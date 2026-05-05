@@ -1,0 +1,8 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Nexus eye icon">
+  <g stroke="currentColor" stroke-width="22" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M64 256c52-74 116-111 192-111s140 37 192 111c-52 74-116 111-192 111S116 330 64 256Z"/>
+    <circle cx="256" cy="256" r="58"/>
+    <circle cx="256" cy="256" r="22" fill="currentColor" stroke="none"/>
+    <path d="M256 64v42M256 406v42M158 88l20 37M354 88l-20 37M88 158l37 20M424 158l-37 20M88 354l37-20M424 354l-37-20"/>
+  </g>
+</svg>

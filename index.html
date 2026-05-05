@@ -3,17 +3,228 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Impulsive</title>
+  <meta name="description" content="Impulsive is a privacy-first recovery and behaviour-change app for difficult compulsive habits." />
+  <title>Impulsive | Privacy-first habit recovery</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@600;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <main class="page">
-    <section class="card">
-      <p class="eyebrow">useimpulsive.com</p>
-      <h1>Impulsive is live</h1>
-      <p>This is a Cloudflare Pages deployment test for useimpulsive.com.</p>
-      <a href="#" class="button">Website connection working</a>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header" aria-label="Primary navigation">
+    <nav class="nav">
+      <a class="wordmark" href="#top" aria-label="Impulsive home">Impulsive</a>
+      <div class="nav-links" aria-label="Site links">
+        <a href="#how-it-works">How it works</a>
+        <a href="#paths">Paths</a>
+        <a href="#principles">Principles</a>
+        <a href="#waitlist">Waitlist</a>
+      </div>
+      <a class="button button-small" href="#waitlist">Join Waitlist</a>
+    </nav>
+  </header>
+
+  <main id="main">
+    <section class="hero section" id="top" aria-labelledby="hero-title">
+      <div class="hero-bg" aria-hidden="true">
+        <span class="shape shape-lilac"></span>
+        <span class="shape shape-blue"></span>
+        <span class="shape shape-lemon"></span>
+        <span class="shape shape-coral"></span>
+      </div>
+      <div class="container hero-grid">
+        <div class="hero-copy reveal">
+          <p class="eyebrow">Privacy-first behaviour change</p>
+          <h1 id="hero-title">Built for habits that do not break with willpower.</h1>
+          <p class="hero-subhead">Impulsive helps you slow the loop, understand your patterns, and take one better action at the right moment through calm, private, structured behaviour change.</p>
+          <div class="hero-actions" aria-label="Hero actions">
+            <a class="button" href="#waitlist">Join the waitlist</a>
+            <a class="button button-secondary" href="#how-it-works">See how it works</a>
+          </div>
+          <p class="trust-line">Private by design. Built in London. Early beta coming soon.</p>
+        </div>
+
+        <div class="hero-visual reveal" aria-label="Impulsive app preview">
+          <div class="orbit-card card-calm">Calm intervention</div>
+          <div class="orbit-card card-trigger">Trigger window</div>
+          <div class="phone" role="img" aria-label="A phone mockup showing today's plan, trigger window, calm intervention, progress taper bar, and four support paths.">
+            <div class="phone-speaker"></div>
+            <div class="app-screen">
+              <div class="app-topbar">
+                <span>Today</span>
+                <span class="privacy-pill">Private</span>
+              </div>
+              <section class="today-plan" aria-label="Today's plan preview">
+                <p>Today's plan</p>
+                <h2>Slow the loop before 8:30pm</h2>
+                <div class="plan-row">
+                  <span>Trigger window</span>
+                  <strong>7:45-9:15pm</strong>
+                </div>
+              </section>
+              <section class="intervention">
+                <div>
+                  <span class="mini-label">Calm intervention</span>
+                  <strong>90-second reset</strong>
+                </div>
+                <button type="button" aria-label="Start calm intervention">Start</button>
+              </section>
+              <section class="progress">
+                <div class="progress-copy">
+                  <span>Progress/taper bar</span>
+                  <strong>Reducing intensity</strong>
+                </div>
+                <div class="progress-track" aria-hidden="true"><span></span></div>
+              </section>
+              <section class="path-grid" aria-label="Support paths preview">
+                <article class="path-chip psychology"><span>Psychology</span></article>
+                <article class="path-chip physical"><span>Physical</span></article>
+                <article class="path-chip spiritual"><span>Spiritual</span></article>
+                <article class="path-chip focus"><span>Focus</span></article>
+              </section>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section paths-section" id="paths" aria-labelledby="paths-title">
+      <div class="container">
+        <div class="section-heading reveal">
+          <p class="eyebrow">Support paths</p>
+          <h2 id="paths-title">Choose the support that fits the moment.</h2>
+        </div>
+        <div class="path-cards">
+          <article class="path-card psychology reveal">
+            <span class="soft-icon" aria-hidden="true">P</span>
+            <h3>Psychology Path</h3>
+            <p>Map the thought, feeling, and cue behind the urge without turning it into a verdict.</p>
+          </article>
+          <article class="path-card physical reveal">
+            <span class="soft-icon" aria-hidden="true">M</span>
+            <h3>Physical Path</h3>
+            <p>Use body-first actions that settle the nervous system and make the next choice easier.</p>
+          </article>
+          <article class="path-card spiritual reveal">
+            <span class="soft-icon" aria-hidden="true">S</span>
+            <h3>Spiritual Path</h3>
+            <p>Reconnect with values, meaning, and a steadier sense of self during a difficult moment.</p>
+          </article>
+          <article class="path-card focus reveal">
+            <span class="soft-icon" aria-hidden="true">F</span>
+            <h3>Focus Mode</h3>
+            <p>Shift attention into one simple action when the fastest route is a quieter environment.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section problem-section" aria-labelledby="problem-title">
+      <div class="container split-panel reveal">
+        <div>
+          <p class="eyebrow">The problem</p>
+          <h2 id="problem-title">Most habit apps make one slip feel like failure.</h2>
+        </div>
+        <p>Many tools rely on pressure, streaks, hard blocking, and shame. Impulsive is designed differently. It helps users pause, redirect, and review progress without turning a difficult moment into an identity.</p>
+      </div>
+    </section>
+
+    <section class="section solution-section" aria-labelledby="solution-title">
+      <div class="container">
+        <div class="section-heading reveal">
+          <p class="eyebrow">The Impulsive loop</p>
+          <h2 id="solution-title">A calmer recovery loop.</h2>
+        </div>
+        <div class="feature-grid">
+          <article class="feature-card reveal">
+            <span class="number">01</span>
+            <h3>Notice the pattern</h3>
+            <p>Understand your recurring cues, time windows, emotions, and environments with private reflection.</p>
+          </article>
+          <article class="feature-card reveal">
+            <span class="number">02</span>
+            <h3>Interrupt the moment</h3>
+            <p>Use a soft prompt, short exercise, or focus shift when the habit loop is beginning to accelerate.</p>
+          </article>
+          <article class="feature-card reveal">
+            <span class="number">03</span>
+            <h3>Reduce the loop over time</h3>
+            <p>Review what helped, taper intensity, and keep moving without streak pressure or perfection rules.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section how-section" id="how-it-works" aria-labelledby="how-title">
+      <div class="container">
+        <div class="section-heading reveal">
+          <p class="eyebrow">How it works</p>
+          <h2 id="how-title">Designed for the moment before the decision.</h2>
+        </div>
+        <ol class="step-flow">
+          <li class="step-card reveal">
+            <span>Step 1</span>
+            <h3>Set your pattern</h3>
+            <p>Name the habit loop, its likely trigger windows, and the type of support you want available.</p>
+          </li>
+          <li class="step-card reveal">
+            <span>Step 2</span>
+            <h3>Receive a calm intervention</h3>
+            <p>Get a private prompt that helps you slow down, regulate, and choose one better next action.</p>
+          </li>
+          <li class="step-card reveal">
+            <span>Step 3</span>
+            <h3>Review without shame</h3>
+            <p>Reflect on what happened and what helped, without punishment, inflated scores, or public pressure.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="section principles-section" id="principles" aria-labelledby="principles-title">
+      <div class="container principles-panel reveal">
+        <div>
+          <p class="eyebrow">Principles</p>
+          <h2 id="principles-title">What Impulsive will never do.</h2>
+        </div>
+        <ul class="principles-list">
+          <li>No humiliation</li>
+          <li>No panic design</li>
+          <li>No fake recovery scores</li>
+          <li>No paywall during a trigger moment</li>
+          <li>No addiction to the app itself</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="section waitlist-section" id="waitlist" aria-labelledby="waitlist-title">
+      <div class="container waitlist-card reveal">
+        <div>
+          <p class="eyebrow">Early beta</p>
+          <h2 id="waitlist-title">Join the early beta.</h2>
+          <p>We are opening a small private beta for early users who want a calmer, more colourful, more structured way to work on difficult habits.</p>
+        </div>
+        <!-- Paste your real Formspree or Web3Forms endpoint in the action attribute below. Keep method="POST". -->
+        <form class="waitlist-form" action="PASTE_YOUR_REAL_FORMSPREE_OR_WEB3FORMS_ENDPOINT_HERE" method="POST">
+          <label for="email">Email address</label>
+          <div class="form-row">
+            <input id="email" name="email" type="email" placeholder="you@example.com" autocomplete="email" required />
+            <button class="button" type="submit">Get early access</button>
+          </div>
+        </form>
+      </div>
     </section>
   </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <a class="wordmark" href="#top">Impulsive</a>
+      <p>useimpulsive.com</p>
+      <p>Built in London</p>
+      <p>Privacy-first recovery product</p>
+    </div>
+  </footer>
 </body>
 </html>

@@ -1,30 +1,15 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
-  <title id="title">Soul path icon</title>
-  <desc id="desc">A grounded meditation figure surrounded by warm rays.</desc>
-  <defs>
-    <linearGradient id="soul-fill" x1="143" y1="76" x2="378" y2="426" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#F8D967"/>
-      <stop offset="1" stop-color="#B8872E"/>
-    </linearGradient>
-    <linearGradient id="soul-glow" x1="108" y1="82" x2="406" y2="430" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#FFF4B8"/>
-      <stop offset="1" stop-color="#FEF1AB" stop-opacity="0.22"/>
-    </linearGradient>
-  </defs>
-  <g fill="none" stroke="url(#soul-glow)" stroke-width="20" stroke-linecap="round">
-    <path d="M256 42v48"/>
-    <path d="M145 74l25 42"/>
-    <path d="M367 74l-25 42"/>
-    <path d="M74 179l43 24"/>
-    <path d="M438 179l-43 24"/>
-    <path d="M62 300l50-8"/>
-    <path d="M450 300l-50-8"/>
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Meditation icon">
+  <g stroke="currentColor" stroke-width="28" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="256" cy="104" r="58"/>
+    <path d="M202 164c-36 10-57 33-61 71l-8 82"/>
+    <path d="M310 164c36 10 57 33 61 71l8 82"/>
+    <path d="M213 189c11 26 26 40 43 40s32-14 43-40"/>
+    <path d="M164 354c37-15 73-7 108 26"/>
+    <path d="M348 354c-37-15-73-7-108 26"/>
+    <path d="M118 387c30-42 78-43 138-7c60-36 108-35 138 7"/>
+    <path d="M118 387c-16 27 0 55 43 63c42 8 78-3 95-30"/>
+    <path d="M394 387c16 27 0 55-43 63c-42 8-78-3-95-30"/>
+    <path d="M176 262c0 54-16 91-65 102"/>
+    <path d="M336 262c0 54 16 91 65 102"/>
   </g>
-  <circle cx="256" cy="136" r="50" fill="url(#soul-fill)"/>
-  <path d="M198 214c18 28 37 42 58 42s40-14 58-42" fill="none" stroke="url(#soul-fill)" stroke-width="38" stroke-linecap="round" stroke-linejoin="round"/>
-  <path d="M179 237c-27 22-42 54-44 96" fill="none" stroke="url(#soul-fill)" stroke-width="34" stroke-linecap="round"/>
-  <path d="M333 237c27 22 42 54 44 96" fill="none" stroke="url(#soul-fill)" stroke-width="34" stroke-linecap="round"/>
-  <path d="M109 388c34-42 80-47 137-14 7 4 13 4 20 0 57-33 103-28 137 14" fill="none" stroke="url(#soul-fill)" stroke-width="40" stroke-linecap="round" stroke-linejoin="round"/>
-  <path d="M161 390c-18 22-7 46 33 54 31 6 54-3 68-27" fill="none" stroke="url(#soul-fill)" stroke-width="36" stroke-linecap="round"/>
-  <path d="M351 390c18 22 7 46-33 54-31 6-54-3-68-27" fill="none" stroke="url(#soul-fill)" stroke-width="36" stroke-linecap="round"/>
 </svg>

@@ -1,35 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
-  <title id="title">Nexus path icon</title>
-  <desc id="desc">An adaptive eye with connected pastel signal points.</desc>
-  <defs>
-    <linearGradient id="nexus-stroke" x1="72" y1="120" x2="430" y2="388" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#BFAFEA"/>
-      <stop offset="0.5" stop-color="#8EC5FF"/>
-      <stop offset="1" stop-color="#F5D765"/>
-    </linearGradient>
-    <radialGradient id="nexus-core" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(256 256) rotate(90) scale(74)">
-      <stop stop-color="#2D2730"/>
-      <stop offset="0.52" stop-color="#5B4C76"/>
-      <stop offset="1" stop-color="#BDE0FE"/>
-    </radialGradient>
-  </defs>
-  <path d="M62 256c52-76 117-114 194-114s142 38 194 114c-52 76-117 114-194 114S114 332 62 256Z" fill="none" stroke="url(#nexus-stroke)" stroke-width="34" stroke-linecap="round" stroke-linejoin="round"/>
-  <circle cx="256" cy="256" r="70" fill="url(#nexus-core)"/>
-  <circle cx="256" cy="256" r="24" fill="#FFFDF8"/>
-  <g fill="none" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M256 96v-42" stroke="#BFAFEA" stroke-width="22"/>
-    <path d="M256 416v42" stroke="#F5D765" stroke-width="22"/>
-    <path d="M142 142l-30-30" stroke="#BDE0FE" stroke-width="22"/>
-    <path d="M370 142l30-30" stroke="#FEF1AB" stroke-width="22"/>
-    <path d="M142 370l-30 30" stroke="#D0C3F1" stroke-width="22"/>
-    <path d="M370 370l30 30" stroke="#BDE0FE" stroke-width="22"/>
-  </g>
-  <g fill="#2D2730">
-    <circle cx="256" cy="54" r="15"/>
-    <circle cx="256" cy="458" r="15"/>
-    <circle cx="112" cy="112" r="13"/>
-    <circle cx="400" cy="112" r="13"/>
-    <circle cx="112" cy="400" r="13"/>
-    <circle cx="400" cy="400" r="13"/>
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Nexus eye icon">
+  <g stroke="currentColor" stroke-width="22" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M64 256c52-74 116-111 192-111s140 37 192 111c-52 74-116 111-192 111S116 330 64 256Z"/>
+    <circle cx="256" cy="256" r="58"/>
+    <circle cx="256" cy="256" r="22" fill="currentColor" stroke="none"/>
+    <path d="M256 64v42M256 406v42M158 88l20 37M354 88l-20 37M88 158l37 20M424 158l-37 20M88 354l37-20M424 354l-37-20"/>
   </g>
 </svg>

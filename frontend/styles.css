@@ -135,10 +135,10 @@ button {
 }
 
 .wordmark img {
-  width: 38px;
-  height: 38px;
+  width: 56px;
+  height: auto;
+  max-height: 44px;
   flex: 0 0 auto;
-  border-radius: 12px;
   object-fit: contain;
 }
 
@@ -1398,9 +1398,8 @@ p {
   }
 
   .wordmark img {
-    width: 34px;
-    height: 34px;
-    border-radius: 10px;
+    width: 42px;
+    max-height: 38px;
   }
 
   h1 {

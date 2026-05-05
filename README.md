@@ -14,6 +14,7 @@ impulsive-website/
 │   ├── _redirects
 │   └── assets/
 │       ├── images/
+│       │   ├── impulsive-logo-vector.svg
 │       │   ├── impulsive-logo.png
 │       │   └── spiritual-icon.png
 │       ├── icons/
@@ -93,7 +94,8 @@ frontend/assets/images/
 
 Current images:
 
-- `impulsive-logo.png`: official Impulsive symbol used in the navigation and footer.
+- `impulsive-logo-vector.svg`: official Impulsive symbol used in the navigation and footer.
+- `impulsive-logo.png`: raster fallback/source asset retained in the images folder.
 - `spiritual-icon.png`: Spiritual Path icon used in path cards and the phone mockup.
 
 Keep filenames stable unless you also update the references in `frontend/index.html`.

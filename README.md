@@ -54,6 +54,8 @@ Use these settings:
 
 Cloudflare Pages will serve the static files from `frontend/` and route `/api/waitlist` to `functions/api/waitlist.js`.
 
+`frontend/_redirects` intentionally does not contain a catch-all rewrite. A rule like `/* /index.html 200` can be rejected by Wrangler static asset deploys as an infinite loop and is not needed for this single-page landing page.
+
 ## Environment Variables
 
 Set these in Cloudflare Pages project settings:

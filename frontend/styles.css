@@ -235,6 +235,12 @@ button {
   transition: transform 180ms ease, box-shadow 180ms ease, filter 180ms ease;
 }
 
+.button:disabled {
+  cursor: wait;
+  filter: grayscale(0.18);
+  opacity: 0.72;
+}
+
 .button:hover {
   box-shadow: 0 16px 34px rgba(45, 39, 48, 0.14);
   filter: saturate(1.03);
@@ -1034,6 +1040,14 @@ p {
   gap: 10px;
 }
 
+.hp-field {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
 .waitlist-form label {
   color: var(--ink);
   font-weight: 700;
@@ -1065,18 +1079,21 @@ p {
 }
 
 .form-note {
-  display: none;
   margin: 0;
   border-radius: 16px;
-  background: rgba(254, 241, 171, 0.5);
+  background: rgba(208, 195, 241, 0.24);
   color: #514752;
   font-size: 0.9rem;
   font-weight: 700;
   padding: 12px 14px;
 }
 
-.form-note.is-visible {
-  display: block;
+.form-note[data-state="success"] {
+  background: rgba(189, 224, 254, 0.42);
+}
+
+.form-note[data-state="error"] {
+  background: rgba(245, 167, 166, 0.28);
 }
 
 .site-footer {

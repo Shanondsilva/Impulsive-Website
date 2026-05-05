@@ -22,7 +22,7 @@
   <header class="site-header" data-header>
     <nav class="nav" aria-label="Primary navigation">
       <a class="wordmark" href="#top" aria-label="Impulsive home">
-        <img src="assets/impulsive-logo.png" alt="Impulsive logo" />
+        <img src="assets/images/impulsive-logo.png" alt="Impulsive logo" />
         <span>Impulsive</span>
       </a>
       <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="primary-menu" data-menu-toggle>
@@ -101,7 +101,7 @@
 
               <section class="phone-paths" aria-label="Recovery path preview">
                 <article class="phone-path psychology">
-                  <span class="app-icon symbol-icon" aria-hidden="true">✦</span>
+                  <span class="app-icon symbol-icon" aria-hidden="true">&#10022;</span>
                   <div>
                     <strong>Psychological Core</strong>
                     <small>Default path</small>
@@ -116,7 +116,7 @@
                 </article>
                 <article class="phone-path spiritual">
                   <span class="app-icon image-icon" aria-hidden="true">
-                    <img src="assets/spiritual-icon.png" alt="" />
+                    <img src="assets/images/spiritual-icon.png" alt="" />
                   </span>
                   <div>
                     <strong>Spiritual</strong>
@@ -152,7 +152,7 @@
         <div class="path-cards">
           <article class="path-card psychology reveal">
             <div class="card-topline">
-              <span class="soft-icon symbol-icon" aria-hidden="true">✦</span>
+              <span class="soft-icon symbol-icon" aria-hidden="true">&#10022;</span>
               <span class="status-pill">Starts first</span>
             </div>
             <h3>Psychological Core</h3>
@@ -169,7 +169,7 @@
           <article class="path-card spiritual reveal">
             <div class="card-topline">
               <span class="soft-icon image-icon" aria-hidden="true">
-                <img src="assets/spiritual-icon.png" alt="" />
+                <img src="assets/images/spiritual-icon.png" alt="" />
               </span>
               <span class="status-pill">Optional</span>
             </div>
@@ -299,14 +299,16 @@
           <h2 id="waitlist-title">Join the early beta.</h2>
           <p>We are opening a small private beta for early users who want a calmer, more colourful, more structured way to work on difficult habits.</p>
         </div>
-        <!-- FORM SETUP: Replace the action URL below with your real Formspree or Web3Forms endpoint before launch. -->
-        <form class="waitlist-form" action="https://formspree.io/f/PASTE_YOUR_FORM_ID_HERE" method="POST" data-waitlist-form>
+        <form class="waitlist-form" action="/api/waitlist" method="POST" data-waitlist-form>
           <label for="email">Email address</label>
+          <label class="hp-field" for="company" aria-hidden="true">Company</label>
+          <input class="hp-field" id="company" name="company" type="text" tabindex="-1" autocomplete="off" aria-hidden="true" />
+          <input type="hidden" name="startedAt" data-started-at />
           <div class="form-row">
             <input id="email" name="email" type="email" placeholder="you@example.com" autocomplete="email" required />
             <button class="button" type="submit">Get early access</button>
           </div>
-          <p class="form-note" data-form-note aria-live="polite">Form endpoint is still a placeholder. Add your real Formspree or Web3Forms URL before launch.</p>
+          <p class="form-note" data-form-note aria-live="polite">Add your email and we will request early beta access.</p>
         </form>
       </div>
     </section>
@@ -315,7 +317,7 @@
   <footer class="site-footer">
     <div class="container footer-inner">
       <a class="wordmark" href="#top">
-        <img src="assets/impulsive-logo.png" alt="Impulsive logo" />
+        <img src="assets/images/impulsive-logo.png" alt="Impulsive logo" />
         <span>Impulsive</span>
       </a>
       <p>useimpulsive.com</p>

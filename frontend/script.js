@@ -6,7 +6,7 @@ const navLinks = document.querySelectorAll("[data-menu] a");
 const year = document.querySelector("[data-year]");
 const form = document.querySelector("[data-waitlist-form]");
 const formNote = document.querySelector("[data-form-note]");
-const placeholderPattern = /PASTE_YOUR_FORM_ID_HERE|PASTE_YOUR_REAL|example\.com/i;
+const startedAt = document.querySelector("[data-started-at]");
 
 const closeMenu = () => {
   if (!menuToggle) return;
@@ -25,11 +25,8 @@ const openMenu = () => {
 if (menuToggle && menu) {
   menuToggle.addEventListener("click", () => {
     const isOpen = menuToggle.getAttribute("aria-expanded") === "true";
-    if (isOpen) {
-      closeMenu();
-    } else {
-      openMenu();
-    }
+    if (isOpen) closeMenu();
+    else openMenu();
   });
 
   navLinks.forEach((link) => {
@@ -53,6 +50,10 @@ if (year) {
   year.textContent = new Date().getFullYear();
 }
 
+if (startedAt) {
+  startedAt.value = String(Date.now());
+}
+
 const reveals = document.querySelectorAll(".reveal");
 
 if ("IntersectionObserver" in window) {
@@ -73,19 +74,56 @@ if ("IntersectionObserver" in window) {
   reveals.forEach((item) => item.classList.add("is-visible"));
 }
 
+const setFormMessage = (message, type = "info") => {
+  if (!formNote) return;
+  formNote.textContent = message;
+  formNote.dataset.state = type;
+  formNote.classList.add("is-visible");
+};
+
+const isValidEmail = (value) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+
 if (form) {
-  const showPlaceholderNote = () => {
-    if (formNote) formNote.classList.add("is-visible");
-  };
+  const submitButton = form.querySelector('button[type="submit"]');
 
-  if (placeholderPattern.test(form.action)) {
-    showPlaceholderNote();
-  }
+  form.addEventListener("submit", async (event) => {
+    event.preventDefault();
 
-  form.addEventListener("submit", (event) => {
-    if (placeholderPattern.test(form.action)) {
-      event.preventDefault();
-      showPlaceholderNote();
+    const formData = new FormData(form);
+    const email = String(formData.get("email") || "").trim();
+
+    if (!isValidEmail(email)) {
+      setFormMessage("Please enter a valid email address.", "error");
+      return;
+    }
+
+    if (submitButton) {
+      submitButton.disabled = true;
+      submitButton.textContent = "Sending...";
+    }
+
+    try {
+      const response = await fetch(form.action, {
+        method: "POST",
+        headers: { Accept: "application/json" },
+        body: formData
+      });
+      const result = await response.json().catch(() => ({}));
+
+      if (!response.ok || !result.ok) {
+        throw new Error(result.message || "Unable to join the waitlist right now.");
+      }
+
+      form.reset();
+      if (startedAt) startedAt.value = String(Date.now());
+      setFormMessage(result.message || "You are on the early beta request list.", "success");
+    } catch (error) {
+      setFormMessage(error.message || "Unable to join the waitlist right now.", "error");
+    } finally {
+      if (submitButton) {
+        submitButton.disabled = false;
+        submitButton.textContent = "Get early access";
+      }
     }
   });
 }

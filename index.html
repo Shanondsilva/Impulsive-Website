@@ -4,25 +4,41 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="Impulsive is a privacy-first recovery and behaviour-change app for difficult compulsive habits." />
+  <meta name="theme-color" content="#FFFDF8" />
+  <meta property="og:title" content="Impulsive | Privacy-first habit recovery" />
+  <meta property="og:description" content="Slow the loop, understand your patterns, and take one better action at the right moment." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://useimpulsive.com/" />
   <title>Impulsive | Privacy-first habit recovery</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@600;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
+  <script src="script.js" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
 
-  <header class="site-header" aria-label="Primary navigation">
-    <nav class="nav">
-      <a class="wordmark" href="#top" aria-label="Impulsive home">Impulsive</a>
-      <div class="nav-links" aria-label="Site links">
-        <a href="#how-it-works">How it works</a>
-        <a href="#paths">Paths</a>
-        <a href="#principles">Principles</a>
-        <a href="#waitlist">Waitlist</a>
+  <header class="site-header" data-header>
+    <nav class="nav" aria-label="Primary navigation">
+      <a class="wordmark" href="#top" aria-label="Impulsive home">
+        <img src="assets/impulsive-logo.png" alt="Impulsive logo" />
+        <span>Impulsive</span>
+      </a>
+      <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="primary-menu" data-menu-toggle>
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <div class="nav-menu" id="primary-menu" data-menu>
+        <div class="nav-links" aria-label="Site links">
+          <a href="#how-it-works">How it works</a>
+          <a href="#paths">Paths</a>
+          <a href="#principles">Principles</a>
+          <a href="#waitlist">Waitlist</a>
+        </div>
+        <a class="button button-small" href="#waitlist">Join Waitlist</a>
       </div>
-      <a class="button button-small" href="#waitlist">Join Waitlist</a>
     </nav>
   </header>
 
@@ -34,6 +50,7 @@
         <span class="shape shape-lemon"></span>
         <span class="shape shape-coral"></span>
       </div>
+
       <div class="container hero-grid">
         <div class="hero-copy reveal">
           <p class="eyebrow">Privacy-first behaviour change</p>
@@ -47,23 +64,25 @@
         </div>
 
         <div class="hero-visual reveal" aria-label="Impulsive app preview">
-          <div class="orbit-card card-calm">Calm intervention</div>
-          <div class="orbit-card card-trigger">Trigger window</div>
-          <div class="phone" role="img" aria-label="A phone mockup showing today's plan, trigger window, calm intervention, progress taper bar, and four support paths.">
-            <div class="phone-speaker"></div>
+          <div class="orbit-card card-calm">Level path, not open chaos</div>
+          <div class="orbit-card card-trigger">No paywall in a trigger</div>
+          <div class="phone">
+            <div class="phone-speaker" aria-hidden="true"></div>
             <div class="app-screen">
               <div class="app-topbar">
-                <span>Today</span>
+                <span>Impulsive</span>
                 <span class="privacy-pill">Private</span>
               </div>
+
               <section class="today-plan" aria-label="Today's plan preview">
                 <p>Today's plan</p>
-                <h2>Slow the loop before 8:30pm</h2>
+                <h2>Start with Psychological Core</h2>
                 <div class="plan-row">
                   <span>Trigger window</span>
                   <strong>7:45-9:15pm</strong>
                 </div>
               </section>
+
               <section class="intervention">
                 <div>
                   <span class="mini-label">Calm intervention</span>
@@ -71,19 +90,52 @@
                 </div>
                 <button type="button" aria-label="Start calm intervention">Start</button>
               </section>
+
               <section class="progress">
                 <div class="progress-copy">
-                  <span>Progress/taper bar</span>
-                  <strong>Reducing intensity</strong>
+                  <span>Progress / taper bar</span>
+                  <strong>Level 3 of 8</strong>
                 </div>
                 <div class="progress-track" aria-hidden="true"><span></span></div>
               </section>
-              <section class="path-grid" aria-label="Support paths preview">
-                <article class="path-chip psychology"><span>Psychology</span></article>
-                <article class="path-chip physical"><span>Physical</span></article>
-                <article class="path-chip spiritual"><span>Spiritual</span></article>
-                <article class="path-chip focus"><span>Focus</span></article>
+
+              <section class="phone-paths" aria-label="Recovery path preview">
+                <article class="phone-path psychology">
+                  <span class="app-icon symbol-icon" aria-hidden="true">✦</span>
+                  <div>
+                    <strong>Psychological Core</strong>
+                    <small>Default path</small>
+                  </div>
+                </article>
+                <article class="phone-path physical">
+                  <span class="app-icon physical-icon" aria-hidden="true"></span>
+                  <div>
+                    <strong>Physical</strong>
+                    <small>Unlocks later</small>
+                  </div>
+                </article>
+                <article class="phone-path spiritual">
+                  <span class="app-icon image-icon" aria-hidden="true">
+                    <img src="assets/spiritual-icon.png" alt="" />
+                  </span>
+                  <div>
+                    <strong>Spiritual</strong>
+                    <small>Optional unlock</small>
+                  </div>
+                </article>
+                <article class="phone-path synchrology">
+                  <span class="app-icon synch-icon" aria-hidden="true"></span>
+                  <div>
+                    <strong>Synchrology</strong>
+                    <small>Adaptive engine</small>
+                  </div>
+                </article>
               </section>
+
+              <aside class="focus-note">
+                <span>Focus Mode</span>
+                <strong>Start focus, recover, resume smoothly.</strong>
+              </aside>
             </div>
           </div>
         </div>
@@ -93,29 +145,44 @@
     <section class="section paths-section" id="paths" aria-labelledby="paths-title">
       <div class="container">
         <div class="section-heading reveal">
-          <p class="eyebrow">Support paths</p>
+          <p class="eyebrow">Guided path map</p>
           <h2 id="paths-title">Choose the support that fits the moment.</h2>
+          <p>Impulsive starts simple with Psychological Core, learns your trigger pattern, then unlocks stronger support when you have enough progress to use it well.</p>
         </div>
         <div class="path-cards">
           <article class="path-card psychology reveal">
-            <span class="soft-icon" aria-hidden="true">P</span>
-            <h3>Psychology Path</h3>
-            <p>Map the thought, feeling, and cue behind the urge without turning it into a verdict.</p>
+            <div class="card-topline">
+              <span class="soft-icon symbol-icon" aria-hidden="true">✦</span>
+              <span class="status-pill">Starts first</span>
+            </div>
+            <h3>Psychological Core</h3>
+            <p>A calm first layer that helps you pause, name the pattern, and choose one better action before the loop takes over.</p>
           </article>
           <article class="path-card physical reveal">
-            <span class="soft-icon" aria-hidden="true">M</span>
+            <div class="card-topline">
+              <span class="soft-icon physical-icon" aria-hidden="true"></span>
+              <span class="status-pill">Unlocks later</span>
+            </div>
             <h3>Physical Path</h3>
-            <p>Use body-first actions that settle the nervous system and make the next choice easier.</p>
+            <p>A movement-based reset that helps you change state, leave the trigger environment, and interrupt the moment through action.</p>
           </article>
           <article class="path-card spiritual reveal">
-            <span class="soft-icon" aria-hidden="true">S</span>
+            <div class="card-topline">
+              <span class="soft-icon image-icon" aria-hidden="true">
+                <img src="assets/spiritual-icon.png" alt="" />
+              </span>
+              <span class="status-pill">Optional</span>
+            </div>
             <h3>Spiritual Path</h3>
-            <p>Reconnect with values, meaning, and a steadier sense of self during a difficult moment.</p>
+            <p>An optional grounding path for reflection, values, prayer, or recommitment without shame or pressure.</p>
           </article>
-          <article class="path-card focus reveal">
-            <span class="soft-icon" aria-hidden="true">F</span>
-            <h3>Focus Mode</h3>
-            <p>Shift attention into one simple action when the fastest route is a quieter environment.</p>
+          <article class="path-card synchrology reveal">
+            <div class="card-topline">
+              <span class="soft-icon synch-icon" aria-hidden="true"></span>
+              <span class="status-pill">Engine</span>
+            </div>
+            <h3>Synchrology</h3>
+            <p>The adaptive engine that learns what works and coordinates the right support across your recovery paths.</p>
           </article>
         </div>
       </div>
@@ -146,7 +213,7 @@
           <article class="feature-card reveal">
             <span class="number">02</span>
             <h3>Interrupt the moment</h3>
-            <p>Use a soft prompt, short exercise, or focus shift when the habit loop is beginning to accelerate.</p>
+            <p>Use a soft prompt, short exercise, movement reset, or focus shift when the habit loop begins to accelerate.</p>
           </article>
           <article class="feature-card reveal">
             <span class="number">03</span>
@@ -154,6 +221,22 @@
             <p>Review what helped, taper intensity, and keep moving without streak pressure or perfection rules.</p>
           </article>
         </div>
+      </div>
+    </section>
+
+    <section class="section progression-section" aria-labelledby="progression-title">
+      <div class="container progression-panel reveal">
+        <div>
+          <p class="eyebrow">Progression, not overwhelm</p>
+          <h2 id="progression-title">Start tiny. Unlock strength.</h2>
+          <p>The first experience is one trigger interruption, one recommended action, one progress bar, and one clear next unlock. Premium and referrals belong in calm progress moments, never when someone is trying to get help quickly.</p>
+        </div>
+        <ol class="level-map" aria-label="Impulsive level path preview">
+          <li><span>1</span>Psychological Core</li>
+          <li><span>3</span>Schedule taper card</li>
+          <li><span>5</span>Path preview</li>
+          <li><span>8</span>Full Synchrology</li>
+        </ol>
       </div>
     </section>
 
@@ -167,12 +250,12 @@
           <li class="step-card reveal">
             <span>Step 1</span>
             <h3>Set your pattern</h3>
-            <p>Name the habit loop, its likely trigger windows, and the type of support you want available.</p>
+            <p>Name the habit loop, its likely trigger windows, and a realistic taper target.</p>
           </li>
           <li class="step-card reveal">
             <span>Step 2</span>
             <h3>Receive a calm intervention</h3>
-            <p>Get a private prompt that helps you slow down, regulate, and choose one better next action.</p>
+            <p>Get one private recommendation first, with fallback support if the moment needs a different route.</p>
           </li>
           <li class="step-card reveal">
             <span>Step 3</span>
@@ -180,6 +263,16 @@
             <p>Reflect on what happened and what helped, without punishment, inflated scores, or public pressure.</p>
           </li>
         </ol>
+      </div>
+    </section>
+
+    <section class="section focus-section" aria-labelledby="focus-title">
+      <div class="container focus-panel reveal">
+        <div>
+          <p class="eyebrow">Supporting feature</p>
+          <h2 id="focus-title">Focus Mode helps you return without friction.</h2>
+        </div>
+        <p>Focus Mode supports the loop around recovery: start focus, recover from interruption, and resume smoothly. It stays separate from Synchrology, which coordinates the recovery paths behind the scenes.</p>
       </div>
     </section>
 
@@ -206,13 +299,14 @@
           <h2 id="waitlist-title">Join the early beta.</h2>
           <p>We are opening a small private beta for early users who want a calmer, more colourful, more structured way to work on difficult habits.</p>
         </div>
-        <!-- Paste your real Formspree or Web3Forms endpoint in the action attribute below. Keep method="POST". -->
-        <form class="waitlist-form" action="PASTE_YOUR_REAL_FORMSPREE_OR_WEB3FORMS_ENDPOINT_HERE" method="POST">
+        <!-- FORM SETUP: Replace the action URL below with your real Formspree or Web3Forms endpoint before launch. -->
+        <form class="waitlist-form" action="https://formspree.io/f/PASTE_YOUR_FORM_ID_HERE" method="POST" data-waitlist-form>
           <label for="email">Email address</label>
           <div class="form-row">
             <input id="email" name="email" type="email" placeholder="you@example.com" autocomplete="email" required />
             <button class="button" type="submit">Get early access</button>
           </div>
+          <p class="form-note" data-form-note aria-live="polite">Form endpoint is still a placeholder. Add your real Formspree or Web3Forms URL before launch.</p>
         </form>
       </div>
     </section>
@@ -220,10 +314,14 @@
 
   <footer class="site-footer">
     <div class="container footer-inner">
-      <a class="wordmark" href="#top">Impulsive</a>
+      <a class="wordmark" href="#top">
+        <img src="assets/impulsive-logo.png" alt="Impulsive logo" />
+        <span>Impulsive</span>
+      </a>
       <p>useimpulsive.com</p>
       <p>Built in London</p>
       <p>Privacy-first recovery product</p>
+      <p>&copy; <span data-year>2026</span></p>
     </div>
   </footer>
 </body>

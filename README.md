@@ -1,101 +1,42 @@
 # Impulsive Website
 
-Official static-first landing page for Impulsive, deployed with Cloudflare Pages.
+Updated Vite React version of the Impulsive landing page.
 
-## Project Structure
+## What changed
 
-```text
-impulsive-website/
-├── frontend/
-│   ├── index.html
-│   ├── styles.css
-│   ├── script.js
-│   ├── _headers
-│   ├── _redirects
-│   └── assets/
-│       ├── images/
-│       │   ├── impulsive-logo-vector.svg
-│       │   ├── impulsive-logo.png
-│       │   └── spiritual-icon.png
-│       ├── icons/
-│       └── favicons/
-├── functions/
-│   └── api/
-│       └── waitlist.js
-├── README.md
-└── SECURITY.md
+- Converted the older static `frontend` build into the newer Vite React structure from the updated file.
+- Kept the Impulsive landing page content, pastel theme, mobile menu, reveal animations, and waitlist form.
+- Replaced externally hosted image links with local assets in `public/` so the site works without image-hosting dependencies.
+- Preserved the Cloudflare Pages waitlist function from the original repository at `functions/api/waitlist.js`.
+- Added Cloudflare deployment headers and redirects in `public/_headers` and `public/_redirects` so they are copied into `dist` during build.
+
+## Local setup
+
+```bash
+npm install
+npm run dev
 ```
 
-## Local Preview
+Open the local URL shown in your terminal.
 
-The frontend is plain static HTML, CSS, and vanilla JavaScript.
+## Production build
 
-Open `frontend/index.html` directly in a browser for a quick static preview.
-
-For a local HTTP preview from the repo root:
-
-```powershell
-cd D:\Impulsive\Impulsive-Website\frontend
-python -m http.server 8000
+```bash
+npm run build
+npm run preview
 ```
 
-Then open `http://127.0.0.1:8000/`.
+## Cloudflare Pages notes
 
-The waitlist form posts to `/api/waitlist`, which is handled by Cloudflare Pages Functions in production. Direct file previews will not run the Function.
+Recommended settings:
 
-## Cloudflare Pages Deployment
+- Build command: `npm run build`
+- Build output directory: `dist`
+- Functions directory: `functions`
 
-Use these settings:
+For the waitlist form to store or forward signups, add these environment variables in Cloudflare Pages if you have a forwarding endpoint:
 
-- Framework preset: `None`
-- Build command: leave empty
-- Build output directory: `frontend`
-- Functions folder: `functions`
-- Custom domain: `useimpulsive.com`
+- `WAITLIST_FORWARD_URL`
+- `WAITLIST_ACCESS_KEY` if your endpoint needs one
 
-Cloudflare Pages will serve the static files from `frontend/` and route `/api/waitlist` to `functions/api/waitlist.js`.
-
-`frontend/_redirects` intentionally does not contain a catch-all rewrite. A rule like `/* /index.html 200` can be rejected by Wrangler static asset deploys as an infinite loop and is not needed for this single-page landing page.
-
-## Environment Variables
-
-Set these in Cloudflare Pages project settings:
-
-- `WAITLIST_FORWARD_URL`: provider endpoint used by the waitlist Function.
-- `WAITLIST_ACCESS_KEY`: optional provider key if your waitlist provider requires one.
-
-No provider URLs or access keys should be placed in `frontend/index.html`, `frontend/script.js`, or any other frontend file.
-
-## Waitlist Provider
-
-The frontend form submits to:
-
-```text
-/api/waitlist
-```
-
-The backend Function validates the email and forwards it only if `WAITLIST_FORWARD_URL` is configured.
-
-To change provider later, update only:
-
-```text
-functions/api/waitlist.js
-```
-
-and the related Cloudflare environment variables.
-
-## Updating Images
-
-Website images live in:
-
-```text
-frontend/assets/images/
-```
-
-Current images:
-
-- `impulsive-logo-vector.svg`: official Impulsive symbol used in the navigation and footer.
-- `impulsive-logo.png`: raster fallback/source asset retained in the images folder.
-- `spiritual-icon.png`: Spiritual Path icon used in path cards and the phone mockup.
-
-Keep filenames stable unless you also update the references in `frontend/index.html`.
+Without `WAITLIST_FORWARD_URL`, the function still validates requests but returns a setup message instead of forwarding the signup.

@@ -42,7 +42,7 @@ async function startServer() {
 
     return res.json({ 
       ok: true, 
-      message: "You are on the early beta request list.",
+      message: "Thanks. You're on the waitlist.",
       forwarded: false 
     });
   });

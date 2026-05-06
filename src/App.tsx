@@ -59,16 +59,26 @@ export default function App() {
         headers: { Accept: "application/json", "Content-Type": "application/json" },
         body: JSON.stringify(Object.fromEntries(formData.entries()))
       });
-      const result = await response.json();
+
+      const rawBody = await response.text();
+      let result: { ok?: boolean; message?: string } = {};
+
+      if (rawBody.trim()) {
+        try {
+          result = JSON.parse(rawBody);
+        } catch {
+          throw new Error("Sorry, the server returned an unexpected response. Please try again in a moment.");
+        }
+      }
 
       if (!response.ok || !result.ok) {
-        throw new Error(result.message || "Unable to join the waitlist right now.");
+        throw new Error(result.message || "Sorry, we could not add you to the waitlist right now. Please try again later.");
       }
 
       formRef.current.reset();
       setFormStatus({ message: result.message || "Thanks. You're on the waitlist.", type: "success" });
     } catch (error: any) {
-      setFormStatus({ message: error.message || "Unable to join the waitlist right now.", type: "error" });
+      setFormStatus({ message: error.message || "Unable to join the waitlist right now. Please try again later.", type: "error" });
     } finally {
       setIsSubmitting(false);
     }

@@ -1,0 +1,15 @@
+{
+  "name": "steep-cake-9a73",
+  "compatibility_date": "2026-05-06",
+  "observability": {
+    "enabled": true
+  },
+  "assets": {
+    "directory": "frontend",
+    "html_handling": "none",
+    "not_found_handling": "404-page"
+  },
+  "compatibility_flags": [
+    "nodejs_compat"
+  ]
+}

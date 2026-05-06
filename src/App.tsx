@@ -66,7 +66,7 @@ export default function App() {
       }
 
       formRef.current.reset();
-      setFormStatus({ message: result.message || "You are on the early beta request list.", type: "success" });
+      setFormStatus({ message: result.message || "Thanks. You're on the waitlist.", type: "success" });
     } catch (error: any) {
       setFormStatus({ message: error.message || "Unable to join the waitlist right now.", type: "error" });
     } finally {
@@ -101,6 +101,7 @@ export default function App() {
               <a href="#how-it-works" onClick={closeMenu}>How it works</a>
               <a href="#paths" onClick={closeMenu}>Paths</a>
               <a href="#principles" onClick={closeMenu}>Principles</a>
+              <a href="#about" onClick={closeMenu}>About</a>
               <a href="#waitlist" onClick={closeMenu}>Waitlist</a>
             </div>
             <a className="button button-small" href="#waitlist" onClick={closeMenu}>Join Waitlist</a>
@@ -126,7 +127,7 @@ export default function App() {
                 <a className="button" href="#waitlist">Join the waitlist</a>
                 <a className="button button-secondary" href="#how-it-works">See how it works</a>
               </div>
-              <p className="trust-line">Private by design. Built in London. Early beta coming soon.</p>
+              <p className="trust-line">Private by design. Built in London. Launching soon.</p>
             </div>
 
             <div className="hero-visual reveal" aria-label="Impulsive app preview">
@@ -154,7 +155,7 @@ export default function App() {
                       <span className="mini-label">Calm intervention</span>
                       <strong>90-second reset</strong>
                     </div>
-                    <button type="button" aria-label="Start calm intervention">Start</button>
+                    <button type="button" aria-label="Calm intervention preview" tabIndex={-1}>Start</button>
                   </section>
 
                   <section className="progress">
@@ -309,7 +310,7 @@ export default function App() {
               <li><span>1</span>Psychological Core</li>
               <li><span>3</span>Schedule taper card</li>
               <li><span>5</span>Path preview</li>
-              <li><span>8</span>Full Synchrology</li>
+              <li><span>8</span>Full Nexus engine</li>
             </ol>
           </div>
         </section>
@@ -346,7 +347,7 @@ export default function App() {
               <p className="eyebrow">Supporting feature</p>
               <h2 id="focus-title">Focus Mode helps you return without friction.</h2>
             </div>
-            <p>Focus Mode supports the loop around recovery: start focus, recover from interruption, and resume smoothly. It stays separate from Synchrology, which coordinates the recovery paths behind the scenes.</p>
+            <p>Focus Mode supports the loop around recovery: start focus, recover from interruption, and resume smoothly. It stays separate from Nexus, the adaptive engine that coordinates your recovery paths behind the scenes.</p>
           </div>
         </section>
 
@@ -357,21 +358,93 @@ export default function App() {
               <h2 id="principles-title">What Impulsive will never do.</h2>
             </div>
             <ul className="principles-list">
-              <li>No humiliation</li>
-              <li>No panic design</li>
-              <li>No fake recovery scores</li>
-              <li>No paywall during a trigger moment</li>
-              <li>No addiction to the app itself</li>
+              <li>
+                <strong>No humiliation.</strong>
+                <span>We never use shame, gamification, or punishment to push behaviour. Slips are data, not failures.</span>
+              </li>
+              <li>
+                <strong>No panic design.</strong>
+                <span>No red flashes, alarming notifications, or "you broke your streak" pressure tactics.</span>
+              </li>
+              <li>
+                <strong>No fake recovery scores.</strong>
+                <span>We do not invent percentages or fake metrics that pretend to measure something we cannot.</span>
+              </li>
+              <li>
+                <strong>No paywall during a trigger moment.</strong>
+                <span>The help you need at a hard moment is always free. Premium lives in calm progress, never in crisis.</span>
+              </li>
+              <li>
+                <strong>No addiction to the app itself.</strong>
+                <span>We measure success by you needing us less, not by you opening the app more.</span>
+              </li>
             </ul>
+          </div>
+        </section>
+
+        <section className="section about-section" id="about" aria-labelledby="about-title">
+          <div className="container about-panel reveal">
+            <div>
+              <p className="eyebrow">About</p>
+              <h2 id="about-title">Built carefully, in London.</h2>
+            </div>
+            <div className="about-copy">
+              <p>Impulsive is being built in London for people working through difficult, compulsive habits. The product is being shaped in conversation with clinicians, researchers, and people with lived experience of habit recovery.</p>
+              <ul className="about-points">
+                <li>
+                  <strong>Privacy by default.</strong>
+                  <span>No third-party advertising trackers. Your patterns, triggers, and reflections stay yours.</span>
+                </li>
+                <li>
+                  <strong>Designed alongside clinical care.</strong>
+                  <span>Impulsive is not a replacement for therapy. It is built to sit alongside professional support.</span>
+                </li>
+                <li>
+                  <strong>Honest about what we do.</strong>
+                  <span>If you are in crisis, please contact your GP, a qualified therapist, or the Samaritans on 116 123.</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section className="section faq-section" id="faq" aria-labelledby="faq-title">
+          <div className="container">
+            <div className="section-heading reveal">
+              <p className="eyebrow">Common questions</p>
+              <h2 id="faq-title">Things people ask before joining.</h2>
+            </div>
+            <div className="faq-list">
+              <details className="faq-item reveal">
+                <summary>Is my data private?</summary>
+                <p>Yes. Impulsive is privacy-first. Your patterns, triggers, and reflections stay on your device by default. We do not sell data and we do not use third-party advertising trackers.</p>
+              </details>
+              <details className="faq-item reveal">
+                <summary>How is this different from a habit tracker or a blocker app?</summary>
+                <p>Trackers measure streaks. Blockers add friction. Impulsive is designed for the moment a loop starts to accelerate. It helps you pause, redirect, and review what worked, without shame metrics or hard blocks that tend to break under pressure.</p>
+              </details>
+              <details className="faq-item reveal">
+                <summary>Is Impulsive a replacement for therapy?</summary>
+                <p>No. Impulsive is designed to sit alongside professional support, not replace it. If you are in crisis or want clinical care, please speak to a qualified therapist, your GP, or contact the Samaritans on 116 123.</p>
+              </details>
+              <details className="faq-item reveal">
+                <summary>When will Impulsive be available?</summary>
+                <p>We are building carefully and testing with a small group first. Join the waitlist and we will notify you when access opens.</p>
+              </details>
+              <details className="faq-item reveal">
+                <summary>How will pricing work?</summary>
+                <p>The core help — the parts you need at a hard moment — will always be free. Premium features will live in calm progress moments, never in crisis.</p>
+              </details>
+            </div>
           </div>
         </section>
 
         <section className="section waitlist-section" id="waitlist" aria-labelledby="waitlist-title">
           <div className="container waitlist-card reveal">
             <div>
-              <p className="eyebrow">Early beta</p>
-              <h2 id="waitlist-title">Join the early beta.</h2>
-              <p>We are opening a small private beta for early users who want a calmer, more colourful, more structured way to work on difficult habits.</p>
+              <p className="eyebrow">Waitlist</p>
+              <h2 id="waitlist-title">Join the waitlist.</h2>
+              <p>Add your email and we will let you know when Impulsive opens up. We are building it carefully, in London, for people who want a calmer, more structured way to work on difficult habits.</p>
             </div>
             <form 
               className="waitlist-form" 
@@ -385,7 +458,7 @@ export default function App() {
               <div className="form-row">
                 <input id="email" name="email" type="email" placeholder="you@example.com" autoComplete="email" required />
                 <button className="button" type="submit" disabled={isSubmitting}>
-                  {isSubmitting ? "Sending..." : "Get early access"}
+                  {isSubmitting ? "Sending..." : "Join the waitlist"}
                 </button>
               </div>
               {formStatus.message && (
@@ -395,7 +468,7 @@ export default function App() {
               )}
               {!formStatus.message && (
                 <p className="form-note" aria-live="polite">
-                  Add your email and we will request early beta access.
+                  Add your email and we will let you know when Impulsive is ready.
                 </p>
               )}
             </form>
@@ -404,15 +477,36 @@ export default function App() {
       </main>
 
       <footer className="site-footer">
-        <div className="container footer-inner">
-          <a className="wordmark" href="#top">
-            <img src="/images/icons/impulsive-logo-transparent-clean.png" alt="Impulsive logo" />
-            <span>Impulsive</span>
-          </a>
+        <div className="container footer-grid">
+          <div className="footer-brand">
+            <a className="wordmark" href="#top" aria-label="Impulsive home">
+              <img src="/images/icons/impulsive-logo-transparent-clean.png" alt="" />
+              <span>Impulsive</span>
+            </a>
+            <p className="footer-tagline">Privacy-first behaviour change. Built in London.</p>
+          </div>
+          <nav className="footer-nav" aria-label="Product links">
+            <h3>Product</h3>
+            <a href="#how-it-works">How it works</a>
+            <a href="#paths">Paths</a>
+            <a href="#principles">Principles</a>
+            <a href="#faq">FAQ</a>
+          </nav>
+          <nav className="footer-nav" aria-label="Company links">
+            <h3>Company</h3>
+            <a href="#about">About</a>
+            <a href="#waitlist">Waitlist</a>
+            <a href="mailto:hello@useimpulsive.com">Contact</a>
+          </nav>
+          <nav className="footer-nav" aria-label="Legal links">
+            <h3>Legal</h3>
+            <a href="/privacy.html">Privacy</a>
+            <a href="/terms.html">Terms</a>
+          </nav>
+        </div>
+        <div className="container footer-base">
+          <p>&copy; {new Date().getFullYear()} Impulsive. All rights reserved.</p>
           <p>useimpulsive.com</p>
-          <p>Built in London</p>
-          <p>Privacy-first recovery product</p>
-          <p>&copy; {new Date().getFullYear()}</p>
         </div>
       </footer>
     </div>

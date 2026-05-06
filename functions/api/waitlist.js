@@ -51,7 +51,7 @@ async function forwardWaitlistSignup(env, email) {
 
   return {
     forwarded: true,
-    message: "You are on the early beta request list."
+    message: "Thanks. You're on the waitlist."
   };
 }
 

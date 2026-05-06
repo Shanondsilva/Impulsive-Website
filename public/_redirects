@@ -1,0 +1,2 @@
+# No redirects are required for the static landing page.
+# Keep this file empty of catch-all rewrites so /api/waitlist can be handled by Cloudflare Pages Functions.

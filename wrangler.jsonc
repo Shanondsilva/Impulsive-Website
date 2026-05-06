@@ -5,8 +5,8 @@
     "enabled": true
   },
   "assets": {
-    "directory": "frontend",
-    "html_handling": "none",
+    "directory": "dist",
+    "html_handling": "single-page-application",
     "not_found_handling": "404-page"
   },
   "compatibility_flags": [

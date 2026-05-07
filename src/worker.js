@@ -5,6 +5,11 @@ const SUCCESS_MESSAGE = "Thanks. You're on the waitlist.";
 const DUPLICATE_MESSAGE = "You're already on the waitlist.";
 const INVALID_EMAIL_MESSAGE = "Please enter a valid email address.";
 const GENERIC_FAILURE_MESSAGE = "Sorry, we could not add you to the waitlist right now. Please try again later.";
+const ROBOTS_TXT = `User-agent: *
+Allow: /
+
+Sitemap: https://useimpulsive.com/sitemap.xml
+`;
 const CONFIRMATION_SUBJECT = "Thank you for joining the Impulsive waitlist";
 const CONFIRMATION_TEXT = `Hi,
 
@@ -240,6 +245,15 @@ export default {
       url.protocol = "https:";
       url.hostname = canonicalHost;
       return Response.redirect(url.toString(), 301);
+    }
+
+    if (url.pathname === "/robots.txt") {
+      return new Response(ROBOTS_TXT, {
+        headers: {
+          "Content-Type": "text/plain; charset=utf-8",
+          "Cache-Control": "public, max-age=3600"
+        }
+      });
     }
 
     if (url.pathname === "/api/waitlist" || url.pathname === "/api/waitlist/") {

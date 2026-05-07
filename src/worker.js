@@ -218,9 +218,9 @@ export default {
   async fetch(request, env) {
     const url = new URL(request.url);
 
-    if (url.pathname === "/api/waitlist") {
-      return handleWaitlist(request, env);
-    }
+    if (url.pathname === "/api/waitlist" || url.pathname === "/api/waitlist/") {
+  return handleWaitlist(request, env);
+}
 
     return env.ASSETS.fetch(request);
   }

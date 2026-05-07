@@ -388,26 +388,137 @@ export default function App() {
                   </span>
                 </article>
               </div>
-              <article className="path-card spiritual reveal">
-                <div className="card-topline">
-                  <span className="soft-icon image-icon" aria-hidden="true">
-                    <img src="/images/icons/impulsive-soul.png" alt="" />
+              <div
+                className={`path-card-wrapper${flippedCards.has("soul") ? " is-flipped" : ""}`}
+                role="button"
+                tabIndex={0}
+                aria-pressed={flippedCards.has("soul")}
+                aria-label="Soul path. Click to see how it works."
+                onClick={() => togglePathFlip("soul")}
+                onKeyDown={(event) => handlePathKeyDown(event, "soul")}
+              >
+                <article className="path-card spiritual card-front reveal">
+                  <div className="card-topline">
+                    <span className="soft-icon image-icon" aria-hidden="true">
+                      <img src="/images/icons/impulsive-soul.png" alt="" />
+                    </span>
+                    <span className="status-pill">Optional</span>
+                  </div>
+                  <h3>Soul</h3>
+                  <p>An optional grounding path for reflection, values, prayer, or recommitment without shame or pressure.</p>
+                  <span className="card-flip-hint" aria-hidden="true">
+                    <span>How it works</span>
+                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 12h18M13 5l7 7-7 7" /></svg>
                   </span>
-                  <span className="status-pill">Optional</span>
-                </div>
-                <h3>Soul</h3>
-                <p>An optional grounding path for reflection, values, prayer, or recommitment without shame or pressure.</p>
-              </article>
-              <article className="path-card synchrology reveal">
-                <div className="card-topline">
-                  <span className="soft-icon image-icon" aria-hidden="true">
-                    <img src="/images/icons/impulsive-nexus.png" alt="" />
+                </article>
+
+                <article className="path-card spiritual card-back" aria-hidden={!flippedCards.has("soul")}>
+                  <div className="card-topline">
+                    <span className="soft-icon image-icon" aria-hidden="true">
+                      <img src="/images/icons/impulsive-soul.png" alt="" />
+                    </span>
+                    <span className="status-pill">Optional</span>
+                  </div>
+                  <h3>Soul</h3>
+                  <p className="card-back-tag">For people who want their faith woven into recovery, without anything pushy or preachy in the way.</p>
+                  <p className="card-back-section-h">How it works</p>
+                  <ol className="card-back-steps">
+                    <li>You answer a quick honest question about how you are feeling. Bored, lonely, restless, ashamed, anything real.</li>
+                    <li>The app picks something that fits the moment. A short prayer, a passage, or a few minutes of reflection.</li>
+                    <li>If you slipped recently, Soul guides a gentle recommitment. No shame, no lecture, just a kind way back.</li>
+                  </ol>
+                  <div className="card-back-diagram">
+                    <svg viewBox="0 0 240 180" width="100%" role="img" aria-label="A line of sight from the present moment, through prayer, passage, and reflection, to a steady future self.">
+                      <circle cx="120" cy="22" r="14" fill="rgba(255,255,255,0.85)" stroke="#2D2730" strokeWidth="1.2" />
+                      <text x="120" y="26" textAnchor="middle" fontSize="10" fontWeight="500" fill="#2D2730">Now</text>
+                      <text x="120" y="46" textAnchor="middle" fontSize="9" fill="#5D5360">a hard moment</text>
+                      <line x1="120" y1="56" x2="120" y2="138" stroke="#2D2730" strokeWidth="1" strokeDasharray="2 3" />
+                      <circle cx="120" cy="74" r="3" fill="#2D2730" />
+                      <text x="135" y="77" fontSize="9" fill="#5D5360">prayer</text>
+                      <circle cx="120" cy="96" r="3" fill="#2D2730" />
+                      <text x="135" y="99" fontSize="9" fill="#5D5360">passage</text>
+                      <circle cx="120" cy="118" r="3" fill="#2D2730" />
+                      <text x="135" y="121" fontSize="9" fill="#5D5360">reflection</text>
+                      <circle cx="120" cy="156" r="18" fill="rgba(255,255,255,0.9)" stroke="#2D2730" strokeWidth="1.5" />
+                      <text x="120" y="155" textAnchor="middle" fontSize="9" fontWeight="500" fill="#2D2730">Future</text>
+                      <text x="120" y="165" textAnchor="middle" fontSize="9" fontWeight="500" fill="#2D2730">self</text>
+                    </svg>
+                  </div>
+                  <span className="card-flip-hint card-flip-hint-back" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 12H3M11 5l-7 7 7 7" /></svg>
+                    <span>Back</span>
                   </span>
-                  <span className="status-pill">Engine</span>
-                </div>
-                <h3>Nexus</h3>
-                <p>The adaptive engine that learns what works and coordinates the right support across your recovery paths.</p>
-              </article>
+                </article>
+              </div>
+              <div
+                className={`path-card-wrapper${flippedCards.has("nexus") ? " is-flipped" : ""}`}
+                role="button"
+                tabIndex={0}
+                aria-pressed={flippedCards.has("nexus")}
+                aria-label="Nexus path. Click to see how it works."
+                onClick={() => togglePathFlip("nexus")}
+                onKeyDown={(event) => handlePathKeyDown(event, "nexus")}
+              >
+                <article className="path-card synchrology card-front reveal">
+                  <div className="card-topline">
+                    <span className="soft-icon image-icon" aria-hidden="true">
+                      <img src="/images/icons/impulsive-nexus.png" alt="" />
+                    </span>
+                    <span className="status-pill">Engine</span>
+                  </div>
+                  <h3>Nexus</h3>
+                  <p>The adaptive engine that learns what works and coordinates the right support across your recovery paths.</p>
+                  <span className="card-flip-hint" aria-hidden="true">
+                    <span>How it works</span>
+                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 12h18M13 5l7 7-7 7" /></svg>
+                  </span>
+                </article>
+
+                <article className="path-card synchrology card-back" aria-hidden={!flippedCards.has("nexus")}>
+                  <div className="card-topline">
+                    <span className="soft-icon image-icon" aria-hidden="true">
+                      <img src="/images/icons/impulsive-nexus.png" alt="" />
+                    </span>
+                    <span className="status-pill">Engine</span>
+                  </div>
+                  <h3>Nexus</h3>
+                  <p className="card-back-tag">Nexus is the part you do not see. It learns what helps you, and chooses what to offer next without overwhelming you.</p>
+                  <p className="card-back-section-h">How it works</p>
+                  <ol className="card-back-steps">
+                    <li>Levels 1 and 2. Only Mind is active. The app quietly learns when your hard moments happen and what helps.</li>
+                    <li>Levels 3 to 5. Mind keeps going, with deeper recovery activities and short previews of Body and Soul.</li>
+                    <li>Levels 6 and 7. You pick two paths out of three. One alone is too easy for the brain to learn around.</li>
+                    <li>Level 8 and beyond. Full Nexus. All three paths active, with adaptive routing in the moment.</li>
+                  </ol>
+                  <div className="card-back-diagram">
+                    <svg viewBox="0 0 240 200" width="100%" role="img" aria-label="A four step ladder showing Mind only at levels one and two, previews at three to five, two of three paths at six and seven, and full Nexus at level eight and beyond.">
+                      <line x1="40" y1="20" x2="40" y2="180" stroke="#2D2730" strokeWidth="1.4" />
+                      <circle cx="40" cy="170" r="6" fill="rgba(255,255,255,0.95)" stroke="#2D2730" strokeWidth="1.2" />
+                      <text x="56" y="168" fontSize="9" fill="#5D5360">Levels 1-2</text>
+                      <text x="56" y="180" fontSize="10" fontWeight="500" fill="#2D2730">Mind only</text>
+                      <circle cx="40" cy="124" r="6" fill="rgba(255,255,255,0.95)" stroke="#2D2730" strokeWidth="1.2" />
+                      <text x="56" y="122" fontSize="9" fill="#5D5360">Levels 3-5</text>
+                      <text x="56" y="134" fontSize="10" fontWeight="500" fill="#2D2730">Mind plus previews</text>
+                      <circle cx="40" cy="78" r="6" fill="rgba(255,255,255,0.95)" stroke="#2D2730" strokeWidth="1.2" />
+                      <text x="56" y="76" fontSize="9" fill="#5D5360">Levels 6-7</text>
+                      <text x="56" y="88" fontSize="10" fontWeight="500" fill="#2D2730">Pick 2 of 3 paths</text>
+                      <circle cx="40" cy="30" r="8" fill="#2D2730" stroke="#2D2730" strokeWidth="1.4" />
+                      <text x="56" y="28" fontSize="9" fill="#5D5360">Level 8+</text>
+                      <text x="56" y="40" fontSize="10" fontWeight="500" fill="#2D2730">Full Nexus</text>
+                      <text x="56" y="52" fontSize="9" fill="#5D5360">all three paths active</text>
+                      <text x="200" y="174" fontSize="9" fill="#5D5360" textAnchor="middle">M . .</text>
+                      <text x="200" y="128" fontSize="9" fill="#5D5360" textAnchor="middle">M ~ ~</text>
+                      <text x="200" y="82" fontSize="9" fill="#5D5360" textAnchor="middle">M B S</text>
+                      <text x="200" y="34" fontSize="9" fill="#5D5360" textAnchor="middle">M B S</text>
+                      <text x="120" y="196" textAnchor="middle" fontSize="9" fill="#5D5360" fontStyle="italic">progress earns choice</text>
+                    </svg>
+                  </div>
+                  <span className="card-flip-hint card-flip-hint-back" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 12H3M11 5l-7 7 7 7" /></svg>
+                    <span>Back</span>
+                  </span>
+                </article>
+              </div>
             </div>
           </div>
         </section>

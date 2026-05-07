@@ -668,6 +668,35 @@ export default function App() {
           </div>
         </section>
 
+        <section className="section review-section" aria-labelledby="review-title">
+          <div className="container review-panel reveal">
+            <div className="review-intro">
+              <p className="eyebrow">Review ready</p>
+              <h2 id="review-title">Built for careful review.</h2>
+              <p>Impulsive is being built as a privacy-first behaviour-change tool, not as therapy or a medical product. The goal is to help people slow difficult habit loops with calmer interruption, structured recovery actions, and gradual reduction, without shame-based streaks or panic design.</p>
+            </div>
+            <div className="review-grid" aria-label="Impulsive review principles">
+              <article className="review-card">
+                <h3>Privacy-first by design</h3>
+                <p>No public profiles, no social pressure, and no unnecessary exposure of sensitive habit data.</p>
+              </article>
+              <article className="review-card">
+                <h3>Shame-free recovery language</h3>
+                <p>The product avoids humiliation, punishment, panic messaging, and fake recovery scores.</p>
+              </article>
+              <article className="review-card">
+                <h3>Structured intervention</h3>
+                <p>The core experience focuses on interrupting the risky moment before the automatic habit loop takes over.</p>
+              </article>
+              <article className="review-card">
+                <h3>Open to expert review</h3>
+                <p>The concept, safety language, and recovery flows are being prepared for feedback from wellbeing, behavioural health, and clinical-adjacent reviewers.</p>
+              </article>
+            </div>
+            <p className="review-note">Impulsive is not a substitute for therapy, diagnosis, crisis support, or professional medical advice.</p>
+          </div>
+        </section>
+
         <section className="section faq-section" id="faq" aria-labelledby="faq-title">
           <div className="container">
             <div className="section-heading reveal">

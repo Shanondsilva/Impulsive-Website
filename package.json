@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "dev": "npm run build && npx wrangler dev --local --port 8787",
+    "dev": "npm run build && npx wrangler dev --local --port 8787 --local-protocol http --local-upstream 127.0.0.1:8787 --upstream-protocol http",
     "dev:vite": "tsx server.ts",
     "start": "tsx server.ts",
     "build": "vite build",

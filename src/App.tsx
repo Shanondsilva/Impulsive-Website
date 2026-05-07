@@ -242,7 +242,7 @@ export default function App() {
               <article className="path-card physical reveal">
                 <div className="card-topline">
                   <span className="soft-icon image-icon" aria-hidden="true">
-                    <img src="/images/icons/impulsive-runner.svg" alt="" />
+                    <img src="/images/icons/impulsive-body.png" alt="" />
                   </span>
                   <span className="status-pill">Unlocks later</span>
                 </div>
@@ -252,7 +252,7 @@ export default function App() {
               <article className="path-card spiritual reveal">
                 <div className="card-topline">
                   <span className="soft-icon image-icon" aria-hidden="true">
-                    <img src="/images/icons/impulsive-meditation.svg" alt="" />
+                    <img src="/images/icons/impulsive-soul.png" alt="" />
                   </span>
                   <span className="status-pill">Optional</span>
                 </div>
@@ -262,7 +262,7 @@ export default function App() {
               <article className="path-card synchrology reveal">
                 <div className="card-topline">
                   <span className="soft-icon image-icon" aria-hidden="true">
-                    <img src="/images/icons/impulsive-nexus-eye.svg" alt="" />
+                    <img src="/images/icons/impulsive-nexus.png" alt="" />
                   </span>
                   <span className="status-pill">Engine</span>
                 </div>

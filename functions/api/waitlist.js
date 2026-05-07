@@ -1,6 +1,35 @@
 const MAX_BODY_BYTES = 8192;
 const MIN_FORM_SECONDS = 2;
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const SUCCESS_MESSAGE = "Thanks. You're on the waitlist.";
+const DUPLICATE_MESSAGE = "You're already on the waitlist.";
+const INVALID_EMAIL_MESSAGE = "Please enter a valid email address.";
+const GENERIC_FAILURE_MESSAGE = "Sorry, we could not add you to the waitlist right now. Please try again later.";
+const CONFIRMATION_SUBJECT = "You are on the Impulsive waitlist";
+const CONFIRMATION_TEXT = `Thank you for signing up for Impulsive.
+
+We will let you know as soon as the app is ready for Google Play and the App Store.
+
+Your support means a lot. I am building this carefully as a solo developer, and every early signup helps.
+
+Thank you,
+Shanon
+Founder, Impulsive`;
+const CONFIRMATION_HTML = `<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>You are on the Impulsive waitlist</title>
+</head>
+<body style="font-family: Arial, sans-serif; color: #2D2730; line-height: 1.6;">
+  <main>
+    <p>Thank you for signing up for Impulsive.</p>
+    <p>We will let you know as soon as the app is ready for Google Play and the App Store.</p>
+    <p>Your support means a lot. I am building this carefully as a solo developer, and every early signup helps.</p>
+    <p>Thank you,<br />Shanon<br />Founder, Impulsive</p>
+  </main>
+</body>
+</html>`;
 
 const json = (payload, status = 200) =>
   new Response(JSON.stringify(payload), {
@@ -12,47 +41,124 @@ const json = (payload, status = 200) =>
   });
 
 const normaliseEmail = (value) => String(value || "").trim().toLowerCase();
+const cleanText = (value, maxLength = 500) => {
+  const text = String(value || "").trim();
+  return text ? text.slice(0, maxLength) : null;
+};
 
 async function parseRequest(request) {
   const contentType = request.headers.get("content-type") || "";
 
   if (contentType.includes("application/json")) {
-    return request.json();
+    const rawBody = await request.text();
+    return rawBody.trim() ? JSON.parse(rawBody) : {};
   }
 
   const formData = await request.formData();
   return Object.fromEntries(formData.entries());
 }
 
-async function forwardWaitlistSignup(env, email) {
-  if (!env.WAITLIST_FORWARD_URL) {
-    return {
-      forwarded: false,
-      message: "Waitlist request validated. Configure WAITLIST_FORWARD_URL in Cloudflare Pages to store signups."
-    };
+const getClientIp = (request) => {
+  const cfIp = request.headers.get("cf-connecting-ip");
+  if (cfIp) return cfIp;
+
+  const forwardedFor = request.headers.get("x-forwarded-for");
+  return forwardedFor ? forwardedFor.split(",")[0].trim() : "";
+};
+
+const hashIp = async (ip, secret) => {
+  if (!ip || !secret) return null;
+
+  const input = new TextEncoder().encode(`${secret}:${ip}`);
+  const digest = await crypto.subtle.digest("SHA-256", input);
+  return Array.from(new Uint8Array(digest))
+    .map((byte) => byte.toString(16).padStart(2, "0"))
+    .join("");
+};
+
+async function saveWaitlistSignup(env, request, payload, email) {
+  const db = env.WAITLIST_DB || env.DB;
+
+  if (!db) {
+    console.error("Waitlist signup failed", { reason: "missing_d1_binding" });
+    throw new Error("Missing waitlist database binding.");
   }
 
-  const body = new FormData();
-  body.set("email", email);
-  body.set("source", "useimpulsive.com");
+  const ipHash = await hashIp(getClientIp(request), env.WAITLIST_IP_HASH_SECRET);
+  const result = await db
+    .prepare(
+      `INSERT OR IGNORE INTO waitlist_signups (
+        email,
+        source,
+        page,
+        referrer,
+        user_agent,
+        ip_hash
+      ) VALUES (?, ?, ?, ?, ?, ?)`
+    )
+    .bind(
+      email,
+      cleanText(payload.source || "useimpulsive.com", 120),
+      cleanText(payload.page, 500),
+      cleanText(payload.referrer || request.headers.get("referer"), 500),
+      cleanText(request.headers.get("user-agent"), 500),
+      ipHash
+    )
+    .run();
 
-  if (env.WAITLIST_ACCESS_KEY) {
-    body.set("access_key", env.WAITLIST_ACCESS_KEY);
+  return {
+    db,
+    duplicate: result.meta?.changes === 0
+  };
+}
+
+async function sendConfirmationEmail(env, email) {
+  if (!env.BREVO_API_KEY) {
+    return { sent: false, skipped: true };
   }
 
-  const response = await fetch(env.WAITLIST_FORWARD_URL, {
+  const fromEmail = cleanText(env.WAITLIST_FROM_EMAIL, 254);
+  if (!fromEmail) {
+    console.error("Waitlist confirmation email skipped", { reason: "missing_from_email" });
+    return { sent: false, skipped: true };
+  }
+
+  const response = await fetch("https://api.brevo.com/v3/smtp/email", {
     method: "POST",
-    body
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      "api-key": env.BREVO_API_KEY
+    },
+    body: JSON.stringify({
+      sender: {
+        email: fromEmail,
+        name: cleanText(env.WAITLIST_FROM_NAME, 120) || "Impulsive"
+      },
+      to: [{ email }],
+      subject: CONFIRMATION_SUBJECT,
+      textContent: CONFIRMATION_TEXT,
+      htmlContent: CONFIRMATION_HTML
+    })
   });
 
   if (!response.ok) {
-    throw new Error("The waitlist provider did not accept the signup.");
+    throw new Error("Brevo email request failed.");
   }
 
-  return {
-    forwarded: true,
-    message: "Thanks. You're on the waitlist."
-  };
+  return { sent: true, skipped: false };
+}
+
+async function markConfirmationSent(db, email) {
+  await db
+    .prepare(
+      `UPDATE waitlist_signups
+       SET confirmation_sent_at = CURRENT_TIMESTAMP,
+           updated_at = CURRENT_TIMESTAMP
+       WHERE email = ?`
+    )
+    .bind(email)
+    .run();
 }
 
 export async function onRequest(context) {
@@ -88,17 +194,27 @@ export async function onRequest(context) {
 
   const email = normaliseEmail(payload.email);
   if (!email) {
-    return json({ ok: false, message: "Email address is required." }, 400);
+    return json({ ok: false, message: INVALID_EMAIL_MESSAGE }, 400);
   }
 
   if (email.length > 254 || !EMAIL_PATTERN.test(email)) {
-    return json({ ok: false, message: "Please enter a valid email address." }, 400);
+    return json({ ok: false, message: INVALID_EMAIL_MESSAGE }, 400);
   }
 
   try {
-    const result = await forwardWaitlistSignup(env, email);
-    return json({ ok: true, message: result.message, forwarded: result.forwarded });
-  } catch {
-    return json({ ok: false, message: "Unable to save the signup right now." }, 502);
+    const result = await saveWaitlistSignup(env, request, payload, email);
+    try {
+      const confirmation = await sendConfirmationEmail(env, email);
+      if (confirmation.sent) {
+        await markConfirmationSent(result.db, email);
+      }
+    } catch (error) {
+      console.error("Waitlist confirmation email failed", { reason: "brevo_failed", name: error?.name || "Error" });
+    }
+
+    return json({ ok: true, message: result.duplicate ? DUPLICATE_MESSAGE : SUCCESS_MESSAGE });
+  } catch (error) {
+    console.error("Waitlist signup failed", { reason: "save_failed", name: error?.name || "Error" });
+    return json({ ok: false, message: GENERIC_FAILURE_MESSAGE }, 502);
   }
 }

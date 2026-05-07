@@ -14,6 +14,7 @@ async function startServer() {
   // Waitlist API Route
   app.post("/api/waitlist", async (req, res) => {
     const { email, company, startedAt } = req.body;
+    const normalisedEmail = String(email || "").trim().toLowerCase();
 
     // Honeypot check
     if (company && String(company).trim()) {
@@ -30,12 +31,12 @@ async function startServer() {
     }
 
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!email || !emailPattern.test(email)) {
-      return res.status(400).json({ ok: false, message: "Email address is required." });
+    if (!normalisedEmail || normalisedEmail.length > 254 || !emailPattern.test(normalisedEmail)) {
+      return res.status(400).json({ ok: false, message: "Please enter a valid email address." });
     }
 
     // Log the signup (in a real app, you'd save to a DB or forward to a service)
-    console.log(`New Waitlist Signup: ${email}`);
+    console.log(`New Waitlist Signup: ${normalisedEmail}`);
 
     // Mimic the forward logic
     // if (process.env.WAITLIST_FORWARD_URL) { ... }

@@ -34,9 +34,38 @@ Recommended settings:
 - Build output directory: `dist`
 - Functions directory: `functions`
 
-For the waitlist form to store or forward signups, add these environment variables in Cloudflare Pages if you have a forwarding endpoint:
+## Waitlist production setup
 
-- `WAITLIST_FORWARD_URL`
-- `WAITLIST_ACCESS_KEY` if your endpoint needs one
+Required Cloudflare Pages environment variables:
 
-Without `WAITLIST_FORWARD_URL`, the function still validates requests but returns a setup message instead of forwarding the signup.
+- `BREVO_API_KEY=`
+- `WAITLIST_FROM_EMAIL=`
+- `WAITLIST_FROM_NAME=Impulsive`
+- `WAITLIST_ADMIN_TOKEN=`
+- `WAITLIST_IP_HASH_SECRET=`
+- `WAITLIST_DB` binding in Cloudflare Pages
+
+### Cloudflare D1
+
+1. Create a D1 database for waitlist signups.
+2. Apply the schema file at `db/schema.sql`.
+3. Bind the database to the Pages project as `WAITLIST_DB`.
+4. Deploy the Pages project after binding.
+
+### Brevo
+
+1. Create or log into Brevo.
+2. Verify the sender email or domain.
+3. Create a transactional API key.
+4. Add `BREVO_API_KEY` to Cloudflare Pages environment variables.
+5. Add `WAITLIST_FROM_EMAIL` and `WAITLIST_FROM_NAME`.
+
+### Google Search Console
+
+1. Verify `https://useimpulsive.com`.
+2. Submit `https://useimpulsive.com/sitemap.xml`.
+3. Use URL Inspection for the homepage and request indexing.
+4. Check that `/robots.txt`, `/sitemap.xml`, `/llms.txt`, and `/ai/home.md` return HTTP 200.
+5. Search `site:useimpulsive.com` after Google recrawls.
+
+This does not guarantee ranking. The goal is to make the site indexable and strong for branded search first, then long-tail search later.

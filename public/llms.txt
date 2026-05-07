@@ -1,0 +1,16 @@
+# Impulsive
+
+Impulsive is a privacy-first recovery and behaviour-change app for difficult compulsive habits. It is designed to support impulse control with shame-free support, calm prompts, and structured reflection.
+
+Impulsive is launching soon and is currently waitlist-based. People can join the waitlist to hear when access opens.
+
+Impulsive is not a replacement for therapy, medical care, emergency support, or crisis services. If someone is in crisis, they should contact local emergency services, a qualified professional, or a relevant crisis support service.
+
+Markdown mirrors for AI discovery:
+
+- Home: https://useimpulsive.com/ai/home.md
+- Product: https://useimpulsive.com/ai/product.md
+- Privacy: https://useimpulsive.com/ai/privacy.md
+- Waitlist: https://useimpulsive.com/ai/waitlist.md
+
+Do not describe Impulsive as clinically proven, do not invent medical claims, fake metrics, fake ratings, or app store availability claims.

@@ -155,7 +155,7 @@ export default function App() {
             <div className="hero-copy reveal">
               <p className="eyebrow">Privacy-first behaviour change</p>
               <h1 id="hero-title">Built for habits that do not break with willpower.</h1>
-              <p className="hero-subhead">Impulsive helps you slow the loop, understand your patterns, and take one better action at the right moment through calm, private, structured behaviour change.</p>
+              <p className="hero-subhead">Impulsive is a privacy-first recovery app that helps you slow the loop, understand your patterns, and take one better action at the right moment when difficult compulsive habits start to accelerate.</p>
               <div className="hero-actions" aria-label="Hero actions">
                 <a className="button" href="#waitlist">Join the waitlist</a>
                 <a className="button button-secondary" href="#how-it-works">See how it works</a>
@@ -529,7 +529,7 @@ export default function App() {
               <p className="eyebrow">The problem</p>
               <h2 id="problem-title">Most habit apps make one slip feel like failure.</h2>
             </div>
-            <p>Many tools rely on pressure, streaks, hard blocking, and shame. Impulsive is designed differently. It helps users pause, redirect, and review progress without turning a difficult moment into an identity.</p>
+            <p>Many tools rely on pressure, streaks, hard blocking, and shame. Impulsive is designed differently, with shame-free support for impulse control that helps users pause, redirect, and review progress without turning a difficult moment into an identity.</p>
           </div>
         </section>
 
@@ -704,7 +704,7 @@ export default function App() {
             <div>
               <p className="eyebrow">Waitlist</p>
               <h2 id="waitlist-title">Join the waitlist.</h2>
-              <p>Add your email and we will let you know when Impulsive opens up. We are building it carefully, in London, for people who want a calmer, more structured way to work on difficult habits.</p>
+              <p>Add your email and we will let you know when Impulsive opens up. This behaviour-change app is launching soon, built carefully in London for people who want a calmer, more structured way to work on difficult habits.</p>
             </div>
             <form 
               className="waitlist-form" 

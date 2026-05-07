@@ -1,22 +1,4 @@
 User-agent: *
 Allow: /
 
-User-agent: facebookexternalhit
-Allow: /
-
-User-agent: facebookcatalog
-Allow: /
-
-User-agent: Twitterbot
-Allow: /
-
-User-agent: LinkedInBot
-Allow: /
-
-User-agent: Slackbot
-Allow: /
-
-User-agent: WhatsApp
-Allow: /
-
 Sitemap: https://useimpulsive.com/sitemap.xml

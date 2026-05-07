@@ -4,10 +4,15 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "dev": "tsx server.ts",
+    "dev": "npm run build && npx wrangler dev --local --port 8787",
+    "dev:vite": "tsx server.ts",
     "start": "tsx server.ts",
     "build": "vite build",
     "preview": "vite preview",
+    "db:apply:local": "npx wrangler d1 execute impulsive_waitlist --local --file ./db/schema.sql",
+    "db:apply:remote": "npx wrangler d1 execute impulsive_waitlist --remote --file ./db/schema.sql",
+    "db:migrate:remote": "npx wrangler d1 execute impulsive_waitlist --remote --file ./db/migrate-waitlist-v2.sql",
+    "db:normalise:remote": "npx wrangler d1 execute impulsive_waitlist --remote --file ./db/migrate-waitlist-v3-normalise.sql",
     "clean": "rm -rf dist",
     "lint": "tsc --noEmit"
   },

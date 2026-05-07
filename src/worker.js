@@ -48,6 +48,15 @@ const cleanText = (value, maxLength = 500) => {
   return text ? text.slice(0, maxLength) : null;
 };
 
+const isMissingWaitlistStorage = (error) => {
+  const message = String(error?.message || "").toLowerCase();
+  return (
+    message.includes("no such table") ||
+    message.includes("waitlist_signups") ||
+    message.includes("missing waitlist database binding")
+  );
+};
+
 async function parseRequest(request) {
   const contentType = request.headers.get("content-type") || "";
 
@@ -116,9 +125,9 @@ async function sendConfirmationEmail(env, email) {
     return { sent: false, skipped: true };
   }
 
-  const fromEmail = cleanText(env.BREVO_SENDER_EMAIL, 254);
+  const fromEmail = cleanText(env.WAITLIST_FROM_EMAIL || env.BREVO_SENDER_EMAIL, 254);
   if (!fromEmail) {
-    console.error("Waitlist confirmation email skipped", { reason: "missing_brevo_sender_email" });
+    console.error("Waitlist confirmation email skipped", { reason: "missing_sender_email" });
     return { sent: false, skipped: true };
   }
 
@@ -133,7 +142,7 @@ async function sendConfirmationEmail(env, email) {
     body: JSON.stringify({
       sender: {
         email: fromEmail,
-        name: cleanText(env.BREVO_SENDER_NAME, 120) || "Impulsive"
+        name: cleanText(env.WAITLIST_FROM_NAME || env.BREVO_SENDER_NAME, 120) || "Impulsive"
       },
       to: [{ email }],
       ...(replyToEmail ? { replyTo: { email: replyToEmail } } : {}),
@@ -209,7 +218,14 @@ async function handleWaitlist(request, env) {
 
     return json({ ok: true, message: result.duplicate ? DUPLICATE_MESSAGE : SUCCESS_MESSAGE });
   } catch (error) {
-    console.error("Waitlist signup failed", { reason: "save_failed", name: error?.name || "Error" });
+    console.error("Waitlist signup failed", {
+      reason: isMissingWaitlistStorage(error) ? "storage_not_configured" : "save_failed",
+      name: error?.name || "Error",
+      message: error?.message || "Unknown waitlist storage error"
+    });
+    if (isMissingWaitlistStorage(error)) {
+      return json({ ok: false, message: "Waitlist storage is not configured. Please try again later." }, 503);
+    }
     return json({ ok: false, message: GENERIC_FAILURE_MESSAGE }, 502);
   }
 }

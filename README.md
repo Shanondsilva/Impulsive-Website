@@ -14,10 +14,13 @@ Updated Vite React version of the Impulsive landing page.
 
 ```bash
 npm install
+npm run db:apply:local
 npm run dev
 ```
 
-Open the local URL shown in your terminal.
+Open `http://127.0.0.1:8787`. This uses Wrangler so `/api/waitlist` runs through the same Cloudflare Worker and D1 binding as production.
+
+`npm run dev:vite` starts the older Vite/Express development server. Do not use that command to test waitlist storage because its `/api/waitlist` route is only a local stub.
 
 ## Production build
 
@@ -26,31 +29,48 @@ npm run build
 npm run preview
 ```
 
-## Cloudflare Pages notes
+## Cloudflare deployment notes
 
-Recommended settings:
+This project is deployed as a Cloudflare Worker with static assets, configured in `wrangler.toml`.
 
-- Build command: `npm run build`
-- Build output directory: `dist`
-- Functions directory: `functions`
+Before deploying a new D1 database, apply the schema:
+
+```bash
+npm run db:apply:remote
+```
+
+If the remote D1 database was created before `page`, `referrer`, `status`, `updated_at`, and `confirmation_sent_at` existed, run:
+
+```bash
+npm run db:migrate:remote
+npm run db:normalise:remote
+```
 
 ## Waitlist production setup
 
-Required Cloudflare Pages environment variables:
+Required Cloudflare environment variables and bindings:
 
-- `BREVO_API_KEY=`
-- `WAITLIST_FROM_EMAIL=`
+- `WAITLIST_DB` D1 binding
+- `WAITLIST_IP_HASH_SECRET`
+
+Optional email confirmation variables:
+
+- `BREVO_API_KEY`
+- `WAITLIST_FROM_EMAIL`
 - `WAITLIST_FROM_NAME=Impulsive`
-- `WAITLIST_ADMIN_TOKEN=`
-- `WAITLIST_IP_HASH_SECRET=`
-- `WAITLIST_DB` binding in Cloudflare Pages
+- `WAITLIST_ADMIN_EMAIL`
+
+Optional waitlist export variable:
+
+- `WAITLIST_ADMIN_TOKEN`
 
 ### Cloudflare D1
 
 1. Create a D1 database for waitlist signups.
 2. Apply the schema file at `db/schema.sql`.
-3. Bind the database to the Pages project as `WAITLIST_DB`.
-4. Deploy the Pages project after binding.
+3. Bind the database to the Worker as `WAITLIST_DB`.
+4. Run `npm run db:apply:remote` for a new database, or `npm run db:migrate:remote` then `npm run db:normalise:remote` for an older existing database.
+5. Deploy after the binding and schema are in place.
 
 ### Brevo
 

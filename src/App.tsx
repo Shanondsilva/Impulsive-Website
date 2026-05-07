@@ -135,6 +135,16 @@ export default function App() {
             <span>Impulsive</span>
           </a>
           <div className="nav-right">
+            <div className="nav-menu" id="primary-menu">
+              <div className="nav-links" aria-label="Site links">
+                <a href="#how-it-works" onClick={closeMenu}>How it works</a>
+                <a href="#paths" onClick={closeMenu}>Paths</a>
+                <a href="#principles" onClick={closeMenu}>Principles</a>
+                <a href="#about" onClick={closeMenu}>About</a>
+                <a href="#waitlist" onClick={closeMenu}>Waitlist</a>
+              </div>
+              <a className="button button-small" href="#waitlist" onClick={closeMenu}>Join Waitlist</a>
+            </div>
             <button
               className="theme-toggle"
               type="button"
@@ -161,30 +171,6 @@ export default function App() {
               <span></span>
               <span></span>
             </button>
-            <div className="nav-menu" id="primary-menu">
-              <div className="nav-links" aria-label="Site links">
-                <a href="#how-it-works" onClick={closeMenu}>How it works</a>
-                <a href="#paths" onClick={closeMenu}>Paths</a>
-                <a href="#principles" onClick={closeMenu}>Principles</a>
-                <a href="#about" onClick={closeMenu}>About</a>
-                <a href="#waitlist" onClick={closeMenu}>Waitlist</a>
-              </div>
-              <button
-                className="theme-toggle theme-toggle-menu"
-                type="button"
-                aria-label="Toggle dark mode"
-                aria-pressed={theme === "dark"}
-                onClick={toggleTheme}
-              >
-                <span className="theme-toggle-icon" aria-hidden="true">
-                  {theme === "dark" ? "☀" : "☾"}
-                </span>
-                <span className="theme-toggle-label">
-                  {theme === "dark" ? "Light mode" : "Dark mode"}
-                </span>
-              </button>
-              <a className="button button-small" href="#waitlist" onClick={closeMenu}>Join Waitlist</a>
-            </div>
           </div>
         </nav>
       </header>

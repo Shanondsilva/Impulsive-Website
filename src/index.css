@@ -1361,16 +1361,6 @@ p {
     background: rgba(255, 255, 255, 0.62);
   }
 
-  .nav-right > .theme-toggle {
-    width: 44px;
-    height: 44px;
-  }
-
-  .nav-menu .theme-toggle {
-    display: inline-flex;
-    justify-content: center;
-  }
-
   .split-panel,
   .principles-panel,
   .waitlist-card,
@@ -1540,13 +1530,13 @@ p {
   }
 
   .nav-right {
-    gap: 6px;
+    gap: 8px;
   }
 
   .nav-right > .theme-toggle,
   .menu-toggle {
-    width: 42px;
-    height: 42px;
+    width: 40px;
+    height: 40px;
   }
 
   .footer-grid {
@@ -2104,7 +2094,7 @@ p {
 .nav-right {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
 }
 
 /* ===== Theme toggle button ===== */
@@ -2112,8 +2102,8 @@ p {
 .theme-toggle {
   position: relative;
   z-index: 31;
-  width: 42px;
-  height: 42px;
+  width: 38px;
+  height: 38px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -2141,22 +2131,6 @@ p {
   overflow: hidden;
   clip: rect(0 0 0 0);
   white-space: nowrap;
-}
-
-.theme-toggle-menu {
-  width: 100%;
-  min-height: 48px;
-  gap: 10px;
-  padding: 0 16px;
-}
-
-.theme-toggle-menu .theme-toggle-label {
-  position: static;
-  width: auto;
-  height: auto;
-  margin: 0;
-  overflow: visible;
-  clip: auto;
 }
 
 .theme-toggle:hover {
@@ -2261,11 +2235,6 @@ p {
   [data-theme="dark"] .nav-links a:hover,
   [data-theme="dark"] .nav-links a:focus-visible {
     background: rgba(208, 195, 241, 0.18);
-    color: #F2EDF6;
-  }
-
-  [data-theme="dark"] .nav-menu .theme-toggle {
-    background: rgba(255, 255, 255, 0.085);
     color: #F2EDF6;
   }
 }

@@ -5,28 +5,30 @@ const SUCCESS_MESSAGE = "Thanks. You're on the waitlist.";
 const DUPLICATE_MESSAGE = "You're already on the waitlist.";
 const INVALID_EMAIL_MESSAGE = "Please enter a valid email address.";
 const GENERIC_FAILURE_MESSAGE = "Sorry, we could not add you to the waitlist right now. Please try again later.";
-const CONFIRMATION_SUBJECT = "You are on the Impulsive waitlist";
-const CONFIRMATION_TEXT = `Thank you for signing up for Impulsive.
+const CONFIRMATION_SUBJECT = "Thank you for joining the Impulsive waitlist";
+const CONFIRMATION_TEXT = `Hi,
 
-We will let you know as soon as the app is ready for Google Play and the App Store.
+Thank you for signing up for Impulsive.
 
-Your support means a lot. I am building this carefully as a solo developer, and every early signup helps.
+We will let you know as soon as the app drops on the Google Play Store and Apple App Store.
 
-Thank you,
+Thank you for your support. It means a lot to me as a single developer.
+
 Shanon
-Founder, Impulsive`;
+Impulsive`;
 const CONFIRMATION_HTML = `<!doctype html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>You are on the Impulsive waitlist</title>
+  <title>Thank you for joining the Impulsive waitlist</title>
 </head>
 <body style="font-family: Arial, sans-serif; color: #2D2730; line-height: 1.6;">
   <main>
+    <p>Hi,</p>
     <p>Thank you for signing up for Impulsive.</p>
-    <p>We will let you know as soon as the app is ready for Google Play and the App Store.</p>
-    <p>Your support means a lot. I am building this carefully as a solo developer, and every early signup helps.</p>
-    <p>Thank you,<br />Shanon<br />Founder, Impulsive</p>
+    <p>We will let you know as soon as the app drops on the Google Play Store and Apple App Store.</p>
+    <p>Thank you for your support. It means a lot to me as a single developer.</p>
+    <p>Shanon<br />Impulsive</p>
   </main>
 </body>
 </html>`;
@@ -117,11 +119,13 @@ async function sendConfirmationEmail(env, email) {
     return { sent: false, skipped: true };
   }
 
-  const fromEmail = cleanText(env.WAITLIST_FROM_EMAIL, 254);
+  const fromEmail = cleanText(env.BREVO_SENDER_EMAIL, 254);
   if (!fromEmail) {
-    console.error("Waitlist confirmation email skipped", { reason: "missing_from_email" });
+    console.error("Waitlist confirmation email skipped", { reason: "missing_brevo_sender_email" });
     return { sent: false, skipped: true };
   }
+
+  const replyToEmail = cleanText(env.WAITLIST_ADMIN_EMAIL, 254);
 
   const response = await fetch("https://api.brevo.com/v3/smtp/email", {
     method: "POST",
@@ -133,9 +137,10 @@ async function sendConfirmationEmail(env, email) {
     body: JSON.stringify({
       sender: {
         email: fromEmail,
-        name: cleanText(env.WAITLIST_FROM_NAME, 120) || "Impulsive"
+        name: cleanText(env.BREVO_SENDER_NAME, 120) || "Impulsive"
       },
       to: [{ email }],
+      ...(replyToEmail ? { replyTo: { email: replyToEmail } } : {}),
       subject: CONFIRMATION_SUBJECT,
       textContent: CONFIRMATION_TEXT,
       htmlContent: CONFIRMATION_HTML

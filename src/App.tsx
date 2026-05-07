@@ -7,7 +7,6 @@ export default function App() {
   const [formStatus, setFormStatus] = useState<{ message: string; type: 'success' | 'error' | 'info' | '' }>({ message: '', type: '' });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [startedAt] = useState(Date.now().toString());
-  
   const formRef = useRef<HTMLFormElement>(null);
 
   const togglePathFlip = (id: string) => {

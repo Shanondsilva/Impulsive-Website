@@ -233,6 +233,14 @@ async function handleWaitlist(request, env) {
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
+    const canonicalHost = "useimpulsive.com";
+    const isLocalHost = url.hostname === "127.0.0.1" || url.hostname === "localhost";
+
+    if (!isLocalHost && (url.protocol !== "https:" || url.hostname !== canonicalHost)) {
+      url.protocol = "https:";
+      url.hostname = canonicalHost;
+      return Response.redirect(url.toString(), 301);
+    }
 
     if (url.pathname === "/api/waitlist" || url.pathname === "/api/waitlist/") {
   return handleWaitlist(request, env);

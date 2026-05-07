@@ -20,3 +20,7 @@ database_id = "d43a695f-856f-412f-848c-3afc6241ccc9"
 [[routes]]
 pattern = "useimpulsive.com"
 custom_domain = true
+
+[[routes]]
+pattern = "www.useimpulsive.com"
+custom_domain = true

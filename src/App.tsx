@@ -186,7 +186,7 @@ export default function App() {
                     </article>
                     <article className="phone-path physical">
                       <span className="app-icon image-icon" aria-hidden="true">
-                        <img src="/images/icons/impulsive-runner.svg" alt="" />
+                        <img src="/images/icons/impulsive-body.png" alt="" />
                       </span>
                       <div>
                         <strong>Body</strong>
@@ -195,7 +195,7 @@ export default function App() {
                     </article>
                     <article className="phone-path spiritual">
                       <span className="app-icon image-icon" aria-hidden="true">
-                        <img src="/images/icons/impulsive-meditation.svg" alt="" />
+                        <img src="/images/icons/impulsive-soul.png" alt="" />
                       </span>
                       <div>
                         <strong>Soul</strong>
@@ -204,7 +204,7 @@ export default function App() {
                     </article>
                     <article className="phone-path synchrology">
                       <span className="app-icon image-icon" aria-hidden="true">
-                        <img src="/images/icons/impulsive-nexus-eye.svg" alt="" />
+                        <img src="/images/icons/impulsive-nexus.png" alt="" />
                       </span>
                       <div>
                         <strong>Nexus</strong>

@@ -716,7 +716,6 @@ p {
 
 .path-card:hover {
   box-shadow: 0 20px 50px rgba(45, 39, 48, 0.12);
-  transform: translateY(-4px);
 }
 
 .card-topline {
@@ -1741,4 +1740,188 @@ p {
   font-weight: 500;
   line-height: 1.6;
   font-size: 0.98rem;
+}
+
+/* ===== Path card flip interaction ===== */
+
+.path-card-wrapper {
+  position: relative;
+  perspective: 1400px;
+  cursor: pointer;
+  min-height: 540px;
+  border-radius: 22px;
+  outline: none;
+}
+
+.path-card-wrapper:focus-visible {
+  outline: 2px solid #2D2730;
+  outline-offset: 4px;
+}
+
+.path-card-wrapper > .path-card {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  transform-style: preserve-3d;
+  transition:
+    transform 0.7s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.3s ease;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  will-change: transform;
+}
+
+.path-card-wrapper > .card-front {
+  justify-content: space-between;
+  z-index: 2;
+}
+
+.path-card-wrapper > .card-back {
+  transform: rotateY(180deg);
+  overflow-y: auto;
+  z-index: 1;
+}
+
+.path-card-wrapper.is-flipped > .card-front {
+  transform: rotateY(180deg);
+  z-index: 1;
+}
+
+.path-card-wrapper.is-flipped > .card-back {
+  transform: rotateY(360deg);
+  z-index: 2;
+}
+
+.path-card-wrapper:hover > .card-front {
+  transform: translateY(-6px);
+  box-shadow: 0 18px 42px rgba(45, 39, 48, 0.14);
+}
+
+.path-card-wrapper.is-flipped:hover > .card-front {
+  transform: rotateY(180deg) translateY(-6px);
+}
+
+.path-card-wrapper:hover > .card-back {
+  box-shadow: 0 18px 42px rgba(45, 39, 48, 0.14);
+}
+
+.path-card-wrapper.is-flipped:hover > .card-back {
+  transform: rotateY(360deg) translateY(-6px);
+}
+
+.card-flip-hint {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 18px;
+  padding: 6px 12px;
+  align-self: flex-start;
+  background: rgba(255, 255, 255, 0.78);
+  border: 1px solid rgba(45, 39, 48, 0.1);
+  border-radius: 999px;
+  color: #4D4352;
+  font-size: 0.82rem;
+  font-weight: 500;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.path-card-wrapper:hover .card-flip-hint {
+  background: rgba(255, 255, 255, 0.95);
+  color: #2D2730;
+}
+
+.card-flip-hint-back {
+  margin-top: auto;
+}
+
+.card-back-tag {
+  font-size: 0.95rem;
+  line-height: 1.55;
+  color: #2D2730;
+  font-weight: 500;
+  margin: 0 0 14px;
+}
+
+.card-back-section-h {
+  font-size: 0.74rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 500;
+  color: #5D5360;
+  margin: 0 0 8px;
+}
+
+.card-back-steps {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  counter-reset: step;
+}
+
+.card-back-steps li {
+  font-size: 0.86rem;
+  line-height: 1.55;
+  color: #413846;
+  padding-left: 26px;
+  position: relative;
+  counter-increment: step;
+}
+
+.card-back-steps li::before {
+  content: counter(step);
+  position: absolute;
+  left: 0;
+  top: 1px;
+  width: 18px;
+  height: 18px;
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 50%;
+  font-size: 0.68rem;
+  font-weight: 500;
+  color: #2D2730;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(45, 39, 48, 0.12);
+}
+
+.card-back-diagram {
+  background: rgba(255, 255, 255, 0.55);
+  border: 1px solid rgba(45, 39, 48, 0.06);
+  border-radius: 12px;
+  padding: 10px 8px 8px;
+  margin: 0 0 14px;
+}
+
+.card-back-diagram svg {
+  display: block;
+  margin: 0 auto;
+  max-height: 200px;
+}
+
+@media (max-width: 880px) {
+  .path-card-wrapper {
+    min-height: 560px;
+  }
+}
+
+@media (max-width: 640px) {
+  .path-card-wrapper {
+    min-height: 580px;
+  }
+
+  .card-back-steps li {
+    font-size: 0.9rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .path-card-wrapper > .path-card {
+    transition: none;
+  }
 }

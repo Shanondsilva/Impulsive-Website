@@ -1,13 +1,36 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, type KeyboardEvent } from 'react';
 
 export default function App() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [flippedCards, setFlippedCards] = useState<Set<string>>(new Set());
   const [isScrolled, setIsScrolled] = useState(false);
   const [formStatus, setFormStatus] = useState<{ message: string; type: 'success' | 'error' | 'info' | '' }>({ message: '', type: '' });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [startedAt] = useState(Date.now().toString());
   
   const formRef = useRef<HTMLFormElement>(null);
+
+  const togglePathFlip = (id: string) => {
+    setFlippedCards((prev) => {
+      const next = new Set(prev);
+
+      if (next.has(id)) {
+        next.delete(id);
+      } else {
+        next.add(id);
+      }
+
+      return next;
+    });
+  };
+
+  const handlePathKeyDown = (event: KeyboardEvent<HTMLDivElement>, id: string) => {
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      togglePathFlip(id);
+    }
+  };
+
   useEffect(() => {
     // Scroll handler
     const handleScroll = () => {
@@ -231,24 +254,140 @@ export default function App() {
               <p>Impulsive starts simple with Psychological Core, learns your trigger pattern, then unlocks stronger support when you have enough progress to use it well.</p>
             </div>
             <div className="path-cards">
-              <article className="path-card psychology reveal">
-                <div className="card-topline">
-                  <span className="soft-icon symbol-icon" aria-hidden="true">&#10022;</span>
-                  <span className="status-pill">Starts first</span>
-                </div>
-                <h3>Mind</h3>
-                <p>A calm first layer that helps you pause, name the pattern, and choose one better action before the loop takes over.</p>
-              </article>
-              <article className="path-card physical reveal">
-                <div className="card-topline">
-                  <span className="soft-icon image-icon" aria-hidden="true">
-                    <img src="/images/icons/impulsive-body.png" alt="" />
+              <div
+                className={`path-card-wrapper${flippedCards.has("mind") ? " is-flipped" : ""}`}
+                role="button"
+                tabIndex={0}
+                aria-pressed={flippedCards.has("mind")}
+                aria-label="Mind path. Click to see how it works."
+                onClick={() => togglePathFlip("mind")}
+                onKeyDown={(event) => handlePathKeyDown(event, "mind")}
+              >
+                <article className="path-card psychology card-front reveal">
+                  <div className="card-topline">
+                    <span className="soft-icon symbol-icon" aria-hidden="true">&#10022;</span>
+                    <span className="status-pill">Starts first</span>
+                  </div>
+                  <h3>Mind</h3>
+                  <p>A calm first layer that helps you pause, name the pattern, and choose one better action before the loop takes over.</p>
+                  <span className="card-flip-hint" aria-hidden="true">
+                    <span>How it works</span>
+                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 12h18M13 5l7 7-7 7" /></svg>
                   </span>
-                  <span className="status-pill">Unlocks later</span>
-                </div>
-                <h3>Body</h3>
-                <p>A movement-based reset that helps you change state, leave the trigger environment, and interrupt the moment through action.</p>
-              </article>
+                </article>
+
+                <article className="path-card psychology card-back" aria-hidden={!flippedCards.has("mind")}>
+                  <div className="card-topline">
+                    <span className="soft-icon symbol-icon" aria-hidden="true">&#10022;</span>
+                    <span className="status-pill">Starts first</span>
+                  </div>
+                  <h3>Mind</h3>
+                  <p className="card-back-tag">When something pulls at you, Mind helps you stop, look at it, and choose a calmer next move.</p>
+                  <p className="card-back-section-h">How it works</p>
+                  <ol className="card-back-steps">
+                    <li>You notice the urge as a wave coming through, not a command you have to follow.</li>
+                    <li>You name what is actually pulling at you. Boredom, loneliness, something you saw earlier.</li>
+                    <li>You pick one small thing to do instead. A breath exercise, urge surfing, or a few honest lines in a journal.</li>
+                  </ol>
+                  <div className="card-back-diagram">
+                    <svg viewBox="0 0 240 170" width="100%" role="img" aria-label="A trigger leads to a pause, then naming the pattern, then choosing a calmer next move. The old loop fades each time you do this.">
+                      <defs>
+                        <marker id="arr-mind-back" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M2 1L8 5L2 9" fill="none" stroke="#2D2730" strokeWidth="1.5" strokeLinecap="round" /></marker>
+                      </defs>
+                      <rect x="78" y="6" width="84" height="26" rx="8" fill="rgba(255,255,255,0.9)" stroke="#2D2730" strokeWidth="0.6" />
+                      <text x="120" y="23" textAnchor="middle" fontSize="11" fontWeight="500" fill="#2D2730">Trigger</text>
+                      <line x1="120" y1="34" x2="120" y2="48" stroke="#2D2730" strokeWidth="1" markerEnd="url(#arr-mind-back)" />
+                      <circle cx="120" cy="76" r="24" fill="#FFFFFF" stroke="#2D2730" strokeWidth="1.6" />
+                      <circle cx="120" cy="76" r="30" fill="none" stroke="#2D2730" strokeWidth="0.5" strokeDasharray="2 3" opacity="0.45" />
+                      <text x="120" y="74" textAnchor="middle" fontSize="11" fontWeight="500" fill="#2D2730">Pause</text>
+                      <text x="120" y="86" textAnchor="middle" fontSize="9" fill="#5D5360">notice it</text>
+                      <line x1="120" y1="102" x2="120" y2="116" stroke="#2D2730" strokeWidth="1" markerEnd="url(#arr-mind-back)" />
+                      <rect x="68" y="118" width="104" height="22" rx="6" fill="rgba(255,255,255,0.85)" stroke="#2D2730" strokeWidth="0.6" />
+                      <text x="120" y="133" textAnchor="middle" fontSize="11" fontWeight="500" fill="#2D2730">Name and choose</text>
+                      <line x1="120" y1="142" x2="120" y2="154" stroke="#2D2730" strokeWidth="1" markerEnd="url(#arr-mind-back)" />
+                      <text x="120" y="166" textAnchor="middle" fontSize="10" fill="#5D5360" fontStyle="italic">a calmer next move</text>
+                      <path d="M 174 156 Q 218 80 168 14" stroke="#5D5360" strokeWidth="0.5" fill="none" strokeDasharray="2 3" opacity="0.5" />
+                      <text x="208" y="86" fontSize="8" fill="#5D5360" fontStyle="italic" textAnchor="middle">old loop</text>
+                      <text x="208" y="96" fontSize="8" fill="#5D5360" fontStyle="italic" textAnchor="middle">fades</text>
+                    </svg>
+                  </div>
+                  <span className="card-flip-hint card-flip-hint-back" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 12H3M11 5l-7 7 7 7" /></svg>
+                    <span>Back</span>
+                  </span>
+                </article>
+              </div>
+              <div
+                className={`path-card-wrapper${flippedCards.has("body") ? " is-flipped" : ""}`}
+                role="button"
+                tabIndex={0}
+                aria-pressed={flippedCards.has("body")}
+                aria-label="Body path. Click to see how it works."
+                onClick={() => togglePathFlip("body")}
+                onKeyDown={(event) => handlePathKeyDown(event, "body")}
+              >
+                <article className="path-card physical card-front reveal">
+                  <div className="card-topline">
+                    <span className="soft-icon image-icon" aria-hidden="true">
+                      <img src="/images/icons/impulsive-body.png" alt="" />
+                    </span>
+                    <span className="status-pill">Unlocks later</span>
+                  </div>
+                  <h3>Body</h3>
+                  <p>A movement-based reset that helps you change state, leave the trigger environment, and interrupt the moment through action.</p>
+                  <span className="card-flip-hint" aria-hidden="true">
+                    <span>How it works</span>
+                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 12h18M13 5l7 7-7 7" /></svg>
+                  </span>
+                </article>
+
+                <article className="path-card physical card-back" aria-hidden={!flippedCards.has("body")}>
+                  <div className="card-topline">
+                    <span className="soft-icon image-icon" aria-hidden="true">
+                      <img src="/images/icons/impulsive-body.png" alt="" />
+                    </span>
+                    <span className="status-pill">Unlocks later</span>
+                  </div>
+                  <h3>Body</h3>
+                  <p className="card-back-tag">Sometimes you cannot think your way out of an urge. You have to move out of it. That is what Body is for.</p>
+                  <p className="card-back-section-h">How it works</p>
+                  <ol className="card-back-steps">
+                    <li>You leave the room you got triggered in. The app does a quiet check that you actually moved.</li>
+                    <li>You start a short walk. Five, ten, or fifteen minutes, depending on how strong the urge is.</li>
+                    <li>The walk is checked in a private, simple way. Time, motion, and where you went. Nothing is shared.</li>
+                  </ol>
+                  <div className="card-back-diagram">
+                    <svg viewBox="0 0 240 190" width="100%" role="img" aria-label="A person leaves an indoor trigger zone, steps through a door, and walks outside on a path.">
+                      <defs>
+                        <marker id="arr-body-back" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M2 1L8 5L2 9" fill="none" stroke="#2D2730" strokeWidth="1.5" strokeLinecap="round" /></marker>
+                      </defs>
+                      <rect x="50" y="6" width="140" height="50" rx="8" fill="rgba(255,255,255,0.7)" stroke="#2D2730" strokeWidth="0.8" strokeDasharray="3 3" />
+                      <text x="120" y="22" textAnchor="middle" fontSize="10" fontWeight="500" fill="#2D2730">Indoor trigger zone</text>
+                      <text x="120" y="34" textAnchor="middle" fontSize="9" fill="#5D5360">where the loop wins</text>
+                      <circle cx="120" cy="46" r="3.5" fill="#2D2730" />
+                      <line x1="120" y1="49" x2="120" y2="52" stroke="#2D2730" strokeWidth="1.2" />
+                      <line x1="120" y1="60" x2="120" y2="80" stroke="#2D2730" strokeWidth="1.2" markerEnd="url(#arr-body-back)" />
+                      <text x="160" y="74" fontSize="9" fill="#5D5360">leave</text>
+                      <rect x="100" y="86" width="40" height="34" rx="4" fill="rgba(255,255,255,0.9)" stroke="#2D2730" strokeWidth="0.8" />
+                      <line x1="120" y1="86" x2="120" y2="120" stroke="#2D2730" strokeWidth="0.8" />
+                      <circle cx="125" cy="103" r="1.2" fill="#2D2730" />
+                      <text x="120" y="132" textAnchor="middle" fontSize="9" fill="#5D5360">step out</text>
+                      <line x1="120" y1="138" x2="120" y2="150" stroke="#2D2730" strokeWidth="1.2" markerEnd="url(#arr-body-back)" />
+                      <path d="M 30 170 Q 80 156 120 164 T 210 170" stroke="#2D2730" strokeWidth="1.4" fill="none" />
+                      <circle cx="55" cy="166" r="2.5" fill="#2D2730" />
+                      <circle cx="85" cy="161" r="2.5" fill="#2D2730" />
+                      <circle cx="115" cy="163" r="2.5" fill="#2D2730" />
+                      <circle cx="145" cy="166" r="2.5" fill="#2D2730" />
+                      <circle cx="175" cy="168" r="2.5" fill="#2D2730" />
+                      <text x="120" y="185" textAnchor="middle" fontSize="9" fill="#5D5360">5, 10, or 15 minute walk</text>
+                    </svg>
+                  </div>
+                  <span className="card-flip-hint card-flip-hint-back" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 12H3M11 5l-7 7 7 7" /></svg>
+                    <span>Back</span>
+                  </span>
+                </article>
+              </div>
               <article className="path-card spiritual reveal">
                 <div className="card-topline">
                   <span className="soft-icon image-icon" aria-hidden="true">

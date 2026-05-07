@@ -170,7 +170,7 @@ export async function onRequest(context) {
   const { request, env } = context;
 
   if (request.method !== "POST") {
-    return json({ ok: false, message: "Method not allowed." }, 405);
+    return json({ error: "Method not allowed" }, 405);
   }
 
   const contentLength = Number(request.headers.get("content-length") || "0");

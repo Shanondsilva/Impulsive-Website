@@ -182,7 +182,7 @@ button {
 }
 
 .nav-links a {
-  min-height: 44px;
+  height: 44px;
   display: inline-flex;
   align-items: center;
   border-radius: 999px;
@@ -2194,7 +2194,7 @@ p {
 /* ===== Dark mode — nav ===== */
 
 [data-theme="dark"] .nav-links a {
-  background: rgba(255, 255, 255, 0.05);
+  color: var(--muted);
 }
 
 [data-theme="dark"] .nav-links a:hover {
@@ -2216,12 +2216,14 @@ p {
   background: rgba(255, 255, 255, 0.13);
 }
 
-[data-theme="dark"] .nav-menu {
+@media (max-width: 860px) {
+  [data-theme="dark"] .nav-menu {
   background:
     radial-gradient(circle at 12% 16%, rgba(208, 195, 241, 0.20), transparent 32%),
     radial-gradient(circle at 94% 18%, rgba(189, 224, 254, 0.16), transparent 30%),
     rgba(29, 25, 33, 0.97);
   border-color: rgba(237, 232, 243, 0.09);
+  }
 }
 
 /* ===== Dark mode — buttons ===== */

@@ -1,0 +1,18 @@
+name = "steep-cake-9a73"
+main = "src/worker.js"
+compatibility_date = "2026-05-06"
+compatibility_flags = ["nodejs_compat"]
+
+[observability]
+enabled = true
+
+[assets]
+directory = "./dist"
+binding = "ASSETS"
+html_handling = "auto-trailing-slash"
+not_found_handling = "single-page-application"
+
+[[d1_databases]]
+binding = "WAITLIST_DB"
+database_name = "impulsive_waitlist"
+database_id = "d43a695f-856f-412f-848c-3afc6241ccc9"

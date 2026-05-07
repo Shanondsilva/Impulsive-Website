@@ -1,6 +1,3 @@
-// Not used by the current Wrangler Worker deployment.
-// The active deployed waitlist endpoint lives in src/worker.js.
-
 const MAX_BODY_BYTES = 8192;
 const MIN_FORM_SECONDS = 2;
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -82,15 +79,13 @@ const hashIp = async (ip, secret) => {
 };
 
 async function saveWaitlistSignup(env, request, payload, email) {
-  const db = env.WAITLIST_DB || env.DB;
-
-  if (!db) {
+  if (!env.WAITLIST_DB) {
     console.error("Waitlist signup failed", { reason: "missing_d1_binding" });
     throw new Error("Missing waitlist database binding.");
   }
 
   const ipHash = await hashIp(getClientIp(request), env.WAITLIST_IP_HASH_SECRET);
-  const result = await db
+  const result = await env.WAITLIST_DB
     .prepare(
       `INSERT OR IGNORE INTO waitlist_signups (
         email,
@@ -112,7 +107,6 @@ async function saveWaitlistSignup(env, request, payload, email) {
     .run();
 
   return {
-    db,
     duplicate: result.meta?.changes === 0
   };
 }
@@ -129,7 +123,6 @@ async function sendConfirmationEmail(env, email) {
   }
 
   const replyToEmail = cleanText(env.WAITLIST_ADMIN_EMAIL, 254);
-
   const response = await fetch("https://api.brevo.com/v3/smtp/email", {
     method: "POST",
     headers: {
@@ -157,8 +150,8 @@ async function sendConfirmationEmail(env, email) {
   return { sent: true, skipped: false };
 }
 
-async function markConfirmationSent(db, email) {
-  await db
+async function markConfirmationSent(env, email) {
+  await env.WAITLIST_DB
     .prepare(
       `UPDATE waitlist_signups
        SET confirmation_sent_at = CURRENT_TIMESTAMP,
@@ -169,9 +162,7 @@ async function markConfirmationSent(db, email) {
     .run();
 }
 
-export async function onRequest(context) {
-  const { request, env } = context;
-
+async function handleWaitlist(request, env) {
   if (request.method !== "POST") {
     return json({ error: "Method not allowed" }, 405);
   }
@@ -201,11 +192,7 @@ export async function onRequest(context) {
   }
 
   const email = normaliseEmail(payload.email);
-  if (!email) {
-    return json({ ok: false, message: INVALID_EMAIL_MESSAGE }, 400);
-  }
-
-  if (email.length > 254 || !EMAIL_PATTERN.test(email)) {
+  if (!email || email.length > 254 || !EMAIL_PATTERN.test(email)) {
     return json({ ok: false, message: INVALID_EMAIL_MESSAGE }, 400);
   }
 
@@ -214,7 +201,7 @@ export async function onRequest(context) {
     try {
       const confirmation = await sendConfirmationEmail(env, email);
       if (confirmation.sent) {
-        await markConfirmationSent(result.db, email);
+        await markConfirmationSent(env, email);
       }
     } catch (error) {
       console.error("Waitlist confirmation email failed", { reason: "brevo_failed", name: error?.name || "Error" });
@@ -226,3 +213,15 @@ export async function onRequest(context) {
     return json({ ok: false, message: GENERIC_FAILURE_MESSAGE }, 502);
   }
 }
+
+export default {
+  async fetch(request, env) {
+    const url = new URL(request.url);
+
+    if (url.pathname === "/api/waitlist") {
+      return handleWaitlist(request, env);
+    }
+
+    return env.ASSETS.fetch(request);
+  }
+};

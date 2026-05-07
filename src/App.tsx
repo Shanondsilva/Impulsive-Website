@@ -1,5 +1,15 @@
 import React, { useEffect, useState, useRef, type KeyboardEvent } from 'react';
 
+type ThemeMode = "light" | "dark";
+
+function getInitialTheme(): ThemeMode {
+  try {
+    const saved = localStorage.getItem("impulsive-theme");
+    if (saved === "light" || saved === "dark") return saved;
+  } catch {}
+  return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+}
+
 export default function App() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [flippedCards, setFlippedCards] = useState<Set<string>>(new Set());
@@ -8,6 +18,7 @@ export default function App() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [startedAt] = useState(Date.now().toString());
   const formRef = useRef<HTMLFormElement>(null);
+  const [theme, setTheme] = useState<ThemeMode>(getInitialTheme);
 
   const togglePathFlip = (id: string) => {
     setFlippedCards((prev) => {
@@ -59,8 +70,15 @@ export default function App() {
     };
   }, []);
 
+  useEffect(() => {
+    document.documentElement.setAttribute("data-theme", theme);
+    try { localStorage.setItem("impulsive-theme", theme); } catch {}
+  }, [theme]);
+
   const handleMenuToggle = () => setMenuOpen(!menuOpen);
   const closeMenu = () => setMenuOpen(false);
+
+  const toggleTheme = () => setTheme(t => t === "dark" ? "light" : "dark");
 
   const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -116,27 +134,57 @@ export default function App() {
             <img src="/images/icons/impulsive-logo-transparent-clean.png" alt="Impulsive logo" />
             <span>Impulsive</span>
           </a>
-          <button 
-            className="menu-toggle" 
-            type="button" 
-            aria-label={menuOpen ? "Close menu" : "Open menu"} 
-            aria-expanded={menuOpen} 
-            aria-controls="primary-menu" 
-            onClick={handleMenuToggle}
-          >
-            <span></span>
-            <span></span>
-            <span></span>
-          </button>
-          <div className="nav-menu" id="primary-menu">
-            <div className="nav-links" aria-label="Site links">
-              <a href="#how-it-works" onClick={closeMenu}>How it works</a>
-              <a href="#paths" onClick={closeMenu}>Paths</a>
-              <a href="#principles" onClick={closeMenu}>Principles</a>
-              <a href="#about" onClick={closeMenu}>About</a>
-              <a href="#waitlist" onClick={closeMenu}>Waitlist</a>
+          <div className="nav-right">
+            <button
+              className="theme-toggle"
+              type="button"
+              aria-label="Toggle dark mode"
+              aria-pressed={theme === "dark"}
+              onClick={toggleTheme}
+            >
+              <span className="theme-toggle-icon" aria-hidden="true">
+                {theme === "dark" ? "☀" : "☾"}
+              </span>
+              <span className="theme-toggle-label">
+                {theme === "dark" ? "Light" : "Dark"}
+              </span>
+            </button>
+            <button
+              className="menu-toggle"
+              type="button"
+              aria-label={menuOpen ? "Close menu" : "Open menu"}
+              aria-expanded={menuOpen}
+              aria-controls="primary-menu"
+              onClick={handleMenuToggle}
+            >
+              <span></span>
+              <span></span>
+              <span></span>
+            </button>
+            <div className="nav-menu" id="primary-menu">
+              <div className="nav-links" aria-label="Site links">
+                <a href="#how-it-works" onClick={closeMenu}>How it works</a>
+                <a href="#paths" onClick={closeMenu}>Paths</a>
+                <a href="#principles" onClick={closeMenu}>Principles</a>
+                <a href="#about" onClick={closeMenu}>About</a>
+                <a href="#waitlist" onClick={closeMenu}>Waitlist</a>
+              </div>
+              <button
+                className="theme-toggle theme-toggle-menu"
+                type="button"
+                aria-label="Toggle dark mode"
+                aria-pressed={theme === "dark"}
+                onClick={toggleTheme}
+              >
+                <span className="theme-toggle-icon" aria-hidden="true">
+                  {theme === "dark" ? "☀" : "☾"}
+                </span>
+                <span className="theme-toggle-label">
+                  {theme === "dark" ? "Light mode" : "Dark mode"}
+                </span>
+              </button>
+              <a className="button button-small" href="#waitlist" onClick={closeMenu}>Join Waitlist</a>
             </div>
-            <a className="button button-small" href="#waitlist" onClick={closeMenu}>Join Waitlist</a>
           </div>
         </nav>
       </header>

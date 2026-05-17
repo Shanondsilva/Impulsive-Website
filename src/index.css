@@ -4,10 +4,20 @@
   color-scheme: light;
 
   /* Brand pastels */
+  --impulsive-theme: #93E9BE;
+  --path-psychology: #D0C3F1;
+  --path-physical: #BDE0FE;
+  --path-spiritual: #FEF1AB;
+  --focus-mode: #F5A7A6;
   --psychology: #D0C3F1;
   --physical: #BDE0FE;
   --spiritual: #FEF1AB;
   --focus: #F5A7A6;
+  --glow-soft: 0 0 18px rgba(208, 195, 241, 0.22);
+  --glow-medium: 0 0 28px rgba(147, 233, 190, 0.24);
+  --border-soft: rgba(255, 255, 255, 0.13);
+  --text-strong: #F7F2FF;
+  --text-muted-readable: rgba(247, 242, 255, 0.74);
 
   /* Legacy tokens — kept for existing components */
   --background: #FFFDF8;
@@ -2168,6 +2178,31 @@ p {
   --color-success: #A8D4F5;
   --color-error: #E8A0A0;
   --shadow-elevated: 0 32px 80px rgba(0, 0, 0, 0.56);
+  --brand-glow: #93E9BE;
+  --mind-glow: #D0C3F1;
+  --body-glow: #BDE0FE;
+  --soul-glow: #FEF1AB;
+  --focus-glow: #F5A7A6;
+  --glass-border: rgba(237, 232, 243, 0.13);
+  --glass-border-strong: rgba(237, 232, 243, 0.20);
+  --glow-soft: 0 0 18px rgba(208, 195, 241, 0.22);
+  --glow-medium: 0 0 28px rgba(147, 233, 190, 0.24);
+  --border-soft: rgba(255, 255, 255, 0.13);
+  --text-strong: #F7F2FF;
+  --text-muted-readable: rgba(247, 242, 255, 0.74);
+  --dark-panel-glow:
+    0 0 0 1px rgba(255, 255, 255, 0.035) inset,
+    0 0 28px rgba(147, 233, 190, 0.07),
+    0 22px 58px rgba(0, 0, 0, 0.36);
+  --dark-panel-glow-hover:
+    0 0 0 1px rgba(255, 255, 255, 0.055) inset,
+    0 0 36px rgba(147, 233, 190, 0.11),
+    0 26px 66px rgba(0, 0, 0, 0.40);
+  --mind-shadow: 0 0 26px rgba(208, 195, 241, 0.16), 0 18px 46px rgba(0, 0, 0, 0.34);
+  --body-shadow: 0 0 26px rgba(189, 224, 254, 0.15), 0 18px 46px rgba(0, 0, 0, 0.34);
+  --soul-shadow: 0 0 24px rgba(254, 241, 171, 0.13), 0 18px 46px rgba(0, 0, 0, 0.34);
+  --focus-shadow: 0 0 26px rgba(245, 167, 166, 0.15), 0 18px 46px rgba(0, 0, 0, 0.34);
+  --nexus-shadow: 0 0 22px rgba(147, 233, 190, 0.10), 0 0 34px rgba(208, 195, 241, 0.09), 0 18px 46px rgba(0, 0, 0, 0.34);
 }
 
 /* ===== Dark mode — body background ===== */
@@ -2268,6 +2303,44 @@ p {
   color: #ACA3B4;
 }
 
+[data-theme="dark"] .hero-actions .button {
+  background:
+    linear-gradient(135deg, rgba(147, 233, 190, 0.96), rgba(208, 195, 241, 0.92) 48%, rgba(189, 224, 254, 0.88));
+  border-color: rgba(147, 233, 190, 0.42);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.10) inset,
+    0 14px 34px rgba(147, 233, 190, 0.15),
+    0 8px 22px rgba(0, 0, 0, 0.34);
+  color: #18151B;
+}
+
+[data-theme="dark"] .hero-actions .button:hover {
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.14) inset,
+    0 18px 42px rgba(147, 233, 190, 0.20),
+    0 10px 26px rgba(0, 0, 0, 0.38);
+}
+
+[data-theme="dark"] .hero-actions .button-secondary {
+  background:
+    linear-gradient(135deg, rgba(37, 32, 41, 0.86), rgba(48, 42, 55, 0.78)),
+    rgba(255, 255, 255, 0.08);
+  border-color: rgba(208, 195, 241, 0.34);
+  box-shadow:
+    0 0 0 1px rgba(208, 195, 241, 0.06) inset,
+    0 12px 30px rgba(208, 195, 241, 0.10),
+    0 8px 22px rgba(0, 0, 0, 0.30);
+  color: #F0EAF7;
+}
+
+[data-theme="dark"] .hero-actions .button-secondary:hover {
+  border-color: rgba(208, 195, 241, 0.46);
+  box-shadow:
+    0 0 0 1px rgba(208, 195, 241, 0.10) inset,
+    0 16px 38px rgba(208, 195, 241, 0.14),
+    0 10px 26px rgba(0, 0, 0, 0.36);
+}
+
 [data-theme="dark"] .hero-visual::before {
   background:
     radial-gradient(circle at 20% 24%, rgba(254, 241, 171, 0.50), transparent 34%),
@@ -2278,10 +2351,32 @@ p {
 
 [data-theme="dark"] .orbit-card {
   background: rgba(37, 32, 41, 0.84);
-  border-color: rgba(237, 232, 243, 0.10);
+  border-color: rgba(208, 195, 241, 0.30);
+  box-shadow:
+    0 0 0 1px rgba(147, 233, 190, 0.05) inset,
+    0 16px 36px rgba(208, 195, 241, 0.13),
+    0 8px 20px rgba(0, 0, 0, 0.34);
+  color: #F0EAF7;
 }
 
 /* ===== Dark mode — phone mockup ===== */
+
+[data-theme="dark"] .phone {
+  border-color: #292431;
+  background: #221D29;
+  box-shadow:
+    0 0 0 1px rgba(147, 233, 190, 0.22),
+    0 0 0 2px rgba(208, 195, 241, 0.10),
+    0 22px 58px rgba(147, 233, 190, 0.12),
+    0 34px 90px rgba(0, 0, 0, 0.58);
+}
+
+[data-theme="dark"] .phone::before {
+  border-color: rgba(147, 233, 190, 0.24);
+  box-shadow:
+    inset 0 0 0 1px rgba(208, 195, 241, 0.10),
+    inset 0 0 30px rgba(147, 233, 190, 0.045);
+}
 
 [data-theme="dark"] .app-screen {
   background:
@@ -2295,30 +2390,41 @@ p {
 }
 
 [data-theme="dark"] .privacy-pill {
-  background: rgba(208, 195, 241, 0.34);
-  color: #C8BED0;
+  background: rgba(208, 195, 241, 0.20);
+  border: 1px solid rgba(208, 195, 241, 0.26);
+  color: #F0EAF7;
 }
 
 [data-theme="dark"] .status-pill {
-  background: rgba(255, 255, 255, 0.11);
-  color: #C0B8C8;
+  background: rgba(237, 232, 243, 0.11);
+  border: 1px solid rgba(237, 232, 243, 0.16);
+  color: #F0EAF7;
 }
 
 [data-theme="dark"] .today-plan,
 [data-theme="dark"] .phone-path,
 [data-theme="dark"] .focus-note {
   background: rgba(255, 255, 255, 0.06);
-  border-color: rgba(237, 232, 243, 0.09);
+  border-color: rgba(147, 233, 190, 0.16);
+  box-shadow:
+    0 0 0 1px rgba(208, 195, 241, 0.035) inset,
+    0 10px 24px rgba(0, 0, 0, 0.22);
 }
 
 [data-theme="dark"] .intervention {
   background: rgba(245, 167, 166, 0.20);
-  border-color: rgba(237, 232, 243, 0.09);
+  border-color: rgba(245, 167, 166, 0.22);
+  box-shadow:
+    0 0 0 1px rgba(245, 167, 166, 0.035) inset,
+    0 10px 24px rgba(0, 0, 0, 0.22);
 }
 
 [data-theme="dark"] .progress {
   background: rgba(254, 241, 171, 0.20);
-  border-color: rgba(237, 232, 243, 0.09);
+  border-color: rgba(254, 241, 171, 0.22);
+  box-shadow:
+    0 0 0 1px rgba(254, 241, 171, 0.035) inset,
+    0 10px 24px rgba(0, 0, 0, 0.22);
 }
 
 [data-theme="dark"] .progress-track {
@@ -2332,6 +2438,28 @@ p {
 [data-theme="dark"] .plan-row {
   background: rgba(189, 224, 254, 0.22);
   color: #C8C0D0;
+}
+
+@media (max-width: 640px) {
+  [data-theme="dark"] .hero-actions .button,
+  [data-theme="dark"] .hero-actions .button-secondary {
+    box-shadow:
+      0 0 0 1px rgba(255, 255, 255, 0.08) inset,
+      0 10px 24px rgba(0, 0, 0, 0.32);
+  }
+
+  [data-theme="dark"] .phone {
+    box-shadow:
+      0 0 0 1px rgba(147, 233, 190, 0.16),
+      0 18px 44px rgba(147, 233, 190, 0.08),
+      0 24px 62px rgba(0, 0, 0, 0.52);
+  }
+
+  [data-theme="dark"] .orbit-card {
+    box-shadow:
+      0 0 0 1px rgba(147, 233, 190, 0.04) inset,
+      0 12px 26px rgba(0, 0, 0, 0.32);
+  }
 }
 
 [data-theme="dark"] .mini-label,
@@ -2396,34 +2524,73 @@ p {
 }
 
 [data-theme="dark"] .path-card.psychology {
-  border-color: rgba(208, 195, 241, 0.28);
-  box-shadow: 0 16px 42px rgba(208, 195, 241, 0.10), 0 4px 14px rgba(0, 0, 0, 0.30);
+  border-color: rgba(208, 195, 241, 0.38);
+  box-shadow:
+    0 0 0 1px rgba(208, 195, 241, 0.07) inset,
+    0 16px 42px rgba(208, 195, 241, 0.11),
+    0 5px 18px rgba(0, 0, 0, 0.32);
 }
 
 [data-theme="dark"] .path-card.physical {
-  border-color: rgba(189, 224, 254, 0.28);
-  box-shadow: 0 16px 42px rgba(189, 224, 254, 0.10), 0 4px 14px rgba(0, 0, 0, 0.30);
+  border-color: rgba(189, 224, 254, 0.38);
+  box-shadow:
+    0 0 0 1px rgba(189, 224, 254, 0.07) inset,
+    0 16px 42px rgba(189, 224, 254, 0.11),
+    0 5px 18px rgba(0, 0, 0, 0.32);
 }
 
 [data-theme="dark"] .path-card.spiritual {
-  border-color: rgba(254, 241, 171, 0.28);
-  box-shadow: 0 16px 42px rgba(254, 241, 171, 0.10), 0 4px 14px rgba(0, 0, 0, 0.30);
+  border-color: rgba(254, 241, 171, 0.40);
+  box-shadow:
+    0 0 0 1px rgba(254, 241, 171, 0.07) inset,
+    0 16px 42px rgba(254, 241, 171, 0.10),
+    0 5px 18px rgba(0, 0, 0, 0.32);
 }
 
 [data-theme="dark"] .path-card.synchrology {
-  border-color: rgba(208, 195, 241, 0.22);
-  box-shadow: 0 16px 42px rgba(208, 195, 241, 0.08), 0 4px 14px rgba(0, 0, 0, 0.30);
+  border-color: rgba(147, 233, 190, 0.36);
+  box-shadow:
+    0 0 0 1px rgba(147, 233, 190, 0.06) inset,
+    0 16px 42px rgba(147, 233, 190, 0.08),
+    0 14px 36px rgba(208, 195, 241, 0.07),
+    0 5px 18px rgba(0, 0, 0, 0.32);
 }
 
-[data-theme="dark"] .path-card:hover {
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.36);
+[data-theme="dark"] .path-card-wrapper:hover > .path-card.psychology,
+[data-theme="dark"] .path-card-wrapper.is-flipped:hover > .path-card.psychology {
+  border-color: rgba(208, 195, 241, 0.54);
+  box-shadow:
+    0 0 0 1px rgba(208, 195, 241, 0.12) inset,
+    0 18px 48px rgba(208, 195, 241, 0.16),
+    0 10px 26px rgba(0, 0, 0, 0.38);
 }
 
-[data-theme="dark"] .path-card-wrapper:hover > .card-front,
-[data-theme="dark"] .path-card-wrapper.is-flipped:hover > .card-front,
-[data-theme="dark"] .path-card-wrapper:hover > .card-back,
-[data-theme="dark"] .path-card-wrapper.is-flipped:hover > .card-back {
-  box-shadow: 0 18px 42px rgba(0, 0, 0, 0.42);
+[data-theme="dark"] .path-card-wrapper:hover > .path-card.physical,
+[data-theme="dark"] .path-card-wrapper.is-flipped:hover > .path-card.physical {
+  border-color: rgba(189, 224, 254, 0.54);
+  box-shadow:
+    0 0 0 1px rgba(189, 224, 254, 0.12) inset,
+    0 18px 48px rgba(189, 224, 254, 0.16),
+    0 10px 26px rgba(0, 0, 0, 0.38);
+}
+
+[data-theme="dark"] .path-card-wrapper:hover > .path-card.spiritual,
+[data-theme="dark"] .path-card-wrapper.is-flipped:hover > .path-card.spiritual {
+  border-color: rgba(254, 241, 171, 0.56);
+  box-shadow:
+    0 0 0 1px rgba(254, 241, 171, 0.12) inset,
+    0 18px 48px rgba(254, 241, 171, 0.15),
+    0 10px 26px rgba(0, 0, 0, 0.38);
+}
+
+[data-theme="dark"] .path-card-wrapper:hover > .path-card.synchrology,
+[data-theme="dark"] .path-card-wrapper.is-flipped:hover > .path-card.synchrology {
+  border-color: rgba(147, 233, 190, 0.50);
+  box-shadow:
+    0 0 0 1px rgba(147, 233, 190, 0.11) inset,
+    0 18px 46px rgba(147, 233, 190, 0.12),
+    0 12px 36px rgba(208, 195, 241, 0.10),
+    0 10px 26px rgba(0, 0, 0, 0.38);
 }
 
 [data-theme="dark"] .path-card-wrapper:focus-visible {
@@ -2431,9 +2598,9 @@ p {
 }
 
 [data-theme="dark"] .card-flip-hint {
-  background: rgba(255, 255, 255, 0.09);
-  border-color: rgba(237, 232, 243, 0.11);
-  color: #C8BDD0;
+  background: rgba(237, 232, 243, 0.10);
+  border-color: rgba(237, 232, 243, 0.16);
+  color: #EDE8F3;
 }
 
 [data-theme="dark"] .path-card-wrapper:hover .card-flip-hint {
@@ -2474,7 +2641,11 @@ p {
     radial-gradient(circle at 8% 0%, rgba(208, 195, 241, 0.16), transparent 32%),
     radial-gradient(circle at 94% 16%, rgba(254, 241, 171, 0.14), transparent 30%),
     rgba(37, 32, 41, 0.92);
-  border-color: rgba(237, 232, 243, 0.08);
+  border-color: var(--glass-border);
+  box-shadow:
+    0 0 0 1px rgba(147, 233, 190, 0.035) inset,
+    0 24px 58px rgba(0, 0, 0, 0.36),
+    0 0 36px rgba(147, 233, 190, 0.045);
 }
 
 [data-theme="dark"] .principles-panel {
@@ -2482,7 +2653,11 @@ p {
     radial-gradient(circle at 12% 20%, rgba(189, 224, 254, 0.18), transparent 31%),
     radial-gradient(circle at 98% 100%, rgba(245, 167, 166, 0.14), transparent 28%),
     rgba(37, 32, 41, 0.92);
-  border-color: rgba(237, 232, 243, 0.08);
+  border-color: var(--glass-border);
+  box-shadow:
+    0 0 0 1px rgba(189, 224, 254, 0.04) inset,
+    0 24px 58px rgba(0, 0, 0, 0.36),
+    0 0 36px rgba(189, 224, 254, 0.05);
 }
 
 [data-theme="dark"] .progression-panel {
@@ -2503,37 +2678,43 @@ p {
 
 [data-theme="dark"] .feature-card {
   background: rgba(37, 32, 41, 0.90);
-  border-color: rgba(237, 232, 243, 0.09);
+  border-color: var(--glass-border);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.30), 0 0 24px rgba(147, 233, 190, 0.035);
 }
 
 [data-theme="dark"] .step-card {
   background: rgba(37, 32, 41, 0.90);
-  border-color: rgba(237, 232, 243, 0.09);
+  border-color: var(--glass-border);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.30), 0 0 24px rgba(208, 195, 241, 0.04);
 }
 
 [data-theme="dark"] .number {
-  background: rgba(208, 195, 241, 0.32);
-  color: #C8BACE;
+  background: rgba(208, 195, 241, 0.20);
+  border: 1px solid rgba(208, 195, 241, 0.30);
+  color: #F1ECF8;
 }
 
 [data-theme="dark"] .feature-card:nth-child(2) .number {
-  background: rgba(189, 224, 254, 0.34);
+  background: rgba(189, 224, 254, 0.20);
+  border-color: rgba(189, 224, 254, 0.32);
 }
 
 [data-theme="dark"] .feature-card:nth-child(3) .number {
-  background: rgba(245, 167, 166, 0.26);
+  background: rgba(245, 167, 166, 0.18);
+  border-color: rgba(245, 167, 166, 0.30);
 }
 
 [data-theme="dark"] .step-card span {
-  background: rgba(254, 241, 171, 0.34);
-  color: #C8BACE;
+  background: rgba(254, 241, 171, 0.18);
+  border: 1px solid rgba(254, 241, 171, 0.30);
+  color: #F1ECF8;
 }
 
 /* ===== Dark mode — level map ===== */
 
 [data-theme="dark"] .level-map li {
   background: rgba(255, 255, 255, 0.05);
-  border-color: rgba(237, 232, 243, 0.09);
+  border-color: var(--glass-border);
   color: #D4CDD9;
 }
 
@@ -2557,7 +2738,7 @@ p {
     radial-gradient(circle at 90% 28%, rgba(189, 224, 254, 0.16), transparent 30%),
     radial-gradient(circle at 74% 100%, rgba(254, 241, 171, 0.14), transparent 32%),
     rgba(37, 32, 41, 0.94);
-  border-color: rgba(237, 232, 243, 0.10);
+  border-color: var(--glass-border-strong);
 }
 
 [data-theme="dark"] .waitlist-form label {
@@ -2617,7 +2798,8 @@ p {
 
 [data-theme="dark"] .faq-item {
   background: rgba(37, 32, 41, 0.88);
-  border-color: rgba(237, 232, 243, 0.09);
+  border-color: var(--glass-border);
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.28), 0 0 22px rgba(147, 233, 190, 0.03);
 }
 
 [data-theme="dark"] .faq-item[open] {
@@ -2643,7 +2825,11 @@ p {
     radial-gradient(circle at 8% 10%, rgba(208, 195, 241, 0.16), transparent 30%),
     radial-gradient(circle at 95% 100%, rgba(254, 241, 171, 0.14), transparent 32%),
     rgba(37, 32, 41, 0.92);
-  border-color: rgba(237, 232, 243, 0.08);
+  border-color: var(--glass-border);
+  box-shadow:
+    0 0 0 1px rgba(147, 233, 190, 0.035) inset,
+    0 24px 58px rgba(0, 0, 0, 0.36),
+    0 0 36px rgba(147, 233, 190, 0.045);
 }
 
 [data-theme="dark"] .about-copy p {
@@ -2652,7 +2838,7 @@ p {
 
 [data-theme="dark"] .about-points li {
   background: rgba(255, 255, 255, 0.04);
-  border-color: rgba(237, 232, 243, 0.08);
+  border-color: var(--glass-border);
 }
 
 [data-theme="dark"] .about-points li strong {
@@ -2670,7 +2856,11 @@ p {
     radial-gradient(circle at 10% 6%, rgba(189, 224, 254, 0.14), transparent 30%),
     radial-gradient(circle at 96% 100%, rgba(208, 195, 241, 0.12), transparent 34%),
     rgba(37, 32, 41, 0.92);
-  border-color: rgba(237, 232, 243, 0.08);
+  border-color: var(--glass-border);
+  box-shadow:
+    0 0 0 1px rgba(189, 224, 254, 0.035) inset,
+    0 24px 58px rgba(0, 0, 0, 0.36),
+    0 0 36px rgba(189, 224, 254, 0.045);
 }
 
 [data-theme="dark"] .review-intro p:last-child {
@@ -2679,7 +2869,7 @@ p {
 
 [data-theme="dark"] .review-card {
   background: rgba(255, 255, 255, 0.04);
-  border-color: rgba(237, 232, 243, 0.08);
+  border-color: var(--glass-border);
 }
 
 [data-theme="dark"] .review-card p {
@@ -2687,15 +2877,16 @@ p {
 }
 
 [data-theme="dark"] .review-note {
-  background: rgba(254, 241, 171, 0.16);
-  color: #C8BDD0;
+  background: rgba(254, 241, 171, 0.14);
+  border: 1px solid rgba(254, 241, 171, 0.24);
+  color: #EFE7F6;
 }
 
 /* ===== Dark mode — principles ===== */
 
 [data-theme="dark"] .principles-list li {
   background: rgba(255, 255, 255, 0.04);
-  border-color: rgba(237, 232, 243, 0.08);
+  border-color: var(--glass-border);
   color: #C8C0D0;
 }
 
@@ -2708,6 +2899,41 @@ p {
 }
 
 /* ===== Dark mode — footer ===== */
+
+@media (max-width: 640px) {
+  [data-theme="dark"] .path-card.psychology,
+  [data-theme="dark"] .path-card.physical,
+  [data-theme="dark"] .path-card.spiritual,
+  [data-theme="dark"] .path-card.synchrology,
+  [data-theme="dark"] .feature-card,
+  [data-theme="dark"] .step-card,
+  [data-theme="dark"] .faq-item {
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.30);
+  }
+
+  [data-theme="dark"] .split-panel,
+  [data-theme="dark"] .principles-panel,
+  [data-theme="dark"] .waitlist-card,
+  [data-theme="dark"] .progression-panel,
+  [data-theme="dark"] .focus-panel,
+  [data-theme="dark"] .about-panel,
+  [data-theme="dark"] .review-panel {
+    box-shadow:
+      0 0 0 1px rgba(237, 232, 243, 0.035) inset,
+      0 18px 42px rgba(0, 0, 0, 0.34);
+  }
+
+  [data-theme="dark"] .path-card-wrapper:hover > .path-card.psychology,
+  [data-theme="dark"] .path-card-wrapper.is-flipped:hover > .path-card.psychology,
+  [data-theme="dark"] .path-card-wrapper:hover > .path-card.physical,
+  [data-theme="dark"] .path-card-wrapper.is-flipped:hover > .path-card.physical,
+  [data-theme="dark"] .path-card-wrapper:hover > .path-card.spiritual,
+  [data-theme="dark"] .path-card-wrapper.is-flipped:hover > .path-card.spiritual,
+  [data-theme="dark"] .path-card-wrapper:hover > .path-card.synchrology,
+  [data-theme="dark"] .path-card-wrapper.is-flipped:hover > .path-card.synchrology {
+    box-shadow: 0 14px 32px rgba(0, 0, 0, 0.36);
+  }
+}
 
 [data-theme="dark"] .site-footer {
   background:
@@ -2757,4 +2983,362 @@ p {
 [data-theme="dark"] button:focus-visible,
 [data-theme="dark"] input:focus-visible {
   outline-color: rgba(208, 195, 241, 0.80);
+}
+
+/* ===== Dark mode premium glow system ===== */
+
+.glow-card {
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.03) inset,
+    0 0 22px rgba(208, 195, 241, 0.16),
+    0 18px 60px rgba(0, 0, 0, 0.32);
+}
+
+.glow-card:hover {
+  border-color: rgba(255, 255, 255, 0.22);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.05) inset,
+    0 0 32px rgba(208, 195, 241, 0.24),
+    0 22px 70px rgba(0, 0, 0, 0.38);
+}
+
+[data-theme="dark"] .button,
+[data-theme="dark"] .orbit-card,
+[data-theme="dark"] .phone,
+[data-theme="dark"] .path-card,
+[data-theme="dark"] .split-panel,
+[data-theme="dark"] .feature-card,
+[data-theme="dark"] .progression-panel,
+[data-theme="dark"] .level-map li,
+[data-theme="dark"] .step-card,
+[data-theme="dark"] .focus-panel,
+[data-theme="dark"] .principles-panel,
+[data-theme="dark"] .principles-list li,
+[data-theme="dark"] .about-panel,
+[data-theme="dark"] .about-points li,
+[data-theme="dark"] .review-panel,
+[data-theme="dark"] .review-card,
+[data-theme="dark"] .faq-item,
+[data-theme="dark"] .waitlist-card,
+[data-theme="dark"] .form-row,
+[data-theme="dark"] .site-footer {
+  transition:
+    background 220ms ease,
+    border-color 220ms ease,
+    box-shadow 220ms ease,
+    transform 180ms ease,
+    color 180ms ease;
+}
+
+[data-theme="dark"] .button:not(.button-secondary) {
+  background:
+    linear-gradient(135deg, rgba(208, 195, 241, 0.98), rgba(189, 224, 254, 0.94) 38%, rgba(254, 241, 171, 0.92) 72%, rgba(147, 233, 190, 0.92));
+  border-color: rgba(255, 255, 255, 0.34);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.18) inset,
+    0 0 26px rgba(147, 233, 190, 0.18),
+    0 16px 34px rgba(0, 0, 0, 0.34);
+  color: #1C1820;
+}
+
+[data-theme="dark"] .button:not(.button-secondary):hover {
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.24) inset,
+    0 0 34px rgba(147, 233, 190, 0.24),
+    0 18px 42px rgba(0, 0, 0, 0.40);
+}
+
+[data-theme="dark"] .button-secondary {
+  background:
+    linear-gradient(135deg, rgba(37, 32, 41, 0.90), rgba(48, 42, 55, 0.82)),
+    rgba(255, 255, 255, 0.08);
+  border-color: rgba(208, 195, 241, 0.34);
+  box-shadow:
+    0 0 0 1px rgba(208, 195, 241, 0.07) inset,
+    0 0 22px rgba(208, 195, 241, 0.11),
+    0 12px 30px rgba(0, 0, 0, 0.32);
+  color: var(--text-strong);
+}
+
+[data-theme="dark"] .button-secondary:hover {
+  border-color: rgba(147, 233, 190, 0.36);
+  box-shadow:
+    0 0 0 1px rgba(147, 233, 190, 0.08) inset,
+    0 0 28px rgba(147, 233, 190, 0.13),
+    0 16px 38px rgba(0, 0, 0, 0.36);
+}
+
+[data-theme="dark"] .orbit-card {
+  border-color: rgba(208, 195, 241, 0.34);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.04) inset,
+    0 0 26px rgba(208, 195, 241, 0.16),
+    0 16px 36px rgba(0, 0, 0, 0.34);
+}
+
+[data-theme="dark"] .phone {
+  border-color: #2B2532;
+  box-shadow:
+    0 0 0 1px rgba(147, 233, 190, 0.26),
+    0 0 0 2px rgba(208, 195, 241, 0.11),
+    0 0 36px rgba(147, 233, 190, 0.16),
+    0 34px 90px rgba(0, 0, 0, 0.58);
+}
+
+[data-theme="dark"] .path-card.psychology,
+[data-theme="dark"] .phone-path.psychology {
+  border-color: rgba(208, 195, 241, 0.42);
+  box-shadow:
+    0 0 0 1px rgba(208, 195, 241, 0.08) inset,
+    var(--mind-shadow);
+}
+
+[data-theme="dark"] .path-card.physical,
+[data-theme="dark"] .phone-path.physical {
+  border-color: rgba(189, 224, 254, 0.42);
+  box-shadow:
+    0 0 0 1px rgba(189, 224, 254, 0.08) inset,
+    var(--body-shadow);
+}
+
+[data-theme="dark"] .path-card.spiritual,
+[data-theme="dark"] .phone-path.spiritual {
+  border-color: rgba(254, 241, 171, 0.44);
+  box-shadow:
+    0 0 0 1px rgba(254, 241, 171, 0.08) inset,
+    var(--soul-shadow);
+}
+
+[data-theme="dark"] .path-card.synchrology,
+[data-theme="dark"] .phone-path.synchrology {
+  border-color: rgba(147, 233, 190, 0.40);
+  box-shadow:
+    0 0 0 1px rgba(147, 233, 190, 0.075) inset,
+    var(--nexus-shadow);
+}
+
+[data-theme="dark"] .split-panel,
+[data-theme="dark"] .progression-panel,
+[data-theme="dark"] .waitlist-card,
+[data-theme="dark"] .about-panel {
+  border-color: rgba(147, 233, 190, 0.20);
+  box-shadow: var(--dark-panel-glow);
+}
+
+[data-theme="dark"] .principles-panel,
+[data-theme="dark"] .review-panel {
+  border-color: rgba(189, 224, 254, 0.20);
+  box-shadow:
+    0 0 0 1px rgba(189, 224, 254, 0.045) inset,
+    0 0 30px rgba(189, 224, 254, 0.075),
+    0 22px 58px rgba(0, 0, 0, 0.36);
+}
+
+[data-theme="dark"] .focus-panel {
+  border-color: rgba(245, 167, 166, 0.24);
+  box-shadow:
+    0 0 0 1px rgba(245, 167, 166, 0.055) inset,
+    0 0 30px rgba(245, 167, 166, 0.11),
+    0 22px 58px rgba(0, 0, 0, 0.36);
+}
+
+[data-theme="dark"] .feature-card:nth-child(1) {
+  border-color: rgba(208, 195, 241, 0.24);
+  box-shadow:
+    0 0 0 1px rgba(208, 195, 241, 0.045) inset,
+    0 0 22px rgba(208, 195, 241, 0.09),
+    0 16px 36px rgba(0, 0, 0, 0.30);
+}
+
+[data-theme="dark"] .feature-card:nth-child(2) {
+  border-color: rgba(189, 224, 254, 0.24);
+  box-shadow:
+    0 0 0 1px rgba(189, 224, 254, 0.045) inset,
+    0 0 22px rgba(189, 224, 254, 0.09),
+    0 16px 36px rgba(0, 0, 0, 0.30);
+}
+
+[data-theme="dark"] .feature-card:nth-child(3) {
+  border-color: rgba(245, 167, 166, 0.24);
+  box-shadow:
+    0 0 0 1px rgba(245, 167, 166, 0.045) inset,
+    0 0 22px rgba(245, 167, 166, 0.08),
+    0 16px 36px rgba(0, 0, 0, 0.30);
+}
+
+[data-theme="dark"] .level-map li,
+[data-theme="dark"] .step-card,
+[data-theme="dark"] .principles-list li,
+[data-theme="dark"] .about-points li,
+[data-theme="dark"] .review-card,
+[data-theme="dark"] .faq-item,
+[data-theme="dark"] .form-row {
+  border-color: var(--border-soft);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.035) inset,
+    0 0 20px rgba(208, 195, 241, 0.055),
+    0 12px 30px rgba(0, 0, 0, 0.28);
+}
+
+[data-theme="dark"] .step-card:nth-child(2),
+[data-theme="dark"] .faq-item:nth-child(even) {
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.035) inset,
+    0 0 20px rgba(189, 224, 254, 0.055),
+    0 12px 30px rgba(0, 0, 0, 0.28);
+}
+
+[data-theme="dark"] .step-card:nth-child(3) {
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.035) inset,
+    0 0 20px rgba(254, 241, 171, 0.055),
+    0 12px 30px rgba(0, 0, 0, 0.28);
+}
+
+[data-theme="dark"] .form-row:focus-within {
+  border-color: rgba(147, 233, 190, 0.45);
+  box-shadow:
+    0 0 0 1px rgba(147, 233, 190, 0.08) inset,
+    0 0 28px rgba(147, 233, 190, 0.16),
+    0 18px 42px rgba(0, 0, 0, 0.34);
+}
+
+[data-theme="dark"] .site-footer {
+  border-top-color: rgba(208, 195, 241, 0.16);
+  box-shadow:
+    0 -1px 0 rgba(255, 255, 255, 0.035) inset,
+    0 -18px 50px rgba(208, 195, 241, 0.045);
+}
+
+[data-theme="dark"] .split-panel:hover,
+[data-theme="dark"] .progression-panel:hover,
+[data-theme="dark"] .waitlist-card:hover,
+[data-theme="dark"] .about-panel:hover,
+[data-theme="dark"] .faq-item:hover {
+  border-color: rgba(147, 233, 190, 0.26);
+  box-shadow: var(--dark-panel-glow-hover);
+}
+
+[data-theme="dark"] .number,
+[data-theme="dark"] .step-card span,
+[data-theme="dark"] .level-map span,
+[data-theme="dark"] .status-pill,
+[data-theme="dark"] .privacy-pill,
+[data-theme="dark"] .card-flip-hint,
+[data-theme="dark"] .card-back-steps li::before {
+  font-weight: 800;
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.22);
+}
+
+[data-theme="dark"] .number {
+  background: rgba(208, 195, 241, 0.28);
+  border-color: rgba(208, 195, 241, 0.46);
+  box-shadow:
+    0 0 18px rgba(208, 195, 241, 0.22),
+    inset 0 0 12px rgba(255, 255, 255, 0.08);
+  color: #F9F6FF;
+}
+
+[data-theme="dark"] .feature-card:nth-child(2) .number {
+  background: rgba(189, 224, 254, 0.28);
+  border-color: rgba(189, 224, 254, 0.46);
+  box-shadow:
+    0 0 18px rgba(189, 224, 254, 0.20),
+    inset 0 0 12px rgba(255, 255, 255, 0.08);
+}
+
+[data-theme="dark"] .feature-card:nth-child(3) .number {
+  background: rgba(245, 167, 166, 0.28);
+  border-color: rgba(245, 167, 166, 0.44);
+  box-shadow:
+    0 0 18px rgba(245, 167, 166, 0.18),
+    inset 0 0 12px rgba(255, 255, 255, 0.08);
+}
+
+[data-theme="dark"] .level-map span {
+  background: rgba(208, 195, 241, 0.86);
+  border: 1px solid rgba(255, 255, 255, 0.32);
+  box-shadow: 0 0 18px rgba(208, 195, 241, 0.26);
+  color: #211C27;
+}
+
+[data-theme="dark"] .level-map li:nth-child(2) span {
+  background: rgba(254, 241, 171, 0.88);
+  box-shadow: 0 0 18px rgba(254, 241, 171, 0.22);
+  color: #2A2530;
+}
+
+[data-theme="dark"] .level-map li:nth-child(3) span {
+  background: rgba(189, 224, 254, 0.88);
+  box-shadow: 0 0 18px rgba(189, 224, 254, 0.24);
+  color: #1F2530;
+}
+
+[data-theme="dark"] .level-map li:nth-child(4) span {
+  background: rgba(245, 167, 166, 0.88);
+  box-shadow: 0 0 18px rgba(245, 167, 166, 0.22);
+  color: #2A1E24;
+}
+
+[data-theme="dark"] .step-card span {
+  background: rgba(254, 241, 171, 0.74);
+  border-color: rgba(254, 241, 171, 0.54);
+  color: #2A2530;
+  text-shadow: none;
+}
+
+[data-theme="dark"] .status-pill,
+[data-theme="dark"] .privacy-pill,
+[data-theme="dark"] .card-flip-hint {
+  background: rgba(247, 242, 255, 0.15);
+  border-color: rgba(247, 242, 255, 0.23);
+  color: #F9F6FF;
+}
+
+[data-theme="dark"] .mini-label,
+[data-theme="dark"] .phone-path small,
+[data-theme="dark"] .progress-copy span,
+[data-theme="dark"] .focus-note span {
+  color: rgba(247, 242, 255, 0.78);
+  font-weight: 800;
+}
+
+[data-theme="dark"] .progress-copy strong,
+[data-theme="dark"] .phone-path strong,
+[data-theme="dark"] .focus-note strong {
+  color: #F9F6FF;
+  font-weight: 800;
+}
+
+@media (max-width: 640px) {
+  [data-theme="dark"] .phone,
+  [data-theme="dark"] .path-card.psychology,
+  [data-theme="dark"] .path-card.physical,
+  [data-theme="dark"] .path-card.spiritual,
+  [data-theme="dark"] .path-card.synchrology,
+  [data-theme="dark"] .split-panel,
+  [data-theme="dark"] .progression-panel,
+  [data-theme="dark"] .focus-panel,
+  [data-theme="dark"] .principles-panel,
+  [data-theme="dark"] .waitlist-card,
+  [data-theme="dark"] .about-panel,
+  [data-theme="dark"] .review-panel {
+    box-shadow:
+      0 0 0 1px rgba(255, 255, 255, 0.035) inset,
+      0 16px 38px rgba(0, 0, 0, 0.34);
+  }
+
+  [data-theme="dark"] .feature-card,
+  [data-theme="dark"] .step-card,
+  [data-theme="dark"] .level-map li,
+  [data-theme="dark"] .principles-list li,
+  [data-theme="dark"] .about-points li,
+  [data-theme="dark"] .review-card,
+  [data-theme="dark"] .faq-item,
+  [data-theme="dark"] .form-row {
+    box-shadow:
+      0 0 0 1px rgba(255, 255, 255, 0.03) inset,
+      0 10px 26px rgba(0, 0, 0, 0.30);
+  }
 }

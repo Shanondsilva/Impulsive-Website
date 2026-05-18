@@ -1,14 +1,5 @@
 import React, { useEffect, useState, useRef, type KeyboardEvent } from 'react';
-
-type ThemeMode = "light" | "dark";
-
-function getInitialTheme(): ThemeMode {
-  try {
-    const saved = localStorage.getItem("impulsive-theme");
-    if (saved === "light" || saved === "dark") return saved;
-  } catch {}
-  return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-}
+import { useDarkMode } from './hooks/useDarkMode';
 
 export default function App() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -18,7 +9,8 @@ export default function App() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [startedAt] = useState(Date.now().toString());
   const formRef = useRef<HTMLFormElement>(null);
-  const [theme, setTheme] = useState<ThemeMode>(getInitialTheme);
+  const themeButtonRef = useRef<HTMLButtonElement>(null);
+  const { theme, toggle } = useDarkMode();
 
   const togglePathFlip = (id: string) => {
     setFlippedCards((prev) => {
@@ -70,15 +62,8 @@ export default function App() {
     };
   }, []);
 
-  useEffect(() => {
-    document.documentElement.setAttribute("data-theme", theme);
-    try { localStorage.setItem("impulsive-theme", theme); } catch {}
-  }, [theme]);
-
   const handleMenuToggle = () => setMenuOpen(!menuOpen);
   const closeMenu = () => setMenuOpen(false);
-
-  const toggleTheme = () => setTheme(t => t === "dark" ? "light" : "dark");
 
   const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -146,11 +131,12 @@ export default function App() {
               <a className="button button-small" href="#waitlist" onClick={closeMenu}>Join Waitlist</a>
             </div>
             <button
+              ref={themeButtonRef}
               className="theme-toggle"
               type="button"
               aria-label="Toggle dark mode"
               aria-pressed={theme === "dark"}
-              onClick={toggleTheme}
+              onClick={() => toggle(themeButtonRef.current)}
             >
               <span className="theme-toggle-icon" aria-hidden="true">
                 {theme === "dark" ? "☀" : "☾"}
@@ -298,7 +284,7 @@ export default function App() {
               >
                 <article className="path-card psychology card-front reveal">
                   <div className="card-topline">
-                    <span className="soft-icon symbol-icon" aria-hidden="true">&#10022;</span>
+                    <span className="soft-icon symbol-icon" aria-hidden="true" data-fallable="">&#10022;</span>
                     <span className="status-pill">Starts first</span>
                   </div>
                   <h3>Mind</h3>
@@ -361,7 +347,7 @@ export default function App() {
               >
                 <article className="path-card physical card-front reveal">
                   <div className="card-topline">
-                    <span className="soft-icon image-icon" aria-hidden="true">
+                    <span className="soft-icon image-icon" aria-hidden="true" data-fallable="">
                       <img src="/images/icons/impulsive-body.png" alt="" />
                     </span>
                     <span className="status-pill">Unlocks later</span>
@@ -432,7 +418,7 @@ export default function App() {
               >
                 <article className="path-card spiritual card-front reveal">
                   <div className="card-topline">
-                    <span className="soft-icon image-icon" aria-hidden="true">
+                    <span className="soft-icon image-icon" aria-hidden="true" data-fallable="">
                       <img src="/images/icons/impulsive-soul.png" alt="" />
                     </span>
                     <span className="status-pill">Optional</span>
@@ -494,7 +480,7 @@ export default function App() {
               >
                 <article className="path-card synchrology card-front reveal">
                   <div className="card-topline">
-                    <span className="soft-icon image-icon" aria-hidden="true">
+                    <span className="soft-icon image-icon" aria-hidden="true" data-fallable="">
                       <img src="/images/icons/impulsive-nexus.png" alt="" />
                     </span>
                     <span className="status-pill">Engine</span>
@@ -600,10 +586,10 @@ export default function App() {
               <p>The first experience is one trigger interruption, one recommended action, one progress bar, and one clear next unlock. Premium and referrals belong in calm progress moments, never when someone is trying to get help quickly.</p>
             </div>
             <ol className="level-map" aria-label="Impulsive level path preview">
-              <li><span>1</span>Psychological Core</li>
-              <li><span>3</span>Schedule taper card</li>
-              <li><span>5</span>Path preview</li>
-              <li><span>8</span>Full Nexus engine</li>
+              <li><span data-fallable="">1</span>Psychological Core</li>
+              <li><span data-fallable="">3</span>Schedule taper card</li>
+              <li><span data-fallable="">5</span>Path preview</li>
+              <li><span data-fallable="">8</span>Full Nexus engine</li>
             </ol>
           </div>
         </section>

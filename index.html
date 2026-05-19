@@ -5,7 +5,27 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="Impulsive is a privacy-first recovery and behaviour-change app for difficult compulsive habits. Slow the loop, understand your patterns, and take one better action at the right moment. Launching soon." />
   <meta name="robots" content="index, follow" />
-  <meta name="theme-color" content="#FFFDF8" />
+  <meta name="color-scheme" content="light dark" />
+  <meta name="theme-color" content="#FFF9F1" />
+  <script>
+    (function () {
+      try {
+        var storedTheme = localStorage.getItem("impulsive-theme");
+        if (storedTheme !== "light" && storedTheme !== "dark") {
+          localStorage.removeItem("impulsive-theme");
+        }
+        var theme = storedTheme === "light" || storedTheme === "dark"
+          ? storedTheme
+          : (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+        document.documentElement.dataset.theme = theme;
+        document.documentElement.style.colorScheme = theme;
+        var themeColor = document.querySelector('meta[name="theme-color"]');
+        if (themeColor) themeColor.setAttribute("content", theme === "dark" ? "#08071A" : "#FFF9F1");
+      } catch (error) {
+        document.documentElement.dataset.theme = "light";
+      }
+    })();
+  </script>
   <link rel="canonical" href="https://useimpulsive.com/" />
 
   <!-- Open Graph -->

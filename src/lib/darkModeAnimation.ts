@@ -47,8 +47,8 @@ export function initAnimationActors(): void {
 }
 
 function setThemeAttr(dark: boolean): void {
-  if (dark) document.documentElement.setAttribute('data-theme', 'dark');
-  else document.documentElement.removeAttribute('data-theme');
+  document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+  document.documentElement.style.colorScheme = dark ? 'dark' : 'light';
 }
 
 function positionWire(toggleEl: HTMLElement): void {

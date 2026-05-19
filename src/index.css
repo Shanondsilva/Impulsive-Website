@@ -5531,16 +5531,19 @@ p {
   gap: clamp(24px, 4vw, 48px);
   align-items: center;
   margin-bottom: 18px;
-  border: 1px solid color-mix(in srgb, var(--game-color) 38%, rgba(45, 39, 48, 0.12));
+  border: 1px solid color-mix(in srgb, var(--game-color) 78%, rgba(255, 255, 255, 0.22));
   border-radius: 28px;
   background:
     radial-gradient(circle at 12% 12%, color-mix(in srgb, var(--game-color) 18%, transparent), transparent 34%),
     linear-gradient(180deg, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0.06)),
     rgba(255, 252, 247, 0.86);
   box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--game-color) 34%, transparent),
     0 0 0 1px rgba(255, 255, 255, 0.32) inset,
     0 18px 46px rgba(45, 39, 48, 0.09),
-    0 0 30px color-mix(in srgb, var(--game-color) 8%, transparent);
+    0 0 44px color-mix(in srgb, var(--game-color) 34%, transparent),
+    0 0 112px color-mix(in srgb, var(--game-color) 20%, transparent),
+    0 0 170px color-mix(in srgb, var(--game-color) 10%, transparent);
   padding: clamp(24px, 4vw, 36px);
 }
 
@@ -5682,14 +5685,17 @@ p {
   position: relative;
   width: min(100%, 310px);
   aspect-ratio: 1;
-  border: 1px solid color-mix(in srgb, var(--game-color) 42%, rgba(45, 39, 48, 0.12));
+  border: 1px solid color-mix(in srgb, var(--game-color) 82%, rgba(255, 255, 255, 0.20));
   border-radius: 28px;
   background:
     radial-gradient(circle at 28% 18%, color-mix(in srgb, var(--game-color) 28%, transparent), transparent 28%),
     radial-gradient(circle at 76% 78%, rgba(189, 224, 254, 0.18), transparent 30%),
     linear-gradient(145deg, rgba(16, 18, 34, 0.92), rgba(28, 26, 43, 0.84));
   box-shadow:
-    0 18px 44px color-mix(in srgb, var(--game-color) 12%, transparent),
+    0 0 0 1px color-mix(in srgb, var(--game-color) 36%, transparent),
+    0 0 42px color-mix(in srgb, var(--game-color) 38%, transparent),
+    0 0 104px color-mix(in srgb, var(--game-color) 18%, transparent),
+    0 18px 60px color-mix(in srgb, var(--game-color) 22%, transparent),
     inset 0 0 0 1px rgba(255, 255, 255, 0.08),
     inset 0 1px 0 rgba(255, 255, 255, 0.16);
   overflow: hidden;
@@ -5852,13 +5858,16 @@ p {
   min-height: 390px;
   display: flex;
   flex-direction: column;
-  border: 1px solid color-mix(in srgb, var(--game-color) 42%, rgba(247, 242, 255, 0.12));
+  border: 1px solid color-mix(in srgb, var(--game-color) 88%, rgba(247, 242, 255, 0.22));
   border-radius: 24px;
   background:
     radial-gradient(circle at 22% 12%, color-mix(in srgb, var(--game-color) 18%, transparent), transparent 36%),
     linear-gradient(145deg, rgba(21, 20, 32, 0.96), rgba(12, 16, 30, 0.94));
   box-shadow:
-    0 18px 44px color-mix(in srgb, var(--game-color) 13%, transparent),
+    0 0 0 1px color-mix(in srgb, var(--game-color) 38%, transparent),
+    0 0 46px color-mix(in srgb, var(--game-color) 42%, transparent),
+    0 0 116px color-mix(in srgb, var(--game-color) 20%, transparent),
+    0 18px 64px color-mix(in srgb, var(--game-color) 24%, transparent),
     inset 0 0 0 1px rgba(255, 255, 255, 0.06),
     inset 0 1px 0 rgba(255, 255, 255, 0.12);
   overflow: hidden;
@@ -6393,14 +6402,17 @@ p {
   justify-content: space-between;
   gap: 12px;
   text-align: left;
-  border: 1px solid color-mix(in srgb, var(--game-color) 34%, rgba(45, 39, 48, 0.12));
+  border: 1px solid color-mix(in srgb, var(--game-color) 76%, rgba(255, 255, 255, 0.18));
   border-radius: 22px;
   background:
     radial-gradient(circle at 14% 12%, color-mix(in srgb, var(--game-color) 16%, transparent), transparent 36%),
     rgba(255, 252, 247, 0.78);
   box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--game-color) 30%, transparent),
     0 0 0 1px rgba(255, 255, 255, 0.24) inset,
-    0 12px 28px rgba(45, 39, 48, 0.07);
+    0 12px 28px rgba(45, 39, 48, 0.07),
+    0 0 38px color-mix(in srgb, var(--game-color) 24%, transparent),
+    0 0 84px color-mix(in srgb, var(--game-color) 12%, transparent);
   color: var(--color-text);
   cursor: pointer;
   overflow: hidden;
@@ -6444,12 +6456,15 @@ p {
 .game-card:hover,
 .game-card:focus-visible,
 .game-card.is-selected {
-  border-color: color-mix(in srgb, var(--game-color) 50%, rgba(45, 39, 48, 0.12));
+  border-color: color-mix(in srgb, var(--game-color) 92%, rgba(255, 255, 255, 0.24));
   transition-delay: 0ms;
   transform: translateY(-3px);
   box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--game-color) 44%, transparent),
     0 18px 40px rgba(45, 39, 48, 0.10),
-    0 0 22px color-mix(in srgb, var(--game-color) 12%, transparent);
+    0 0 48px color-mix(in srgb, var(--game-color) 40%, transparent),
+    0 0 110px color-mix(in srgb, var(--game-color) 22%, transparent),
+    0 0 170px color-mix(in srgb, var(--game-color) 12%, transparent);
 }
 
 .game-card:hover .game-card-action,
@@ -6508,14 +6523,17 @@ p {
 
 [data-theme="dark"] .featured-game-card,
 [data-theme="dark"] .game-card {
-  border-color: color-mix(in srgb, var(--game-color) 32%, rgba(247, 242, 255, 0.12));
+  border-color: color-mix(in srgb, var(--game-color) 86%, rgba(247, 242, 255, 0.22));
   background:
     radial-gradient(circle at 12% 12%, color-mix(in srgb, var(--game-color) 16%, transparent), transparent 34%),
     linear-gradient(180deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.025)),
     rgba(12, 16, 30, 0.78);
   box-shadow:
-    0 0 0 1px rgba(255, 255, 255, 0.035) inset,
-    0 0 24px color-mix(in srgb, var(--game-color) 9%, transparent),
+    0 0 0 1px color-mix(in srgb, var(--game-color) 44%, transparent),
+    0 0 0 1px rgba(255, 255, 255, 0.055) inset,
+    0 0 50px color-mix(in srgb, var(--game-color) 44%, transparent),
+    0 0 120px color-mix(in srgb, var(--game-color) 24%, transparent),
+    0 0 190px color-mix(in srgb, var(--game-color) 12%, transparent),
     0 20px 52px rgba(0, 0, 0, 0.32);
 }
 
@@ -6554,8 +6572,10 @@ p {
     radial-gradient(circle at 76% 30%, rgba(255, 255, 255, 0.10), transparent 16%),
     linear-gradient(145deg, color-mix(in srgb, var(--game-color) 18%, rgba(255, 255, 255, 0.06)), rgba(255, 255, 255, 0.045));
   box-shadow:
-    0 0 34px color-mix(in srgb, var(--game-color) 18%, transparent),
-    inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+    0 0 0 1px color-mix(in srgb, var(--game-color) 42%, transparent),
+    0 0 56px color-mix(in srgb, var(--game-color) 48%, transparent),
+    0 0 128px color-mix(in srgb, var(--game-color) 24%, transparent),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.07);
 }
 
 [data-theme="dark"] .target-decoy {
@@ -6578,10 +6598,13 @@ p {
 [data-theme="dark"] .game-card:hover,
 [data-theme="dark"] .game-card:focus-visible,
 [data-theme="dark"] .game-card.is-selected {
-  border-color: color-mix(in srgb, var(--game-color) 48%, rgba(247, 242, 255, 0.14));
+  border-color: color-mix(in srgb, var(--game-color) 94%, rgba(247, 242, 255, 0.24));
   box-shadow:
-    0 0 0 1px rgba(255, 255, 255, 0.05) inset,
-    0 0 30px color-mix(in srgb, var(--game-color) 14%, transparent),
+    0 0 0 1px color-mix(in srgb, var(--game-color) 52%, transparent),
+    0 0 0 1px rgba(255, 255, 255, 0.07) inset,
+    0 0 58px color-mix(in srgb, var(--game-color) 52%, transparent),
+    0 0 132px color-mix(in srgb, var(--game-color) 28%, transparent),
+    0 0 210px color-mix(in srgb, var(--game-color) 14%, transparent),
     0 22px 54px rgba(0, 0, 0, 0.34);
 }
 

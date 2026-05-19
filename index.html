@@ -10,10 +10,22 @@
   <script>
     (function () {
       try {
-        var storedTheme = localStorage.getItem("impulsive-theme");
-        if (storedTheme !== "light" && storedTheme !== "dark") {
-          localStorage.removeItem("impulsive-theme");
+        var storageKey = "impulsive-theme";
+        var defaultVersionKey = "impulsive-theme-default-version";
+        var currentDefaultVersion = "light-default-2026-05-19";
+        var storedTheme = localStorage.getItem(storageKey);
+        var defaultVersion = localStorage.getItem(defaultVersionKey);
+
+        if (defaultVersion !== currentDefaultVersion) {
+          storedTheme = "light";
+          localStorage.setItem(storageKey, storedTheme);
+          localStorage.setItem(defaultVersionKey, currentDefaultVersion);
         }
+
+        if (storedTheme !== "light" && storedTheme !== "dark") {
+          localStorage.removeItem(storageKey);
+        }
+
         var theme = storedTheme === "light" || storedTheme === "dark"
           ? storedTheme
           : "light";

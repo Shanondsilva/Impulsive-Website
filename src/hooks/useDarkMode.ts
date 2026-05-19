@@ -4,6 +4,8 @@ import { initAnimationActors, runDarkModeAnimation, runLightModeAnimation } from
 type Theme = 'light' | 'dark';
 
 const STORAGE_KEY = 'impulsive-theme';
+const DEFAULT_VERSION_KEY = 'impulsive-theme-default-version';
+const CURRENT_DEFAULT_VERSION = 'light-default-2026-05-19';
 
 const isTheme = (value: string | null): value is Theme =>
   value === 'light' || value === 'dark';
@@ -12,6 +14,13 @@ const getInitialTheme = (): Theme => {
   if (typeof window === 'undefined') return 'light';
 
   try {
+    const defaultVersion = localStorage.getItem(DEFAULT_VERSION_KEY);
+    if (defaultVersion !== CURRENT_DEFAULT_VERSION) {
+      localStorage.setItem(STORAGE_KEY, 'light');
+      localStorage.setItem(DEFAULT_VERSION_KEY, CURRENT_DEFAULT_VERSION);
+      return 'light';
+    }
+
     const storedTheme = localStorage.getItem(STORAGE_KEY);
     if (isTheme(storedTheme)) return storedTheme;
 
@@ -59,6 +68,7 @@ export function useDarkMode() {
 
     try {
       localStorage.setItem(STORAGE_KEY, nextTheme);
+      localStorage.setItem(DEFAULT_VERSION_KEY, CURRENT_DEFAULT_VERSION);
     } catch {
       // The visible theme can still change even if storage is unavailable.
     }

@@ -92,6 +92,19 @@ const hashIp = async (ip, secret) => {
     .join("");
 };
 
+const withAssetCacheHeaders = (response) => {
+  const contentType = response.headers.get("content-type") || "";
+  if (!contentType.includes("text/html")) return response;
+
+  const headers = new Headers(response.headers);
+  headers.set("Cache-Control", "no-cache, max-age=0, must-revalidate");
+  return new Response(response.body, {
+    status: response.status,
+    statusText: response.statusText,
+    headers
+  });
+};
+
 async function saveWaitlistSignup(env, request, payload, email) {
   if (!env.WAITLIST_DB) {
     console.error("Waitlist signup failed", { reason: "missing_d1_binding" });
@@ -260,6 +273,6 @@ export default {
   return handleWaitlist(request, env);
 }
 
-    return env.ASSETS.fetch(request);
+    return withAssetCacheHeaders(await env.ASSETS.fetch(request));
   }
 };

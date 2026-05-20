@@ -1,11 +1,13 @@
 # Privacy
 
-Impulsive is designed as a privacy-first recovery app.
+Impulsive is designed as a privacy-first behaviour-change support tool. It is an early-stage, pre-launch product currently in waitlist phase.
 
 The product is intended to keep patterns, triggers, and reflections private by default. Impulsive does not sell user data and does not use third-party advertising trackers.
 
-The public privacy page is available at https://useimpulsive.com/privacy.html.
+The waitlist collects email addresses for early access, testing, and launch updates. Signups may be stored in Cloudflare D1 or equivalent backend storage, and confirmation email may be sent through a transactional email provider.
 
-The current privacy page is a placeholder. A full privacy policy will be published before the product launches.
+Waitlist removal and email deletion requests can be sent to hello@useimpulsive.com.
 
-Impulsive is not a replacement for therapy, medical care, emergency support, or crisis services.
+The public privacy page is available at https://useimpulsive.com/privacy.html and was last updated on 20 May 2026.
+
+Impulsive is not a medical device, therapy service, diagnosis service, or crisis service. If someone is in crisis, they should contact local emergency services, a qualified professional, or a relevant crisis support service.

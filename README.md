@@ -1,14 +1,16 @@
 # Impulsive Website
 
-Updated Vite React version of the Impulsive landing page.
+The pre-launch landing page and waitlist for Impulsive, a privacy-first behaviour-change support tool.
 
-## What changed
+## Stack
 
-- Converted the older static `frontend` build into the newer Vite React structure from the updated file.
-- Kept the Impulsive landing page content, pastel theme, mobile menu, reveal animations, and waitlist form.
-- Replaced externally hosted image links with local assets in `public/` so the site works without image-hosting dependencies.
-- Preserved the Cloudflare Pages waitlist function from the original repository at `functions/api/waitlist.js`.
-- Added Cloudflare deployment headers and redirects in `public/_headers` and `public/_redirects` so they are copied into `dist` during build.
+- Vite + React + TypeScript (`src/`)
+- Static assets in `public/`
+- Cloudflare Worker with Static Assets binding (`src/worker.js`, `wrangler.toml`)
+- Cloudflare D1 for the waitlist database
+- Brevo (optional) for transactional confirmation email
+
+The legacy static site is kept under `frontend/` for reference only — see [`frontend/LEGACY.txt`](frontend/LEGACY.txt). It is not part of the current build.
 
 ## Local setup
 
@@ -18,9 +20,9 @@ npm run db:apply:local
 npm run dev
 ```
 
-Open `http://127.0.0.1:8787`. This uses Wrangler so `/api/waitlist` runs through the same Cloudflare Worker and D1 binding as production.
+`npm run dev` builds the React app and runs Wrangler with the local D1 binding so `/api/waitlist` behaves the same as production.
 
-`npm run dev:vite` starts the older Vite/Express development server. Do not use that command to test waitlist storage because its `/api/waitlist` route is only a local stub.
+For quick frontend-only iteration without Wrangler, `npm run dev:vite` starts an Express + Vite middleware server on `http://localhost:3000`. Its `/api/waitlist` route is a local stub — it always returns success and does not write to a database. Use Wrangler-based `npm run dev` to test the real waitlist flow.
 
 ## Production build
 
@@ -29,42 +31,23 @@ npm run build
 npm run preview
 ```
 
-## Cloudflare deployment notes
+## Cloudflare deployment
 
-This project is deployed as a Cloudflare Worker with static assets, configured in `wrangler.toml`.
+This project deploys as a Cloudflare Worker with Static Assets. Configuration is in `wrangler.toml`.
 
-Before deploying a new D1 database, apply the schema:
+Security headers (including CSP, HSTS, Referrer-Policy, Permissions-Policy, X-Frame-Options) are applied directly inside `src/worker.js` via `applySecurityHeaders()`, because Cloudflare Workers Static Assets does not automatically apply the `public/_headers` file. The `_headers` file is kept as a fallback in case the project is ever served via Cloudflare Pages.
 
-```bash
-npm run db:apply:remote
-```
-
-If the remote D1 database was created before `page`, `referrer`, `status`, `updated_at`, and `confirmation_sent_at` existed, run:
+### Verifying security headers in production
 
 ```bash
-npm run db:migrate:remote
-npm run db:normalise:remote
+curl -I https://useimpulsive.com/
+curl -I https://useimpulsive.com/privacy.html
+curl -I https://useimpulsive.com/terms.html
 ```
 
-## Waitlist production setup
+Each response should include `Content-Security-Policy`, `Strict-Transport-Security`, `X-Content-Type-Options: nosniff`, `X-Frame-Options: DENY`, `Referrer-Policy`, and `Permissions-Policy`.
 
-Required Cloudflare environment variables and bindings:
-
-- `WAITLIST_DB` D1 binding
-- `WAITLIST_IP_HASH_SECRET`
-
-Optional email confirmation variables:
-
-- `BREVO_API_KEY`
-- `WAITLIST_FROM_EMAIL`
-- `WAITLIST_FROM_NAME=Impulsive`
-- `WAITLIST_ADMIN_EMAIL`
-
-Optional waitlist export variable:
-
-- `WAITLIST_ADMIN_TOKEN`
-
-### Cloudflare D1
+### D1 (waitlist database)
 
 1. Create a D1 database for waitlist signups.
 2. Apply the schema file at `db/schema.sql`.
@@ -72,20 +55,31 @@ Optional waitlist export variable:
 4. Run `npm run db:apply:remote` for a new database, or `npm run db:migrate:remote` then `npm run db:normalise:remote` for an older existing database.
 5. Deploy after the binding and schema are in place.
 
-### Brevo
+### Required Worker bindings
 
-1. Create or log into Brevo.
-2. Verify the sender email or domain.
-3. Create a transactional API key.
-4. Add `BREVO_API_KEY` to Cloudflare Pages environment variables.
-5. Add `WAITLIST_FROM_EMAIL` and `WAITLIST_FROM_NAME`.
+- `WAITLIST_DB` — D1 binding
+- `WAITLIST_IP_HASH_SECRET` — secret used to hash the submitter IP before storage
 
-### Google Search Console
+### Optional Worker variables
+
+Transactional confirmation email (Brevo):
+
+- `BREVO_API_KEY`
+- `WAITLIST_FROM_EMAIL`
+- `WAITLIST_FROM_NAME` (defaults to "Impulsive")
+- `WAITLIST_ADMIN_EMAIL`
+
+Admin waitlist export:
+
+- `WAITLIST_ADMIN_TOKEN`
+
+## Abuse protection (TODO before broad public traffic)
+
+The waitlist endpoint currently relies on a honeypot field, a minimum form-fill time, a hashed-IP rate column, and a small body size limit. Before broad public traffic, add Cloudflare Turnstile on the form or a Cloudflare rate limiting / WAF rule on `/api/waitlist`.
+
+## Search Console
 
 1. Verify `https://useimpulsive.com`.
 2. Submit `https://useimpulsive.com/sitemap.xml`.
 3. Use URL Inspection for the homepage and request indexing.
-4. Check that `/robots.txt`, `/sitemap.xml`, `/llms.txt`, and `/ai/home.md` return HTTP 200.
-5. Search `site:useimpulsive.com` after Google recrawls.
-
-This does not guarantee ranking. The goal is to make the site indexable and strong for branded search first, then long-tail search later.
+4. Confirm `/robots.txt`, `/sitemap.xml`, `/llms.txt`, and `/ai/home.md` return HTTP 200.

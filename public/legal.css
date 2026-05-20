@@ -21,6 +21,13 @@ h1 {
   margin-bottom: 8px;
 }
 
+h2 {
+  font-size: 1.18rem;
+  margin-top: 28px;
+  margin-bottom: 8px;
+  color: #1f1a23;
+}
+
 p.muted {
   color: #5D5360;
   margin-top: 0;

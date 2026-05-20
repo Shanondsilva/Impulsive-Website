@@ -1,10 +1,12 @@
 # Impulsive
 
-Impulsive is a privacy-first recovery and behaviour-change app for difficult compulsive habits. It is designed to support impulse control with shame-free support, calm prompts, and structured reflection.
+Impulsive is a privacy-first behaviour-change support tool designed for difficult compulsive habits, impulse control, and shame-free support. It is intended to help people pause, redirect, and reflect during high-risk urge moments with calm prompts and structured reflection.
 
-Impulsive is launching soon and is currently waitlist-based. People can join the waitlist to hear when access opens.
+Impulsive is currently early-stage and pre-launch. The product is waitlist-based. People can join the waitlist to be notified about early access, testing, or launch updates.
 
-Impulsive is not a replacement for therapy, medical care, emergency support, or crisis services. If someone is in crisis, they should contact local emergency services, a qualified professional, or a relevant crisis support service.
+Impulsive is not a medical device, therapy service, diagnosis service, or crisis service. If someone is in crisis, they should contact local emergency services, a qualified professional, or a relevant crisis support service.
+
+Some screens, metrics, and recovery indicators shown on the marketing site are prototype previews with example data, not real user outcomes or clinical results. Nexus is described on the site as a planned future feature, not a current live capability.
 
 Markdown mirrors for AI discovery:
 

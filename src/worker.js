@@ -10,42 +10,86 @@ Allow: /
 
 Sitemap: https://useimpulsive.com/sitemap.xml
 `;
-const CONFIRMATION_SUBJECT = "Thank you for joining the Impulsive waitlist";
-const CONFIRMATION_TEXT = `Hi,
+const CONFIRMATION_SUBJECT = "You're on the Impulsive waitlist";
+const CONFIRMATION_TEXT = `Thank you for joining the Impulsive waitlist.
 
-Thank you for signing up for Impulsive.
+Impulsive is being built as a privacy-first behaviour-change support tool for people who want help pausing, redirecting, and reflecting during high-risk urge moments.
 
-We will let you know as soon as the app drops on the Google Play Store and Apple App Store.
+We will let you know when early access, testing, or launch updates are ready.
 
-Thank you for your support. It means a lot to me as a single developer.
+Impulsive is not a medical device, therapy service, or crisis service. If you feel at immediate risk or need urgent support, please contact local emergency services or a qualified support provider.
 
-Shanon
-Impulsive`;
+If you ever want to leave the waitlist or have your email removed, just reply to this message or write to hello@useimpulsive.com.
+
+Thank you,
+Shanon DSilva
+Founder, Impulsive`;
 const CONFIRMATION_HTML = `<!doctype html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Thank you for joining the Impulsive waitlist</title>
+  <title>You're on the Impulsive waitlist</title>
 </head>
 <body style="font-family: Arial, sans-serif; color: #2D2730; line-height: 1.6;">
   <main>
-    <p>Hi,</p>
-    <p>Thank you for signing up for Impulsive.</p>
-    <p>We will let you know as soon as the app drops on the Google Play Store and Apple App Store.</p>
-    <p>Thank you for your support. It means a lot to me as a single developer.</p>
-    <p>Shanon<br />Impulsive</p>
+    <p>Thank you for joining the Impulsive waitlist.</p>
+    <p>Impulsive is being built as a privacy-first behaviour-change support tool for people who want help pausing, redirecting, and reflecting during high-risk urge moments.</p>
+    <p>We will let you know when early access, testing, or launch updates are ready.</p>
+    <p>Impulsive is not a medical device, therapy service, or crisis service. If you feel at immediate risk or need urgent support, please contact local emergency services or a qualified support provider.</p>
+    <p>If you ever want to leave the waitlist or have your email removed, just reply to this message or write to <a href="mailto:hello@useimpulsive.com">hello@useimpulsive.com</a>.</p>
+    <p>Thank you,<br />Shanon DSilva<br />Founder, Impulsive</p>
   </main>
 </body>
 </html>`;
 
-const json = (payload, status = 200) =>
-  new Response(JSON.stringify(payload), {
-    status,
-    headers: {
-      "Content-Type": "application/json; charset=utf-8",
-      "Cache-Control": "no-store"
-    }
+// Cloudflare Workers Static Assets does not apply public/_headers automatically.
+// Security headers are attached here so they cover /, /privacy.html, /terms.html,
+// asset responses, and waitlist JSON responses.
+//
+// CSP notes:
+// - 'unsafe-inline' for script-src is required because index.html contains an inline
+//   theme-detection script and two inline JSON-LD blocks.
+// - 'unsafe-inline' for style-src is required because the React app uses inline style
+//   attributes (style={{ ... }}) for per-card CSS variables, and the legal pages also
+//   use a small amount of inline styling.
+// - Google Fonts is allow-listed for style-src and font-src.
+const SECURITY_HEADERS = {
+  "X-Content-Type-Options": "nosniff",
+  "X-Frame-Options": "DENY",
+  "Referrer-Policy": "strict-origin-when-cross-origin",
+  "Permissions-Policy": "camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()",
+  "Cross-Origin-Opener-Policy": "same-origin",
+  "Cross-Origin-Resource-Policy": "same-origin",
+  "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+  "Content-Security-Policy": [
+    "default-src 'self'",
+    "base-uri 'self'",
+    "object-src 'none'",
+    "frame-ancestors 'none'",
+    "img-src 'self' data:",
+    "script-src 'self' 'unsafe-inline'",
+    "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+    "font-src 'self' https://fonts.gstatic.com",
+    "connect-src 'self'",
+    "form-action 'self'",
+    "upgrade-insecure-requests"
+  ].join("; ")
+};
+
+function applySecurityHeaders(headers) {
+  for (const [name, value] of Object.entries(SECURITY_HEADERS)) {
+    headers.set(name, value);
+  }
+}
+
+const json = (payload, status = 200) => {
+  const headers = new Headers({
+    "Content-Type": "application/json; charset=utf-8",
+    "Cache-Control": "no-store"
   });
+  applySecurityHeaders(headers);
+  return new Response(JSON.stringify(payload), { status, headers });
+};
 
 const normaliseEmail = (value) => String(value || "").trim().toLowerCase();
 const cleanText = (value, maxLength = 500) => {
@@ -94,10 +138,14 @@ const hashIp = async (ip, secret) => {
 
 const withAssetCacheHeaders = (response) => {
   const contentType = response.headers.get("content-type") || "";
-  if (!contentType.includes("text/html")) return response;
-
   const headers = new Headers(response.headers);
-  headers.set("Cache-Control", "no-cache, max-age=0, must-revalidate");
+
+  applySecurityHeaders(headers);
+
+  if (contentType.includes("text/html")) {
+    headers.set("Cache-Control", "no-cache, max-age=0, must-revalidate");
+  }
+
   return new Response(response.body, {
     status: response.status,
     statusText: response.statusText,
@@ -189,6 +237,10 @@ async function markConfirmationSent(env, email) {
     .run();
 }
 
+// TODO: Before broad public traffic, add Cloudflare Turnstile verification on the
+// waitlist form or attach a Cloudflare rate-limiting / WAF rule to this endpoint.
+// Today the endpoint relies on: HTTPS-only canonical host, body-size cap,
+// honeypot field, minimum form-fill time, and IP-hash storage.
 async function handleWaitlist(request, env) {
   if (request.method !== "POST") {
     return json({ error: "Method not allowed" }, 405);
@@ -261,12 +313,12 @@ export default {
     }
 
     if (url.pathname === "/robots.txt") {
-      return new Response(ROBOTS_TXT, {
-        headers: {
-          "Content-Type": "text/plain; charset=utf-8",
-          "Cache-Control": "public, max-age=3600"
-        }
+      const headers = new Headers({
+        "Content-Type": "text/plain; charset=utf-8",
+        "Cache-Control": "public, max-age=3600"
       });
+      applySecurityHeaders(headers);
+      return new Response(ROBOTS_TXT, { headers });
     }
 
     if (url.pathname === "/api/waitlist" || url.pathname === "/api/waitlist/") {

@@ -1,0 +1,1 @@
+<!-- LEGACY: This is the original static HTML site, predating the Vite+React app in src/. It is NOT used by the current build (vite.config.ts builds from src/). Do not mix with src/. -->

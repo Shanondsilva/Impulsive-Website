@@ -8,30 +8,34 @@ const SUCCESS_MESSAGE = "Thanks. You're on the waitlist.";
 const DUPLICATE_MESSAGE = "You're already on the waitlist.";
 const INVALID_EMAIL_MESSAGE = "Please enter a valid email address.";
 const GENERIC_FAILURE_MESSAGE = "Sorry, we could not add you to the waitlist right now. Please try again later.";
-const CONFIRMATION_SUBJECT = "Thank you for joining the Impulsive waitlist";
-const CONFIRMATION_TEXT = `Hi,
+const CONFIRMATION_SUBJECT = "You're on the Impulsive waitlist";
+const CONFIRMATION_TEXT = `Thank you for joining the Impulsive waitlist.
 
-Thank you for signing up for Impulsive.
+Impulsive is being built as a privacy-first behaviour-change support tool for people who want help pausing, redirecting, and reflecting during high-risk urge moments.
 
-We will let you know as soon as the app drops on the Google Play Store and Apple App Store.
+We will let you know when early access, testing, or launch updates are ready.
 
-Thank you for your support. It means a lot to me as a single developer.
+Impulsive is not a medical device, therapy service, or crisis service. If you feel at immediate risk or need urgent support, please contact local emergency services or a qualified support provider.
 
-Shanon
-Impulsive`;
+If you ever want to leave the waitlist or have your email removed, just reply to this message or write to hello@useimpulsive.com.
+
+Thank you,
+Shanon DSilva
+Founder, Impulsive`;
 const CONFIRMATION_HTML = `<!doctype html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Thank you for joining the Impulsive waitlist</title>
+  <title>You're on the Impulsive waitlist</title>
 </head>
 <body style="font-family: Arial, sans-serif; color: #2D2730; line-height: 1.6;">
   <main>
-    <p>Hi,</p>
-    <p>Thank you for signing up for Impulsive.</p>
-    <p>We will let you know as soon as the app drops on the Google Play Store and Apple App Store.</p>
-    <p>Thank you for your support. It means a lot to me as a single developer.</p>
-    <p>Shanon<br />Impulsive</p>
+    <p>Thank you for joining the Impulsive waitlist.</p>
+    <p>Impulsive is being built as a privacy-first behaviour-change support tool for people who want help pausing, redirecting, and reflecting during high-risk urge moments.</p>
+    <p>We will let you know when early access, testing, or launch updates are ready.</p>
+    <p>Impulsive is not a medical device, therapy service, or crisis service. If you feel at immediate risk or need urgent support, please contact local emergency services or a qualified support provider.</p>
+    <p>If you ever want to leave the waitlist or have your email removed, just reply to this message or write to <a href="mailto:hello@useimpulsive.com">hello@useimpulsive.com</a>.</p>
+    <p>Thank you,<br />Shanon DSilva<br />Founder, Impulsive</p>
   </main>
 </body>
 </html>`;

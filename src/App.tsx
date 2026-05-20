@@ -103,6 +103,7 @@ const SECTION_NAV = [
   { id: 'waitlist',      label: 'Waitlist' },
 ] as const;
 
+
 export default function App() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [flippedCards, setFlippedCards] = useState<Set<string>>(new Set());
@@ -188,6 +189,15 @@ export default function App() {
   const handleMenuToggle = () => setMenuOpen(!menuOpen);
   const closeMenu = () => setMenuOpen(false);
 
+  useEffect(() => {
+    if (!menuOpen) return;
+    const handleKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setMenuOpen(false);
+    };
+    window.addEventListener("keydown", handleKey);
+    return () => window.removeEventListener("keydown", handleKey);
+  }, [menuOpen]);
+
   const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!formRef.current) return;
@@ -235,6 +245,15 @@ export default function App() {
   return (
     <div className={menuOpen ? "menu-open" : ""}>
       <a className="skip-link" href="#main">Skip to content</a>
+
+      <button
+        type="button"
+        className="nav-backdrop"
+        aria-label="Close menu"
+        tabIndex={menuOpen ? 0 : -1}
+        onClick={closeMenu}
+        hidden={!menuOpen}
+      />
 
       <header className={`site-header ${isScrolled ? "is-scrolled" : ""}`} data-header>
         <nav className="nav" aria-label="Primary navigation">
@@ -314,6 +333,7 @@ export default function App() {
             <div className="hero-visual reveal" aria-label="Impulsive app preview">
               <div className="orbit-card card-calm">One clear recovery action</div>
               <div className="orbit-card card-trigger">No paywall in a trigger</div>
+              <p className="mockup-disclaimer" aria-label="Mockup disclaimer">Prototype preview with example data.</p>
               <div className="phone">
                 <div className="phone-speaker" aria-hidden="true"></div>
                 <div className="app-screen">
@@ -383,7 +403,7 @@ export default function App() {
           </div>
         </section>
 
-        <section className="section urge-loop-section" id="urge-loop" aria-labelledby="urge-loop-title">
+                <section className="section urge-loop-section" id="urge-loop" aria-labelledby="urge-loop-title">
           <div className="container">
             <div className="section-heading urge-loop-heading reveal">
               <p className="eyebrow">The real app loop</p>
@@ -717,17 +737,17 @@ export default function App() {
                     <span className="soft-icon image-icon" aria-hidden="true" data-fallable="">
                       <img src="/images/icons/impulsive-nexus.png" alt="" />
                     </span>
-                    <span className="status-pill">Engine</span>
+                    <span className="status-pill status-pill--future">Coming later</span>
                   </div>
                   <h3>Nexus</h3>
-                  <p>The adaptive engine that learns what helps and routes the next best support.</p>
+                  <p>An adaptive engine that is designed to learn what helps and route the next best support, planned for a future release.</p>
                   <ul className="path-detail-list" aria-label="Nexus details">
                     <li>Not a public path menu</li>
-                    <li>Coordinates Mind, Body, Soul, Focus, and games</li>
-                    <li>Becomes more personal over time</li>
+                    <li>Will coordinate Mind, Body, Soul, Focus, and games</li>
+                    <li>Designed to become more personal over time</li>
                   </ul>
                   <span className="card-flip-hint" aria-hidden="true">
-                    <span>How it works</span>
+                    <span>How it will work</span>
                     <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 12h18M13 5l7 7-7 7" /></svg>
                   </span>
                 </article>
@@ -737,16 +757,16 @@ export default function App() {
                     <span className="soft-icon image-icon" aria-hidden="true">
                       <img src="/images/icons/impulsive-nexus.png" alt="" />
                     </span>
-                    <span className="status-pill">Engine</span>
+                    <span className="status-pill status-pill--future">Coming later</span>
                   </div>
                   <h3>Nexus</h3>
-                  <p className="card-back-tag">Nexus uses trigger patterns, past success, urge ratings, and fallback history to recommend one clear action.</p>
-                  <p className="card-back-section-h">How it works</p>
+                  <p className="card-back-tag">Nexus is designed to use private trigger patterns, past success, urge ratings, and fallback history to recommend one clear action. It is a planned future feature, not a current live capability.</p>
+                  <p className="card-back-section-h">How it will work</p>
                   <ol className="card-back-steps">
-                    <li>It reads the private pattern: trigger windows, past success, urge ratings, and fallback history.</li>
-                    <li>It coordinates Mind, Body, Soul, Focus, and recovery games behind the scenes.</li>
-                    <li>It recommends one clear action instead of showing every option at once.</li>
-                    <li>It helps Impulsive become more personal over time.</li>
+                    <li>It will read the private pattern: trigger windows, past success, urge ratings, and fallback history.</li>
+                    <li>It will coordinate Mind, Body, Soul, Focus, and recovery games behind the scenes.</li>
+                    <li>It will recommend one clear action instead of showing every option at once.</li>
+                    <li>It is designed to help Impulsive become more personal over time.</li>
                   </ol>
                   <div className="card-back-diagram">
                     <svg viewBox="0 0 240 200" width="100%" role="img" aria-label="A four step ladder showing Mind only at levels one and two, previews at three to five, two of three paths at six and seven, and full Nexus at level eight and beyond.">
@@ -1446,7 +1466,7 @@ export default function App() {
               </details>
               <details className="faq-item">
                 <summary>Is my data private?</summary>
-                <p>Yes. Your patterns, triggers, and reflections stay on your device by default. We do not sell your data and we do not use advertising trackers. The only time data leaves your device is if you opt into Cloud Sync — an explicit choice, not a default.</p>
+                <p>Yes. Your patterns, triggers, and reflections are designed to stay on your device by default. We do not sell your data and we do not use advertising trackers. Any future backup or sync feature would be optional, opt-in, and clearly explained before use — never enabled by default.</p>
               </details>
               <details className="faq-item">
                 <summary>Will I be asked to pay during a trigger?</summary>
@@ -1491,7 +1511,7 @@ export default function App() {
                   {formStatus.message}
                 </p>
               )}
-              <p className="waitlist-privacy-note">Your email is only used for Impulsive updates.</p>
+              <p className="waitlist-privacy-note">Your email is only used for Impulsive updates. Want to leave the waitlist? Email <a href="mailto:hello@useimpulsive.com">hello@useimpulsive.com</a>.</p>
             </form>
           </div>
         </section>
@@ -1528,6 +1548,7 @@ export default function App() {
         </div>
         <div className="container footer-base">
           <p className="footer-disclaimer">Impulsive is an early-stage behaviour-change support product. It is not a replacement for professional medical or mental health care.</p>
+          <p className="footer-removal-note">Want to leave the waitlist or request deletion of your email? Email <a href="mailto:hello@useimpulsive.com">hello@useimpulsive.com</a>.</p>
           <p>&copy; {new Date().getFullYear()} Impulsive. All rights reserved.</p>
         </div>
       </footer>

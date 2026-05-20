@@ -906,30 +906,27 @@ export default function App() {
         </section>
 
 
-        <section className="section principles-section" id="principles" aria-labelledby="principles-title">
-          <div className="container">
-            <div className="section-heading principles-section-heading">
-              <p className="eyebrow"><strong>PRINCIPLES</strong></p>
-              <h2 id="principles-title"><strong>Built without shame loops.</strong></h2>
-              <p><strong>No humiliation. No panic design. No fake scores. No trigger paywalls.</strong></p>
-              <p><strong>Help first. Everything else comes after.</strong></p>
-            </div>
-          </div>
-        </section>
+        <section className="section credibility-dual-section" id="principles" aria-labelledby="principles-title">
+          <div className="container reveal">
+            <div className="credibility-dual-card">
+              <article className="credibility-pane credibility-pane--principles" aria-labelledby="principles-title">
+                <p className="eyebrow"><strong>PRINCIPLES</strong></p>
+                <h2 id="principles-title"><strong>Built without shame loops.</strong></h2>
+                <p className="credibility-principles-line"><strong>No shame streaks. No fake scores. No trigger paywalls. Private by design.</strong></p>
+              </article>
 
-        <section className="section about-section" id="about" aria-labelledby="about-title">
-          <div className="container">
-            <div className="section-heading about-section-heading">
-              <p className="eyebrow">ABOUT</p>
-              <h2 id="about-title">Built carefully for private behaviour change.</h2>
-            </div>
-            <div className="about-credibility-lines reveal">
-              <p><strong>Privacy-first:</strong> sensitive recovery records stay private and local-first by default.</p>
-              <p><strong>Careful language:</strong> no cure claims, fake percentages, or medical promises.</p>
-              <p><strong>Review-ready:</strong> clear enough for advisors, clinicians, and endorsement reviewers to understand.</p>
-            </div>
-            <div className="about-footer-row about-footer-row--disclaimer">
-              <p className="about-disclaimer">Impulsive is not a substitute for therapy, diagnosis, crisis support, or professional medical advice. If you are in crisis, please contact your GP, a qualified therapist, or the Samaritans on 116 123.</p>
+              <article className="credibility-pane credibility-pane--about" id="about" aria-labelledby="about-title">
+                <p className="eyebrow">ABOUT</p>
+                <h2 id="about-title">Built carefully for private behaviour change.</h2>
+                <div className="about-credibility-lines">
+                  <p><strong>Privacy-first:</strong> sensitive recovery records stay private and local-first by default.</p>
+                  <p><strong>Careful language:</strong> no cure claims, fake percentages, or medical promises.</p>
+                  <p><strong>Review-ready:</strong> clear enough for advisors, clinicians, and endorsement reviewers to understand.</p>
+                </div>
+                <div className="about-footer-row about-footer-row--disclaimer">
+                  <p className="about-disclaimer">Impulsive is not a substitute for therapy, diagnosis, crisis support, or professional medical advice. If you are in crisis, please contact your GP, a qualified therapist, or the Samaritans on 116 123.</p>
+                </div>
+              </article>
             </div>
           </div>
         </section>

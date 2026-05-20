@@ -10180,3 +10180,141 @@ p {
     font-size: clamp(1.82rem, 8.4vw, 2.08rem);
   }
 }
+
+/* ===== Unified Principles + About credibility card ===== */
+
+.credibility-dual-section {
+  padding-top: clamp(42px, 4.4vw, 68px);
+  padding-bottom: clamp(48px, 5vw, 74px);
+}
+
+.credibility-dual-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 1px minmax(0, 1fr);
+  align-items: stretch;
+  border: 1px solid var(--color-border);
+  border-radius: clamp(20px, 2.2vw, 30px);
+  background:
+    radial-gradient(circle at 8% 12%, rgba(147, 233, 190, 0.08), transparent 36%),
+    radial-gradient(circle at 94% 88%, rgba(208, 195, 241, 0.08), transparent 38%),
+    var(--glass-bg);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.18) inset,
+    0 20px 52px rgba(45, 39, 48, 0.12);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  overflow: hidden;
+}
+
+.credibility-dual-card::before {
+  content: "";
+  grid-column: 2;
+  grid-row: 1;
+  width: 1px;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.10);
+}
+
+.credibility-pane {
+  min-width: 0;
+  padding: clamp(28px, 3vw, 42px);
+}
+
+.credibility-pane .eyebrow {
+  margin-bottom: 10px;
+}
+
+.credibility-pane h2 {
+  margin-bottom: 14px;
+  font-size: clamp(1.58rem, 2.35vw, 2.15rem);
+  line-height: 1.12;
+}
+
+.credibility-principles-line {
+  max-width: 40ch;
+  margin: 0;
+  font-size: clamp(1rem, 1.06vw, 1.12rem);
+  line-height: 1.56;
+}
+
+.credibility-pane--about .about-credibility-lines {
+  max-width: 46ch;
+  display: grid;
+  gap: 12px;
+  margin: 0;
+}
+
+.credibility-pane--about .about-credibility-lines p {
+  margin: 0;
+  font-size: clamp(0.98rem, 1.02vw, 1.08rem);
+  line-height: 1.58;
+}
+
+.credibility-pane--about .about-footer-row--disclaimer {
+  max-width: 46ch;
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.credibility-pane--about .about-disclaimer {
+  margin: 0;
+  font-size: 0.78rem;
+  line-height: 1.52;
+  opacity: 0.82;
+}
+
+[data-theme="dark"] .credibility-dual-card {
+  border-color: rgba(247, 242, 255, 0.16);
+  background:
+    radial-gradient(circle at 8% 12%, rgba(147, 233, 190, 0.10), transparent 36%),
+    radial-gradient(circle at 94% 88%, rgba(208, 195, 241, 0.10), transparent 40%),
+    linear-gradient(160deg, rgba(20, 17, 31, 0.92), rgba(16, 13, 24, 0.94));
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.06) inset,
+    0 26px 64px rgba(0, 0, 0, 0.34);
+}
+
+[data-theme="dark"] .credibility-dual-card::before {
+  background: rgba(247, 242, 255, 0.14);
+}
+
+[data-theme="dark"] .credibility-pane--about .about-footer-row--disclaimer {
+  border-top-color: rgba(247, 242, 255, 0.14);
+}
+
+@media (max-width: 900px) {
+  .credibility-dual-card {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1px auto;
+  }
+
+  .credibility-dual-card::before {
+    grid-column: 1;
+    grid-row: 2;
+    width: 100%;
+    height: 1px;
+  }
+
+  .credibility-pane {
+    padding: clamp(24px, 4.8vw, 34px);
+  }
+}
+
+@media (max-width: 640px) {
+  .credibility-dual-section {
+    padding-top: 34px;
+    padding-bottom: 44px;
+  }
+
+  .credibility-pane h2 {
+    font-size: clamp(1.34rem, 6vw, 1.7rem);
+    margin-bottom: 12px;
+  }
+
+  .credibility-principles-line,
+  .credibility-pane--about .about-credibility-lines p {
+    font-size: 0.95rem;
+    line-height: 1.52;
+  }
+}

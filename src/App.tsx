@@ -506,7 +506,7 @@ export default function App() {
                   <span className="status-pill">Starts first</span>
                 </div>
                 <h3>Mind</h3>
-                <p>Pause the thought before it becomes the loop.</p>
+                <p>Mind is the Psychological framework of Impulsive: the first layer that helps you pause, name the urge, understand the pattern behind it, and choose one better action before the loop becomes automatic.</p>
               </article>
 
               <article className="path-card physical reveal">
@@ -517,7 +517,7 @@ export default function App() {
                   <span className="status-pill">Unlocks later</span>
                 </div>
                 <h3>Body</h3>
-                <p>Move your body before the environment wins.</p>
+                <p>Body is the Physical system: movement-based support for the moments when thinking is not enough, helping you change state, leave the trigger environment, and interrupt the loop through action.</p>
               </article>
 
               <article className="path-card spiritual reveal">
@@ -528,7 +528,7 @@ export default function App() {
                   <span className="status-pill">Optional</span>
                 </div>
                 <h3>Soul</h3>
-                <p>Return to meaning when the moment feels loud.</p>
+                <p>Soul is the optional Spiritual alignment path, built for users who want values, reflection, prayer, faith, or recommitment to help them return to meaning when a difficult moment feels loud.</p>
               </article>
 
               <article className="path-card synchrology reveal">
@@ -539,7 +539,7 @@ export default function App() {
                   <span className="status-pill status-pill--future">Coming later</span>
                 </div>
                 <h3>Nexus</h3>
-                <p>Route the next best action from what actually helps.</p>
+                <p>Nexus is the Synchrology layer: the adaptive system designed to learn what actually helps across Mind, Body, Soul, and recovery tools, then route one clear next action at the right moment.</p>
               </article>
             </div>
           </div>

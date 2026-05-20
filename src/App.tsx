@@ -909,10 +909,10 @@ export default function App() {
         <section className="section principles-section" id="principles" aria-labelledby="principles-title">
           <div className="container">
             <div className="section-heading principles-section-heading">
-              <p className="eyebrow">Principles</p>
-              <h2 id="principles-title">Built without shame loops</h2>
-              <p>Impulsive is designed for the moment someone is trying to regain control, not prove they are perfect. The product should lower pressure, make the next action clear, and protect the user from feeling worse when the loop has already started.</p>
-              <p>No shame streaks. No fake scores. No trigger paywalls. Private by design. These are not slogans; they are product rules for every recovery flow, unlock moment, game, and progress screen.</p>
+              <p className="eyebrow"><strong>PRINCIPLES</strong></p>
+              <h2 id="principles-title"><strong>Built without shame loops.</strong></h2>
+              <p><strong>No humiliation. No panic design. No fake scores. No trigger paywalls.</strong></p>
+              <p><strong>Help first. Everything else comes after.</strong></p>
             </div>
           </div>
         </section>
@@ -921,33 +921,14 @@ export default function App() {
           <div className="container">
             <div className="section-heading about-section-heading">
               <p className="eyebrow">About</p>
-              <h2 id="about-title">Built carefully for private behaviour change</h2>
-              <p>Impulsive is being built with a privacy-first, local-first direction and careful product boundaries for difficult moments.</p>
+              <h2 id="about-title">Built carefully for private behaviour change.</h2>
             </div>
-            <div className="credibility-grid">
-              <article className="credibility-card reveal">
-                <span className="credibility-num" aria-hidden="true">01</span>
-                <h3>Privacy-first direction</h3>
-                <p>Sensitive recovery records should stay private and local by default unless future backup is clearly enabled by the user.</p>
-              </article>
-              <article className="credibility-card reveal">
-                <span className="credibility-num" aria-hidden="true">02</span>
-                <h3>Local-first product logic</h3>
-                <p>Progress, game records, urge ratings, safe exits, and recovery notes are designed around private on-device tracking first.</p>
-              </article>
-              <article className="credibility-card reveal">
-                <span className="credibility-num" aria-hidden="true">03</span>
-                <h3>Careful language</h3>
-                <p>Impulsive avoids cure claims and medical promises. It explains behaviour support honestly.</p>
-              </article>
-              <article className="credibility-card reveal">
-                <span className="credibility-num" aria-hidden="true">04</span>
-                <h3>Ready for proper review</h3>
-                <p>The product is structured so clinicians, advisors, reviewers, or endorsing bodies can understand the recovery loop, boundaries, and safety logic clearly.</p>
-              </article>
+            <div className="about-credibility-lines reveal">
+              <p><strong>Privacy-first:</strong> sensitive recovery records stay private and local-first by default.</p>
+              <p><strong>Careful language:</strong> no cure claims, fake percentages, or medical promises.</p>
+              <p><strong>Review-ready:</strong> clear enough for advisors, clinicians, and endorsement reviewers to understand.</p>
             </div>
-            <div className="about-footer-row">
-              <p className="about-london-note">Built in London as an early-stage recovery support product.</p>
+            <div className="about-footer-row about-footer-row--disclaimer">
               <p className="about-disclaimer">Impulsive is not a substitute for therapy, diagnosis, crisis support, or professional medical advice. If you are in crisis, please contact your GP, a qualified therapist, or the Samaritans on 116 123.</p>
             </div>
           </div>

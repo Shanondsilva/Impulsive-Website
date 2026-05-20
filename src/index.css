@@ -8857,6 +8857,25 @@ p {
   margin-bottom: 52px;
 }
 
+.about-credibility-lines {
+  max-width: 900px;
+  display: grid;
+  gap: 22px;
+  margin: 0 auto 52px;
+}
+
+.about-credibility-lines p {
+  margin: 0;
+  color: var(--color-muted);
+  font-size: clamp(1.05rem, 1.55vw, 1.28rem);
+  line-height: 1.65;
+}
+
+.about-credibility-lines strong {
+  color: var(--color-text);
+  font-weight: 700;
+}
+
 /* ── 2×2 credibility card grid ── */
 .credibility-grid {
   display: grid;
@@ -8938,6 +8957,12 @@ p {
   line-height: 1.58;
 }
 
+.about-footer-row--disclaimer {
+  max-width: 900px;
+  grid-template-columns: 1fr;
+  margin-inline: auto;
+}
+
 /* ─── Dark mode — About / Credibility ────────────────────────────────────── */
 
 [data-theme="dark"] .credibility-card {
@@ -8984,11 +9009,24 @@ p {
   color: var(--text-muted-readable);
 }
 
+[data-theme="dark"] .about-credibility-lines p {
+  color: var(--text-muted-readable);
+}
+
+[data-theme="dark"] .about-credibility-lines strong {
+  color: var(--text-strong);
+}
+
 /* ─── Mobile — About / Credibility ──────────────────────────────────────── */
 
 @media (max-width: 640px) {
   .about-section-heading {
     text-align: left;
+    margin-bottom: 36px;
+  }
+
+  .about-credibility-lines {
+    gap: 18px;
     margin-bottom: 36px;
   }
 

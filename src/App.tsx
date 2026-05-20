@@ -97,7 +97,6 @@ const SECTION_NAV = [
   { id: 'invite-unlock', label: 'Invite & Unlock' },
   { id: 'tiers',         label: 'Tiers' },
   { id: 'how-it-works',  label: 'How it works' },
-  { id: 'focus',         label: 'Focus Mode' },
   { id: 'principles',    label: 'Principles' },
   { id: 'about',         label: 'About' },
   { id: 'waitlist',      label: 'Waitlist' },
@@ -1279,101 +1278,6 @@ export default function App() {
           </div>
         </section>
 
-        <section className="section focus-section" id="focus" aria-labelledby="focus-title">
-          <div className="container">
-            <div className="section-heading focus-section-heading">
-              <p className="eyebrow">Focus mode</p>
-              <h2 id="focus-title">Focus Mode that helps you come back</h2>
-              <p>Impulsive Focus is not just a timer. It helps you start, blocks the distractions you choose, gives a recovery flow if you get interrupted, and helps you resume without shame.</p>
-            </div>
-
-            <div className="focus-loop" role="img" aria-label="The Focus Mode loop: Start focus, get interrupted, recover, then resume smoothly">
-              <div className="focus-loop-step">
-                <span className="focus-loop-dot focus-loop-dot--start" aria-hidden="true"></span>
-                <span className="focus-loop-label">Start</span>
-              </div>
-              <span className="focus-loop-connector" aria-hidden="true"></span>
-              <div className="focus-loop-step">
-                <span className="focus-loop-dot focus-loop-dot--interrupt" aria-hidden="true"></span>
-                <span className="focus-loop-label">Interrupt</span>
-              </div>
-              <span className="focus-loop-connector" aria-hidden="true"></span>
-              <div className="focus-loop-step">
-                <span className="focus-loop-dot focus-loop-dot--recover" aria-hidden="true"></span>
-                <span className="focus-loop-label">Recover</span>
-              </div>
-              <span className="focus-loop-connector" aria-hidden="true"></span>
-              <div className="focus-loop-step">
-                <span className="focus-loop-dot focus-loop-dot--resume" aria-hidden="true"></span>
-                <span className="focus-loop-label">Resume</span>
-              </div>
-            </div>
-
-            <div className="focus-mode-grid">
-
-              <article className="focus-mode-card focus-mode-card--standard reveal" style={{ "--mode-color": "var(--focus-color)" } as React.CSSProperties}>
-                <div className="focus-mode-card-top">
-                  <span className="focus-mode-badge">Standard</span>
-                  <span className="focus-mode-available">Always available</span>
-                </div>
-                <h3>Standard Focus</h3>
-                <p>Choose a focus time, block selected distractions, mute interruptions, recover if distracted, and resume smoothly.</p>
-                <div className="focus-mode-best">
-                  <span>Best for</span>
-                  <p>Daily work, study, simple routines, and normal productivity sessions.</p>
-                </div>
-              </article>
-
-              <div className="focus-temp-row">
-                <p className="focus-temp-label">Temperature modes</p>
-                <div className="focus-temp-cards">
-                  <article className="focus-mode-card focus-mode-card--cold reveal" style={{ "--mode-color": "var(--body-color)" } as React.CSSProperties}>
-                    <span className="focus-temp-badge focus-temp-badge--cold">Cold</span>
-                    <h3>Cold Focus</h3>
-                    <p>A gentle, low-pressure start for low-energy days.</p>
-                    <div className="focus-mode-best">
-                      <span>Best for</span>
-                      <p>Getting started when motivation is low.</p>
-                    </div>
-                  </article>
-                  <article className="focus-mode-card focus-mode-card--warm reveal" style={{ "--mode-color": "var(--soul-color)" } as React.CSSProperties}>
-                    <span className="focus-temp-badge focus-temp-badge--warm">Warm</span>
-                    <h3>Warm Focus</h3>
-                    <p>Balanced blocking, normal recovery flow, and everyday focus support.</p>
-                    <div className="focus-mode-best">
-                      <span>Best for</span>
-                      <p>Normal work sessions and repeatable routines.</p>
-                    </div>
-                  </article>
-                  <article className="focus-mode-card focus-mode-card--hot reveal" style={{ "--mode-color": "var(--focus-color)" } as React.CSSProperties}>
-                    <span className="focus-temp-badge focus-temp-badge--hot">Hot</span>
-                    <h3>Hot Focus</h3>
-                    <p>Stricter blocking, harder exit flow, and stronger interruption handling.</p>
-                    <div className="focus-mode-best">
-                      <span>Best for</span>
-                      <p>Deep work, high-priority tasks, and serious focus sessions.</p>
-                    </div>
-                  </article>
-                </div>
-              </div>
-
-              <article className="focus-mode-card focus-mode-card--recovery reveal" style={{ "--mode-color": "var(--brand-glow)" } as React.CSSProperties}>
-                <div className="focus-mode-card-top">
-                  <span className="focus-mode-badge focus-mode-badge--recovery">Recovery</span>
-                  <span className="focus-mode-available focus-mode-available--recovery">Emotionally safe re-entry</span>
-                </div>
-                <h3>Recovery Focus</h3>
-                <p>A short re-entry flow after distraction, built to help you restart without shame or overload.</p>
-                <div className="focus-mode-best">
-                  <span>Best for</span>
-                  <p>Coming back after scrolling, slipping, procrastinating, or losing momentum.</p>
-                </div>
-              </article>
-
-            </div>
-          </div>
-        </section>
-
         <section className="section principles-section" id="principles" aria-labelledby="principles-title">
           <div className="container">
             <div className="section-heading principles-section-heading">
@@ -1532,7 +1436,6 @@ export default function App() {
             <a href="#how-it-works">How it works</a>
             <a href="#paths">Paths</a>
             <a href="#games">Games</a>
-            <a href="#focus">Focus Mode</a>
             <a href="#invite-unlock">Invite &amp; Unlock</a>
           </nav>
           <nav className="footer-nav" aria-label="Support links">

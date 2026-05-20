@@ -5,21 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="Impulsive is a privacy-first recovery and behaviour-change app for difficult compulsive habits. Slow the loop, understand your patterns, and take one better action at the right moment. Launching soon." />
   <meta name="robots" content="index, follow" />
-  <meta name="color-scheme" content="light dark" />
+  <meta name="color-scheme" content="light" />
   <meta name="theme-color" content="#FFF9F1" />
   <script>
-    // Light is the default. Dark only applies if the user has explicitly chosen it.
+    // Every fresh page load starts in light mode.
     (function () {
-      try {
-        var stored = localStorage.getItem("impulsive-theme");
-        var theme = stored === "dark" ? "dark" : "light";
-        document.documentElement.dataset.theme = theme;
-        document.documentElement.style.colorScheme = theme;
-        var meta = document.querySelector('meta[name="theme-color"]');
-        if (meta) meta.setAttribute("content", theme === "dark" ? "#08071A" : "#FFF9F1");
-      } catch (e) {
-        document.documentElement.dataset.theme = "light";
-      }
+      var theme = "light";
+      document.documentElement.dataset.theme = theme;
+      document.documentElement.style.colorScheme = theme;
+      var meta = document.querySelector('meta[name="theme-color"]');
+      if (meta) meta.setAttribute("content", "#FFF9F1");
     })();
   </script>
   <link rel="canonical" href="https://useimpulsive.com/" />

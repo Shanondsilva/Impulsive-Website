@@ -9,14 +9,9 @@ type Theme = 'light' | 'dark';
 
 const STORAGE_KEY = 'impulsive-theme';
 
-// Light is the default. Dark only applies if the user has explicitly chosen it.
+// Every fresh page load starts in light mode.
 const readStoredTheme = (): Theme => {
-  if (typeof window === 'undefined') return 'light';
-  try {
-    return localStorage.getItem(STORAGE_KEY) === 'dark' ? 'dark' : 'light';
-  } catch {
-    return 'light';
-  }
+  return 'light';
 };
 
 const applyTheme = (theme: Theme): void => {

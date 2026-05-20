@@ -920,7 +920,7 @@ export default function App() {
         <section className="section about-section" id="about" aria-labelledby="about-title">
           <div className="container">
             <div className="section-heading about-section-heading">
-              <p className="eyebrow">About</p>
+              <p className="eyebrow">ABOUT</p>
               <h2 id="about-title">Built carefully for private behaviour change.</h2>
             </div>
             <div className="about-credibility-lines reveal">

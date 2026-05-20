@@ -9843,6 +9843,122 @@ p {
   }
 }
 
+/* ===== Compact credibility close: Principles + About ===== */
+
+.principles-section {
+  padding-top: clamp(44px, 4.2vw, 64px);
+  padding-bottom: clamp(26px, 2.6vw, 38px);
+}
+
+.principles-section .principles-section-heading {
+  max-width: 760px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.principles-section .principles-section-heading h2 {
+  font-size: clamp(2rem, 3.9vw, 3rem);
+  line-height: 1.08;
+  margin-bottom: 14px;
+}
+
+.principles-section .principles-section-heading p {
+  max-width: 720px;
+  margin: 0 auto 8px;
+  font-size: clamp(0.98rem, 1.05vw, 1.08rem);
+  line-height: 1.52;
+}
+
+.about-section {
+  padding-top: clamp(22px, 2.2vw, 34px);
+  padding-bottom: clamp(44px, 4vw, 62px);
+  border-top: 1px solid rgba(147, 233, 190, 0.12);
+  background: linear-gradient(180deg, rgba(147, 233, 190, 0.04), transparent 38%);
+}
+
+.about-section .about-section-heading {
+  max-width: 760px;
+  margin-bottom: clamp(22px, 2.2vw, 30px);
+}
+
+.about-section .about-section-heading h2 {
+  font-size: clamp(1.9rem, 3.3vw, 2.6rem);
+  line-height: 1.12;
+}
+
+.about-section .about-credibility-lines {
+  max-width: 760px;
+  gap: 14px;
+  margin: 0 auto 26px;
+}
+
+.about-section .about-credibility-lines p {
+  font-size: clamp(1rem, 1.05vw, 1.12rem);
+  line-height: 1.58;
+}
+
+.about-section .about-footer-row--disclaimer {
+  max-width: 760px;
+  margin-top: 6px;
+  padding-top: 18px;
+}
+
+.about-section .about-disclaimer {
+  font-size: 0.8rem;
+  line-height: 1.52;
+  opacity: 0.84;
+}
+
+[data-theme="dark"] .about-section {
+  border-top-color: rgba(147, 233, 190, 0.16);
+  background: linear-gradient(180deg, rgba(147, 233, 190, 0.06), transparent 40%);
+}
+
+@media (max-width: 640px) {
+  .principles-section {
+    padding-top: 42px;
+    padding-bottom: 20px;
+  }
+
+  .principles-section .principles-section-heading {
+    text-align: left;
+  }
+
+  .principles-section .principles-section-heading h2 {
+    font-size: clamp(1.52rem, 7vw, 2rem);
+    margin-bottom: 10px;
+  }
+
+  .principles-section .principles-section-heading p {
+    font-size: 0.94rem;
+    line-height: 1.46;
+    margin-bottom: 6px;
+  }
+
+  .about-section {
+    padding-top: 16px;
+    padding-bottom: 42px;
+  }
+
+  .about-section .about-section-heading {
+    margin-bottom: 16px;
+  }
+
+  .about-section .about-section-heading h2 {
+    font-size: clamp(1.42rem, 6.5vw, 1.86rem);
+  }
+
+  .about-section .about-credibility-lines {
+    gap: 12px;
+    margin-bottom: 18px;
+  }
+
+  .about-section .about-credibility-lines p {
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+}
+
 /* ===== Light mode recovery loop colour correction ===== */
 
 :root:not([data-theme="dark"]) .urge-loop-section {

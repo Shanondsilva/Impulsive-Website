@@ -71,7 +71,7 @@ const recoveryGames: RecoveryGame[] = [
   },
   {
     name: "Rage Discharge Mode",
-    purpose: "A safe abstract outlet for stress, shame, rejection, or anger. The screen moves from chaos to calm.",
+    purpose: "A safe abstract outlet for stress, rejection, or anger. The screen moves from chaos to calm.",
     length: "30-90 seconds.",
     record: "Best discharge score, fastest clear, biggest urge drop, best safe exit after discharge.",
     safeExit: "Do not encourage aggression. Message should be: energy discharged, control restored.",
@@ -321,8 +321,6 @@ export default function App() {
                 <a className="button button-secondary" href="#urge-loop">See how it works</a>
               </div>
               <ul className="hero-trust-chips" aria-label="Impulsive product notes">
-                <li>Private by design</li>
-                <li>No paywall in a trigger</li>
                 <li>Built in London</li>
                 <li>Early beta</li>
               </ul>
@@ -330,7 +328,7 @@ export default function App() {
 
             <div className="hero-visual reveal" aria-label="Impulsive app preview">
               <div className="orbit-card card-calm">One clear recovery action</div>
-              <div className="orbit-card card-trigger">No paywall in a trigger</div>
+              <div className="orbit-card card-trigger">Built for the first pull</div>
               <p className="mockup-disclaimer" aria-label="Mockup disclaimer">Prototype preview with example data.</p>
               <div className="phone">
                 <div className="phone-speaker" aria-hidden="true"></div>
@@ -430,7 +428,7 @@ export default function App() {
                 <span className="loop-marker" aria-hidden="true">03</span>
                 <div>
                   <h3>Reduce</h3>
-                  <p>Save what helped and slowly weaken the pattern without shame or fake scores.</p>
+                  <p>Save what helped and slowly weaken the pattern over time.</p>
                 </div>
               </article>
             </div>
@@ -918,8 +916,8 @@ export default function App() {
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
               </span>
               <div>
-                <h3>No paywall during a trigger</h3>
-                <p>Payment and referral prompts belong after progress, inside Settings, Path Map, or weekly review. They should not appear during trigger interception, lapse recovery, emergency override, or urgent help.</p>
+                <h3>Calm unlock moments</h3>
+                <p>Upgrade and referral prompts belong in progress screens, Settings, Path Map, or weekly review.</p>
               </div>
             </div>
           </div>
@@ -931,7 +929,7 @@ export default function App() {
               <p className="eyebrow">The problem</p>
               <h2 id="problem-title">Most habit apps make one slip feel like failure.</h2>
             </div>
-            <p>Many tools rely on pressure, streaks, hard blocking, and shame. Impulsive is designed differently, with shame-free support for impulse control that helps users pause, redirect, and review progress without turning a difficult moment into an identity.</p>
+            <p>Many tools ask you to stay strong after the loop is already moving. Impulsive is designed to help earlier, when one clear action can still change the next step.</p>
           </div>
         </section>
 
@@ -940,41 +938,9 @@ export default function App() {
           <div className="container">
             <div className="section-heading principles-section-heading">
               <p className="eyebrow">Principles</p>
-              <h2 id="principles-title">Built without shame loops</h2>
-              <p>Impulsive is designed for vulnerable moments, so the product rules matter. The app should support recovery without panic, humiliation, fake scores, or pressure to pay when someone is already struggling.</p>
+              <h2 id="principles-title">Product principles</h2>
+              <p>No shame streaks. No fake scores. No trigger paywalls. Private by design.</p>
             </div>
-            <ul className="principle-cards" aria-label="Impulsive product principles">
-              <li className="principle-card reveal">
-                <span className="principle-num" aria-hidden="true">01</span>
-                <h3>No humiliation</h3>
-                <p>No public shame, guilt language, or punishment screens after a slip.</p>
-              </li>
-              <li className="principle-card reveal">
-                <span className="principle-num" aria-hidden="true">02</span>
-                <h3>No panic design</h3>
-                <p>No red flashing warnings, fear-based countdowns, or dramatic failure states.</p>
-              </li>
-              <li className="principle-card reveal">
-                <span className="principle-num" aria-hidden="true">03</span>
-                <h3>No fake recovery scores</h3>
-                <p>Progress should come from saved actions, urge changes, safe exits, and real completion proof.</p>
-              </li>
-              <li className="principle-card reveal">
-                <span className="principle-num" aria-hidden="true">04</span>
-                <h3>No paywall in a trigger</h3>
-                <p>Basic help stays available during risky moments. Upgrade prompts belong in calm progress screens.</p>
-              </li>
-              <li className="principle-card reveal">
-                <span className="principle-num" aria-hidden="true">05</span>
-                <h3>No addictive economy</h3>
-                <p>Recovery games are short and time-boxed. They should guide the user back to real life, not trap them inside another loop.</p>
-              </li>
-              <li className="principle-card reveal">
-                <span className="principle-num" aria-hidden="true">06</span>
-                <h3>No public shame leaderboard</h3>
-                <p>Sensitive recovery records stay private. Progress is self-vs-self, not a ranking against other people.</p>
-              </li>
-            </ul>
           </div>
         </section>
 
@@ -983,7 +949,7 @@ export default function App() {
             <div className="section-heading about-section-heading">
               <p className="eyebrow">About</p>
               <h2 id="about-title">Built carefully for private behaviour change</h2>
-              <p>Impulsive is being built with a privacy-first, local-first direction and careful product boundaries. The goal is to support difficult moments without shame, panic design, or exaggerated claims.</p>
+              <p>Impulsive is being built with a privacy-first, local-first direction and careful product boundaries for difficult moments.</p>
             </div>
             <div className="credibility-grid">
               <article className="credibility-card reveal">
@@ -999,7 +965,7 @@ export default function App() {
               <article className="credibility-card reveal">
                 <span className="credibility-num" aria-hidden="true">03</span>
                 <h3>Careful language</h3>
-                <p>Impulsive avoids cure claims, fake recovery percentages, and medical promises. It explains behaviour support honestly.</p>
+                <p>Impulsive avoids cure claims and medical promises. It explains behaviour support honestly.</p>
               </article>
               <article className="credibility-card reveal">
                 <span className="credibility-num" aria-hidden="true">04</span>
@@ -1024,15 +990,11 @@ export default function App() {
             <div className="faq-list">
               <details className="faq-item">
                 <summary>What does Impulsive actually do?</summary>
-                <p>Impulsive is a behaviour-change app designed for the moment a habit loop accelerates. When a trigger starts, it gives you structured tools to pause and redirect — breathing patterns, body-focused grounding, short recovery games, and a calm reflection log. Between sessions it shows you patterns over time so you can understand your own loop without judgment.</p>
+                <p>Impulsive is a behaviour-change app designed for the moment a habit loop accelerates. When a trigger starts, it gives you structured tools to pause and redirect — breathing patterns, body-focused grounding, short recovery games, and a calm reflection log. Between sessions it shows patterns over time so you can understand your own loop more clearly.</p>
               </details>
               <details className="faq-item">
                 <summary>Is my data private?</summary>
                 <p>Yes. Your patterns, triggers, and reflections are designed to stay on your device by default. We do not sell your data and we do not use advertising trackers. Any future backup or sync feature would be optional, opt-in, and clearly explained before use — never enabled by default.</p>
-              </details>
-              <details className="faq-item">
-                <summary>Will I be asked to pay during a trigger?</summary>
-                <p>No. Never. Payment prompts, upgrade banners, and referral nudges are blocked during trigger moments, lapses, and the recovery flow. Financial pressure during a hard moment is harmful. The free tools work fully when you need them most.</p>
               </details>
               <details className="faq-item">
                 <summary>Is Impulsive a replacement for therapy?</summary>
@@ -1051,7 +1013,7 @@ export default function App() {
             <div>
               <p className="eyebrow">Waitlist</p>
               <h2 id="waitlist-title">Join the Impulsive waitlist.</h2>
-              <p>Get notified when Impulsive is ready for wider testing or release. No spam, no public recovery data, and no pressure during vulnerable moments.</p>
+              <p>Get notified when Impulsive is ready for wider testing or release.</p>
             </div>
             <form
               className="waitlist-form"

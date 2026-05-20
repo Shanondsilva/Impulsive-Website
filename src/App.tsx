@@ -966,8 +966,7 @@ export default function App() {
           <div className="container">
             <div className="section-heading unlock-progression-heading reveal">
               <p className="eyebrow">Level-based recovery</p>
-              <h2 id="unlock-progression-title">Progress that unlocks stronger support</h2>
-              <p>Impulsive starts small on purpose. As the app learns what helps you interrupt the loop, stronger paths, focus tools, games, and Nexus routing become available.</p>
+              <h2 id="unlock-progression-title">Start tiny. Unlock strength.</h2>
             </div>
 
             <ol className="progression-path" aria-label="Impulsive progression path">
@@ -978,27 +977,8 @@ export default function App() {
                   <span className="prog-connector" aria-hidden="true"></span>
                 </div>
                 <div className="prog-card">
-                  <div className="prog-card-head">
-                    <span className="prog-level-label">Level 1</span>
-                    <span className="prog-status-pill">Mind</span>
-                  </div>
-                  <h3 className="prog-card-title">First interruption</h3>
-                  <p className="prog-card-copy">Trigger interruption and one guided Mind reset.</p>
-                </div>
-              </li>
-
-              <li className="progression-step progression-step--unlocked reveal" style={{ "--prog-color": "var(--body-color)" } as React.CSSProperties}>
-                <div className="prog-milestone">
-                  <span className="prog-badge" aria-hidden="true">2</span>
-                  <span className="prog-connector" aria-hidden="true"></span>
-                </div>
-                <div className="prog-card">
-                  <div className="prog-card-head">
-                    <span className="prog-level-label">Level 2</span>
-                    <span className="prog-status-pill">Free</span>
-                  </div>
-                  <h3 className="prog-card-title">More recovery actions</h3>
-                  <p className="prog-card-copy">Unlock one extra recovery action or recovery game.</p>
+                  <span className="prog-level-label">Level 1</span>
+                  <h3 className="prog-card-title">First reset</h3>
                 </div>
               </li>
 
@@ -1008,27 +988,8 @@ export default function App() {
                   <span className="prog-connector" aria-hidden="true"></span>
                 </div>
                 <div className="prog-card">
-                  <div className="prog-card-head">
-                    <span className="prog-level-label">Level 3</span>
-                    <span className="prog-status-pill">Free</span>
-                  </div>
+                  <span className="prog-level-label">Level 3</span>
                   <h3 className="prog-card-title">Taper progress</h3>
-                  <p className="prog-card-copy">See a basic schedule taper card based on completed recovery actions.</p>
-                </div>
-              </li>
-
-              <li className="progression-step progression-step--unlocked reveal" style={{ "--prog-color": "var(--focus-color)" } as React.CSSProperties}>
-                <div className="prog-milestone">
-                  <span className="prog-badge" aria-hidden="true">4</span>
-                  <span className="prog-connector" aria-hidden="true"></span>
-                </div>
-                <div className="prog-card">
-                  <div className="prog-card-head">
-                    <span className="prog-level-label">Level 4</span>
-                    <span className="prog-status-pill">Free</span>
-                  </div>
-                  <h3 className="prog-card-title">Standard Focus</h3>
-                  <p className="prog-card-copy">Start focus sessions, recover from distraction, and resume smoothly.</p>
                 </div>
               </li>
 
@@ -1038,12 +999,8 @@ export default function App() {
                   <span className="prog-connector" aria-hidden="true"></span>
                 </div>
                 <div className="prog-card">
-                  <div className="prog-card-head">
-                    <span className="prog-level-label">Level 5</span>
-                    <span className="prog-status-pill prog-status-pill--preview">Preview</span>
-                  </div>
-                  <h3 className="prog-card-title">Path Map preview</h3>
-                  <p className="prog-card-copy">Preview Body and Soul as future support options without pressure.</p>
+                  <span className="prog-level-label">Level 5</span>
+                  <h3 className="prog-card-title">Path preview</h3>
                 </div>
               </li>
 
@@ -1053,32 +1010,12 @@ export default function App() {
                   <span className="prog-connector" aria-hidden="true"></span>
                 </div>
                 <div className="prog-card">
-                  <div className="prog-card-head">
-                    <span className="prog-level-label">Level 6</span>
-                    <span className="prog-status-pill prog-status-pill--calm">Your choice</span>
-                  </div>
-                  <h3 className="prog-card-title">Calm unlock moment</h3>
-                  <p className="prog-card-copy">Stay free, buy Plus, or explore Invite &amp; Unlock from a calm progress screen.</p>
-                </div>
-              </li>
-
-              <li className="progression-step progression-step--locked reveal" style={{ "--prog-color": "var(--nexus-color)" } as React.CSSProperties}>
-                <div className="prog-milestone">
-                  <span className="prog-badge prog-badge--nexus" aria-hidden="true">7</span>
-                </div>
-                <div className="prog-card prog-card--locked">
-                  <div className="prog-card-head">
-                    <span className="prog-level-label">Level 8+</span>
-                    <span className="prog-status-pill prog-status-pill--engine">Nexus</span>
-                  </div>
-                  <h3 className="prog-card-title">Nexus routing</h3>
-                  <p className="prog-card-copy">Nexus coordinates stronger multi-path support based on what actually helps.</p>
+                  <span className="prog-level-label">Level 6</span>
+                  <h3 className="prog-card-title">Stronger support</h3>
                 </div>
               </li>
 
             </ol>
-
-            <p className="progression-footnote reveal">Unlocks appear after progress, not during vulnerable moments.</p>
           </div>
         </section>
 

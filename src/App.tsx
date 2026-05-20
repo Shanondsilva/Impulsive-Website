@@ -94,7 +94,6 @@ const SECTION_NAV = [
   { id: 'paths',         label: 'Paths' },
   { id: 'games',         label: 'Games' },
   { id: 'progression',   label: 'Progression' },
-  { id: 'invite-unlock', label: 'Invite & Unlock' },
   { id: 'tiers',         label: 'Tiers' },
   { id: 'principles',    label: 'Principles' },
   { id: 'about',         label: 'About' },
@@ -485,7 +484,7 @@ export default function App() {
                 <div>
                   <p className="week-label">Day 6+</p>
                   <h3>Choose your next strength level</h3>
-                  <p>Stay free, explore Plus, or use Invite & Unlock when you are in a calm progress moment.</p>
+                  <p>Stay free or explore stronger tools when you are in a calm progress moment.</p>
                 </div>
               </li>
             </ol>
@@ -827,87 +826,6 @@ export default function App() {
           </div>
         </section>
 
-        <section className="section invite-unlock-section" id="invite-unlock" aria-labelledby="invite-unlock-title">
-          <div className="container">
-            <div className="section-heading invite-unlock-heading">
-              <p className="eyebrow">Invite &amp; Unlock</p>
-              <h2 id="invite-unlock-title">Invite &amp; Unlock</h2>
-              <p>Not everyone needs to pay to unlock more support. Impulsive can let users earn selected lifetime unlocks by inviting people who genuinely need it. Only real activation counts.</p>
-            </div>
-
-            <div className="invite-unlock-layout">
-
-              <div className="invite-ladder-wrap">
-                <ol className="invite-ladder" aria-label="Invite and unlock referral milestones">
-
-                  <li className="invite-step" style={{ "--invite-color": "var(--nexus-color)" } as React.CSSProperties}>
-                    <div className="invite-milestone">
-                      <span className="invite-count" aria-hidden="true">5</span>
-                      <span className="invite-count-label">activated</span>
-                      <span className="invite-rung" aria-hidden="true"></span>
-                    </div>
-                    <div className="invite-card reveal">
-                      <span className="invite-unlock-label">Unlocks</span>
-                      <h3 className="invite-card-title">Nexus preview</h3>
-                      <p className="invite-card-copy">Start seeing how Impulsive coordinates recovery paths behind the scenes.</p>
-                    </div>
-                  </li>
-
-                  <li className="invite-step" style={{ "--invite-color": "var(--soul-color)" } as React.CSSProperties}>
-                    <div className="invite-milestone">
-                      <span className="invite-count" aria-hidden="true">10</span>
-                      <span className="invite-count-label">activated</span>
-                      <span className="invite-rung" aria-hidden="true"></span>
-                    </div>
-                    <div className="invite-card reveal">
-                      <span className="invite-unlock-label">Unlocks</span>
-                      <h3 className="invite-card-title">Soul path</h3>
-                      <p className="invite-card-copy">Unlock optional grounding, prayer, reflection, and recommitment support if enabled.</p>
-                    </div>
-                  </li>
-
-                  <li className="invite-step" style={{ "--invite-color": "var(--body-color)" } as React.CSSProperties}>
-                    <div className="invite-milestone">
-                      <span className="invite-count" aria-hidden="true">20</span>
-                      <span className="invite-count-label">activated</span>
-                    </div>
-                    <div className="invite-card reveal">
-                      <span className="invite-unlock-label">Unlocks</span>
-                      <h3 className="invite-card-title">Body path</h3>
-                      <p className="invite-card-copy">Unlock stronger movement-based resets for leaving the trigger environment and changing state.</p>
-                    </div>
-                  </li>
-
-                </ol>
-              </div>
-
-              <div className="invite-rule-cards">
-
-                <article className="invite-rule-card reveal">
-                  <span className="invite-rule-icon" aria-hidden="true">&#10003;</span>
-                  <h3>Only real activation counts</h3>
-                  <p>Fake clicks, empty signups, repeated installs, or abuse should not unlock recovery tools. A referral counts only when the invited person genuinely joins and reaches the required activation point.</p>
-                </article>
-
-                <article className="invite-rule-card reveal">
-                  <span className="invite-rule-icon" aria-hidden="true">&#9670;</span>
-                  <h3>Plus still stays stronger</h3>
-                  <p>Invite &amp; Unlock is slower and more limited than Plus. Advanced protection, deeper insights, cloud features, VPN/DNS protection, and full Premium tools stay separate.</p>
-                </article>
-
-                <article className="invite-rule-card reveal">
-                  <span className="invite-rule-icon" aria-hidden="true">&#9675;</span>
-                  <h3>Never during a trigger</h3>
-                  <p>Invite prompts appear only in calm places like Path Map, Settings, weekly review, or milestone screens. They do not appear during trigger interception, lapse recovery, or urgent help.</p>
-                </article>
-
-              </div>
-            </div>
-
-            <p className="invite-cta-note">Explore unlocks after progress</p>
-          </div>
-        </section>
-
         <section className="section tiers-section" id="tiers" aria-labelledby="tiers-title">
           <div className="container">
             <div className="section-heading tiers-heading">
@@ -1110,7 +1028,6 @@ export default function App() {
             <a href="#urge-loop">How it works</a>
             <a href="#paths">Paths</a>
             <a href="#games">Games</a>
-            <a href="#invite-unlock">Invite &amp; Unlock</a>
           </nav>
           <nav className="footer-nav" aria-label="Support links">
             <h3>Support</h3>

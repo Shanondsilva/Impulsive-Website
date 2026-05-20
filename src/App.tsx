@@ -1524,7 +1524,8 @@ export default function App() {
               <img src="/images/icons/impulsive-logo-transparent-clean.png" alt="" />
               <span>Impulsive</span>
             </a>
-            <p className="footer-tagline">Privacy-first behaviour change. Built in London.</p>
+            <p className="footer-tagline">Privacy-first behaviour change.</p>
+            <p className="footer-location">Built in London</p>
           </div>
           <nav className="footer-nav" aria-label="Product links">
             <h3>Product</h3>
@@ -1534,11 +1535,11 @@ export default function App() {
             <a href="#focus">Focus Mode</a>
             <a href="#invite-unlock">Invite &amp; Unlock</a>
           </nav>
-          <nav className="footer-nav" aria-label="Company links">
-            <h3>Company</h3>
-            <span className="footer-location">Built in London</span>
-            <a href="mailto:hello@useimpulsive.com">Contact</a>
+          <nav className="footer-nav" aria-label="Support links">
+            <h3>Support</h3>
+            <a href="#faq">FAQ</a>
             <a href="#waitlist">Waitlist</a>
+            <a href="mailto:hello@useimpulsive.com">Contact</a>
           </nav>
           <nav className="footer-nav" aria-label="Legal links">
             <h3>Legal</h3>
@@ -1547,9 +1548,11 @@ export default function App() {
           </nav>
         </div>
         <div className="container footer-base">
-          <p className="footer-disclaimer">Impulsive is an early-stage behaviour-change support product. It is not a replacement for professional medical or mental health care.</p>
-          <p className="footer-removal-note">Want to leave the waitlist or request deletion of your email? Email <a href="mailto:hello@useimpulsive.com">hello@useimpulsive.com</a>.</p>
-          <p>&copy; {new Date().getFullYear()} Impulsive. All rights reserved.</p>
+          <div className="footer-base-text">
+            <p className="footer-disclaimer">Impulsive is an early-stage behaviour-change support product. It is not a replacement for professional medical or mental health care.</p>
+            <p className="footer-removal-note">Want to leave the waitlist or request deletion of your email? Email <a href="mailto:hello@useimpulsive.com">hello@useimpulsive.com</a>.</p>
+          </div>
+          <p className="footer-copyright">&copy; {new Date().getFullYear()} Impulsive. All rights reserved.</p>
         </div>
       </footer>
 

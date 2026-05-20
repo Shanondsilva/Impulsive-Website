@@ -862,6 +862,15 @@ export default function App() {
                 <p className="eyebrow"><strong>PRINCIPLES</strong></p>
                 <h2 id="principles-title"><strong>Built without shame loops.</strong></h2>
                 <p className="credibility-principles-line"><strong>No shame streaks. No fake scores. No trigger paywalls. Private by design.</strong></p>
+                <div className="credibility-chips-group" aria-label="Recovery paths">
+                  <p className="credibility-chips-label">Recovery paths</p>
+                  <div className="credibility-chips">
+                    <span className="credibility-chip" style={{ "--chip-color": "var(--mind-color)" } as React.CSSProperties}>Mind</span>
+                    <span className="credibility-chip" style={{ "--chip-color": "var(--body-color)" } as React.CSSProperties}>Body</span>
+                    <span className="credibility-chip" style={{ "--chip-color": "var(--soul-color)" } as React.CSSProperties}>Soul</span>
+                    <span className="credibility-chip" style={{ "--chip-color": "var(--focus-color)" } as React.CSSProperties}>Focus</span>
+                  </div>
+                </div>
               </article>
 
               <article className="credibility-pane credibility-pane--about" id="about" aria-labelledby="about-title">
@@ -871,6 +880,16 @@ export default function App() {
                   <p><strong>Privacy-first:</strong> sensitive recovery records stay private and local-first by default.</p>
                   <p><strong>Careful language:</strong> no cure claims, fake percentages, or medical promises.</p>
                   <p><strong>Review-ready:</strong> clear enough for advisors, clinicians, and endorsement reviewers to understand.</p>
+                </div>
+                <div className="credibility-chips-group" aria-label="Recovery games">
+                  <p className="credibility-chips-label">Recovery games</p>
+                  <div className="credibility-chips">
+                    <span className="credibility-chip" style={{ "--chip-color": "var(--focus-color)" } as React.CSSProperties}>Reflex Override</span>
+                    <span className="credibility-chip" style={{ "--chip-color": "var(--body-color)" } as React.CSSProperties}>Fluid Regulation</span>
+                    <span className="credibility-chip" style={{ "--chip-color": "var(--brand-glow)" } as React.CSSProperties}>Breath Control</span>
+                    <span className="credibility-chip" style={{ "--chip-color": "var(--mind-color)" } as React.CSSProperties}>Pattern Break</span>
+                    <span className="credibility-chip" style={{ "--chip-color": "var(--soul-color)" } as React.CSSProperties}>+5 more</span>
+                  </div>
                 </div>
                 <div className="about-footer-row about-footer-row--disclaimer">
                   <p className="about-disclaimer">Impulsive is not a substitute for therapy, diagnosis, crisis support, or professional medical advice. If you are in crisis, please contact your GP, a qualified therapist, or the Samaritans on 116 123.</p>

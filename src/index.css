@@ -9780,6 +9780,69 @@ p {
   }
 }
 
+/* ===== Recovery loop levitation + color glow override ===== */
+
+.urge-loop-card {
+  animation: loop-card-float 8.6s ease-in-out infinite;
+  box-shadow:
+    0 18px 42px rgba(10, 12, 26, 0.18),
+    0 0 0 1px color-mix(in srgb, var(--loop-color) 20%, transparent),
+    0 0 24px color-mix(in srgb, var(--loop-color) 18%, transparent);
+  will-change: transform, box-shadow;
+}
+
+.urge-loop-card:nth-child(1) {
+  animation-delay: 0s;
+}
+
+.urge-loop-card:nth-child(2) {
+  animation-delay: 0.75s;
+}
+
+.urge-loop-card:nth-child(3) {
+  animation-delay: 1.5s;
+}
+
+.urge-loop-card:hover {
+  box-shadow:
+    0 22px 54px rgba(10, 12, 26, 0.22),
+    0 0 0 1px color-mix(in srgb, var(--loop-color) 36%, transparent),
+    0 0 34px color-mix(in srgb, var(--loop-color) 34%, transparent),
+    0 0 56px color-mix(in srgb, var(--loop-color) 18%, transparent);
+}
+
+@keyframes loop-card-float {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, -9px, 0);
+  }
+}
+
+[data-theme="dark"] .urge-loop-card {
+  box-shadow:
+    0 24px 60px rgba(0, 0, 0, 0.34),
+    0 0 0 1px color-mix(in srgb, var(--loop-color) 30%, rgba(247, 242, 255, 0.08)),
+    0 0 28px color-mix(in srgb, var(--loop-color) 28%, transparent);
+}
+
+[data-theme="dark"] .urge-loop-card:hover {
+  box-shadow:
+    0 28px 70px rgba(0, 0, 0, 0.42),
+    0 0 0 1px color-mix(in srgb, var(--loop-color) 42%, rgba(247, 242, 255, 0.12)),
+    0 0 42px color-mix(in srgb, var(--loop-color) 42%, transparent),
+    0 0 70px color-mix(in srgb, var(--loop-color) 22%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .urge-loop-card {
+    animation: none;
+    transform: none;
+  }
+}
+
 /* ===== Light mode recovery loop colour correction ===== */
 
 :root:not([data-theme="dark"]) .urge-loop-section {

@@ -500,47 +500,206 @@ export default function App() {
               <p>Impulsive starts with Mind first, then unlocks stronger support through movement, reflection, focus tools, and adaptive routing.</p>
             </div>
             <div className="path-cards">
-              <article className="path-card psychology reveal">
-                <div className="card-topline">
-                  <span className="soft-icon symbol-icon" aria-hidden="true" data-fallable="">&#10022;</span>
-                  <span className="status-pill">Starts first</span>
-                </div>
-                <h3>Mind</h3>
-                <p>Mind is the Psychological framework of Impulsive: the first layer that helps you pause, name the urge, understand the pattern behind it, and choose one better action before the loop becomes automatic.</p>
-              </article>
-
-              <article className="path-card physical reveal">
-                <div className="card-topline">
-                  <span className="soft-icon image-icon" aria-hidden="true" data-fallable="">
-                    <img src="/images/icons/impulsive-body.png" alt="" />
+              <div
+                className={`path-card-wrapper${flippedCards.has("mind") ? " is-flipped" : ""}`}
+                role="button"
+                tabIndex={0}
+                aria-pressed={flippedCards.has("mind")}
+                aria-label="Mind path. Click to see how it works."
+                onClick={() => togglePathFlip("mind")}
+                onKeyDown={(event) => handlePathKeyDown(event, "mind")}
+              >
+                <article className="path-card psychology card-front reveal">
+                  <div className="card-topline">
+                    <span className="soft-icon symbol-icon" aria-hidden="true" data-fallable="">&#10022;</span>
+                    <span className="status-pill">Starts first</span>
+                  </div>
+                  <h3>Mind</h3>
+                  <p>Start with one calm mental reset before the loop takes over.</p>
+                  <ul className="path-detail-list" aria-label="Mind details">
+                    <li>Default first path</li>
+                    <li>Low-friction reset</li>
+                    <li>Indoor, late-night, stress, boredom, or social-media triggers</li>
+                  </ul>
+                  <span className="card-flip-hint" aria-hidden="true">
+                    <span>How it works</span>
+                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 12h18M13 5l7 7-7 7" /></svg>
                   </span>
-                  <span className="status-pill">Unlocks later</span>
-                </div>
-                <h3>Body</h3>
-                <p>Body is the Physical system: movement-based support for the moments when thinking is not enough, helping you change state, leave the trigger environment, and interrupt the loop through action.</p>
-              </article>
+                </article>
 
-              <article className="path-card spiritual reveal">
-                <div className="card-topline">
-                  <span className="soft-icon image-icon" aria-hidden="true" data-fallable="">
-                    <img src="/images/icons/impulsive-soul.png" alt="" />
+                <article className="path-card psychology card-back" aria-hidden={!flippedCards.has("mind")}>
+                  <div className="card-topline">
+                    <span className="soft-icon symbol-icon" aria-hidden="true">&#10022;</span>
+                    <span className="status-pill">Starts first</span>
+                  </div>
+                  <h3>Mind</h3>
+                  <p className="card-back-tag">Pause, name the urge, choose one better action, and save what helped.</p>
+                  <p className="card-back-section-h">How it works</p>
+                  <ol className="card-back-steps">
+                    <li>You notice the urge as a wave coming through, not a command you have to follow.</li>
+                    <li>You name what is actually pulling at you: stress, boredom, late-night scrolling, or another trigger.</li>
+                    <li>You choose one better action and save what helped for next time.</li>
+                  </ol>
+                  <span className="card-flip-hint card-flip-hint-back" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 12H3M11 5l-7 7 7 7" /></svg>
+                    <span>Back</span>
                   </span>
-                  <span className="status-pill">Optional</span>
-                </div>
-                <h3>Soul</h3>
-                <p>Soul is the optional Spiritual alignment path, built for users who want values, reflection, prayer, faith, or recommitment to help them return to meaning when a difficult moment feels loud.</p>
-              </article>
+                </article>
+              </div>
 
-              <article className="path-card synchrology reveal">
-                <div className="card-topline">
-                  <span className="soft-icon image-icon" aria-hidden="true" data-fallable="">
-                    <img src="/images/icons/impulsive-nexus.png" alt="" />
+              <div
+                className={`path-card-wrapper${flippedCards.has("body") ? " is-flipped" : ""}`}
+                role="button"
+                tabIndex={0}
+                aria-pressed={flippedCards.has("body")}
+                aria-label="Body path. Click to see how it works."
+                onClick={() => togglePathFlip("body")}
+                onKeyDown={(event) => handlePathKeyDown(event, "body")}
+              >
+                <article className="path-card physical card-front reveal">
+                  <div className="card-topline">
+                    <span className="soft-icon image-icon" aria-hidden="true" data-fallable="">
+                      <img src="/images/icons/impulsive-body.png" alt="" />
+                    </span>
+                    <span className="status-pill">Unlocks later</span>
+                  </div>
+                  <h3>Body</h3>
+                  <p>When your room, bed, or phone becomes the trigger, Body helps you move before the urge takes over.</p>
+                  <ul className="path-detail-list" aria-label="Body details">
+                    <li>Movement-based reset</li>
+                    <li>Exit-room or walk support</li>
+                    <li>Built for changing state quickly</li>
+                  </ul>
+                  <span className="card-flip-hint" aria-hidden="true">
+                    <span>How it works</span>
+                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 12h18M13 5l7 7-7 7" /></svg>
                   </span>
-                  <span className="status-pill status-pill--future">Coming later</span>
-                </div>
-                <h3>Nexus</h3>
-                <p>Nexus is the Synchrology layer: the adaptive system designed to learn what actually helps across Mind, Body, Soul, and recovery tools, then route one clear next action at the right moment.</p>
-              </article>
+                </article>
+
+                <article className="path-card physical card-back" aria-hidden={!flippedCards.has("body")}>
+                  <div className="card-topline">
+                    <span className="soft-icon image-icon" aria-hidden="true">
+                      <img src="/images/icons/impulsive-body.png" alt="" />
+                    </span>
+                    <span className="status-pill">Unlocks later</span>
+                  </div>
+                  <h3>Body</h3>
+                  <p className="card-back-tag">Sometimes thinking is not enough. Body helps you leave the exact environment where the loop usually wins.</p>
+                  <p className="card-back-section-h">How it works</p>
+                  <ol className="card-back-steps">
+                    <li>Step away from the room, bed, phone, or place where the urge usually wins.</li>
+                    <li>Start a short reset and complete the movement proof.</li>
+                    <li>Save the progress privately so Impulsive can learn what helps you change state quickly.</li>
+                  </ol>
+                  <span className="card-flip-hint card-flip-hint-back" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 12H3M11 5l-7 7 7 7" /></svg>
+                    <span>Back</span>
+                  </span>
+                </article>
+              </div>
+
+              <div
+                className={`path-card-wrapper${flippedCards.has("soul") ? " is-flipped" : ""}`}
+                role="button"
+                tabIndex={0}
+                aria-pressed={flippedCards.has("soul")}
+                aria-label="Soul path. Click to see how it works."
+                onClick={() => togglePathFlip("soul")}
+                onKeyDown={(event) => handlePathKeyDown(event, "soul")}
+              >
+                <article className="path-card spiritual card-front reveal">
+                  <div className="card-topline">
+                    <span className="soft-icon image-icon" aria-hidden="true" data-fallable="">
+                      <img src="/images/icons/impulsive-soul.png" alt="" />
+                    </span>
+                    <span className="status-pill">Optional</span>
+                  </div>
+                  <h3>Soul</h3>
+                  <p>For users who want faith, values, prayer, or reflection to be part of recovery without pressure.</p>
+                  <ul className="path-detail-list" aria-label="Soul details">
+                    <li>Optional</li>
+                    <li>Never forced</li>
+                    <li>Faith, values, prayer, reflection, recommitment</li>
+                  </ul>
+                  <span className="card-flip-hint" aria-hidden="true">
+                    <span>How it works</span>
+                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 12h18M13 5l7 7-7 7" /></svg>
+                  </span>
+                </article>
+
+                <article className="path-card spiritual card-back" aria-hidden={!flippedCards.has("soul")}>
+                  <div className="card-topline">
+                    <span className="soft-icon image-icon" aria-hidden="true">
+                      <img src="/images/icons/impulsive-soul.png" alt="" />
+                    </span>
+                    <span className="status-pill">Optional</span>
+                  </div>
+                  <h3>Soul</h3>
+                  <p className="card-back-tag">Soul is optional. It appears only if enabled, then gives a short grounding action without pressure.</p>
+                  <p className="card-back-section-h">How it works</p>
+                  <ol className="card-back-steps">
+                    <li>You enable Soul only if faith, values, prayer, or reflection belongs in your recovery.</li>
+                    <li>Impulsive suggests a short grounding action: prayer, reflection, passage reading, or recommitment.</li>
+                    <li>If you slip, Soul helps you restart without shame.</li>
+                  </ol>
+                  <span className="card-flip-hint card-flip-hint-back" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 12H3M11 5l-7 7 7 7" /></svg>
+                    <span>Back</span>
+                  </span>
+                </article>
+              </div>
+
+              <div
+                className={`path-card-wrapper${flippedCards.has("nexus") ? " is-flipped" : ""}`}
+                role="button"
+                tabIndex={0}
+                aria-pressed={flippedCards.has("nexus")}
+                aria-label="Nexus path. Click to see how it works."
+                onClick={() => togglePathFlip("nexus")}
+                onKeyDown={(event) => handlePathKeyDown(event, "nexus")}
+              >
+                <article className="path-card synchrology card-front reveal">
+                  <div className="card-topline">
+                    <span className="soft-icon image-icon" aria-hidden="true" data-fallable="">
+                      <img src="/images/icons/impulsive-nexus.png" alt="" />
+                    </span>
+                    <span className="status-pill status-pill--future">Coming later</span>
+                  </div>
+                  <h3>Nexus</h3>
+                  <p>An adaptive engine that is designed to learn what helps and route the next best support, planned for a future release.</p>
+                  <ul className="path-detail-list" aria-label="Nexus details">
+                    <li>Not a public path menu</li>
+                    <li>Will coordinate Mind, Body, Soul, Focus, and games</li>
+                    <li>Designed to become more personal over time</li>
+                  </ul>
+                  <span className="card-flip-hint" aria-hidden="true">
+                    <span>How it will work</span>
+                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 12h18M13 5l7 7-7 7" /></svg>
+                  </span>
+                </article>
+
+                <article className="path-card synchrology card-back" aria-hidden={!flippedCards.has("nexus")}>
+                  <div className="card-topline">
+                    <span className="soft-icon image-icon" aria-hidden="true">
+                      <img src="/images/icons/impulsive-nexus.png" alt="" />
+                    </span>
+                    <span className="status-pill status-pill--future">Coming later</span>
+                  </div>
+                  <h3>Nexus</h3>
+                  <p className="card-back-tag">Nexus is designed to use private trigger patterns, past success, urge ratings, and fallback history to recommend one clear action. It is a planned future feature, not a current live capability.</p>
+                  <p className="card-back-section-h">How it will work</p>
+                  <ol className="card-back-steps">
+                    <li>It will read the private pattern: trigger windows, past success, urge ratings, and fallback history.</li>
+                    <li>It will coordinate Mind, Body, Soul, Focus, and recovery games behind the scenes.</li>
+                    <li>It will recommend one clear action instead of showing every option at once.</li>
+                    <li>It is designed to help Impulsive become more personal over time.</li>
+                  </ol>
+                  <span className="card-flip-hint card-flip-hint-back" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 12H3M11 5l-7 7 7 7" /></svg>
+                    <span>Back</span>
+                  </span>
+                </article>
+              </div>
             </div>
           </div>
         </section>

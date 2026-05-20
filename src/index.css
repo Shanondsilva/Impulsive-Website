@@ -7422,6 +7422,10 @@ p {
   border-radius: 2px;
 }
 
+.progression-step:last-child .prog-connector {
+  display: none;
+}
+
 .prog-card {
   margin-bottom: 16px;
   border: 1px solid color-mix(in srgb, var(--prog-color) 26%, rgba(45, 39, 48, 0.10));
@@ -7505,7 +7509,12 @@ p {
 
 /* Preview state — Level 5 */
 .progression-step--preview .prog-card {
-  border-style: dashed;
+  border-style: solid;
+  border-color: color-mix(in srgb, var(--prog-color) 38%, rgba(45, 39, 48, 0.12));
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--prog-color) 16%, transparent),
+    0 0 0 1px rgba(255, 255, 255, 0.26) inset,
+    0 12px 32px rgba(45, 39, 48, 0.07);
 }
 
 .progression-step--preview .prog-badge {
@@ -7621,7 +7630,13 @@ p {
 }
 
 [data-theme="dark"] .progression-step--preview .prog-card {
-  border-style: dashed;
+  border-style: solid;
+  border-color: color-mix(in srgb, var(--prog-color) 24%, rgba(255, 255, 255, 0.12));
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--prog-color) 26%, transparent),
+    0 0 0 1px rgba(255, 255, 255, 0.04) inset,
+    0 0 16px color-mix(in srgb, var(--prog-color) 10%, transparent),
+    0 12px 34px rgba(0, 0, 0, 0.36);
   opacity: 0.84;
 }
 
@@ -8491,7 +8506,8 @@ p {
 /* Cloud card is visually quieter — future/later */
 .tier-card--cloud {
   opacity: 0.82;
-  border-style: dashed;
+  border-style: solid;
+  border-color: color-mix(in srgb, var(--tier-color) 36%, rgba(45, 39, 48, 0.12));
 }
 
 .tier-card-top {

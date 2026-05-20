@@ -96,7 +96,6 @@ const SECTION_NAV = [
   { id: 'progression',   label: 'Progression' },
   { id: 'invite-unlock', label: 'Invite & Unlock' },
   { id: 'tiers',         label: 'Tiers' },
-  { id: 'how-it-works',  label: 'How it works' },
   { id: 'principles',    label: 'Principles' },
   { id: 'about',         label: 'About' },
   { id: 'waitlist',      label: 'Waitlist' },
@@ -263,7 +262,7 @@ export default function App() {
           <div className="nav-right">
             <div className="nav-menu" id="primary-menu">
               <div className="nav-links" aria-label="Site links">
-                <a href="#how-it-works" onClick={closeMenu}>How it works</a>
+                <a href="#urge-loop" onClick={closeMenu}>How it works</a>
                 <a href="#paths" onClick={closeMenu}>Paths</a>
                 <a href="#principles" onClick={closeMenu}>Principles</a>
                 <a href="#about" onClick={closeMenu}>About</a>
@@ -319,7 +318,7 @@ export default function App() {
               <p className="hero-subhead">Impulsive helps you slow the loop before it becomes automatic. It notices risky moments, gives one clear recovery action, and saves what helped so your pattern can get weaker over time.</p>
               <div className="hero-actions" aria-label="Hero actions">
                 <a className="button" href="#waitlist">Join the waitlist</a>
-                <a className="button button-secondary" href="#how-it-works">See how it works</a>
+                <a className="button button-secondary" href="#urge-loop">See how it works</a>
               </div>
               <ul className="hero-trust-chips" aria-label="Impulsive product notes">
                 <li>Private by design</li>
@@ -405,41 +404,33 @@ export default function App() {
                 <section className="section urge-loop-section" id="urge-loop" aria-labelledby="urge-loop-title">
           <div className="container">
             <div className="section-heading urge-loop-heading reveal">
-              <p className="eyebrow">The real app loop</p>
-              <h2 id="urge-loop-title">When the urge starts</h2>
-              <p>Impulsive is not just motivation after the damage is done. It is built to step in before the loop becomes automatic.</p>
+              <p className="eyebrow">Recovery loop</p>
+              <h2 id="urge-loop-title">Notice, interrupt, reduce.</h2>
+              <p>Impulsive is built for the moment a difficult habit starts to move faster than motivation.</p>
             </div>
 
             <div className="urge-loop-grid" aria-label="What happens when Impulsive steps in">
               <article className="urge-loop-card reveal" style={{ "--loop-color": "#D0C3F1" } as React.CSSProperties}>
                 <span className="loop-marker" aria-hidden="true">01</span>
                 <div>
-                  <h3>Impulsive notices the risky moment</h3>
-                  <p>A trigger window, monitored app, risky browser path, or user-reported urge starts the recovery flow.</p>
+                  <h3>Notice</h3>
+                  <p>Spot the time, place, emotion, app, or routine that usually starts the loop.</p>
                 </div>
               </article>
 
               <article className="urge-loop-card reveal" style={{ "--loop-color": "#BDE0FE" } as React.CSSProperties}>
                 <span className="loop-marker" aria-hidden="true">02</span>
                 <div>
-                  <h3>You get one clear action</h3>
-                  <p>Impulsive recommends one primary action first: Mind reset, Body movement, Soul reflection, Focus recovery, or a recovery game.</p>
+                  <h3>Interrupt</h3>
+                  <p>Get one clear recovery action before autopilot takes over.</p>
                 </div>
               </article>
 
               <article className="urge-loop-card reveal" style={{ "--loop-color": "#FEF1AB" } as React.CSSProperties}>
                 <span className="loop-marker" aria-hidden="true">03</span>
                 <div>
-                  <h3>The app saves what worked</h3>
-                  <p>Urge before, urge after, action completed, safe exit, and recovery notes are stored privately.</p>
-                </div>
-              </article>
-
-              <article className="urge-loop-card reveal" style={{ "--loop-color": "#93E9BE" } as React.CSSProperties}>
-                <span className="loop-marker" aria-hidden="true">04</span>
-                <div>
-                  <h3>The loop gets weaker over time</h3>
-                  <p>Progress unlocks stronger tools and the scheduled habit window can slowly reduce with real completion evidence.</p>
+                  <h3>Reduce</h3>
+                  <p>Save what helped and slowly weaken the pattern without shame or fake scores.</p>
                 </div>
               </article>
             </div>
@@ -1252,32 +1243,6 @@ export default function App() {
         </section>
 
 
-        <section className="section how-section" id="how-it-works" aria-labelledby="how-title">
-          <div className="container">
-            <div className="section-heading reveal">
-              <p className="eyebrow">How it works</p>
-              <h2 id="how-title">Designed for the moment before the decision.</h2>
-            </div>
-            <ol className="step-flow">
-              <li className="step-card reveal">
-                <span>Step 1</span>
-                <h3>Set your pattern</h3>
-                <p>Name the habit loop, its likely trigger windows, and a realistic taper target.</p>
-              </li>
-              <li className="step-card reveal">
-                <span>Step 2</span>
-                <h3>Receive a calm intervention</h3>
-                <p>Get one private recommendation first, with fallback support if the moment needs a different route.</p>
-              </li>
-              <li className="step-card reveal">
-                <span>Step 3</span>
-                <h3>Review without shame</h3>
-                <p>Reflect on what happened and what helped, without punishment, inflated scores, or public pressure.</p>
-              </li>
-            </ol>
-          </div>
-        </section>
-
         <section className="section principles-section" id="principles" aria-labelledby="principles-title">
           <div className="container">
             <div className="section-heading principles-section-heading">
@@ -1433,7 +1398,7 @@ export default function App() {
           </div>
           <nav className="footer-nav" aria-label="Product links">
             <h3>Product</h3>
-            <a href="#how-it-works">How it works</a>
+            <a href="#urge-loop">How it works</a>
             <a href="#paths">Paths</a>
             <a href="#games">Games</a>
             <a href="#invite-unlock">Invite &amp; Unlock</a>

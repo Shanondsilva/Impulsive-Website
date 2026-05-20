@@ -502,291 +502,47 @@ export default function App() {
               <p>Impulsive starts with Mind first, then unlocks stronger support through movement, reflection, focus tools, and adaptive routing.</p>
             </div>
             <div className="path-cards">
-              <div
-                className={`path-card-wrapper${flippedCards.has("mind") ? " is-flipped" : ""}`}
-                role="button"
-                tabIndex={0}
-                aria-pressed={flippedCards.has("mind")}
-                aria-label="Mind path. Click to see how it works."
-                onClick={() => togglePathFlip("mind")}
-                onKeyDown={(event) => handlePathKeyDown(event, "mind")}
-              >
-                <article className="path-card psychology card-front reveal">
-                  <div className="card-topline">
-                    <span className="soft-icon symbol-icon" aria-hidden="true" data-fallable="">&#10022;</span>
-                    <span className="status-pill">Starts first</span>
-                  </div>
-                  <h3>Mind</h3>
-                  <p>Start with one calm mental reset before the loop takes over.</p>
-                  <ul className="path-detail-list" aria-label="Mind details">
-                    <li>Default first path</li>
-                    <li>Low-friction reset</li>
-                    <li>Indoor, late-night, stress, boredom, or social-media triggers</li>
-                  </ul>
-                  <span className="card-flip-hint" aria-hidden="true">
-                    <span>How it works</span>
-                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 12h18M13 5l7 7-7 7" /></svg>
-                  </span>
-                </article>
+              <article className="path-card psychology reveal">
+                <div className="card-topline">
+                  <span className="soft-icon symbol-icon" aria-hidden="true" data-fallable="">&#10022;</span>
+                  <span className="status-pill">Starts first</span>
+                </div>
+                <h3>Mind</h3>
+                <p>Pause the thought before it becomes the loop.</p>
+              </article>
 
-                <article className="path-card psychology card-back" aria-hidden={!flippedCards.has("mind")}>
-                  <div className="card-topline">
-                    <span className="soft-icon symbol-icon" aria-hidden="true">&#10022;</span>
-                    <span className="status-pill">Starts first</span>
-                  </div>
-                  <h3>Mind</h3>
-                  <p className="card-back-tag">Pause, name the urge, choose one better action, and save what helped.</p>
-                  <p className="card-back-section-h">How it works</p>
-                  <ol className="card-back-steps">
-                    <li>You notice the urge as a wave coming through, not a command you have to follow.</li>
-                    <li>You name what is actually pulling at you: stress, boredom, late-night scrolling, or another trigger.</li>
-                    <li>You choose one better action and save what helped for next time.</li>
-                  </ol>
-                  <div className="card-back-diagram">
-                    <svg viewBox="0 0 240 170" width="100%" role="img" aria-label="A trigger leads to a pause, then naming the pattern, then choosing a calmer next move. The old loop fades each time you do this.">
-                      <defs>
-                        <marker id="arr-mind-back" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M2 1L8 5L2 9" fill="none" stroke="#2D2730" strokeWidth="1.5" strokeLinecap="round" /></marker>
-                      </defs>
-                      <rect x="78" y="6" width="84" height="26" rx="8" fill="rgba(255,255,255,0.9)" stroke="#2D2730" strokeWidth="0.6" />
-                      <text x="120" y="23" textAnchor="middle" fontSize="11" fontWeight="500" fill="#2D2730">Trigger</text>
-                      <line x1="120" y1="34" x2="120" y2="48" stroke="#2D2730" strokeWidth="1" markerEnd="url(#arr-mind-back)" />
-                      <circle cx="120" cy="76" r="24" fill="#FFFFFF" stroke="#2D2730" strokeWidth="1.6" />
-                      <circle cx="120" cy="76" r="30" fill="none" stroke="#2D2730" strokeWidth="0.5" strokeDasharray="2 3" opacity="0.45" />
-                      <text x="120" y="74" textAnchor="middle" fontSize="11" fontWeight="500" fill="#2D2730">Pause</text>
-                      <text x="120" y="86" textAnchor="middle" fontSize="9" fill="#5D5360">notice it</text>
-                      <line x1="120" y1="102" x2="120" y2="116" stroke="#2D2730" strokeWidth="1" markerEnd="url(#arr-mind-back)" />
-                      <rect x="68" y="118" width="104" height="22" rx="6" fill="rgba(255,255,255,0.85)" stroke="#2D2730" strokeWidth="0.6" />
-                      <text x="120" y="133" textAnchor="middle" fontSize="11" fontWeight="500" fill="#2D2730">Name and choose</text>
-                      <line x1="120" y1="142" x2="120" y2="154" stroke="#2D2730" strokeWidth="1" markerEnd="url(#arr-mind-back)" />
-                      <text x="120" y="166" textAnchor="middle" fontSize="10" fill="#5D5360" fontStyle="italic">a calmer next move</text>
-                      <path d="M 174 156 Q 218 80 168 14" stroke="#5D5360" strokeWidth="0.5" fill="none" strokeDasharray="2 3" opacity="0.5" />
-                      <text x="208" y="86" fontSize="8" fill="#5D5360" fontStyle="italic" textAnchor="middle">old loop</text>
-                      <text x="208" y="96" fontSize="8" fill="#5D5360" fontStyle="italic" textAnchor="middle">fades</text>
-                    </svg>
-                  </div>
-                  <span className="card-flip-hint card-flip-hint-back" aria-hidden="true">
-                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 12H3M11 5l-7 7 7 7" /></svg>
-                    <span>Back</span>
+              <article className="path-card physical reveal">
+                <div className="card-topline">
+                  <span className="soft-icon image-icon" aria-hidden="true" data-fallable="">
+                    <img src="/images/icons/impulsive-body.png" alt="" />
                   </span>
-                </article>
-              </div>
-              <div
-                className={`path-card-wrapper${flippedCards.has("body") ? " is-flipped" : ""}`}
-                role="button"
-                tabIndex={0}
-                aria-pressed={flippedCards.has("body")}
-                aria-label="Body path. Click to see how it works."
-                onClick={() => togglePathFlip("body")}
-                onKeyDown={(event) => handlePathKeyDown(event, "body")}
-              >
-                <article className="path-card physical card-front reveal">
-                  <div className="card-topline">
-                    <span className="soft-icon image-icon" aria-hidden="true" data-fallable="">
-                      <img src="/images/icons/impulsive-body.png" alt="" />
-                    </span>
-                    <span className="status-pill">Unlocks later</span>
-                  </div>
-                  <h3>Body</h3>
-                  <p>When your room, bed, or phone becomes the trigger, Body helps you move before the urge takes over.</p>
-                  <ul className="path-detail-list" aria-label="Body details">
-                    <li>Movement-based reset</li>
-                    <li>Exit-room or walk support</li>
-                    <li>Built for changing state quickly</li>
-                  </ul>
-                  <span className="card-flip-hint" aria-hidden="true">
-                    <span>How it works</span>
-                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 12h18M13 5l7 7-7 7" /></svg>
-                  </span>
-                </article>
+                  <span className="status-pill">Unlocks later</span>
+                </div>
+                <h3>Body</h3>
+                <p>Move your body before the environment wins.</p>
+              </article>
 
-                <article className="path-card physical card-back" aria-hidden={!flippedCards.has("body")}>
-                  <div className="card-topline">
-                    <span className="soft-icon image-icon" aria-hidden="true">
-                      <img src="/images/icons/impulsive-body.png" alt="" />
-                    </span>
-                    <span className="status-pill">Unlocks later</span>
-                  </div>
-                  <h3>Body</h3>
-                  <p className="card-back-tag">Sometimes thinking is not enough. Body helps you leave the exact environment where the loop usually wins.</p>
-                  <p className="card-back-section-h">How it works</p>
-                  <ol className="card-back-steps">
-                    <li>Step away from the room, bed, phone, or place where the urge usually wins.</li>
-                    <li>Start a short reset and complete the movement proof.</li>
-                    <li>Save the progress privately so Impulsive can learn what helps you change state quickly.</li>
-                  </ol>
-                  <div className="card-back-diagram">
-                    <svg viewBox="0 0 240 190" width="100%" role="img" aria-label="A person leaves an indoor trigger zone, steps through a door, and walks outside on a path.">
-                      <defs>
-                        <marker id="arr-body-back" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M2 1L8 5L2 9" fill="none" stroke="#2D2730" strokeWidth="1.5" strokeLinecap="round" /></marker>
-                      </defs>
-                      <rect x="50" y="6" width="140" height="50" rx="8" fill="rgba(255,255,255,0.7)" stroke="#2D2730" strokeWidth="0.8" strokeDasharray="3 3" />
-                      <text x="120" y="22" textAnchor="middle" fontSize="10" fontWeight="500" fill="#2D2730">Indoor trigger zone</text>
-                      <text x="120" y="34" textAnchor="middle" fontSize="9" fill="#5D5360">where the loop wins</text>
-                      <circle cx="120" cy="46" r="3.5" fill="#2D2730" />
-                      <line x1="120" y1="49" x2="120" y2="52" stroke="#2D2730" strokeWidth="1.2" />
-                      <line x1="120" y1="60" x2="120" y2="80" stroke="#2D2730" strokeWidth="1.2" markerEnd="url(#arr-body-back)" />
-                      <text x="160" y="74" fontSize="9" fill="#5D5360">leave</text>
-                      <rect x="100" y="86" width="40" height="34" rx="4" fill="rgba(255,255,255,0.9)" stroke="#2D2730" strokeWidth="0.8" />
-                      <line x1="120" y1="86" x2="120" y2="120" stroke="#2D2730" strokeWidth="0.8" />
-                      <circle cx="125" cy="103" r="1.2" fill="#2D2730" />
-                      <text x="120" y="132" textAnchor="middle" fontSize="9" fill="#5D5360">step out</text>
-                      <line x1="120" y1="138" x2="120" y2="150" stroke="#2D2730" strokeWidth="1.2" markerEnd="url(#arr-body-back)" />
-                      <path d="M 30 170 Q 80 156 120 164 T 210 170" stroke="#2D2730" strokeWidth="1.4" fill="none" />
-                      <circle cx="55" cy="166" r="2.5" fill="#2D2730" />
-                      <circle cx="85" cy="161" r="2.5" fill="#2D2730" />
-                      <circle cx="115" cy="163" r="2.5" fill="#2D2730" />
-                      <circle cx="145" cy="166" r="2.5" fill="#2D2730" />
-                      <circle cx="175" cy="168" r="2.5" fill="#2D2730" />
-                      <text x="120" y="185" textAnchor="middle" fontSize="9" fill="#5D5360">5, 10, or 15 minute walk</text>
-                    </svg>
-                  </div>
-                  <span className="card-flip-hint card-flip-hint-back" aria-hidden="true">
-                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 12H3M11 5l-7 7 7 7" /></svg>
-                    <span>Back</span>
+              <article className="path-card spiritual reveal">
+                <div className="card-topline">
+                  <span className="soft-icon image-icon" aria-hidden="true" data-fallable="">
+                    <img src="/images/icons/impulsive-soul.png" alt="" />
                   </span>
-                </article>
-              </div>
-              <div
-                className={`path-card-wrapper${flippedCards.has("soul") ? " is-flipped" : ""}`}
-                role="button"
-                tabIndex={0}
-                aria-pressed={flippedCards.has("soul")}
-                aria-label="Soul path. Click to see how it works."
-                onClick={() => togglePathFlip("soul")}
-                onKeyDown={(event) => handlePathKeyDown(event, "soul")}
-              >
-                <article className="path-card spiritual card-front reveal">
-                  <div className="card-topline">
-                    <span className="soft-icon image-icon" aria-hidden="true" data-fallable="">
-                      <img src="/images/icons/impulsive-soul.png" alt="" />
-                    </span>
-                    <span className="status-pill">Optional</span>
-                  </div>
-                  <h3>Soul</h3>
-                  <p>For users who want faith, values, prayer, or reflection to be part of recovery without pressure.</p>
-                  <ul className="path-detail-list" aria-label="Soul details">
-                    <li>Optional</li>
-                    <li>Never forced</li>
-                    <li>Faith, values, prayer, reflection, recommitment</li>
-                  </ul>
-                  <span className="card-flip-hint" aria-hidden="true">
-                    <span>How it works</span>
-                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 12h18M13 5l7 7-7 7" /></svg>
-                  </span>
-                </article>
+                  <span className="status-pill">Optional</span>
+                </div>
+                <h3>Soul</h3>
+                <p>Return to meaning when the moment feels loud.</p>
+              </article>
 
-                <article className="path-card spiritual card-back" aria-hidden={!flippedCards.has("soul")}>
-                  <div className="card-topline">
-                    <span className="soft-icon image-icon" aria-hidden="true">
-                      <img src="/images/icons/impulsive-soul.png" alt="" />
-                    </span>
-                    <span className="status-pill">Optional</span>
-                  </div>
-                  <h3>Soul</h3>
-                  <p className="card-back-tag">Soul is optional. It appears only if enabled, then gives a short grounding action without pressure.</p>
-                  <p className="card-back-section-h">How it works</p>
-                  <ol className="card-back-steps">
-                    <li>You enable Soul only if faith, values, prayer, or reflection belongs in your recovery.</li>
-                    <li>Impulsive suggests a short grounding action: prayer, reflection, passage reading, or recommitment.</li>
-                    <li>If you slip, Soul helps you restart without shame.</li>
-                  </ol>
-                  <div className="card-back-diagram">
-                    <svg viewBox="0 0 240 180" width="100%" role="img" aria-label="A line of sight from the present moment, through prayer, passage, and reflection, to a steady future self.">
-                      <circle cx="120" cy="22" r="14" fill="rgba(255,255,255,0.85)" stroke="#2D2730" strokeWidth="1.2" />
-                      <text x="120" y="26" textAnchor="middle" fontSize="10" fontWeight="500" fill="#2D2730">Now</text>
-                      <text x="120" y="46" textAnchor="middle" fontSize="9" fill="#5D5360">a hard moment</text>
-                      <line x1="120" y1="56" x2="120" y2="138" stroke="#2D2730" strokeWidth="1" strokeDasharray="2 3" />
-                      <circle cx="120" cy="74" r="3" fill="#2D2730" />
-                      <text x="135" y="77" fontSize="9" fill="#5D5360">prayer</text>
-                      <circle cx="120" cy="96" r="3" fill="#2D2730" />
-                      <text x="135" y="99" fontSize="9" fill="#5D5360">passage</text>
-                      <circle cx="120" cy="118" r="3" fill="#2D2730" />
-                      <text x="135" y="121" fontSize="9" fill="#5D5360">reflection</text>
-                      <circle cx="120" cy="156" r="18" fill="rgba(255,255,255,0.9)" stroke="#2D2730" strokeWidth="1.5" />
-                      <text x="120" y="155" textAnchor="middle" fontSize="9" fontWeight="500" fill="#2D2730">Future</text>
-                      <text x="120" y="165" textAnchor="middle" fontSize="9" fontWeight="500" fill="#2D2730">self</text>
-                    </svg>
-                  </div>
-                  <span className="card-flip-hint card-flip-hint-back" aria-hidden="true">
-                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 12H3M11 5l-7 7 7 7" /></svg>
-                    <span>Back</span>
+              <article className="path-card synchrology reveal">
+                <div className="card-topline">
+                  <span className="soft-icon image-icon" aria-hidden="true" data-fallable="">
+                    <img src="/images/icons/impulsive-nexus.png" alt="" />
                   </span>
-                </article>
-              </div>
-              <div
-                className={`path-card-wrapper${flippedCards.has("nexus") ? " is-flipped" : ""}`}
-                role="button"
-                tabIndex={0}
-                aria-pressed={flippedCards.has("nexus")}
-                aria-label="Nexus path. Click to see how it works."
-                onClick={() => togglePathFlip("nexus")}
-                onKeyDown={(event) => handlePathKeyDown(event, "nexus")}
-              >
-                <article className="path-card synchrology card-front reveal">
-                  <div className="card-topline">
-                    <span className="soft-icon image-icon" aria-hidden="true" data-fallable="">
-                      <img src="/images/icons/impulsive-nexus.png" alt="" />
-                    </span>
-                    <span className="status-pill status-pill--future">Coming later</span>
-                  </div>
-                  <h3>Nexus</h3>
-                  <p>An adaptive engine that is designed to learn what helps and route the next best support, planned for a future release.</p>
-                  <ul className="path-detail-list" aria-label="Nexus details">
-                    <li>Not a public path menu</li>
-                    <li>Will coordinate Mind, Body, Soul, Focus, and games</li>
-                    <li>Designed to become more personal over time</li>
-                  </ul>
-                  <span className="card-flip-hint" aria-hidden="true">
-                    <span>How it will work</span>
-                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 12h18M13 5l7 7-7 7" /></svg>
-                  </span>
-                </article>
-
-                <article className="path-card synchrology card-back" aria-hidden={!flippedCards.has("nexus")}>
-                  <div className="card-topline">
-                    <span className="soft-icon image-icon" aria-hidden="true">
-                      <img src="/images/icons/impulsive-nexus.png" alt="" />
-                    </span>
-                    <span className="status-pill status-pill--future">Coming later</span>
-                  </div>
-                  <h3>Nexus</h3>
-                  <p className="card-back-tag">Nexus is designed to use private trigger patterns, past success, urge ratings, and fallback history to recommend one clear action. It is a planned future feature, not a current live capability.</p>
-                  <p className="card-back-section-h">How it will work</p>
-                  <ol className="card-back-steps">
-                    <li>It will read the private pattern: trigger windows, past success, urge ratings, and fallback history.</li>
-                    <li>It will coordinate Mind, Body, Soul, Focus, and recovery games behind the scenes.</li>
-                    <li>It will recommend one clear action instead of showing every option at once.</li>
-                    <li>It is designed to help Impulsive become more personal over time.</li>
-                  </ol>
-                  <div className="card-back-diagram">
-                    <svg viewBox="0 0 240 200" width="100%" role="img" aria-label="A four step ladder showing Mind only at levels one and two, previews at three to five, two of three paths at six and seven, and full Nexus at level eight and beyond.">
-                      <line x1="40" y1="20" x2="40" y2="180" stroke="#2D2730" strokeWidth="1.4" />
-                      <circle cx="40" cy="170" r="6" fill="rgba(255,255,255,0.95)" stroke="#2D2730" strokeWidth="1.2" />
-                      <text x="56" y="168" fontSize="9" fill="#5D5360">Levels 1-2</text>
-                      <text x="56" y="180" fontSize="10" fontWeight="500" fill="#2D2730">Mind only</text>
-                      <circle cx="40" cy="124" r="6" fill="rgba(255,255,255,0.95)" stroke="#2D2730" strokeWidth="1.2" />
-                      <text x="56" y="122" fontSize="9" fill="#5D5360">Levels 3-5</text>
-                      <text x="56" y="134" fontSize="10" fontWeight="500" fill="#2D2730">Mind plus previews</text>
-                      <circle cx="40" cy="78" r="6" fill="rgba(255,255,255,0.95)" stroke="#2D2730" strokeWidth="1.2" />
-                      <text x="56" y="76" fontSize="9" fill="#5D5360">Levels 6-7</text>
-                      <text x="56" y="88" fontSize="10" fontWeight="500" fill="#2D2730">Pick 2 of 3 paths</text>
-                      <circle cx="40" cy="30" r="8" fill="#2D2730" stroke="#2D2730" strokeWidth="1.4" />
-                      <text x="56" y="28" fontSize="9" fill="#5D5360">Level 8+</text>
-                      <text x="56" y="40" fontSize="10" fontWeight="500" fill="#2D2730">Full Nexus</text>
-                      <text x="56" y="52" fontSize="9" fill="#5D5360">all three paths active</text>
-                      <text x="200" y="174" fontSize="9" fill="#5D5360" textAnchor="middle">M . .</text>
-                      <text x="200" y="128" fontSize="9" fill="#5D5360" textAnchor="middle">M ~ ~</text>
-                      <text x="200" y="82" fontSize="9" fill="#5D5360" textAnchor="middle">M B S</text>
-                      <text x="200" y="34" fontSize="9" fill="#5D5360" textAnchor="middle">M B S</text>
-                      <text x="120" y="196" textAnchor="middle" fontSize="9" fill="#5D5360" fontStyle="italic">progress earns choice</text>
-                    </svg>
-                  </div>
-                  <span className="card-flip-hint card-flip-hint-back" aria-hidden="true">
-                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 12H3M11 5l-7 7 7 7" /></svg>
-                    <span>Back</span>
-                  </span>
-                </article>
-              </div>
+                  <span className="status-pill status-pill--future">Coming later</span>
+                </div>
+                <h3>Nexus</h3>
+                <p>Route the next best action from what actually helps.</p>
+              </article>
             </div>
           </div>
         </section>

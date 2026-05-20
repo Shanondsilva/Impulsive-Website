@@ -7353,23 +7353,7 @@ p {
 }
 
 .progression-path::before {
-  content: "";
-  position: absolute;
-  top: 26px;
-  bottom: 26px;
-  left: 25px;
-  width: 2px;
-  background: linear-gradient(
-    to bottom,
-    var(--mind-color),
-    var(--body-color) 28%,
-    var(--soul-color) 50%,
-    var(--focus-color) 70%,
-    var(--brand-glow)
-  );
-  opacity: 0.36;
-  border-radius: 2px;
-  pointer-events: none;
+  content: none;
 }
 
 .progression-step {
@@ -7410,16 +7394,7 @@ p {
 }
 
 .prog-connector {
-  flex: 1;
-  width: 2px;
-  min-height: 20px;
-  background: linear-gradient(
-    to bottom,
-    color-mix(in srgb, var(--prog-color) 38%, transparent),
-    transparent
-  );
-  margin: 4px auto 0;
-  border-radius: 2px;
+  display: none;
 }
 
 .progression-step:last-child .prog-connector {
@@ -9127,7 +9102,7 @@ p {
 
 .section-nav {
   position: fixed;
-  right: 20px;
+  right: max(16px, env(safe-area-inset-right));
   top: 50%;
   transform: translateY(-50%);
   display: flex;
@@ -9140,26 +9115,31 @@ p {
 }
 
 .section-nav-item {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  gap: 8px;
+  width: 22px;
+  min-height: 22px;
   text-decoration: none;
   cursor: pointer;
 }
 
 .section-nav-label {
+  position: absolute;
+  right: calc(100% + 10px);
+  top: 50%;
+  transform: translate3d(8px, -50%, 0);
   font-size: 0.72rem;
   font-weight: 600;
   letter-spacing: 0.01em;
   color: #5D5360;
-  white-space: nowrap;
+    white-space: nowrap;
   background: rgba(255, 253, 248, 0.92);
   border: 1px solid rgba(45, 39, 48, 0.10);
   padding: 3px 9px;
   border-radius: 20px;
   opacity: 0;
-  transform: translateX(6px);
   transition: opacity 150ms ease, transform 150ms ease;
   pointer-events: none;
   backdrop-filter: blur(6px);
@@ -9191,7 +9171,7 @@ p {
 .section-nav-item:focus-visible .section-nav-label,
 .section-nav-item.is-active .section-nav-label {
   opacity: 1;
-  transform: translateX(0);
+  transform: translate3d(0, -50%, 0);
 }
 
 .section-nav-item:focus-visible {
@@ -9222,7 +9202,7 @@ p {
 
 /* ─── Hide below 1200px — not enough horizontal room ────────────────────── */
 
-@media (max-width: 1199px) {
+@media (max-width: 1360px), (hover: none), (pointer: coarse) {
   .section-nav {
     display: none;
   }

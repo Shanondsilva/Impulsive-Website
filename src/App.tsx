@@ -910,8 +910,9 @@ export default function App() {
           <div className="container">
             <div className="section-heading principles-section-heading">
               <p className="eyebrow">Principles</p>
-              <h2 id="principles-title">Product principles</h2>
-              <p>No shame streaks. No fake scores. No trigger paywalls. Private by design.</p>
+              <h2 id="principles-title">Built without shame loops</h2>
+              <p>Impulsive is designed for the moment someone is trying to regain control, not prove they are perfect. The product should lower pressure, make the next action clear, and protect the user from feeling worse when the loop has already started.</p>
+              <p>No shame streaks. No fake scores. No trigger paywalls. Private by design. These are not slogans; they are product rules for every recovery flow, unlock moment, game, and progress screen.</p>
             </div>
           </div>
         </section>

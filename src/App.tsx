@@ -779,10 +779,6 @@ export default function App() {
             <ol className="progression-path" aria-label="Impulsive progression path">
 
               <li className="progression-step progression-step--unlocked reveal" style={{ "--prog-color": "var(--mind-color)" } as React.CSSProperties}>
-                <div className="prog-milestone">
-                  <span className="prog-badge" aria-hidden="true">1</span>
-                  <span className="prog-connector" aria-hidden="true"></span>
-                </div>
                 <div className="prog-card">
                   <span className="prog-level-label">Level 1</span>
                   <h3 className="prog-card-title">First reset</h3>
@@ -790,10 +786,6 @@ export default function App() {
               </li>
 
               <li className="progression-step progression-step--unlocked reveal" style={{ "--prog-color": "var(--soul-color)" } as React.CSSProperties}>
-                <div className="prog-milestone">
-                  <span className="prog-badge" aria-hidden="true">3</span>
-                  <span className="prog-connector" aria-hidden="true"></span>
-                </div>
                 <div className="prog-card">
                   <span className="prog-level-label">Level 3</span>
                   <h3 className="prog-card-title">Taper progress</h3>
@@ -801,10 +793,6 @@ export default function App() {
               </li>
 
               <li className="progression-step progression-step--preview reveal" style={{ "--prog-color": "var(--body-color)" } as React.CSSProperties}>
-                <div className="prog-milestone">
-                  <span className="prog-badge" aria-hidden="true">5</span>
-                  <span className="prog-connector" aria-hidden="true"></span>
-                </div>
                 <div className="prog-card">
                   <span className="prog-level-label">Level 5</span>
                   <h3 className="prog-card-title">Path preview</h3>
@@ -812,10 +800,6 @@ export default function App() {
               </li>
 
               <li className="progression-step progression-step--choice reveal" style={{ "--prog-color": "var(--brand-glow)" } as React.CSSProperties}>
-                <div className="prog-milestone">
-                  <span className="prog-badge" aria-hidden="true">6</span>
-                  <span className="prog-connector" aria-hidden="true"></span>
-                </div>
                 <div className="prog-card">
                   <span className="prog-level-label">Level 6</span>
                   <h3 className="prog-card-title">Stronger support</h3>

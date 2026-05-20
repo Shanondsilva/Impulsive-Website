@@ -260,15 +260,20 @@ export default function App() {
           </a>
           <div className="nav-right">
             <div className="nav-menu" id="primary-menu">
-              <div className="nav-links" aria-label="Site links">
+              <div className="nav-links nav-links--desktop" aria-label="Primary site links">
+                <a href="#urge-loop" onClick={closeMenu}>How it works</a>
+                <a href="#principles" onClick={closeMenu}>Principles</a>
+                <a href="#waitlist" onClick={closeMenu}>Waitlist</a>
+              </div>
+              <div className="nav-links nav-links--mobile" aria-label="Menu links">
                 <a href="#urge-loop" onClick={closeMenu}>How it works</a>
                 <a href="#paths" onClick={closeMenu}>Paths</a>
                 <a href="#principles" onClick={closeMenu}>Principles</a>
                 <a href="#about" onClick={closeMenu}>About</a>
                 <a href="#waitlist" onClick={closeMenu}>Waitlist</a>
               </div>
-              <a className="button button-small" href="#waitlist" onClick={closeMenu}>Join Waitlist</a>
             </div>
+            <a className="button button-small header-cta" href="#waitlist" onClick={closeMenu}>Join Waitlist</a>
             <button
               ref={themeToggleRef}
               className="theme-toggle"
@@ -326,72 +331,32 @@ export default function App() {
             </div>
 
             <div className="hero-visual reveal" aria-label="Impulsive app preview">
-              <div className="orbit-card card-calm">One clear recovery action</div>
-              <div className="orbit-card card-trigger">Built for the first pull</div>
-              <p className="mockup-disclaimer" aria-label="Mockup disclaimer">Prototype preview with example data.</p>
               <div className="phone">
                 <div className="phone-speaker" aria-hidden="true"></div>
                 <div className="app-screen">
                   <div className="app-topbar">
                     <span>Impulsive</span>
-                    <span className="privacy-pill">Private</span>
                   </div>
 
-                  <section className="today-plan" aria-label="Today's plan preview">
-                    <p>Risky moment detected</p>
-                    <h2>Recommended: 90-second Mind reset</h2>
-                    <div className="plan-row">
-                      <span>Trigger window</span>
-                      <strong>7:45-9:15pm</strong>
+                  <section className="hero-phone-flow" aria-label="Impulsive recovery flow preview">
+                    <div className="hero-phone-step hero-phone-step--alert">
+                      <span className="hero-phone-step-label">Step 1</span>
+                      <strong>Risky moment detected</strong>
                     </div>
-                    <div className="scorecard-proof" aria-label="Recovery action saved">
-                      <span>
-                        <small>Urge before</small>
-                        <strong>8/10</strong>
-                      </span>
-                      <span>
-                        <small>Urge after</small>
-                        <strong>5/10</strong>
-                      </span>
+
+                    <div className="hero-phone-step hero-phone-step--reset">
+                      <span className="hero-phone-step-label">Step 2</span>
+                      <strong>Recommended: 90-second reset</strong>
+                    </div>
+
+                    <div className="hero-phone-step hero-phone-step--choices">
+                      <span className="hero-phone-step-label">Step 3</span>
+                      <div className="hero-phone-actions" aria-label="Previewed recovery choices">
+                        <button type="button" className="hero-phone-button hero-phone-button--primary" tabIndex={-1}>Walk away</button>
+                        <button type="button" className="hero-phone-button hero-phone-button--secondary" tabIndex={-1}>Continue with intention</button>
+                      </div>
                     </div>
                   </section>
-
-                  <section className="intervention">
-                    <div>
-                      <span className="mini-label">One clear recovery action</span>
-                      <strong>90-second Mind reset</strong>
-                    </div>
-                    <button type="button" aria-label="Calm intervention preview" tabIndex={-1}>Done</button>
-                  </section>
-
-                  <section className="progress">
-                    <div className="progress-copy">
-                      <span>Saved progress</span>
-                      <strong>Level 3 progress</strong>
-                    </div>
-                    <div className="progress-meta">Mind Core active</div>
-                    <div className="progress-track" aria-hidden="true"><span></span></div>
-                  </section>
-
-                  <section className="mockup-scorecard" aria-label="Private recovery scorecard preview">
-                    <div className="scorecard-row">
-                      <span>Today</span>
-                      <strong>2 risky moments interrupted</strong>
-                    </div>
-                    <div className="scorecard-row">
-                      <span>Safe exits</span>
-                      <strong>1</strong>
-                    </div>
-                    <div className="scorecard-row">
-                      <span>Best reset</span>
-                      <strong>90 seconds</strong>
-                    </div>
-                  </section>
-
-                  <aside className="focus-note">
-                    <span>Safe exit saved</span>
-                    <strong>What helped is stored privately for next time.</strong>
-                  </aside>
                 </div>
               </div>
             </div>

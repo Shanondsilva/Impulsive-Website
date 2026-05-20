@@ -5733,6 +5733,14 @@ p {
   line-height: 1.65;
 }
 
+.game-context-note {
+  max-width: 720px;
+  margin: -16px 0 28px;
+  color: var(--color-muted);
+  font-size: 1.02rem;
+  line-height: 1.65;
+}
+
 .game-flow-strip {
   display: flex;
   flex-wrap: wrap;
@@ -6769,6 +6777,7 @@ p {
 }
 
 [data-theme="dark"] .recovery-games-heading p:last-child,
+[data-theme="dark"] .game-context-note,
 [data-theme="dark"] .featured-game-card p {
   color: rgba(247, 242, 255, 0.76);
 }

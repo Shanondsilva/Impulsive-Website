@@ -719,6 +719,8 @@ export default function App() {
               </div>
             </div>
 
+            <p className="game-context-note reveal">Reflex Override is the first recovery game. Impulsive is designed with 9 short interruption games in total.</p>
+
             <article className="featured-game-card reveal" style={{ "--game-color": selectedGame.accent } as React.CSSProperties}>
               <div className="featured-game-copy">
                 <span className="game-kicker">{selectedGameIndex === 0 ? "Featured first build" : "Selected recovery tool"}</span>
@@ -765,26 +767,6 @@ export default function App() {
               </div>
             </article>
 
-            <div className="game-card-grid" aria-label="Recovery game library">
-              {recoveryGames.map((game, gameIndex) => {
-                return (
-                <button
-                  className={`game-card is-visible${selectedGameIndex === gameIndex ? " is-selected" : ""}`}
-                  key={game.name}
-                  type="button"
-                  style={{ "--game-color": game.accent } as React.CSSProperties}
-                  aria-pressed={selectedGameIndex === gameIndex}
-                  onClick={() => setSelectedGameIndex(gameIndex)}
-                >
-                  <span>
-                    <small>Short interruption tool</small>
-                    <strong>{game.name}</strong>
-                  </span>
-                  <span className="game-card-action" aria-hidden="true">→</span>
-                </button>
-                );
-              })}
-            </div>
           </div>
         </section>
 

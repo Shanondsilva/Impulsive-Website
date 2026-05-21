@@ -145,6 +145,55 @@ body {
   transition: background 250ms ease, color 250ms ease;
 }
 
+.app-shell {
+  position: relative;
+  isolation: isolate;
+  min-height: 100vh;
+}
+
+.background-particles {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.42;
+  background-image:
+    radial-gradient(circle, rgba(208, 195, 241, 0.58) 0 1px, transparent 1.8px),
+    radial-gradient(circle, rgba(189, 224, 254, 0.46) 0 1px, transparent 1.9px),
+    radial-gradient(circle, rgba(147, 233, 190, 0.38) 0 1px, transparent 1.7px);
+  background-position: 0 0, 34px 58px, 82px 22px;
+  background-size: 148px 148px, 214px 214px, 276px 276px;
+  animation: background-particle-drift 34s linear infinite;
+}
+
+.app-shell > :not(.background-particles) {
+  position: relative;
+  z-index: 1;
+}
+
+[data-theme="dark"] .background-particles {
+  opacity: 0.34;
+  background-image:
+    radial-gradient(circle, rgba(208, 195, 241, 0.62) 0 1px, transparent 1.8px),
+    radial-gradient(circle, rgba(189, 224, 254, 0.46) 0 1px, transparent 1.9px),
+    radial-gradient(circle, rgba(254, 241, 171, 0.32) 0 1px, transparent 1.7px);
+}
+
+@keyframes background-particle-drift {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-84px, -148px, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .background-particles {
+    animation: none;
+  }
+}
+
 img {
   display: block;
   max-width: 100%;

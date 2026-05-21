@@ -326,7 +326,8 @@ export default function App() {
   };
 
   return (
-    <div className={menuOpen ? "menu-open" : ""}>
+    <div className={`app-shell${menuOpen ? " menu-open" : ""}`}>
+      <div className="background-particles" aria-hidden="true" />
       <a className="skip-link" href="#main">Skip to content</a>
 
       <header className={`site-header ${isScrolled ? "is-scrolled" : ""}`} data-header>

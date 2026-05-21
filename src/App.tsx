@@ -110,6 +110,8 @@ export default function App() {
   const [formStatus, setFormStatus] = useState<{ message: string; type: 'success' | 'error' | 'info' | '' }>({ message: '', type: '' });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [startedAt] = useState(Date.now().toString());
+  const navMenuRef = useRef<HTMLDivElement>(null);
+  const menuToggleRef = useRef<HTMLButtonElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
   const themeToggleRef = useRef<HTMLButtonElement>(null);
   const { theme, toggle } = useDarkMode();
@@ -188,11 +190,23 @@ export default function App() {
 
   useEffect(() => {
     if (!menuOpen) return;
-    const handleKey = (event: KeyboardEvent) => {
+    const handleKey = (event: globalThis.KeyboardEvent) => {
       if (event.key === "Escape") setMenuOpen(false);
     };
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        navMenuRef.current && !navMenuRef.current.contains(event.target as Node) &&
+        menuToggleRef.current && !menuToggleRef.current.contains(event.target as Node)
+      ) {
+        setMenuOpen(false);
+      }
+    };
     window.addEventListener("keydown", handleKey);
-    return () => window.removeEventListener("keydown", handleKey);
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      window.removeEventListener("keydown", handleKey);
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
   }, [menuOpen]);
 
   const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -259,7 +273,7 @@ export default function App() {
             <span>Impulsive</span>
           </a>
           <div className="nav-right">
-            <div className="nav-menu" id="primary-menu">
+            <div className="nav-menu" id="primary-menu" ref={navMenuRef}>
               <div className="nav-links nav-links--desktop" aria-label="Primary site links">
                 <a href="#urge-loop" onClick={closeMenu}>How it works</a>
                 <a href="#principles" onClick={closeMenu}>Principles</a>
@@ -297,6 +311,7 @@ export default function App() {
               aria-expanded={menuOpen}
               aria-controls="primary-menu"
               onClick={handleMenuToggle}
+              ref={menuToggleRef}
             >
               <span></span>
               <span></span>

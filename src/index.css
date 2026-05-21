@@ -11293,3 +11293,413 @@ p {
     font-size: 0.76rem;
   }
 }
+
+/* ===== Premium hero phone mockup refinement ===== */
+
+.hero-visual,
+[data-theme="dark"] .hero-visual {
+  min-height: clamp(560px, 52vw, 720px);
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.hero-visual::before {
+  width: clamp(320px, 38vw, 560px);
+  opacity: 0.54;
+  filter: blur(1px) saturate(1.04);
+  transform: translateY(8px);
+  background:
+    radial-gradient(circle at 24% 24%, rgba(254, 241, 171, 0.72), transparent 31%),
+    radial-gradient(circle at 78% 28%, rgba(245, 167, 166, 0.48), transparent 35%),
+    radial-gradient(circle at 40% 74%, rgba(189, 224, 254, 0.62), transparent 36%),
+    rgba(208, 195, 241, 0.58);
+  box-shadow:
+    0 28px 80px rgba(208, 195, 241, 0.22),
+    0 36px 110px rgba(189, 224, 254, 0.16);
+  animation: hero-phone-glow-drift 16s ease-in-out infinite;
+}
+
+.hero-visual .phone,
+[data-theme="dark"] .hero-visual .phone,
+[data-theme="dark"] .hero-visual .phone:hover {
+  box-sizing: border-box;
+  width: clamp(260px, 22vw, 340px);
+  max-width: calc(100vw - 32px);
+  aspect-ratio: 390 / 844;
+  border: 0;
+  border-radius: clamp(38px, 3.5vw, 52px);
+  padding: clamp(6px, 0.55vw, 8px);
+  overflow: hidden;
+  background:
+    linear-gradient(150deg, rgba(255, 255, 255, 0.88), rgba(255, 255, 255, 0.28) 18%, transparent 42%) padding-box,
+    linear-gradient(145deg, #38313C 0%, #1F1A24 58%, #4A404F 100%) border-box;
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.52) inset,
+    0 20px 48px rgba(45, 39, 48, 0.18),
+    0 42px 92px rgba(208, 195, 241, 0.20);
+  transform: translateY(0);
+  animation: hero-phone-float 9s ease-in-out infinite;
+}
+
+.hero-visual .phone:hover,
+.hero-visual .phone:focus-within {
+  transform: translateY(-4px);
+}
+
+.hero-visual .phone::before {
+  inset: clamp(6px, 0.55vw, 8px);
+  border-radius: clamp(31px, 3vw, 44px);
+  border-color: rgba(255, 255, 255, 0.68);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.72),
+    inset 0 -18px 42px rgba(45, 39, 48, 0.035);
+}
+
+.hero-visual .phone-speaker {
+  top: clamp(14px, 1.05vw, 18px);
+  width: clamp(70px, 5.8vw, 94px);
+  height: clamp(20px, 1.55vw, 26px);
+  border-radius: 999px;
+  background:
+    linear-gradient(180deg, rgba(30, 25, 34, 0.96), rgba(16, 14, 19, 0.96)),
+    #1B171F;
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.12) inset,
+    0 4px 14px rgba(0, 0, 0, 0.20);
+}
+
+.hero-visual .app-screen {
+  position: relative;
+  z-index: 1;
+  box-sizing: border-box;
+  display: grid;
+  grid-template-rows: auto auto auto minmax(0, 1fr);
+  gap: clamp(10px, 1vw, 14px);
+  width: 100%;
+  height: 100%;
+  padding: clamp(50px, 4.2vw, 66px) clamp(16px, 1.45vw, 22px) clamp(16px, 1.45vw, 22px);
+  border-radius: clamp(31px, 3vw, 44px);
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 20% 12%, rgba(254, 241, 171, 0.55), transparent 27%),
+    radial-gradient(circle at 86% 6%, rgba(189, 224, 254, 0.50), transparent 28%),
+    linear-gradient(180deg, rgba(255, 252, 247, 0.96) 0%, rgba(248, 241, 255, 0.97) 100%);
+}
+
+.hero-visual .app-topbar {
+  min-height: 28px;
+  margin: 0;
+  align-items: center;
+  color: #332C38;
+  font-size: clamp(0.76rem, 0.7vw, 0.88rem);
+  font-weight: 850;
+  letter-spacing: 0.06em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.hero-visual .privacy-pill {
+  border: 1px solid rgba(45, 39, 48, 0.07);
+  background: rgba(255, 255, 255, 0.56);
+  color: rgba(63, 54, 68, 0.76);
+  font-size: clamp(0.58rem, 0.52vw, 0.66rem);
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  padding: 5px 9px;
+  box-shadow: 0 6px 18px rgba(45, 39, 48, 0.05);
+}
+
+.hero-visual .phone-card {
+  margin-top: 0;
+  border-radius: clamp(18px, 1.55vw, 24px);
+  border-color: rgba(45, 39, 48, 0.08);
+  background: rgba(255, 255, 255, 0.66);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.78) inset,
+    0 10px 24px rgba(45, 39, 48, 0.06);
+}
+
+.hero-visual .phone-card-label {
+  margin-bottom: 8px;
+  color: rgba(76, 67, 80, 0.78);
+  font-size: clamp(0.58rem, 0.52vw, 0.68rem);
+  letter-spacing: 0.08em;
+  line-height: 1.1;
+}
+
+.hero-visual .phone-card--trigger {
+  padding: clamp(16px, 1.45vw, 21px);
+  border-color: rgba(139, 190, 232, 0.32);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.58), rgba(255, 255, 255, 0.36)),
+    rgba(189, 224, 254, 0.34);
+}
+
+.hero-visual .phone-card-sub {
+  margin-bottom: clamp(13px, 1.15vw, 16px);
+  color: #2D2730;
+  font-size: clamp(0.90rem, 0.82vw, 1rem);
+  line-height: 1.28;
+}
+
+.hero-visual .phone-card-actions {
+  grid-template-columns: 1fr 1fr;
+  gap: 9px;
+}
+
+.hero-visual .phone-btn {
+  min-height: clamp(36px, 3vw, 42px);
+  border-radius: 999px;
+  font-size: clamp(0.74rem, 0.68vw, 0.84rem);
+  line-height: 1;
+  padding-inline: 10px;
+  box-shadow: 0 7px 18px rgba(45, 39, 48, 0.06);
+}
+
+.hero-visual .phone-btn--primary {
+  background: rgba(255, 255, 255, 0.94);
+  border-color: rgba(45, 39, 48, 0.08);
+}
+
+.hero-visual .phone-btn--ghost {
+  background: rgba(255, 255, 255, 0.42);
+}
+
+.hero-visual .phone-card--paths {
+  padding: clamp(14px, 1.25vw, 18px);
+}
+
+.hero-visual .phone-paths-list {
+  gap: clamp(7px, 0.7vw, 9px);
+}
+
+.hero-visual .phone-path-row {
+  min-width: 0;
+  gap: 9px;
+  padding: clamp(7px, 0.7vw, 9px) clamp(9px, 0.8vw, 12px);
+  border: 1px solid rgba(45, 39, 48, 0.045);
+  border-radius: 13px;
+  background: rgba(255, 255, 255, 0.58);
+  color: #3B3340;
+  font-size: clamp(0.68rem, 0.64vw, 0.80rem);
+  line-height: 1.15;
+}
+
+.hero-visual .phone-path-row > span:last-child {
+  min-width: 0;
+  white-space: nowrap;
+}
+
+.hero-visual .phone-path-dot {
+  width: 8px;
+  height: 8px;
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.56);
+}
+
+.hero-visual .phone-card--game {
+  align-self: end;
+  padding: clamp(15px, 1.35vw, 19px);
+  border-color: rgba(245, 167, 166, 0.22);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.52), rgba(255, 255, 255, 0.28)),
+    rgba(245, 167, 166, 0.15);
+}
+
+.hero-visual .phone-game-name {
+  margin-bottom: 6px;
+  color: #2D2730;
+  font-size: clamp(0.88rem, 0.78vw, 0.98rem);
+  line-height: 1.18;
+}
+
+.hero-visual .phone-game-desc {
+  color: rgba(76, 67, 80, 0.78);
+  font-size: clamp(0.72rem, 0.62vw, 0.80rem);
+  line-height: 1.36;
+}
+
+[data-theme="dark"] .hero-visual::before {
+  opacity: 0.44;
+  background:
+    radial-gradient(circle at 22% 24%, rgba(208, 195, 241, 0.34), transparent 34%),
+    radial-gradient(circle at 76% 28%, rgba(245, 167, 166, 0.28), transparent 36%),
+    radial-gradient(circle at 48% 78%, rgba(91, 172, 255, 0.18), transparent 34%),
+    rgba(12, 15, 34, 0.50);
+  box-shadow:
+    0 0 82px rgba(208, 195, 241, 0.18),
+    0 0 132px rgba(245, 167, 166, 0.10);
+}
+
+[data-theme="dark"] .hero-visual .phone,
+[data-theme="dark"] .hero-visual .phone:hover,
+[data-theme="dark"] .hero-visual .phone:focus-within {
+  background:
+    linear-gradient(150deg, rgba(255, 255, 255, 0.20), rgba(255, 255, 255, 0.04) 18%, transparent 42%) padding-box,
+    linear-gradient(145deg, #F2EAFF 0%, #8D7DA4 18%, #241C2F 52%, #B39CCB 100%) border-box;
+  box-shadow:
+    0 0 0 1px rgba(247, 242, 255, 0.18) inset,
+    0 0 0 1px rgba(208, 195, 241, 0.46),
+    0 0 16px rgba(208, 195, 241, 0.34),
+    -10px 0 30px rgba(126, 95, 255, 0.22),
+    12px 0 32px rgba(245, 167, 166, 0.18),
+    0 18px 48px rgba(0, 0, 0, 0.54),
+    0 30px 92px rgba(126, 95, 255, 0.24);
+  filter: none;
+}
+
+[data-theme="dark"] .hero-visual .app-screen {
+  background:
+    radial-gradient(circle at 18% 12%, rgba(208, 195, 241, 0.18), transparent 28%),
+    radial-gradient(circle at 88% 8%, rgba(189, 224, 254, 0.14), transparent 30%),
+    linear-gradient(180deg, #211B29 0%, #171520 100%);
+}
+
+[data-theme="dark"] .hero-visual .phone::before {
+  border-color: rgba(247, 242, 255, 0.12);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.10),
+    inset 0 -20px 46px rgba(0, 0, 0, 0.18);
+}
+
+[data-theme="dark"] .hero-visual .app-topbar {
+  color: rgba(247, 242, 255, 0.92);
+}
+
+[data-theme="dark"] .hero-visual .privacy-pill {
+  background: rgba(247, 242, 255, 0.08);
+  border-color: rgba(247, 242, 255, 0.10);
+  color: rgba(247, 242, 255, 0.72);
+}
+
+[data-theme="dark"] .hero-visual .phone-card {
+  background: rgba(255, 255, 255, 0.055);
+  border-color: rgba(247, 242, 255, 0.10);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.06) inset,
+    0 12px 28px rgba(0, 0, 0, 0.22);
+}
+
+[data-theme="dark"] .hero-visual .phone-card-label {
+  color: rgba(247, 242, 255, 0.58);
+}
+
+[data-theme="dark"] .hero-visual .phone-card-sub,
+[data-theme="dark"] .hero-visual .phone-game-name {
+  color: rgba(247, 242, 255, 0.92);
+}
+
+[data-theme="dark"] .hero-visual .phone-card--trigger {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.025)),
+    rgba(91, 172, 255, 0.10);
+  border-color: rgba(189, 224, 254, 0.16);
+}
+
+[data-theme="dark"] .hero-visual .phone-btn--primary {
+  background: rgba(247, 242, 255, 0.92);
+  border-color: rgba(247, 242, 255, 0.20);
+  color: #201B28;
+}
+
+[data-theme="dark"] .hero-visual .phone-btn--ghost {
+  background: rgba(247, 242, 255, 0.14);
+  border-color: rgba(247, 242, 255, 0.12);
+  color: rgba(247, 242, 255, 0.84);
+}
+
+[data-theme="dark"] .hero-visual .phone-card--paths {
+  background: rgba(255, 255, 255, 0.045);
+}
+
+[data-theme="dark"] .hero-visual .phone-path-row {
+  background: rgba(255, 255, 255, 0.055);
+  border-color: rgba(247, 242, 255, 0.07);
+  color: rgba(247, 242, 255, 0.84);
+}
+
+[data-theme="dark"] .hero-visual .phone-path-dot {
+  box-shadow: 0 0 0 3px rgba(16, 14, 24, 0.62);
+}
+
+[data-theme="dark"] .hero-visual .phone-card--game {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02)),
+    rgba(245, 167, 166, 0.08);
+  border-color: rgba(245, 167, 166, 0.14);
+}
+
+[data-theme="dark"] .hero-visual .phone-game-desc {
+  color: rgba(247, 242, 255, 0.62);
+}
+
+@keyframes hero-phone-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-7px);
+  }
+}
+
+@keyframes hero-phone-glow-drift {
+  0%,
+  100% {
+    transform: translateY(8px) scale(1);
+  }
+  50% {
+    transform: translateY(0) scale(1.025);
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-visual,
+  [data-theme="dark"] .hero-visual {
+    min-height: auto;
+    overflow: visible;
+  }
+
+  .hero-visual::before,
+  [data-theme="dark"] .hero-visual::before {
+    width: min(88vw, 420px);
+    opacity: 0.48;
+    animation-duration: 20s;
+  }
+
+  .hero-visual .phone,
+  [data-theme="dark"] .hero-visual .phone,
+  [data-theme="dark"] .hero-visual .phone:hover,
+  [data-theme="dark"] .hero-visual .phone:focus-within {
+    width: min(82vw, 318px);
+    max-width: calc(100vw - 32px);
+    transform: none;
+    animation: none;
+  }
+}
+
+@media (max-width: 360px) {
+  .hero-visual .app-screen {
+    padding-inline: 13px;
+    gap: 9px;
+  }
+
+  .hero-visual .phone-card--trigger,
+  .hero-visual .phone-card--paths,
+  .hero-visual .phone-card--game {
+    padding: 13px;
+  }
+
+  .hero-visual .phone-path-row {
+    gap: 7px;
+    padding-inline: 8px;
+    font-size: 0.64rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-visual::before,
+  .hero-visual .phone,
+  [data-theme="dark"] .hero-visual .phone {
+    animation: none;
+  }
+}

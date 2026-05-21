@@ -507,7 +507,7 @@ export default function App() {
               <p>Impulsive is built for the moment a difficult habit starts to move faster than motivation.</p>
             </RevealOnScroll>
 
-            <motion.div className="urge-loop-grid" aria-label="What happens when Impulsive steps in" initial={reduceMotion ? false : 'hidden'} whileInView={reduceMotion ? undefined : 'visible'} viewport={{ once: true, margin: '-15%' }} variants={{ visible: { transition: { staggerChildren: 0.08 } } }}>
+            <motion.div className="urge-loop-grid" aria-label="What happens when Impulsive steps in" initial={reduceMotion ? false : 'hidden'} whileInView={reduceMotion ? undefined : 'visible'} viewport={{ once: true, amount: 0.15 }} variants={{ visible: { transition: { staggerChildren: 0.08 } } }}>
               <motion.article className="urge-loop-card" style={{ "--loop-color": "#D0C3F1" } as React.CSSProperties} variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.8, ease: revealEase }}>
                 <span className="loop-marker" aria-hidden="true">01</span>
                 <div>
@@ -543,7 +543,7 @@ export default function App() {
               <p>Impulsive does not throw every feature at you on day one. It starts with one clear recovery path, learns what helps, then unlocks stronger support when your pattern becomes clearer.</p>
             </RevealOnScroll>
 
-            <motion.ol className="first-week-timeline" aria-label="Impulsive first week onboarding steps" initial={reduceMotion ? false : 'hidden'} whileInView={reduceMotion ? undefined : 'visible'} viewport={{ once: true, margin: '-15%' }} variants={{ visible: { transition: { staggerChildren: 0.1 } } }}>
+            <motion.ol className="first-week-timeline" aria-label="Impulsive first week onboarding steps" initial={reduceMotion ? false : 'hidden'} whileInView={reduceMotion ? undefined : 'visible'} viewport={{ once: true, amount: 0.15 }} variants={{ visible: { transition: { staggerChildren: 0.1 } } }}>
               <motion.li className={`first-week-step${activeWeekCard === 0 ? ' is-active' : ''}`} style={{ "--week-color": "var(--mind-color)" } as React.CSSProperties} variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0 } }} animate={reduceMotion ? undefined : { scale: activeWeekCard === 0 ? 1.02 : 1 }}>
                 <span className="week-dot" aria-hidden="true">1</span>
                 <div>
@@ -599,7 +599,7 @@ export default function App() {
               <h2 id="paths-title">Four ways Impulsive supports the recovery loop</h2>
               <p>Impulsive starts with Mind first, then unlocks stronger support through movement, reflection, focus tools, and adaptive routing.</p>
             </RevealOnScroll>
-            <motion.div className="path-cards" initial={reduceMotion ? false : 'hidden'} whileInView={reduceMotion ? undefined : 'visible'} viewport={{ once: true, margin: '-15%' }} variants={{ visible: { transition: { staggerChildren: 0.08 } } }}>
+            <motion.div className="path-cards" initial={reduceMotion ? false : 'hidden'} whileInView={reduceMotion ? undefined : 'visible'} viewport={{ once: true, amount: 0.15 }} variants={{ visible: { transition: { staggerChildren: 0.08 } } }}>
               <div
                 className={`path-card-wrapper${flippedCards.has("mind") ? " is-flipped" : ""}`}
                 role="button"
@@ -957,7 +957,7 @@ export default function App() {
               <p>Impulsive should help first, then offer stronger tools later. Basic recovery support stays available during risky moments. Upgrade choices belong in calm progress moments, not during weakness.</p>
             </RevealOnScroll>
 
-            <motion.div className="tiers-grid" initial={reduceMotion ? false : 'hidden'} whileInView={reduceMotion ? undefined : 'visible'} viewport={{ once: true, margin: '-15%' }} variants={{ visible: { transition: { staggerChildren: 0.06 } } }}>
+            <motion.div className="tiers-grid" initial={reduceMotion ? false : 'hidden'} whileInView={reduceMotion ? undefined : 'visible'} viewport={{ once: true, amount: 0.15 }} variants={{ visible: { transition: { staggerChildren: 0.06 } } }}>
 
               <motion.article className="tier-card tier-card--free" style={{ "--tier-color": "var(--mind-color)" } as React.CSSProperties} variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0 } }}>
                 <div className="tier-card-top">

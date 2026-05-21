@@ -269,6 +269,15 @@ export default function App() {
       <div className="background-particles" aria-hidden="true" />
       <a className="skip-link" href="#main">Skip to content</a>
 
+      <header className="site-header" aria-label="Site header">
+        <nav className="nav" aria-label="Primary navigation">
+          <a className="wordmark" href="#top" aria-label="Impulsive home">
+            <img src="/images/icons/impulsive-logo-transparent-clean.png" alt="" />
+            <span>Impulsive</span>
+          </a>
+        </nav>
+      </header>
+
       <main id="main">
         <section className="hero section" id="top" aria-labelledby="hero-title" ref={heroRef}>
           <div className="hero-bg" aria-hidden="true">

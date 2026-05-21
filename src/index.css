@@ -10691,30 +10691,57 @@ p {
 }
 
 .credibility-pane--about .about-credibility-lines {
-  max-width: 46ch;
   display: grid;
-  gap: 12px;
+  gap: 16px;
   margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
-.credibility-pane--about .about-credibility-lines p {
+.credibility-pane--about .about-credibility-item {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.credibility-pane--about .about-bullet {
+  flex-shrink: 0;
+  width: 6px;
+  height: 6px;
+  margin-top: 0.42em;
+  border-radius: 50%;
+  background: var(--primary-accent, #93E9BE);
+}
+
+.credibility-pane--about .about-credibility-item p {
   margin: 0;
-  font-size: clamp(0.98rem, 1.02vw, 1.08rem);
-  line-height: 1.58;
+  font-size: clamp(0.96rem, 1.02vw, 1.06rem);
+  line-height: 1.6;
+  color: var(--color-text);
+}
+
+.credibility-pane--about .about-credibility-item strong {
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.credibility-pane--about .about-bullet-desc {
+  color: var(--color-muted);
 }
 
 .credibility-pane--about .about-footer-row--disclaimer {
-  max-width: 46ch;
-  margin-top: 16px;
-  padding-top: 14px;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(45, 39, 48, 0.10);
 }
 
 .credibility-pane--about .about-disclaimer {
   margin: 0;
-  font-size: 0.78rem;
-  line-height: 1.52;
-  opacity: 0.82;
+  font-size: 0.76rem;
+  line-height: 1.58;
+  color: var(--color-muted);
+  opacity: 0.72;
 }
 
 .credibility-chips-group {
@@ -10796,7 +10823,29 @@ p {
 }
 
 [data-theme="dark"] .credibility-pane--about .about-footer-row--disclaimer {
-  border-top-color: rgba(247, 242, 255, 0.14);
+  border-top-color: rgba(247, 242, 255, 0.12);
+}
+
+[data-theme="dark"] .credibility-pane--about .about-credibility-item p {
+  color: var(--text-strong);
+}
+
+[data-theme="dark"] .credibility-pane--about .about-credibility-item strong {
+  color: var(--text-strong);
+}
+
+[data-theme="dark"] .credibility-pane--about .about-bullet-desc {
+  color: var(--text-muted-readable);
+}
+
+[data-theme="dark"] .credibility-pane--about .about-disclaimer {
+  color: var(--text-muted-readable);
+  opacity: 0.65;
+}
+
+[data-theme="dark"] .credibility-pane--about .about-bullet {
+  background: var(--primary-accent);
+  opacity: 0.8;
 }
 
 @media (max-width: 900px) {
@@ -10823,15 +10872,43 @@ p {
     padding-bottom: 44px;
   }
 
-  .credibility-pane h2 {
-    font-size: clamp(1.34rem, 6vw, 1.7rem);
-    margin-bottom: 12px;
+  .credibility-dual-card {
+    margin-inline: 4px;
   }
 
-  .credibility-principles-line,
-  .credibility-pane--about .about-credibility-lines p {
+  .credibility-pane {
+    padding: 28px 24px;
+  }
+
+  .credibility-pane h2 {
+    font-size: clamp(1.34rem, 6vw, 1.7rem);
+    line-height: 1.18;
+    margin-bottom: 14px;
+  }
+
+  .credibility-principles-line {
     font-size: 0.95rem;
     line-height: 1.52;
+  }
+
+  .credibility-pane--about .about-credibility-lines {
+    gap: 20px;
+  }
+
+  .credibility-pane--about .about-credibility-item p {
+    font-size: 0.94rem;
+    line-height: 1.56;
+  }
+
+  .credibility-pane--about .about-footer-row--disclaimer {
+    margin-top: 24px;
+    padding-top: 16px;
+  }
+
+  .credibility-pane--about .about-disclaimer {
+    font-size: 0.72rem;
+    line-height: 1.62;
+    opacity: 0.58;
   }
 
   .hero-visual {

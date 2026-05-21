@@ -894,11 +894,20 @@ export default function App() {
               <article className="credibility-pane credibility-pane--about" id="about" aria-labelledby="about-title">
                 <p className="eyebrow">ABOUT</p>
                 <h2 id="about-title">Built carefully for private behaviour change.</h2>
-                <div className="about-credibility-lines">
-                  <p><strong>Privacy-first:</strong> sensitive recovery records stay private and local-first by default.</p>
-                  <p><strong>Careful language:</strong> no cure claims, fake percentages, or medical promises.</p>
-                  <p><strong>Review-ready:</strong> clear enough for advisors, clinicians, and endorsement reviewers to understand.</p>
-                </div>
+                <ul className="about-credibility-lines" aria-label="About Impulsive">
+                  <li className="about-credibility-item">
+                    <span className="about-bullet" aria-hidden="true"></span>
+                    <p><strong>Privacy-first:</strong><span className="about-bullet-desc"> sensitive recovery records stay private and local-first by default.</span></p>
+                  </li>
+                  <li className="about-credibility-item">
+                    <span className="about-bullet" aria-hidden="true"></span>
+                    <p><strong>Careful language:</strong><span className="about-bullet-desc"> no cure claims, fake percentages, or medical promises.</span></p>
+                  </li>
+                  <li className="about-credibility-item">
+                    <span className="about-bullet" aria-hidden="true"></span>
+                    <p><strong>Review-ready:</strong><span className="about-bullet-desc"> clear enough for advisors, clinicians, and endorsement reviewers to understand.</span></p>
+                  </li>
+                </ul>
                 <div className="credibility-chips-group" aria-label="Recovery games">
                   <p className="credibility-chips-label">Recovery games</p>
                   <div className="credibility-chips">

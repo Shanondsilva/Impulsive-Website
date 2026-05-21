@@ -12230,6 +12230,10 @@ p {
 }
 
 /* ===== Header/menu structure ===== */
+:root {
+  --header-height: 0px;
+}
+
 .nav-menu {
   display: none !important;
 }

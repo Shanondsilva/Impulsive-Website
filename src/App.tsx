@@ -1,9 +1,7 @@
 import React, { useEffect, useMemo, useState, useRef, type KeyboardEvent } from 'react';
-import { Menu, Moon, Sun, X } from 'lucide-react';
-import { AnimatePresence, motion, useMotionValueEvent, useReducedMotion, useScroll, useTransform } from 'framer-motion';
+import { motion, useMotionValueEvent, useReducedMotion, useScroll, useTransform } from 'framer-motion';
 import { ReflexOverrideGame } from './components/ReflexOverrideGame';
 import { RevealOnScroll } from './components/RevealOnScroll';
-import { useDarkMode } from './hooks/useDarkMode';
 
 type RecoveryGame = {
   name: string;
@@ -91,23 +89,17 @@ const recoveryGames: RecoveryGame[] = [
 
 export default function App() {
   const reduceMotion = useReducedMotion();
-  const [menuOpen, setMenuOpen] = useState(false);
   const [flippedCards, setFlippedCards] = useState<Set<string>>(new Set());
   const [selectedGameIndex, setSelectedGameIndex] = useState(0);
-  const [isScrolled, setIsScrolled] = useState(false);
   const [formStatus, setFormStatus] = useState<{ message: string; type: 'success' | 'error' | 'info' | '' }>({ message: '', type: '' });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [activeWeekCard, setActiveWeekCard] = useState(0);
   const [startedAt] = useState(Date.now().toString());
-  const navMenuRef = useRef<HTMLDivElement>(null);
-  const menuToggleRef = useRef<HTMLButtonElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
   const heroRef = useRef<HTMLElement>(null);
   const heroPhoneRef = useRef<HTMLDivElement>(null);
   const firstWeekRef = useRef<HTMLElement>(null);
   const reflexSectionRef = useRef<HTMLElement>(null);
-  const themeToggleRef = useRef<HTMLButtonElement>(null);
-  const { theme, toggle } = useDarkMode();
   const selectedGame = recoveryGames[selectedGameIndex];
   const heroHeadline = "Built for habits that do not break with willpower alone.";
 
@@ -205,59 +197,6 @@ export default function App() {
   }, [reduceMotion]);
 
   useEffect(() => {
-    let ticking = false;
-    const onScroll = () => {
-      if (ticking) return;
-      ticking = true;
-      window.requestAnimationFrame(() => {
-        setIsScrolled(window.scrollY > 80);
-        ticking = false;
-      });
-    };
-    window.addEventListener('scroll', onScroll, { passive: true });
-    onScroll();
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
-
-  const handleMenuToggle = () => setMenuOpen(!menuOpen);
-  const closeMenu = () => setMenuOpen(false);
-
-  useEffect(() => {
-    if (!menuOpen) return;
-    const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-
-    const focusables = Array.from(
-      document.querySelectorAll<HTMLElement>('#menu-panel a, #menu-panel button')
-    );
-    focusables[0]?.focus();
-
-    const handleKey = (event: globalThis.KeyboardEvent) => {
-      if (event.key === "Escape") {
-        setMenuOpen(false);
-        return;
-      }
-      if (event.key === "Tab" && focusables.length > 0) {
-        const first = focusables[0];
-        const last = focusables[focusables.length - 1];
-        if (event.shiftKey && document.activeElement === first) {
-          event.preventDefault();
-          last.focus();
-        } else if (!event.shiftKey && document.activeElement === last) {
-          event.preventDefault();
-          first.focus();
-        }
-      }
-    };
-    window.addEventListener("keydown", handleKey);
-    return () => {
-      document.body.style.overflow = previousOverflow;
-      window.removeEventListener("keydown", handleKey);
-      menuToggleRef.current?.focus();
-    };
-  }, [menuOpen]);
-
-  useEffect(() => {
     const detailsEls = Array.from(document.querySelectorAll<HTMLDetailsElement>(".faq-item"));
     detailsEls.forEach((details, index) => {
       const summary = details.querySelector("summary");
@@ -326,113 +265,9 @@ export default function App() {
   };
 
   return (
-    <div className={`app-shell${menuOpen ? " menu-open" : ""}`}>
+    <div className="app-shell">
       <div className="background-particles" aria-hidden="true" />
       <a className="skip-link" href="#main">Skip to content</a>
-
-      <header className={`site-header ${isScrolled ? "is-scrolled" : ""}`} data-header>
-        <nav className="nav" aria-label="Primary navigation">
-          <div className="nav-left">
-            <a className="wordmark" href="#top" aria-label="Impulsive home">
-              <img src="/images/icons/impulsive-logo-transparent-clean.png" alt="Impulsive logo" />
-              <span>Impulsive</span>
-            </a>
-            <div className="nav-links nav-links--desktop" aria-label="Primary site links">
-              <a href="#principles" onClick={closeMenu}>Principles</a>
-              <a href="#faq" onClick={closeMenu}>FAQs</a>
-            </div>
-          </div>
-          <div className="nav-right">
-            <div className="nav-menu" id="primary-menu" ref={navMenuRef}></div>
-            <a className="button button-small header-cta" href="#waitlist" onClick={closeMenu}>Join Waitlist</a>
-            <button
-              ref={themeToggleRef}
-              className="theme-toggle"
-              type="button"
-              aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
-              aria-pressed={theme === "dark"}
-              title={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
-              onClick={() => toggle(themeToggleRef.current)}
-            >
-              <span className="theme-toggle-icon" aria-hidden="true">
-                {theme === "dark" ? <Sun /> : <Moon />}
-              </span>
-              <span className="theme-toggle-label">
-                {theme === "dark" ? "Light" : "Dark"}
-              </span>
-            </button>
-            <button
-              className="mobile-menu-toggle"
-              type="button"
-              aria-label={menuOpen ? "Close menu" : "Open menu"}
-              aria-expanded={menuOpen}
-              aria-controls="menu-panel"
-              onClick={handleMenuToggle}
-              ref={menuToggleRef}
-            >
-              {menuOpen ? <X size={24} /> : <Menu size={24} />}
-            </button>
-          </div>
-        </nav>
-      </header>
-      <AnimatePresence>
-        {menuOpen && (
-          <>
-            <motion.div
-              className="mobile-menu-overlay"
-              aria-hidden="true"
-              onClick={closeMenu}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.2, ease: 'easeOut' }}
-            />
-            <motion.div
-              id="menu-panel"
-              role="dialog"
-              aria-modal="true"
-              aria-labelledby="menu-heading"
-              className="mobile-menu-panel"
-              initial={reduceMotion ? { opacity: 0 } : { x: "100%", opacity: 0 }}
-              animate={reduceMotion ? { opacity: 1 } : { x: 0, opacity: 1 }}
-              exit={reduceMotion ? { opacity: 0 } : { x: "100%", opacity: 0 }}
-              transition={{ duration: 0.28, ease: 'easeOut' }}
-            >
-              <div className="mobile-menu-head">
-                <h2 className="mobile-menu-title" id="menu-heading">Menu</h2>
-                <button type="button" className="mobile-menu-close" aria-label="Close menu" onClick={closeMenu}>
-                  <X size={24} />
-                </button>
-              </div>
-              <div className="mobile-menu-group">
-                <h3>How It Works</h3>
-                <div className="mobile-menu-links" aria-label="How it works links">
-                  <a href="#urge-loop" onClick={closeMenu}>Recovery Loop</a>
-                  <a href="#first-week" onClick={closeMenu}>First 7 Days</a>
-                  <a href="#paths" onClick={closeMenu}>Guided Path Map</a>
-                  <a href="#games" onClick={closeMenu}>Recovery Games</a>
-                  <a href="#progression" onClick={closeMenu}>Progression</a>
-                </div>
-              </div>
-              <div className="mobile-menu-group">
-                <h3>The Product</h3>
-                <div className="mobile-menu-links" aria-label="Product links">
-                  <a href="#principles" onClick={closeMenu}>Principles</a>
-                  <a href="#tiers" onClick={closeMenu}>Free vs Paid Tiers</a>
-                  <a href="#about" onClick={closeMenu}>About</a>
-                </div>
-              </div>
-              <div className="mobile-menu-group">
-                <h3>Get Started</h3>
-                <div className="mobile-menu-links" aria-label="Get started links">
-                  <a href="#faq" onClick={closeMenu}>FAQs</a>
-                </div>
-              </div>
-              <a className="button mobile-menu-cta" href="#waitlist" onClick={closeMenu}>Join Waitlist</a>
-            </motion.div>
-          </>
-        )}
-      </AnimatePresence>
 
       <main id="main">
         <section className="hero section" id="top" aria-labelledby="hero-title" ref={heroRef}>

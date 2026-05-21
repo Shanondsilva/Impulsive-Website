@@ -3,6 +3,7 @@ import { Menu, Moon, Sun, X } from 'lucide-react';
 import { AnimatePresence, motion, useMotionValueEvent, useReducedMotion, useScroll, useTransform } from 'framer-motion';
 import Lenis from 'lenis';
 import { AmbientParticles } from './components/AmbientParticles';
+import { PageBlobs } from './components/PageBlobs';
 import { ReflexOverrideGame } from './components/ReflexOverrideGame';
 import { RevealOnScroll } from './components/RevealOnScroll';
 import { useDarkMode } from './hooks/useDarkMode';
@@ -528,6 +529,7 @@ export default function App() {
       </AnimatePresence>
 
       <main id="main">
+        <PageBlobs />
         <section className="hero section" id="top" aria-labelledby="hero-title" ref={heroRef}>
           <div className="hero-bg" aria-hidden="true">
             <span className="shape shape-lilac"></span>

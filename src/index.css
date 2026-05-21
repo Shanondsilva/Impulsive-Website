@@ -197,13 +197,19 @@ button {
 }
 
 .site-header {
-  position: sticky;
+  position: fixed;
   top: 0;
-  z-index: 30;
+  left: 0;
+  right: 0;
+  z-index: 100;
   border-bottom: 1px solid var(--color-border);
   background: rgba(255, 249, 241, 0.78);
   backdrop-filter: blur(18px);
   transition: background 250ms ease, border-color 250ms ease, box-shadow 250ms ease;
+}
+
+#main {
+  padding-top: var(--header-height);
 }
 
 .site-header.is-scrolled {
@@ -9293,7 +9299,7 @@ p {
 }
 
 [data-theme="dark"] .hero-bg {
-  opacity: 0.42;
+  display: none;
 }
 
 [data-theme="dark"] .shape {
@@ -10251,9 +10257,6 @@ p {
   --header-height: 84px;
 }
 
-.site-header {
-  z-index: 60;
-}
 
 .nav {
   min-height: var(--header-height);
@@ -12001,11 +12004,7 @@ p {
 }
 
 .site-header {
-  background: transparent;
-  border-bottom: 1px solid transparent;
-  backdrop-filter: blur(0);
-  -webkit-backdrop-filter: blur(0);
-  transition: background 200ms ease-out, border-color 200ms ease-out, backdrop-filter 200ms ease-out;
+  transition: background 200ms ease-out, border-color 200ms ease-out, backdrop-filter 200ms ease-out, box-shadow 200ms ease-out;
 }
 
 :root:not([data-theme="dark"]) .site-header.is-scrolled {
@@ -12160,7 +12159,7 @@ p {
   display: block;
   position: fixed;
   inset: 0;
-  z-index: 80;
+  z-index: 110;
   border: 0;
   background: rgba(0, 0, 0, 0.5);
   backdrop-filter: blur(8px);
@@ -12174,7 +12173,7 @@ p {
   right: 0;
   bottom: 0;
   width: min(420px, 100vw);
-  z-index: 81;
+  z-index: 111;
   padding: 32px;
   overflow-y: auto;
   background: #fff9f1;
@@ -12549,7 +12548,6 @@ p {
   display: block;
 }
 
-.site-header,
 main,
 .site-footer {
   position: relative;
@@ -12694,67 +12692,6 @@ main,
 
 /* ===== Hero visual restore from 07fa9ed ===== */
 
-.hero {
-  min-height: calc(100svh - var(--header-height));
-  display: flex;
-  align-items: center;
-  overflow: clip;
-  padding: 74px 0 96px;
-}
-
-.hero-bg {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  overflow: clip;
-  pointer-events: none;
-}
-
-.shape {
-  position: absolute;
-  display: block;
-  border-radius: 44% 56% 61% 39% / 48% 42% 58% 52%;
-  filter: blur(1px);
-  opacity: 0.72;
-  animation: float 9s ease-in-out infinite;
-  will-change: transform;
-}
-
-.shape-lilac {
-  width: 310px;
-  height: 310px;
-  left: max(-86px, -8vw);
-  top: 140px;
-  background: var(--psychology);
-}
-
-.shape-blue {
-  width: 420px;
-  height: 420px;
-  right: max(-150px, -10vw);
-  top: 40px;
-  background: var(--physical);
-  animation-delay: -2s;
-}
-
-.shape-lemon {
-  width: 270px;
-  height: 270px;
-  left: 36%;
-  bottom: 40px;
-  background: var(--spiritual);
-  animation-delay: -4s;
-}
-
-.shape-coral {
-  width: 230px;
-  height: 230px;
-  right: 22%;
-  bottom: 110px;
-  background: var(--focus);
-  animation-delay: -6s;
-}
-
 .container.hero-grid,
 [data-theme="dark"] .container.hero-grid {
   position: relative;
@@ -12764,24 +12701,6 @@ main,
   align-items: center;
   gap: clamp(40px, 6vw, 72px);
   max-width: var(--container);
-}
-
-.hero-copy,
-[data-theme="dark"] .hero-copy {
-  position: relative;
-  z-index: 2;
-  max-width: none;
-  text-align: left;
-}
-
-.hero-copy h1,
-[data-theme="dark"] .hero-copy h1 {
-  max-width: 780px;
-}
-
-.hero-subhead,
-[data-theme="dark"] .hero-subhead {
-  max-width: 690px;
 }
 
 .hero-visual,
@@ -12813,6 +12732,10 @@ main,
   transform: none;
   animation: float 11s ease-in-out infinite;
   pointer-events: none;
+}
+
+[data-theme="dark"] .hero-visual::before {
+  display: none;
 }
 
 .hero-visual .phone,
@@ -13249,5 +13172,372 @@ main,
   .shape,
   .hero-visual::before {
     animation: none;
+  }
+}
+
+/* ─── Full-page ambient blobs (light mode only) ─── */
+.page-blobs {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 0;
+}
+
+[data-theme="dark"] .page-blobs {
+  display: none;
+}
+
+.pb {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0;
+  will-change: transform;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
+/* Blob 1 — lilac, top-left */
+.pb--1 {
+  width: 600px;
+  height: 600px;
+  top: -120px;
+  left: -180px;
+  background: radial-gradient(circle, rgba(208, 195, 241, 0.55) 0%, rgba(208, 195, 241, 0) 70%);
+  opacity: 1;
+  animation-name: blob-drift-a;
+  animation-duration: 28s;
+}
+
+/* Blob 2 — soft blue, top-right */
+.pb--2 {
+  width: 700px;
+  height: 700px;
+  top: 5vh;
+  right: -200px;
+  background: radial-gradient(circle, rgba(189, 224, 254, 0.50) 0%, rgba(189, 224, 254, 0) 70%);
+  opacity: 1;
+  animation-name: blob-drift-b;
+  animation-duration: 34s;
+}
+
+/* Blob 3 — lemon, mid-left */
+.pb--3 {
+  width: 500px;
+  height: 500px;
+  top: 38vh;
+  left: -100px;
+  background: radial-gradient(circle, rgba(254, 241, 171, 0.45) 0%, rgba(254, 241, 171, 0) 70%);
+  opacity: 1;
+  animation-name: blob-drift-c;
+  animation-duration: 22s;
+}
+
+/* Blob 4 — coral/pink, mid-right */
+.pb--4 {
+  width: 580px;
+  height: 580px;
+  top: 45vh;
+  right: -140px;
+  background: radial-gradient(circle, rgba(245, 167, 166, 0.45) 0%, rgba(245, 167, 166, 0) 70%);
+  opacity: 1;
+  animation-name: blob-drift-a;
+  animation-duration: 30s;
+  animation-delay: -8s;
+}
+
+/* Blob 5 — mint green, lower-left */
+.pb--5 {
+  width: 520px;
+  height: 520px;
+  top: 72vh;
+  left: -80px;
+  background: radial-gradient(circle, rgba(147, 233, 190, 0.40) 0%, rgba(147, 233, 190, 0) 70%);
+  opacity: 1;
+  animation-name: blob-drift-b;
+  animation-duration: 26s;
+  animation-delay: -14s;
+}
+
+/* Blob 6 — lilac, bottom-right */
+.pb--6 {
+  width: 650px;
+  height: 650px;
+  bottom: -160px;
+  right: -160px;
+  background: radial-gradient(circle, rgba(208, 195, 241, 0.42) 0%, rgba(208, 195, 241, 0) 70%);
+  opacity: 1;
+  animation-name: blob-drift-c;
+  animation-duration: 32s;
+  animation-delay: -5s;
+}
+
+@keyframes blob-drift-a {
+  0%   { transform: translate(0, 0) scale(1); }
+  33%  { transform: translate(30px, -24px) scale(1.04); }
+  66%  { transform: translate(-18px, 20px) scale(0.97); }
+  100% { transform: translate(22px, -16px) scale(1.02); }
+}
+
+@keyframes blob-drift-b {
+  0%   { transform: translate(0, 0) scale(1); }
+  40%  { transform: translate(-26px, 28px) scale(1.05); }
+  70%  { transform: translate(20px, -18px) scale(0.96); }
+  100% { transform: translate(-14px, 22px) scale(1.03); }
+}
+
+@keyframes blob-drift-c {
+  0%   { transform: translate(0, 0) scale(1); }
+  30%  { transform: translate(24px, 20px) scale(1.03); }
+  65%  { transform: translate(-20px, -26px) scale(0.98); }
+  100% { transform: translate(16px, 14px) scale(1.04); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pb {
+    animation: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .pb--1, .pb--2, .pb--3, .pb--4, .pb--5, .pb--6 {
+    width: 300px;
+    height: 300px;
+    opacity: 0.7;
+  }
+}
+
+/* ===== Mobile polish ===== */
+
+/* Absolute horizontal-overflow guard */
+html,
+body {
+  max-width: 100%;
+}
+
+/* Safer overflow containment for fixed blobs (avoids iOS scroll glitch) */
+.page-blobs {
+  overflow: clip;
+}
+
+/* Lock every section against x-overflow from positioned children */
+.section {
+  overflow-x: clip;
+}
+
+/* Main content must not bleed past viewport edge */
+#main {
+  overflow-x: clip;
+}
+
+/* --- path cards: base was 610px, too tall on a small screen --- */
+@media (max-width: 640px) {
+  .path-card-inner {
+    min-height: 520px;
+  }
+}
+
+/* --- ≤430px (iPhone 14 Pro Max and similar) --- */
+@media (max-width: 430px) {
+  :root {
+    --header-height: 66px;
+  }
+
+  .section {
+    padding: 52px 0;
+  }
+
+  .hero {
+    padding: 26px 0 46px;
+  }
+
+  .path-card-inner {
+    min-height: 510px;
+  }
+
+  .phone,
+  [data-theme="dark"] .phone,
+  [data-theme="dark"] .phone:hover,
+  [data-theme="dark"] .phone:focus-within {
+    width: min(100%, 284px);
+  }
+
+  .pb--1, .pb--2, .pb--3, .pb--4, .pb--5, .pb--6 {
+    width: 240px;
+    height: 240px;
+    opacity: 0.6;
+  }
+
+  .mobile-menu-panel {
+    padding: 24px;
+  }
+}
+
+/* --- ≤414px (iPhone Plus) --- */
+@media (max-width: 414px) {
+  .phone,
+  [data-theme="dark"] .phone,
+  [data-theme="dark"] .phone:hover,
+  [data-theme="dark"] .phone:focus-within {
+    width: min(100%, 280px);
+  }
+}
+
+/* --- ≤390px additions (augments existing ≤390px rules) --- */
+@media (max-width: 390px) {
+  .path-card-inner {
+    min-height: 500px;
+  }
+}
+
+/* --- ≤375px (iPhone SE / iPhone 14) --- */
+@media (max-width: 375px) {
+  :root {
+    --header-height: 62px;
+  }
+
+  .section {
+    padding: 44px 0;
+  }
+
+  .hero {
+    padding: 20px 0 40px;
+  }
+
+  h1 {
+    font-size: clamp(2.1rem, 12vw, 2.7rem);
+    line-height: 1.02;
+  }
+
+  .phone,
+  [data-theme="dark"] .phone,
+  [data-theme="dark"] .phone:hover,
+  [data-theme="dark"] .phone:focus-within {
+    width: min(100%, 264px);
+  }
+
+  .path-card-inner {
+    min-height: 490px;
+  }
+
+  .pb--1, .pb--2, .pb--3, .pb--4, .pb--5, .pb--6 {
+    width: 200px;
+    height: 200px;
+    opacity: 0.5;
+  }
+
+  .hero-visual::before {
+    width: min(88vw, 300px);
+  }
+
+  .mobile-menu-panel {
+    padding: 20px;
+  }
+}
+
+/* --- ≤360px (many Android flagships) --- */
+@media (max-width: 360px) {
+  :root {
+    --header-height: 60px;
+  }
+
+  .container,
+  .nav {
+    width: min(100% - 22px, var(--container));
+  }
+
+  .section {
+    padding: 40px 0;
+  }
+
+  .phone,
+  [data-theme="dark"] .phone,
+  [data-theme="dark"] .phone:hover,
+  [data-theme="dark"] .phone:focus-within {
+    width: min(100%, 256px);
+  }
+
+  .path-card-inner {
+    min-height: 480px;
+  }
+
+  .wordmark {
+    font-size: 1.1rem;
+    gap: 7px;
+  }
+
+  .wordmark img {
+    width: 34px;
+    max-height: 30px;
+  }
+}
+
+/* --- ≤320px (Galaxy A series, older iPhones) --- */
+@media (max-width: 320px) {
+  :root {
+    --header-height: 56px;
+  }
+
+  .container,
+  .nav {
+    width: min(100% - 18px, var(--container));
+  }
+
+  h1 {
+    font-size: clamp(1.85rem, 11vw, 2.2rem);
+    line-height: 1.04;
+  }
+
+  h2 {
+    font-size: clamp(1.55rem, 9.5vw, 2rem);
+  }
+
+  .section {
+    padding: 36px 0;
+  }
+
+  .hero {
+    padding: 16px 0 32px;
+  }
+
+  .phone,
+  [data-theme="dark"] .phone,
+  [data-theme="dark"] .phone:hover,
+  [data-theme="dark"] .phone:focus-within {
+    width: min(100%, 240px);
+  }
+
+  .app-screen {
+    padding: 40px 10px 10px;
+  }
+
+  .path-card-inner {
+    min-height: 460px;
+  }
+
+  /* Hide ambient blobs on very small screens — reduces paint cost */
+  .page-blobs {
+    display: none;
+  }
+
+  .wordmark {
+    font-size: 1rem;
+    gap: 6px;
+  }
+
+  .wordmark img {
+    width: 30px;
+    max-height: 28px;
+  }
+
+  .nav-right {
+    gap: 6px;
+  }
+
+  .theme-toggle,
+  .mobile-menu-toggle {
+    width: 36px;
+    height: 36px;
   }
 }

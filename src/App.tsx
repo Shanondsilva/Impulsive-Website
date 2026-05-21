@@ -877,37 +877,75 @@ export default function App() {
               <h2 id="unlock-progression-title">Start tiny. Unlock strength.</h2>
             </RevealOnScroll>
 
-            <ol className="progression-path" aria-label="Impulsive progression path">
+            <motion.ol
+              className="progression-path"
+              aria-label="Impulsive progression path"
+              initial={reduceMotion ? false : "hidden"}
+              whileInView={reduceMotion ? undefined : "visible"}
+              viewport={{ once: true, amount: 0.1 }}
+              variants={{
+                hidden: { opacity: 1 },
+                visible: { opacity: 1, transition: { staggerChildren: 0.08 } },
+              }}
+            >
 
-              <li className="progression-step progression-step--unlocked reveal" style={{ "--prog-color": "var(--mind-color)" } as React.CSSProperties}>
+              <motion.li
+                className="progression-step progression-step--unlocked"
+                style={{ "--prog-color": "var(--mind-color)" } as React.CSSProperties}
+                variants={{
+                  hidden: { opacity: 0, y: 30 },
+                  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: revealEase } },
+                }}
+              >
                 <div className="prog-card">
                   <span className="prog-level-label">Level 1</span>
                   <h3 className="prog-card-title">First reset</h3>
                 </div>
-              </li>
+              </motion.li>
 
-              <li className="progression-step progression-step--unlocked reveal" style={{ "--prog-color": "var(--soul-color)" } as React.CSSProperties}>
+              <motion.li
+                className="progression-step progression-step--unlocked"
+                style={{ "--prog-color": "var(--soul-color)" } as React.CSSProperties}
+                variants={{
+                  hidden: { opacity: 0, y: 30 },
+                  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: revealEase } },
+                }}
+              >
                 <div className="prog-card">
                   <span className="prog-level-label">Level 2</span>
                   <h3 className="prog-card-title">Taper progress</h3>
                 </div>
-              </li>
+              </motion.li>
 
-              <li className="progression-step progression-step--preview reveal" style={{ "--prog-color": "var(--body-color)" } as React.CSSProperties}>
+              <motion.li
+                className="progression-step progression-step--preview"
+                style={{ "--prog-color": "var(--body-color)" } as React.CSSProperties}
+                variants={{
+                  hidden: { opacity: 0, y: 30 },
+                  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: revealEase } },
+                }}
+              >
                 <div className="prog-card">
                   <span className="prog-level-label">Level 3</span>
                   <h3 className="prog-card-title">Path preview</h3>
                 </div>
-              </li>
+              </motion.li>
 
-              <li className="progression-step progression-step--choice reveal" style={{ "--prog-color": "var(--brand-glow)" } as React.CSSProperties}>
+              <motion.li
+                className="progression-step progression-step--choice"
+                style={{ "--prog-color": "var(--brand-glow)" } as React.CSSProperties}
+                variants={{
+                  hidden: { opacity: 0, y: 30 },
+                  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: revealEase } },
+                }}
+              >
                 <div className="prog-card">
                   <span className="prog-level-label">Level 4</span>
                   <h3 className="prog-card-title">Stronger support</h3>
                 </div>
-              </li>
+              </motion.li>
 
-            </ol>
+            </motion.ol>
           </div>
         </section>
 

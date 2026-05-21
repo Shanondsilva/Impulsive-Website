@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState, useRef, type KeyboardEvent } from 'react';
 import { Menu, Moon, Sun, X } from 'lucide-react';
 import { AnimatePresence, motion, useMotionValueEvent, useReducedMotion, useScroll, useTransform } from 'framer-motion';
+import { AmbientParticles } from './components/AmbientParticles';
 import { ReflexOverrideGame } from './components/ReflexOverrideGame';
 import { RevealOnScroll } from './components/RevealOnScroll';
 import { useDarkMode } from './hooks/useDarkMode';
@@ -219,6 +220,76 @@ export default function App() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
+  useEffect(() => {
+    if (theme !== 'dark' || reduceMotion) return;
+
+    const observed = new WeakSet<Element>();
+    const cards = document.querySelectorAll<HTMLElement>(
+      '.loop-glow-wrap, .path-card-wrapper, .tier-card, .animated-foundation-card, .featured-game-card, .first-week-step'
+    );
+
+    cards.forEach((card) => {
+      card.classList.add('dark-sweep-card');
+    });
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting || observed.has(entry.target)) return;
+          observed.add(entry.target);
+          entry.target.classList.add('sweep-active');
+          window.setTimeout(() => entry.target.classList.remove('sweep-active'), 1300);
+          observer.unobserve(entry.target);
+        });
+      },
+      { threshold: 0.4 }
+    );
+
+    cards.forEach((card) => observer.observe(card));
+
+    return () => {
+      observer.disconnect();
+      cards.forEach((card) => {
+        card.classList.remove('dark-sweep-card', 'sweep-active');
+      });
+    };
+  }, [theme, reduceMotion]);
+
+  useEffect(() => {
+    if (theme !== 'dark' || reduceMotion) return;
+
+    const seen = new Set<Element>();
+    let lastGlint = 0;
+    const headings = document.querySelectorAll<HTMLElement>('main section h2');
+
+    const runGlint = () => {
+      const now = performance.now();
+      if (now - lastGlint < 600) return;
+      lastGlint = now;
+      const glint = document.createElement('div');
+      glint.className = 'dark-section-glint';
+      glint.setAttribute('aria-hidden', 'true');
+      document.body.appendChild(glint);
+      window.setTimeout(() => glint.remove(), 850);
+    };
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting || seen.has(entry.target)) return;
+          seen.add(entry.target);
+          runGlint();
+          observer.unobserve(entry.target);
+        });
+      },
+      { rootMargin: '-8% 0px -78% 0px', threshold: 0 }
+    );
+
+    headings.forEach((heading) => observer.observe(heading));
+
+    return () => observer.disconnect();
+  }, [theme, reduceMotion]);
+
   const handleMenuToggle = () => setMenuOpen(!menuOpen);
   const closeMenu = () => setMenuOpen(false);
 
@@ -327,6 +398,7 @@ export default function App() {
 
   return (
     <div className={menuOpen ? "menu-open" : ""}>
+      <AmbientParticles active={theme === 'dark'} />
       <a className="skip-link" href="#main">Skip to content</a>
 
       <header className={`site-header ${isScrolled ? "is-scrolled" : ""}`} data-header>

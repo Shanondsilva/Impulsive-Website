@@ -7624,13 +7624,14 @@ p {
 
 [data-theme="dark"] .progression-step--preview .prog-card {
   border-style: solid;
-  border-color: color-mix(in srgb, var(--prog-color) 24%, rgba(255, 255, 255, 0.12));
+  border-color: color-mix(in srgb, var(--prog-color) 44%, rgba(255, 255, 255, 0.18));
   box-shadow:
-    0 0 0 1px color-mix(in srgb, var(--prog-color) 26%, transparent),
-    0 0 0 1px rgba(255, 255, 255, 0.04) inset,
-    0 0 16px color-mix(in srgb, var(--prog-color) 10%, transparent),
+    0 0 0 1px color-mix(in srgb, var(--prog-color) 36%, transparent),
+    0 0 0 1px rgba(255, 255, 255, 0.06) inset,
+    0 0 28px color-mix(in srgb, var(--prog-color) 24%, transparent),
+    0 0 80px color-mix(in srgb, var(--prog-color) 12%, transparent),
     0 12px 34px rgba(0, 0, 0, 0.36);
-  opacity: 0.84;
+  opacity: 1;
 }
 
 [data-theme="dark"] .progression-step--choice .prog-card {
@@ -12550,6 +12551,162 @@ p {
 
 @media (prefers-reduced-motion: reduce) {
   .loop-glow-wrap::before {
+    animation: none;
+  }
+}
+
+/* ===== Dark mode atmosphere ===== */
+.ambient-particles {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  display: none;
+  pointer-events: none;
+}
+
+.ambient-particles[data-active="true"] {
+  display: block;
+}
+
+.site-header,
+main,
+.site-footer {
+  position: relative;
+  z-index: 1;
+}
+
+[data-theme="dark"] body {
+  background-color: #0E1014;
+  background-image:
+    radial-gradient(circle 1200px at 0% 0%, rgba(139, 120, 221, 0.04), transparent 62%),
+    radial-gradient(circle at 12% 10%, rgba(208, 195, 241, 0.10), transparent 34%),
+    radial-gradient(circle at 90% 16%, rgba(99, 140, 221, 0.08), transparent 34%),
+    linear-gradient(180deg, #0E1014 0%, #10131A 48%, #0E1014 100%);
+  background-size: 2400px 2400px, auto, auto, auto;
+  background-position: 0% 0%, center, center, center;
+  animation: dark-depth-drift 60s linear infinite alternate;
+}
+
+@keyframes dark-depth-drift {
+  to {
+    background-position: 100% 100%, center, center, center;
+  }
+}
+
+.dark-sweep-card {
+  --card-accent: var(--mind-color);
+  position: relative;
+  overflow: hidden;
+}
+
+.loop-glow-wrap.dark-sweep-card {
+  --card-accent: var(--loop-color);
+}
+
+.path-card-wrapper:has(.psychology) {
+  --card-accent: var(--mind-color);
+}
+
+.path-card-wrapper:has(.physical) {
+  --card-accent: var(--body-color);
+}
+
+.path-card-wrapper:has(.spiritual) {
+  --card-accent: var(--soul-color);
+}
+
+.path-card-wrapper:has(.synchrology) {
+  --card-accent: var(--brand-glow);
+}
+
+.tier-card.dark-sweep-card {
+  --card-accent: var(--tier-color);
+}
+
+.first-week-step.dark-sweep-card {
+  --card-accent: var(--week-color);
+}
+
+.featured-game-card.dark-sweep-card {
+  --card-accent: var(--game-color);
+}
+
+.animated-foundation-card.dark-sweep-card {
+  --card-accent: var(--mind-color);
+}
+
+[data-theme="dark"] .dark-sweep-card.sweep-active::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  border-radius: inherit;
+  padding: 1.5px;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0%,
+    transparent 82%,
+    color-mix(in srgb, var(--card-accent) 35%, transparent) 88%,
+    color-mix(in srgb, var(--card-accent) 85%, white) 94%,
+    transparent 100%
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  animation: dark-card-sweep 1.2s ease-in-out forwards;
+  pointer-events: none;
+  will-change: transform, opacity;
+}
+
+@keyframes dark-card-sweep {
+  from {
+    opacity: 1;
+    transform: rotate(0deg);
+  }
+
+  to {
+    opacity: 0;
+    transform: rotate(360deg);
+  }
+}
+
+.dark-section-glint {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  z-index: 2;
+  height: 1px;
+  pointer-events: none;
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.04);
+  animation: dark-section-glint 800ms ease-out forwards;
+  will-change: transform, opacity;
+}
+
+@keyframes dark-section-glint {
+  from {
+    opacity: 0;
+    transform: translateY(0);
+  }
+
+  20% {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+    transform: translateY(200px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-theme="dark"] body {
+    animation: none;
+  }
+
+  [data-theme="dark"] .dark-sweep-card.sweep-active::after,
+  .dark-section-glint {
     animation: none;
   }
 }

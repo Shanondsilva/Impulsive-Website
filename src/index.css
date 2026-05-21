@@ -11299,23 +11299,25 @@ p {
 .hero-visual,
 [data-theme="dark"] .hero-visual {
   min-height: clamp(560px, 52vw, 720px);
-  overflow: hidden;
+  overflow: visible;
   isolation: isolate;
 }
 
 .hero-visual::before {
-  width: clamp(320px, 38vw, 560px);
-  opacity: 0.54;
-  filter: blur(1px) saturate(1.04);
-  transform: translateY(8px);
+  inset: 50% auto auto 50%;
+  z-index: 0;
+  width: clamp(520px, 48vw, 760px);
+  aspect-ratio: 1;
+  opacity: 0.42;
+  pointer-events: none;
+  filter: blur(22px) saturate(1.08);
+  transform: translate(-50%, calc(-50% + 8px));
   background:
-    radial-gradient(circle at 24% 24%, rgba(254, 241, 171, 0.72), transparent 31%),
-    radial-gradient(circle at 78% 28%, rgba(245, 167, 166, 0.48), transparent 35%),
-    radial-gradient(circle at 40% 74%, rgba(189, 224, 254, 0.62), transparent 36%),
-    rgba(208, 195, 241, 0.58);
-  box-shadow:
-    0 28px 80px rgba(208, 195, 241, 0.22),
-    0 36px 110px rgba(189, 224, 254, 0.16);
+    radial-gradient(ellipse at 36% 24%, rgba(254, 241, 171, 0.42) 0 12%, transparent 38%),
+    radial-gradient(ellipse at 68% 30%, rgba(245, 167, 166, 0.32) 0 12%, transparent 40%),
+    radial-gradient(ellipse at 44% 70%, rgba(189, 224, 254, 0.38) 0 14%, transparent 42%),
+    radial-gradient(ellipse at center, rgba(208, 195, 241, 0.22) 0 22%, transparent 68%);
+  box-shadow: none;
   animation: hero-phone-glow-drift 16s ease-in-out infinite;
 }
 
@@ -11330,6 +11332,7 @@ p {
   border-radius: clamp(38px, 3.5vw, 52px);
   padding: clamp(6px, 0.55vw, 8px);
   overflow: hidden;
+  z-index: 2;
   background:
     linear-gradient(150deg, rgba(255, 255, 255, 0.88), rgba(255, 255, 255, 0.28) 18%, transparent 42%) padding-box,
     linear-gradient(145deg, #38313C 0%, #1F1A24 58%, #4A404F 100%) border-box;
@@ -11520,19 +11523,17 @@ p {
 
 [data-theme="dark"] .hero-visual::before {
   width: clamp(620px, 62vw, 920px);
-  opacity: 0.74;
+  opacity: 0.66;
   border-radius: 50%;
   filter: blur(24px) saturate(1.18);
   background:
-    radial-gradient(ellipse at 40% 22%, rgba(208, 195, 241, 0.32), transparent 24%),
-    radial-gradient(ellipse at 62% 26%, rgba(245, 167, 166, 0.22), transparent 26%),
-    radial-gradient(ellipse at 50% 72%, rgba(91, 172, 255, 0.16), transparent 28%),
-    radial-gradient(ellipse at 50% 50%, rgba(126, 95, 255, 0.12), transparent 54%);
-  box-shadow:
-    0 0 120px rgba(208, 195, 241, 0.16),
-    0 0 190px rgba(245, 167, 166, 0.09);
-  -webkit-mask-image: radial-gradient(ellipse at center, #000 0 38%, rgba(0, 0, 0, 0.58) 52%, transparent 73%);
-  mask-image: radial-gradient(ellipse at center, #000 0 38%, rgba(0, 0, 0, 0.58) 52%, transparent 73%);
+    radial-gradient(ellipse at 42% 24%, rgba(215, 190, 255, 0.36) 0 11%, transparent 34%),
+    radial-gradient(ellipse at 62% 26%, rgba(255, 167, 197, 0.28) 0 10%, transparent 36%),
+    radial-gradient(ellipse at 50% 72%, rgba(91, 172, 255, 0.15) 0 12%, transparent 38%),
+    radial-gradient(ellipse at center, rgba(126, 95, 255, 0.14) 0 22%, transparent 70%);
+  box-shadow: none;
+  -webkit-mask-image: radial-gradient(ellipse at center, #000 0 34%, rgba(0, 0, 0, 0.54) 48%, transparent 74%);
+  mask-image: radial-gradient(ellipse at center, #000 0 34%, rgba(0, 0, 0, 0.54) 48%, transparent 74%);
 }
 
 [data-theme="dark"] .hero-visual .phone,
@@ -11653,10 +11654,10 @@ p {
 @keyframes hero-phone-glow-drift {
   0%,
   100% {
-    transform: translateY(8px) scale(1);
+    transform: translate(-50%, calc(-50% + 8px)) scale(1);
   }
   50% {
-    transform: translateY(0) scale(1.025);
+    transform: translate(-50%, -50%) scale(1.025);
   }
 }
 

@@ -336,27 +336,45 @@ export default function App() {
                 <div className="app-screen">
                   <div className="app-topbar">
                     <span>Impulsive</span>
+                    <span className="privacy-pill">Private</span>
                   </div>
 
-                  <section className="hero-phone-flow" aria-label="Impulsive recovery flow preview">
-                    <div className="hero-phone-step hero-phone-step--alert">
-                      <span className="hero-phone-step-label">Step 1</span>
-                      <strong>Risky moment detected</strong>
+                  <div className="phone-card phone-card--trigger" aria-label="Trigger moment preview">
+                    <span className="phone-card-label">Risky moment detected</span>
+                    <p className="phone-card-sub">Recommended: 90-second reset</p>
+                    <div className="phone-card-actions">
+                      <button type="button" tabIndex={-1} className="phone-btn phone-btn--primary">Walk away</button>
+                      <button type="button" tabIndex={-1} className="phone-btn phone-btn--ghost">Continue with intention</button>
                     </div>
+                  </div>
 
-                    <div className="hero-phone-step hero-phone-step--reset">
-                      <span className="hero-phone-step-label">Step 2</span>
-                      <strong>Recommended: 90-second reset</strong>
-                    </div>
-
-                    <div className="hero-phone-step hero-phone-step--choices">
-                      <span className="hero-phone-step-label">Step 3</span>
-                      <div className="hero-phone-actions" aria-label="Previewed recovery choices">
-                        <button type="button" className="hero-phone-button hero-phone-button--primary" tabIndex={-1}>Walk away</button>
-                        <button type="button" className="hero-phone-button hero-phone-button--secondary" tabIndex={-1}>Continue with intention</button>
+                  <div className="phone-card phone-card--paths" aria-label="Recovery paths preview">
+                    <span className="phone-card-label">Recovery paths</span>
+                    <div className="phone-paths-list">
+                      <div className="phone-path-row psychology">
+                        <span className="phone-path-dot" aria-hidden="true"></span>
+                        <span><strong>Mind</strong> · Pause the pattern</span>
+                      </div>
+                      <div className="phone-path-row physical">
+                        <span className="phone-path-dot" aria-hidden="true"></span>
+                        <span><strong>Body</strong> · Change state</span>
+                      </div>
+                      <div className="phone-path-row spiritual">
+                        <span className="phone-path-dot" aria-hidden="true"></span>
+                        <span><strong>Soul</strong> · Ground privately</span>
+                      </div>
+                      <div className="phone-path-row synchrology">
+                        <span className="phone-path-dot" aria-hidden="true"></span>
+                        <span><strong>Nexus</strong> · Learns what works</span>
                       </div>
                     </div>
-                  </section>
+                  </div>
+
+                  <div className="phone-card phone-card--game" aria-label="Recovery game preview">
+                    <span className="phone-card-label">Recovery game</span>
+                    <strong className="phone-game-name">Reflex Override</strong>
+                    <p className="phone-game-desc">60-second challenge to interrupt autopilot</p>
+                  </div>
                 </div>
               </div>
             </div>

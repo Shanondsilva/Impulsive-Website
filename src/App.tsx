@@ -442,21 +442,6 @@ export default function App() {
                 <a href="#principles" onClick={closeMenu}>Principles</a>
                 <a href="#waitlist" onClick={closeMenu}>Waitlist</a>
               </div>
-              <div className="mobile-menu-theme-row">
-                <span>Theme</span>
-                <button
-                  className="theme-toggle"
-                  type="button"
-                  aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
-                  aria-pressed={theme === "dark"}
-                  onClick={() => toggle(themeToggleRef.current)}
-                >
-                  <span className="theme-toggle-icon" aria-hidden="true">
-                    {theme === "dark" ? <Sun /> : <Moon />}
-                  </span>
-                  <span className="theme-toggle-label">{theme === "dark" ? "Light" : "Dark"}</span>
-                </button>
-              </div>
               <a className="button mobile-menu-cta" href="#waitlist" onClick={closeMenu}>Join Waitlist</a>
             </motion.div>
           </>

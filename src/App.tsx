@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState, useRef, type KeyboardEvent } from 'react';
 import { Menu, Moon, Sun, X } from 'lucide-react';
 import { AnimatePresence, motion, useMotionValueEvent, useReducedMotion, useScroll, useTransform } from 'framer-motion';
+import Lenis from 'lenis';
 import { AmbientParticles } from './components/AmbientParticles';
 import { ReflexOverrideGame } from './components/ReflexOverrideGame';
 import { RevealOnScroll } from './components/RevealOnScroll';
@@ -202,6 +203,26 @@ export default function App() {
     // Cleanup
     return () => {
       loopObserver?.disconnect();
+    };
+  }, [reduceMotion]);
+
+  useEffect(() => {
+    if (reduceMotion) return;
+    const lenis = new Lenis({
+      duration: 1.15,
+      easing: (t: number) => 1 - Math.pow(1 - t, 4),
+      smoothWheel: true,
+      touchMultiplier: 1.8,
+    });
+    let rafId: number;
+    const raf = (time: number) => {
+      lenis.raf(time);
+      rafId = requestAnimationFrame(raf);
+    };
+    rafId = requestAnimationFrame(raf);
+    return () => {
+      cancelAnimationFrame(rafId);
+      lenis.destroy();
     };
   }, [reduceMotion]);
 
@@ -543,7 +564,9 @@ export default function App() {
             </motion.div>
 
             <motion.div className="hero-visual" aria-label="Impulsive app preview" style={reduceMotion ? undefined : { y: heroParallaxY }}>
-              <motion.div className="phone" role="img" aria-label="Phone mockup showing a private recovery flow with trigger detection, path choices, and a short game prompt." ref={heroPhoneRef} style={reduceMotion ? undefined : { scale: heroPhoneScale, y: heroPhoneY, opacity: heroPhoneOpacity }}>
+              <div className="orbit-card card-calm">One clear recovery action</div>
+              <div className="orbit-card card-trigger">No paywall in a trigger</div>
+              <motion.div className="phone" role="img" aria-label="Phone mockup showing a private recovery flow with trigger detection and recovery actions." ref={heroPhoneRef} style={reduceMotion ? undefined : { scale: heroPhoneScale, y: heroPhoneY, opacity: heroPhoneOpacity }}>
                 <div className="phone-speaker" aria-hidden="true"></div>
                 <div className="app-screen">
                   <div className="app-topbar">
@@ -551,42 +574,61 @@ export default function App() {
                     <span className="privacy-pill">Private</span>
                   </div>
 
-                  <div className="phone-card phone-card--trigger" aria-label="Trigger moment preview">
-                    <span className="phone-card-label">Risky moment detected</span>
-                    <p className="phone-card-sub">Recommended: 90-second reset</p>
-                    <div className="phone-card-actions">
-                      <button type="button" tabIndex={-1} className="phone-btn phone-btn--primary">Walk away</button>
-                      <button type="button" tabIndex={-1} className="phone-btn phone-btn--ghost">Continue</button>
+                  <section className="today-plan" aria-label="Today's plan preview">
+                    <p>Risky moment detected</p>
+                    <h2>Recommended: 90-second Mind reset</h2>
+                    <div className="plan-row">
+                      <span>Trigger window</span>
+                      <strong>7:45-9:15pm</strong>
                     </div>
-                  </div>
-
-                  <div className="phone-card phone-card--paths" aria-label="Recovery paths preview">
-                    <span className="phone-card-label">Recovery paths</span>
-                    <div className="phone-paths-list">
-                      <div className="phone-path-row psychology">
-                        <span className="phone-path-dot" aria-hidden="true"></span>
-                        <span><strong>Mind</strong> · Pause the pattern</span>
-                      </div>
-                      <div className="phone-path-row physical">
-                        <span className="phone-path-dot" aria-hidden="true"></span>
-                        <span><strong>Body</strong> · Change state</span>
-                      </div>
-                      <div className="phone-path-row spiritual">
-                        <span className="phone-path-dot" aria-hidden="true"></span>
-                        <span><strong>Soul</strong> · Ground privately</span>
-                      </div>
-                      <div className="phone-path-row synchrology">
-                        <span className="phone-path-dot" aria-hidden="true"></span>
-                        <span><strong>Nexus</strong> · Learns what works</span>
-                      </div>
+                    <div className="scorecard-proof" aria-label="Recovery action saved">
+                      <span>
+                        <small>Urge before</small>
+                        <strong>8/10</strong>
+                      </span>
+                      <span>
+                        <small>Urge after</small>
+                        <strong>5/10</strong>
+                      </span>
                     </div>
-                  </div>
+                  </section>
 
-                  <div className="phone-card phone-card--game" aria-label="Recovery game preview">
-                    <span className="phone-card-label">Recovery game</span>
-                    <strong className="phone-game-name">Reflex Override</strong>
-                    <p className="phone-game-desc">60-second challenge to interrupt autopilot</p>
-                  </div>
+                  <section className="intervention">
+                    <div>
+                      <span className="mini-label">One clear recovery action</span>
+                      <strong>90-second Mind reset</strong>
+                    </div>
+                    <button type="button" aria-label="Calm intervention preview" tabIndex={-1}>Done</button>
+                  </section>
+
+                  <section className="progress">
+                    <div className="progress-copy">
+                      <span>Saved progress</span>
+                      <strong>Level 3 progress</strong>
+                    </div>
+                    <div className="progress-meta">Mind Core active</div>
+                    <div className="progress-track" aria-hidden="true"><span></span></div>
+                  </section>
+
+                  <section className="mockup-scorecard" aria-label="Private recovery scorecard preview">
+                    <div className="scorecard-row">
+                      <span>Today</span>
+                      <strong>2 risky moments interrupted</strong>
+                    </div>
+                    <div className="scorecard-row">
+                      <span>Safe exits</span>
+                      <strong>1</strong>
+                    </div>
+                    <div className="scorecard-row">
+                      <span>Best reset</span>
+                      <strong>90 seconds</strong>
+                    </div>
+                  </section>
+
+                  <aside className="focus-note">
+                    <span>Safe exit saved</span>
+                    <strong>What helped is stored privately for next time.</strong>
+                  </aside>
                 </div>
               </motion.div>
             </motion.div>
@@ -602,7 +644,7 @@ export default function App() {
             </RevealOnScroll>
 
             <motion.div className="urge-loop-grid" aria-label="What happens when Impulsive steps in" initial={reduceMotion ? false : 'hidden'} whileInView={reduceMotion ? undefined : 'visible'} viewport={{ once: true, amount: 0.15 }} variants={{ visible: { transition: { staggerChildren: 0.08 } } }}>
-              <motion.div className="loop-glow-wrap" style={{ "--loop-color": "#D0C3F1" } as React.CSSProperties} variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.8, ease: revealEase }}>
+              <motion.div className="loop-glow-wrap" style={{ "--loop-color": "#D0C3F1" } as React.CSSProperties} variants={{ hidden: { opacity: 0, y: 24 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.8, ease: revealEase }}>
                 <article className="urge-loop-card">
                   <span className="loop-marker" aria-hidden="true">01</span>
                   <div>
@@ -612,7 +654,7 @@ export default function App() {
                 </article>
               </motion.div>
 
-              <motion.div className="loop-glow-wrap" style={{ "--loop-color": "#BDE0FE" } as React.CSSProperties} variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.8, ease: revealEase }}>
+              <motion.div className="loop-glow-wrap" style={{ "--loop-color": "#BDE0FE" } as React.CSSProperties} variants={{ hidden: { opacity: 0, y: 24 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.8, ease: revealEase }}>
                 <article className="urge-loop-card">
                   <span className="loop-marker" aria-hidden="true">02</span>
                   <div>
@@ -622,7 +664,7 @@ export default function App() {
                 </article>
               </motion.div>
 
-              <motion.div className="loop-glow-wrap" style={{ "--loop-color": "#FEF1AB" } as React.CSSProperties} variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.8, ease: revealEase }}>
+              <motion.div className="loop-glow-wrap" style={{ "--loop-color": "#FEF1AB" } as React.CSSProperties} variants={{ hidden: { opacity: 0, y: 24 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.8, ease: revealEase }}>
                 <article className="urge-loop-card">
                   <span className="loop-marker" aria-hidden="true">03</span>
                   <div>
@@ -644,7 +686,7 @@ export default function App() {
             </RevealOnScroll>
 
             <motion.ol className="first-week-timeline" aria-label="Impulsive first week onboarding steps" initial={reduceMotion ? false : 'hidden'} whileInView={reduceMotion ? undefined : 'visible'} viewport={{ once: true, amount: 0.15 }} variants={{ visible: { transition: { staggerChildren: 0.1 } } }}>
-              <motion.li className={`first-week-step${activeWeekCard === 0 ? ' is-active' : ''}`} style={{ "--week-color": "var(--mind-color)" } as React.CSSProperties} variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0 } }} animate={reduceMotion ? undefined : { scale: activeWeekCard === 0 ? 1.02 : 1 }}>
+              <motion.li className={`first-week-step${activeWeekCard === 0 ? ' is-active' : ''}`} style={{ "--week-color": "var(--mind-color)" } as React.CSSProperties} variants={{ hidden: { opacity: 0, y: 24 }, visible: { opacity: 1, y: 0 } }} animate={reduceMotion ? undefined : { scale: activeWeekCard === 0 ? 1.02 : 1 }}>
                 <span className="week-dot" aria-hidden="true">1</span>
                 <div>
                   <p className="week-label">Day 1</p>
@@ -653,7 +695,7 @@ export default function App() {
                 </div>
               </motion.li>
 
-              <motion.li className={`first-week-step${activeWeekCard === 1 ? ' is-active' : ''}`} style={{ "--week-color": "var(--mind-color)" } as React.CSSProperties} variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0 } }} animate={reduceMotion ? undefined : { scale: activeWeekCard === 1 ? 1.02 : 1 }}>
+              <motion.li className={`first-week-step${activeWeekCard === 1 ? ' is-active' : ''}`} style={{ "--week-color": "var(--mind-color)" } as React.CSSProperties} variants={{ hidden: { opacity: 0, y: 24 }, visible: { opacity: 1, y: 0 } }} animate={reduceMotion ? undefined : { scale: activeWeekCard === 1 ? 1.02 : 1 }}>
                 <span className="week-dot" aria-hidden="true">2</span>
                 <div>
                   <p className="week-label">Days 1-2</p>
@@ -662,7 +704,7 @@ export default function App() {
                 </div>
               </motion.li>
 
-              <motion.li className={`first-week-step${activeWeekCard === 2 ? ' is-active' : ''}`} style={{ "--week-color": "var(--body-color)" } as React.CSSProperties} variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0 } }} animate={reduceMotion ? undefined : { scale: activeWeekCard === 2 ? 1.02 : 1 }}>
+              <motion.li className={`first-week-step${activeWeekCard === 2 ? ' is-active' : ''}`} style={{ "--week-color": "var(--body-color)" } as React.CSSProperties} variants={{ hidden: { opacity: 0, y: 24 }, visible: { opacity: 1, y: 0 } }} animate={reduceMotion ? undefined : { scale: activeWeekCard === 2 ? 1.02 : 1 }}>
                 <span className="week-dot" aria-hidden="true">3</span>
                 <div>
                   <p className="week-label">Days 3-4</p>
@@ -671,7 +713,7 @@ export default function App() {
                 </div>
               </motion.li>
 
-              <motion.li className={`first-week-step${activeWeekCard === 3 ? ' is-active' : ''}`} style={{ "--week-color": "var(--soul-color)" } as React.CSSProperties} variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0 } }} animate={reduceMotion ? undefined : { scale: activeWeekCard === 3 ? 1.02 : 1 }}>
+              <motion.li className={`first-week-step${activeWeekCard === 3 ? ' is-active' : ''}`} style={{ "--week-color": "var(--soul-color)" } as React.CSSProperties} variants={{ hidden: { opacity: 0, y: 24 }, visible: { opacity: 1, y: 0 } }} animate={reduceMotion ? undefined : { scale: activeWeekCard === 3 ? 1.02 : 1 }}>
                 <span className="week-dot" aria-hidden="true">4</span>
                 <div>
                   <p className="week-label">Day 5</p>
@@ -680,7 +722,7 @@ export default function App() {
                 </div>
               </motion.li>
 
-              <motion.li className={`first-week-step${activeWeekCard === 4 ? ' is-active' : ''}`} style={{ "--week-color": "var(--focus-color)" } as React.CSSProperties} variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0 } }} animate={reduceMotion ? undefined : { scale: activeWeekCard === 4 ? 1.02 : 1 }}>
+              <motion.li className={`first-week-step${activeWeekCard === 4 ? ' is-active' : ''}`} style={{ "--week-color": "var(--focus-color)" } as React.CSSProperties} variants={{ hidden: { opacity: 0, y: 24 }, visible: { opacity: 1, y: 0 } }} animate={reduceMotion ? undefined : { scale: activeWeekCard === 4 ? 1.02 : 1 }}>
                 <span className="week-dot" aria-hidden="true">5</span>
                 <div>
                   <p className="week-label">Day 6+</p>
@@ -700,8 +742,10 @@ export default function App() {
               <p>Impulsive starts with Mind first, then unlocks stronger support through movement, reflection, focus tools, and adaptive routing.</p>
             </RevealOnScroll>
             <motion.div className="path-cards" initial={reduceMotion ? false : 'hidden'} whileInView={reduceMotion ? undefined : 'visible'} viewport={{ once: true, amount: 0.15 }} variants={{ visible: { transition: { staggerChildren: 0.08 } } }}>
-              <div
+              <motion.div
                 className={`path-card-wrapper${flippedCards.has("mind") ? " is-flipped" : ""}`}
+                variants={{ hidden: { opacity: 0, y: 24 }, visible: { opacity: 1, y: 0 } }}
+                transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
                 role="button"
                 tabIndex={0}
                 aria-pressed={flippedCards.has("mind")}
@@ -709,46 +753,50 @@ export default function App() {
                 onClick={() => togglePathFlip("mind")}
                 onKeyDown={(event) => handlePathKeyDown(event, "mind")}
               >
-                <motion.article className="path-card psychology card-front" variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0 } }}>
-                  <div className="card-topline">
-                    <span className="soft-icon symbol-icon" aria-hidden="true" data-fallable="">&#10022;</span>
-                    <span className="status-pill">Starts first</span>
-                  </div>
-                  <h3>Mind</h3>
-                  <p>Start with one calm mental reset before the loop takes over.</p>
-                  <ul className="path-detail-list" aria-label="Mind details">
-                    <li>Default first path</li>
-                    <li>Low-friction reset</li>
-                    <li>Indoor, late-night, stress, boredom, or social-media triggers</li>
-                  </ul>
-                  <span className="card-flip-hint" aria-hidden="true">
-                    <span>How it works</span>
-                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 12h18M13 5l7 7-7 7" /></svg>
-                  </span>
-                </motion.article>
+                <div className="path-card-inner">
+                  <article className="path-card psychology card-front">
+                    <div className="card-topline">
+                      <span className="soft-icon symbol-icon" aria-hidden="true" data-fallable="">&#10022;</span>
+                      <span className="status-pill">Starts first</span>
+                    </div>
+                    <h3>Mind</h3>
+                    <p>Start with one calm mental reset before the loop takes over.</p>
+                    <ul className="path-detail-list" aria-label="Mind details">
+                      <li>Default first path</li>
+                      <li>Low-friction reset</li>
+                      <li>Indoor, late-night, stress, boredom, or social-media triggers</li>
+                    </ul>
+                    <span className="card-flip-hint" aria-hidden="true">
+                      <span>How it works</span>
+                      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 12h18M13 5l7 7-7 7" /></svg>
+                    </span>
+                  </article>
 
-                <article className="path-card psychology card-back" aria-hidden={!flippedCards.has("mind")}>
-                  <div className="card-topline">
-                    <span className="soft-icon symbol-icon" aria-hidden="true">&#10022;</span>
-                    <span className="status-pill">Starts first</span>
-                  </div>
-                  <h3>Mind</h3>
-                  <p className="card-back-tag">Pause, name the urge, choose one better action, and save what helped.</p>
-                  <p className="card-back-section-h">How it works</p>
-                  <ol className="card-back-steps">
-                    <li>You notice the urge as a wave coming through, not a command you have to follow.</li>
-                    <li>You name what is actually pulling at you: stress, boredom, late-night scrolling, or another trigger.</li>
-                    <li>You choose one better action and save what helped for next time.</li>
-                  </ol>
-                  <span className="card-flip-hint card-flip-hint-back" aria-hidden="true">
-                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 12H3M11 5l-7 7 7 7" /></svg>
-                    <span>Back</span>
-                  </span>
-                </article>
-              </div>
+                  <article className="path-card psychology card-back" aria-hidden={!flippedCards.has("mind")}>
+                    <div className="card-topline">
+                      <span className="soft-icon symbol-icon" aria-hidden="true">&#10022;</span>
+                      <span className="status-pill">Starts first</span>
+                    </div>
+                    <h3>Mind</h3>
+                    <p className="card-back-tag">Pause, name the urge, choose one better action, and save what helped.</p>
+                    <p className="card-back-section-h">How it works</p>
+                    <ol className="card-back-steps">
+                      <li>You notice the urge as a wave coming through, not a command you have to follow.</li>
+                      <li>You name what is actually pulling at you: stress, boredom, late-night scrolling, or another trigger.</li>
+                      <li>You choose one better action and save what helped for next time.</li>
+                    </ol>
+                    <span className="card-flip-hint card-flip-hint-back" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 12H3M11 5l-7 7 7 7" /></svg>
+                      <span>Back</span>
+                    </span>
+                  </article>
+                </div>
+              </motion.div>
 
-              <div
+              <motion.div
                 className={`path-card-wrapper${flippedCards.has("body") ? " is-flipped" : ""}`}
+                variants={{ hidden: { opacity: 0, y: 24 }, visible: { opacity: 1, y: 0 } }}
+                transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
                 role="button"
                 tabIndex={0}
                 aria-pressed={flippedCards.has("body")}
@@ -756,50 +804,54 @@ export default function App() {
                 onClick={() => togglePathFlip("body")}
                 onKeyDown={(event) => handlePathKeyDown(event, "body")}
               >
-                <motion.article className="path-card physical card-front" variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0 } }}>
-                  <div className="card-topline">
-                    <span className="soft-icon image-icon" aria-hidden="true" data-fallable="">
-                      <img src="/images/icons/impulsive-body.png" alt="" />
+                <div className="path-card-inner">
+                  <article className="path-card physical card-front">
+                    <div className="card-topline">
+                      <span className="soft-icon image-icon" aria-hidden="true" data-fallable="">
+                        <img src="/images/icons/impulsive-body.png" alt="" />
+                      </span>
+                      <span className="status-pill">Unlocks later</span>
+                    </div>
+                    <h3>Body</h3>
+                    <p>When your room, bed, or phone becomes the trigger, Body helps you move before the urge takes over.</p>
+                    <ul className="path-detail-list" aria-label="Body details">
+                      <li>Movement-based reset</li>
+                      <li>Exit-room or walk support</li>
+                      <li>Built for changing state quickly</li>
+                    </ul>
+                    <span className="card-flip-hint" aria-hidden="true">
+                      <span>How it works</span>
+                      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 12h18M13 5l7 7-7 7" /></svg>
                     </span>
-                    <span className="status-pill">Unlocks later</span>
-                  </div>
-                  <h3>Body</h3>
-                  <p>When your room, bed, or phone becomes the trigger, Body helps you move before the urge takes over.</p>
-                  <ul className="path-detail-list" aria-label="Body details">
-                    <li>Movement-based reset</li>
-                    <li>Exit-room or walk support</li>
-                    <li>Built for changing state quickly</li>
-                  </ul>
-                  <span className="card-flip-hint" aria-hidden="true">
-                    <span>How it works</span>
-                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 12h18M13 5l7 7-7 7" /></svg>
-                  </span>
-                </motion.article>
+                  </article>
 
-                <article className="path-card physical card-back" aria-hidden={!flippedCards.has("body")}>
-                  <div className="card-topline">
-                    <span className="soft-icon image-icon" aria-hidden="true">
-                      <img src="/images/icons/impulsive-body.png" alt="" />
+                  <article className="path-card physical card-back" aria-hidden={!flippedCards.has("body")}>
+                    <div className="card-topline">
+                      <span className="soft-icon image-icon" aria-hidden="true">
+                        <img src="/images/icons/impulsive-body.png" alt="" />
+                      </span>
+                      <span className="status-pill">Unlocks later</span>
+                    </div>
+                    <h3>Body</h3>
+                    <p className="card-back-tag">Sometimes thinking is not enough. Body helps you leave the exact environment where the loop usually wins.</p>
+                    <p className="card-back-section-h">How it works</p>
+                    <ol className="card-back-steps">
+                      <li>Step away from the room, bed, phone, or place where the urge usually wins.</li>
+                      <li>Start a short reset and complete the movement proof.</li>
+                      <li>Save the progress privately so Impulsive can learn what helps you change state quickly.</li>
+                    </ol>
+                    <span className="card-flip-hint card-flip-hint-back" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 12H3M11 5l-7 7 7 7" /></svg>
+                      <span>Back</span>
                     </span>
-                    <span className="status-pill">Unlocks later</span>
-                  </div>
-                  <h3>Body</h3>
-                  <p className="card-back-tag">Sometimes thinking is not enough. Body helps you leave the exact environment where the loop usually wins.</p>
-                  <p className="card-back-section-h">How it works</p>
-                  <ol className="card-back-steps">
-                    <li>Step away from the room, bed, phone, or place where the urge usually wins.</li>
-                    <li>Start a short reset and complete the movement proof.</li>
-                    <li>Save the progress privately so Impulsive can learn what helps you change state quickly.</li>
-                  </ol>
-                  <span className="card-flip-hint card-flip-hint-back" aria-hidden="true">
-                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 12H3M11 5l-7 7 7 7" /></svg>
-                    <span>Back</span>
-                  </span>
-                </article>
-              </div>
+                  </article>
+                </div>
+              </motion.div>
 
-              <div
+              <motion.div
                 className={`path-card-wrapper${flippedCards.has("soul") ? " is-flipped" : ""}`}
+                variants={{ hidden: { opacity: 0, y: 24 }, visible: { opacity: 1, y: 0 } }}
+                transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
                 role="button"
                 tabIndex={0}
                 aria-pressed={flippedCards.has("soul")}
@@ -807,50 +859,54 @@ export default function App() {
                 onClick={() => togglePathFlip("soul")}
                 onKeyDown={(event) => handlePathKeyDown(event, "soul")}
               >
-                <motion.article className="path-card spiritual card-front" variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0 } }}>
-                  <div className="card-topline">
-                    <span className="soft-icon image-icon" aria-hidden="true" data-fallable="">
-                      <img src="/images/icons/impulsive-soul.png" alt="" />
+                <div className="path-card-inner">
+                  <article className="path-card spiritual card-front">
+                    <div className="card-topline">
+                      <span className="soft-icon image-icon" aria-hidden="true" data-fallable="">
+                        <img src="/images/icons/impulsive-soul.png" alt="" />
+                      </span>
+                      <span className="status-pill">Optional</span>
+                    </div>
+                    <h3>Soul</h3>
+                    <p>For users who want faith, values, prayer, or reflection to be part of recovery without pressure.</p>
+                    <ul className="path-detail-list" aria-label="Soul details">
+                      <li>Optional</li>
+                      <li>Never forced</li>
+                      <li>Faith, values, prayer, reflection, recommitment</li>
+                    </ul>
+                    <span className="card-flip-hint" aria-hidden="true">
+                      <span>How it works</span>
+                      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 12h18M13 5l7 7-7 7" /></svg>
                     </span>
-                    <span className="status-pill">Optional</span>
-                  </div>
-                  <h3>Soul</h3>
-                  <p>For users who want faith, values, prayer, or reflection to be part of recovery without pressure.</p>
-                  <ul className="path-detail-list" aria-label="Soul details">
-                    <li>Optional</li>
-                    <li>Never forced</li>
-                    <li>Faith, values, prayer, reflection, recommitment</li>
-                  </ul>
-                  <span className="card-flip-hint" aria-hidden="true">
-                    <span>How it works</span>
-                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 12h18M13 5l7 7-7 7" /></svg>
-                  </span>
-                </motion.article>
+                  </article>
 
-                <article className="path-card spiritual card-back" aria-hidden={!flippedCards.has("soul")}>
-                  <div className="card-topline">
-                    <span className="soft-icon image-icon" aria-hidden="true">
-                      <img src="/images/icons/impulsive-soul.png" alt="" />
+                  <article className="path-card spiritual card-back" aria-hidden={!flippedCards.has("soul")}>
+                    <div className="card-topline">
+                      <span className="soft-icon image-icon" aria-hidden="true">
+                        <img src="/images/icons/impulsive-soul.png" alt="" />
+                      </span>
+                      <span className="status-pill">Optional</span>
+                    </div>
+                    <h3>Soul</h3>
+                    <p className="card-back-tag">Soul is optional. It appears only if enabled, then gives a short grounding action without pressure.</p>
+                    <p className="card-back-section-h">How it works</p>
+                    <ol className="card-back-steps">
+                      <li>You enable Soul only if faith, values, prayer, or reflection belongs in your recovery.</li>
+                      <li>Impulsive suggests a short grounding action: prayer, reflection, passage reading, or recommitment.</li>
+                      <li>If you slip, Soul helps you restart without shame.</li>
+                    </ol>
+                    <span className="card-flip-hint card-flip-hint-back" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 12H3M11 5l-7 7 7 7" /></svg>
+                      <span>Back</span>
                     </span>
-                    <span className="status-pill">Optional</span>
-                  </div>
-                  <h3>Soul</h3>
-                  <p className="card-back-tag">Soul is optional. It appears only if enabled, then gives a short grounding action without pressure.</p>
-                  <p className="card-back-section-h">How it works</p>
-                  <ol className="card-back-steps">
-                    <li>You enable Soul only if faith, values, prayer, or reflection belongs in your recovery.</li>
-                    <li>Impulsive suggests a short grounding action: prayer, reflection, passage reading, or recommitment.</li>
-                    <li>If you slip, Soul helps you restart without shame.</li>
-                  </ol>
-                  <span className="card-flip-hint card-flip-hint-back" aria-hidden="true">
-                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 12H3M11 5l-7 7 7 7" /></svg>
-                    <span>Back</span>
-                  </span>
-                </article>
-              </div>
+                  </article>
+                </div>
+              </motion.div>
 
-              <div
+              <motion.div
                 className={`path-card-wrapper${flippedCards.has("nexus") ? " is-flipped" : ""}`}
+                variants={{ hidden: { opacity: 0, y: 24 }, visible: { opacity: 1, y: 0 } }}
+                transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
                 role="button"
                 tabIndex={0}
                 aria-pressed={flippedCards.has("nexus")}
@@ -858,48 +914,50 @@ export default function App() {
                 onClick={() => togglePathFlip("nexus")}
                 onKeyDown={(event) => handlePathKeyDown(event, "nexus")}
               >
-                <motion.article className="path-card synchrology card-front" variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0 } }}>
-                  <div className="card-topline">
-                    <span className="soft-icon image-icon" aria-hidden="true" data-fallable="">
-                      <img src="/images/icons/impulsive-nexus.png" alt="" />
+                <div className="path-card-inner">
+                  <article className="path-card synchrology card-front">
+                    <div className="card-topline">
+                      <span className="soft-icon image-icon" aria-hidden="true" data-fallable="">
+                        <img src="/images/icons/impulsive-nexus.png" alt="" />
+                      </span>
+                      <span className="status-pill status-pill--future">Coming later</span>
+                    </div>
+                    <h3>Nexus</h3>
+                    <p>An adaptive engine that is designed to learn what helps and route the next best support, planned for a future release.</p>
+                    <ul className="path-detail-list" aria-label="Nexus details">
+                      <li>Not a public path menu</li>
+                      <li>Will coordinate Mind, Body, Soul, Focus, and games</li>
+                      <li>Designed to become more personal over time</li>
+                    </ul>
+                    <span className="card-flip-hint" aria-hidden="true">
+                      <span>How it will work</span>
+                      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 12h18M13 5l7 7-7 7" /></svg>
                     </span>
-                    <span className="status-pill status-pill--future">Coming later</span>
-                  </div>
-                  <h3>Nexus</h3>
-                  <p>An adaptive engine that is designed to learn what helps and route the next best support, planned for a future release.</p>
-                  <ul className="path-detail-list" aria-label="Nexus details">
-                    <li>Not a public path menu</li>
-                    <li>Will coordinate Mind, Body, Soul, Focus, and games</li>
-                    <li>Designed to become more personal over time</li>
-                  </ul>
-                  <span className="card-flip-hint" aria-hidden="true">
-                    <span>How it will work</span>
-                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 12h18M13 5l7 7-7 7" /></svg>
-                  </span>
-                </motion.article>
+                  </article>
 
-                <article className="path-card synchrology card-back" aria-hidden={!flippedCards.has("nexus")}>
-                  <div className="card-topline">
-                    <span className="soft-icon image-icon" aria-hidden="true">
-                      <img src="/images/icons/impulsive-nexus.png" alt="" />
+                  <article className="path-card synchrology card-back" aria-hidden={!flippedCards.has("nexus")}>
+                    <div className="card-topline">
+                      <span className="soft-icon image-icon" aria-hidden="true">
+                        <img src="/images/icons/impulsive-nexus.png" alt="" />
+                      </span>
+                      <span className="status-pill status-pill--future">Coming later</span>
+                    </div>
+                    <h3>Nexus</h3>
+                    <p className="card-back-tag">Nexus is designed to use private trigger patterns, past success, urge ratings, and fallback history to recommend one clear action. It is a planned future feature, not a current live capability.</p>
+                    <p className="card-back-section-h">How it will work</p>
+                    <ol className="card-back-steps">
+                      <li>It will read the private pattern: trigger windows, past success, urge ratings, and fallback history.</li>
+                      <li>It will coordinate Mind, Body, Soul, Focus, and recovery games behind the scenes.</li>
+                      <li>It will recommend one clear action instead of showing every option at once.</li>
+                      <li>It is designed to help Impulsive become more personal over time.</li>
+                    </ol>
+                    <span className="card-flip-hint card-flip-hint-back" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 12H3M11 5l-7 7 7 7" /></svg>
+                      <span>Back</span>
                     </span>
-                    <span className="status-pill status-pill--future">Coming later</span>
-                  </div>
-                  <h3>Nexus</h3>
-                  <p className="card-back-tag">Nexus is designed to use private trigger patterns, past success, urge ratings, and fallback history to recommend one clear action. It is a planned future feature, not a current live capability.</p>
-                  <p className="card-back-section-h">How it will work</p>
-                  <ol className="card-back-steps">
-                    <li>It will read the private pattern: trigger windows, past success, urge ratings, and fallback history.</li>
-                    <li>It will coordinate Mind, Body, Soul, Focus, and recovery games behind the scenes.</li>
-                    <li>It will recommend one clear action instead of showing every option at once.</li>
-                    <li>It is designed to help Impulsive become more personal over time.</li>
-                  </ol>
-                  <span className="card-flip-hint card-flip-hint-back" aria-hidden="true">
-                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 12H3M11 5l-7 7 7 7" /></svg>
-                    <span>Back</span>
-                  </span>
-                </article>
-              </div>
+                  </article>
+                </div>
+              </motion.div>
             </motion.div>
           </div>
         </section>
@@ -1059,7 +1117,7 @@ export default function App() {
 
             <motion.div className="tiers-grid" initial={reduceMotion ? false : 'hidden'} whileInView={reduceMotion ? undefined : 'visible'} viewport={{ once: true, amount: 0.15 }} variants={{ visible: { transition: { staggerChildren: 0.06 } } }}>
 
-              <motion.article className="tier-card tier-card--free" style={{ "--tier-color": "var(--mind-color)" } as React.CSSProperties} variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0 } }}>
+              <motion.article className="tier-card tier-card--free" style={{ "--tier-color": "var(--mind-color)" } as React.CSSProperties} variants={{ hidden: { opacity: 0, y: 24 }, visible: { opacity: 1, y: 0 } }}>
                 <div className="tier-card-top">
                   <span className="tier-badge">Free</span>
                   <span className="tier-name">Impulsive Core</span>
@@ -1071,7 +1129,7 @@ export default function App() {
                 </div>
               </motion.article>
 
-              <motion.article className="tier-card tier-card--invite" style={{ "--tier-color": "var(--brand-glow)" } as React.CSSProperties} variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0 } }}>
+              <motion.article className="tier-card tier-card--invite" style={{ "--tier-color": "var(--brand-glow)" } as React.CSSProperties} variants={{ hidden: { opacity: 0, y: 24 }, visible: { opacity: 1, y: 0 } }}>
                 <div className="tier-card-top">
                   <span className="tier-badge tier-badge--invite">Invite &amp; Unlock</span>
                 </div>
@@ -1082,7 +1140,7 @@ export default function App() {
                 </div>
               </motion.article>
 
-              <motion.article className="tier-card tier-card--plus" style={{ "--tier-color": "var(--focus-color)" } as React.CSSProperties} variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0 } }}>
+              <motion.article className="tier-card tier-card--plus" style={{ "--tier-color": "var(--focus-color)" } as React.CSSProperties} variants={{ hidden: { opacity: 0, y: 24 }, visible: { opacity: 1, y: 0 } }}>
                 <div className="tier-card-top">
                   <span className="tier-badge tier-badge--plus">One-time Plus</span>
                 </div>
@@ -1093,7 +1151,7 @@ export default function App() {
                 </div>
               </motion.article>
 
-              <motion.article className="tier-card tier-card--cloud" style={{ "--tier-color": "var(--body-color)" } as React.CSSProperties} variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0 } }}>
+              <motion.article className="tier-card tier-card--cloud" style={{ "--tier-color": "var(--body-color)" } as React.CSSProperties} variants={{ hidden: { opacity: 0, y: 24 }, visible: { opacity: 1, y: 0 } }}>
                 <div className="tier-card-top">
                   <span className="tier-badge tier-badge--cloud">Later: Cloud</span>
                 </div>

@@ -11519,15 +11519,19 @@ p {
 }
 
 [data-theme="dark"] .hero-visual::before {
-  opacity: 0.44;
+  width: clamp(340px, 42vw, 620px);
+  opacity: 0.86;
+  border-radius: 50%;
+  filter: blur(20px) saturate(1.18);
   background:
-    radial-gradient(circle at 22% 24%, rgba(208, 195, 241, 0.34), transparent 34%),
-    radial-gradient(circle at 76% 28%, rgba(245, 167, 166, 0.28), transparent 36%),
-    radial-gradient(circle at 48% 78%, rgba(91, 172, 255, 0.18), transparent 34%),
-    rgba(12, 15, 34, 0.50);
+    radial-gradient(ellipse at 24% 24%, rgba(208, 195, 241, 0.38), transparent 34%),
+    radial-gradient(ellipse at 78% 30%, rgba(245, 167, 166, 0.28), transparent 36%),
+    radial-gradient(ellipse at 50% 82%, rgba(91, 172, 255, 0.20), transparent 38%),
+    radial-gradient(ellipse at 50% 50%, rgba(126, 95, 255, 0.16), transparent 66%);
   box-shadow:
-    0 0 82px rgba(208, 195, 241, 0.18),
-    0 0 132px rgba(245, 167, 166, 0.10);
+    0 0 90px rgba(208, 195, 241, 0.22),
+    0 0 150px rgba(245, 167, 166, 0.14),
+    0 0 210px rgba(91, 172, 255, 0.08);
 }
 
 [data-theme="dark"] .hero-visual .phone,
@@ -11538,12 +11542,13 @@ p {
     linear-gradient(145deg, #F2EAFF 0%, #8D7DA4 18%, #241C2F 52%, #B39CCB 100%) border-box;
   box-shadow:
     0 0 0 1px rgba(247, 242, 255, 0.18) inset,
-    0 0 0 1px rgba(208, 195, 241, 0.46),
-    0 0 16px rgba(208, 195, 241, 0.34),
-    -10px 0 30px rgba(126, 95, 255, 0.22),
-    12px 0 32px rgba(245, 167, 166, 0.18),
-    0 18px 48px rgba(0, 0, 0, 0.54),
-    0 30px 92px rgba(126, 95, 255, 0.24);
+    0 0 0 1px rgba(208, 195, 241, 0.72),
+    0 0 18px rgba(208, 195, 241, 0.78),
+    -10px 0 34px rgba(208, 195, 241, 0.54),
+    12px 0 38px rgba(245, 167, 166, 0.46),
+    22px 0 62px rgba(254, 241, 171, 0.20),
+    0 0 96px rgba(126, 95, 255, 0.34),
+    0 22px 64px rgba(0, 0, 0, 0.58);
   filter: none;
 }
 

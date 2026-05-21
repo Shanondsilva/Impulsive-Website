@@ -785,21 +785,21 @@ export default function App() {
 
               <li className="progression-step progression-step--unlocked reveal" style={{ "--prog-color": "var(--soul-color)" } as React.CSSProperties}>
                 <div className="prog-card">
-                  <span className="prog-level-label">Level 3</span>
+                  <span className="prog-level-label">Level 2</span>
                   <h3 className="prog-card-title">Taper progress</h3>
                 </div>
               </li>
 
               <li className="progression-step progression-step--preview reveal" style={{ "--prog-color": "var(--body-color)" } as React.CSSProperties}>
                 <div className="prog-card">
-                  <span className="prog-level-label">Level 5</span>
+                  <span className="prog-level-label">Level 3</span>
                   <h3 className="prog-card-title">Path preview</h3>
                 </div>
               </li>
 
               <li className="progression-step progression-step--choice reveal" style={{ "--prog-color": "var(--brand-glow)" } as React.CSSProperties}>
                 <div className="prog-card">
-                  <span className="prog-level-label">Level 6</span>
+                  <span className="prog-level-label">Level 4</span>
                   <h3 className="prog-card-title">Stronger support</h3>
                 </div>
               </li>

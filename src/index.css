@@ -11519,19 +11519,20 @@ p {
 }
 
 [data-theme="dark"] .hero-visual::before {
-  width: clamp(340px, 42vw, 620px);
-  opacity: 0.86;
+  width: clamp(620px, 62vw, 920px);
+  opacity: 0.74;
   border-radius: 50%;
-  filter: blur(20px) saturate(1.18);
+  filter: blur(24px) saturate(1.18);
   background:
-    radial-gradient(ellipse at 24% 24%, rgba(208, 195, 241, 0.38), transparent 34%),
-    radial-gradient(ellipse at 78% 30%, rgba(245, 167, 166, 0.28), transparent 36%),
-    radial-gradient(ellipse at 50% 82%, rgba(91, 172, 255, 0.20), transparent 38%),
-    radial-gradient(ellipse at 50% 50%, rgba(126, 95, 255, 0.16), transparent 66%);
+    radial-gradient(ellipse at 40% 22%, rgba(208, 195, 241, 0.32), transparent 24%),
+    radial-gradient(ellipse at 62% 26%, rgba(245, 167, 166, 0.22), transparent 26%),
+    radial-gradient(ellipse at 50% 72%, rgba(91, 172, 255, 0.16), transparent 28%),
+    radial-gradient(ellipse at 50% 50%, rgba(126, 95, 255, 0.12), transparent 54%);
   box-shadow:
-    0 0 90px rgba(208, 195, 241, 0.22),
-    0 0 150px rgba(245, 167, 166, 0.14),
-    0 0 210px rgba(91, 172, 255, 0.08);
+    0 0 120px rgba(208, 195, 241, 0.16),
+    0 0 190px rgba(245, 167, 166, 0.09);
+  -webkit-mask-image: radial-gradient(ellipse at center, #000 0 38%, rgba(0, 0, 0, 0.58) 52%, transparent 73%);
+  mask-image: radial-gradient(ellipse at center, #000 0 38%, rgba(0, 0, 0, 0.58) 52%, transparent 73%);
 }
 
 [data-theme="dark"] .hero-visual .phone,

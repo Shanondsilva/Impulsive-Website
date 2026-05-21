@@ -12311,6 +12311,55 @@ p {
   display: none !important;
 }
 
+/* ===== Principles/About split sections ===== */
+.principles-section,
+.about-section {
+  padding-top: 96px;
+  padding-bottom: 96px;
+}
+
+.section-text-column {
+  max-width: 720px;
+  margin-inline: auto;
+}
+
+.principles-section .credibility-pane,
+.about-section .credibility-pane {
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  padding: 0;
+}
+
+.principles-section .credibility-pane .eyebrow,
+.about-section .credibility-pane .eyebrow {
+  opacity: 0.6;
+  letter-spacing: 0.08em;
+}
+
+.principles-section .credibility-principles-line,
+.about-section .about-credibility-lines p,
+.about-section .about-disclaimer {
+  line-height: 1.6;
+}
+
+.about-section .about-bullet {
+  background: rgba(120, 122, 132, 0.45);
+  box-shadow: none;
+}
+
+[data-theme="dark"] .about-section .about-bullet {
+  background: rgba(192, 195, 208, 0.38);
+}
+
+@media (max-width: 767px) {
+  .principles-section,
+  .about-section {
+    padding-top: 64px;
+    padding-bottom: 64px;
+  }
+}
+
 /* ===== Header desktop alignment refinement ===== */
 .nav-left {
   min-width: 0;

@@ -1057,46 +1057,48 @@ export default function App() {
         </section>
 
 
-        <section className="section credibility-dual-section" id="principles" aria-labelledby="principles-title">
-          <RevealOnScroll className="container">
-            <div className="credibility-dual-card">
-              <article className="credibility-pane credibility-pane--principles" aria-labelledby="principles-title">
-                <p className="eyebrow"><strong>PRINCIPLES</strong></p>
-                <h2 id="principles-title"><strong>Built without shame loops.</strong></h2>
-                <p className="credibility-principles-line"><strong>No shame streaks. No fake scores. No trigger paywalls. Private by design.</strong></p>
-                <div className="credibility-chips-group" aria-label="Recovery paths">
-                  <p className="credibility-chips-label">Recovery paths</p>
-                  <div className="credibility-chips">
-                    <span className="credibility-chip" style={{ "--chip-color": "var(--mind-color)" } as React.CSSProperties}>Mind</span>
-                    <span className="credibility-chip" style={{ "--chip-color": "var(--body-color)" } as React.CSSProperties}>Body</span>
-                    <span className="credibility-chip" style={{ "--chip-color": "var(--soul-color)" } as React.CSSProperties}>Soul</span>
-                    <span className="credibility-chip" style={{ "--chip-color": "var(--focus-color)" } as React.CSSProperties}>Focus</span>
-                  </div>
+        <section className="section principles-section" id="principles" aria-labelledby="principles-title">
+          <RevealOnScroll className="container section-text-column">
+            <article className="credibility-pane credibility-pane--principles" aria-labelledby="principles-title">
+              <p className="eyebrow"><strong>PRINCIPLES</strong></p>
+              <h2 id="principles-title"><strong>Built without shame loops.</strong></h2>
+              <p className="credibility-principles-line"><strong>No shame streaks. No fake scores. No trigger paywalls. Private by design.</strong></p>
+              <div className="credibility-chips-group" aria-label="Recovery paths">
+                <p className="credibility-chips-label">Recovery paths</p>
+                <div className="credibility-chips">
+                  <span className="credibility-chip" style={{ "--chip-color": "var(--mind-color)" } as React.CSSProperties}>Mind</span>
+                  <span className="credibility-chip" style={{ "--chip-color": "var(--body-color)" } as React.CSSProperties}>Body</span>
+                  <span className="credibility-chip" style={{ "--chip-color": "var(--soul-color)" } as React.CSSProperties}>Soul</span>
+                  <span className="credibility-chip" style={{ "--chip-color": "var(--focus-color)" } as React.CSSProperties}>Focus</span>
                 </div>
-              </article>
+              </div>
+            </article>
+          </RevealOnScroll>
+        </section>
 
-              <article className="credibility-pane credibility-pane--about" id="about" aria-labelledby="about-title">
-                <p className="eyebrow">ABOUT</p>
-                <h2 id="about-title">Built carefully for private behaviour change.</h2>
-                <ul className="about-credibility-lines" aria-label="About Impulsive">
-                  <li className="about-credibility-item">
-                    <span className="about-bullet" aria-hidden="true"></span>
-                    <p><strong>Privacy-first:</strong><span className="about-bullet-desc"> sensitive recovery records stay private and local-first by default.</span></p>
-                  </li>
-                  <li className="about-credibility-item">
-                    <span className="about-bullet" aria-hidden="true"></span>
-                    <p><strong>Careful language:</strong><span className="about-bullet-desc"> no cure claims, fake percentages, or medical promises.</span></p>
-                  </li>
-                  <li className="about-credibility-item">
-                    <span className="about-bullet" aria-hidden="true"></span>
-                    <p><strong>Review-ready:</strong><span className="about-bullet-desc"> clear enough for advisors, clinicians, and endorsement reviewers to understand.</span></p>
-                  </li>
-                </ul>
-                <div className="about-footer-row about-footer-row--disclaimer">
-                  <p className="about-disclaimer">Impulsive is not a substitute for therapy, diagnosis, crisis support, or professional medical advice. If you are in crisis, please contact your GP, a qualified therapist, or the Samaritans on 116 123.</p>
-                </div>
-              </article>
-            </div>
+        <section className="section about-section" id="about" aria-labelledby="about-title">
+          <RevealOnScroll className="container section-text-column">
+            <article className="credibility-pane credibility-pane--about" aria-labelledby="about-title">
+              <p className="eyebrow">ABOUT</p>
+              <h2 id="about-title">Built carefully for private behaviour change.</h2>
+              <ul className="about-credibility-lines" aria-label="About Impulsive">
+                <li className="about-credibility-item">
+                  <span className="about-bullet" aria-hidden="true"></span>
+                  <p><strong>Privacy-first:</strong><span className="about-bullet-desc"> sensitive recovery records stay private and local-first by default.</span></p>
+                </li>
+                <li className="about-credibility-item">
+                  <span className="about-bullet" aria-hidden="true"></span>
+                  <p><strong>Careful language:</strong><span className="about-bullet-desc"> no cure claims, fake percentages, or medical promises.</span></p>
+                </li>
+                <li className="about-credibility-item">
+                  <span className="about-bullet" aria-hidden="true"></span>
+                  <p><strong>Review-ready:</strong><span className="about-bullet-desc"> clear enough for advisors, clinicians, and endorsement reviewers to understand.</span></p>
+                </li>
+              </ul>
+              <div className="about-footer-row about-footer-row--disclaimer">
+                <p className="about-disclaimer">Impulsive is not a substitute for therapy, diagnosis, crisis support, or professional medical advice. If you are in crisis, please contact your GP, a qualified therapist, or the Samaritans on 116 123.</p>
+              </div>
+            </article>
           </RevealOnScroll>
         </section>
 

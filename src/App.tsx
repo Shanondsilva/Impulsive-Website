@@ -228,7 +228,7 @@ export default function App() {
     document.body.style.overflow = "hidden";
 
     const focusables = Array.from(
-      document.querySelectorAll<HTMLElement>('#mobile-menu-panel a, #mobile-menu-panel button')
+      document.querySelectorAll<HTMLElement>('#menu-panel a, #menu-panel button')
     );
     focusables[0]?.focus();
 
@@ -366,7 +366,7 @@ export default function App() {
               type="button"
               aria-label={menuOpen ? "Close menu" : "Open menu"}
               aria-expanded={menuOpen}
-              aria-controls="mobile-menu-panel"
+              aria-controls="menu-panel"
               onClick={handleMenuToggle}
               ref={menuToggleRef}
             >
@@ -378,29 +378,28 @@ export default function App() {
       <AnimatePresence>
         {menuOpen && (
           <>
-            <motion.button
-              type="button"
+            <motion.div
               className="mobile-menu-overlay"
-              aria-label="Close menu"
+              aria-hidden="true"
               onClick={closeMenu}
-              initial={reduceMotion ? false : { opacity: 0 }}
-              animate={reduceMotion ? undefined : { opacity: 1 }}
-              exit={reduceMotion ? undefined : { opacity: 0 }}
-              transition={{ duration: 0.25, ease: 'easeOut' }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2, ease: 'easeOut' }}
             />
             <motion.div
-              id="mobile-menu-panel"
+              id="menu-panel"
               role="dialog"
               aria-modal="true"
-              aria-labelledby="menu-title"
+              aria-labelledby="menu-heading"
               className="mobile-menu-panel"
-              initial={reduceMotion ? false : { x: "100%", opacity: 0 }}
-              animate={reduceMotion ? undefined : { x: 0, opacity: 1 }}
-              exit={reduceMotion ? undefined : { x: "100%", opacity: 0 }}
+              initial={reduceMotion ? { opacity: 0 } : { x: "100%", opacity: 0 }}
+              animate={reduceMotion ? { opacity: 1 } : { x: 0, opacity: 1 }}
+              exit={reduceMotion ? { opacity: 0 } : { x: "100%", opacity: 0 }}
               transition={{ duration: 0.28, ease: 'easeOut' }}
             >
               <div className="mobile-menu-head">
-                <h2 className="mobile-menu-title" id="menu-title">Menu</h2>
+                <h2 className="mobile-menu-title" id="menu-heading">Menu</h2>
                 <button type="button" className="mobile-menu-close" aria-label="Close menu" onClick={closeMenu}>
                   <X size={24} />
                 </button>

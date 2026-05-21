@@ -223,19 +223,6 @@ export default function App() {
   const closeMenu = () => setMenuOpen(false);
 
   useEffect(() => {
-    const desktopQuery = window.matchMedia("(min-width: 768px)");
-    const closeOnDesktop = () => {
-      if (desktopQuery.matches) {
-        setMenuOpen(false);
-      }
-    };
-
-    closeOnDesktop();
-    desktopQuery.addEventListener("change", closeOnDesktop);
-    return () => desktopQuery.removeEventListener("change", closeOnDesktop);
-  }, []);
-
-  useEffect(() => {
     if (!menuOpen) return;
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";

@@ -41,8 +41,8 @@ export function useDarkMode() {
         const animated = await runDarkModeAnimation(toggleEl ?? null);
         if (!animated) applyTheme('dark');
       } else {
-        runLightModeAnimation();
-        applyTheme('light');
+        const animated = await runLightModeAnimation(toggleEl ?? null);
+        if (!animated) applyTheme('light');
       }
 
       try {

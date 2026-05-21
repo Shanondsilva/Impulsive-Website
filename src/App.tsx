@@ -89,27 +89,12 @@ const recoveryGames: RecoveryGame[] = [
   },
 ];
 
-const SECTION_NAV = [
-  { id: 'top',           label: 'Home' },
-  { id: 'urge-loop',     label: 'When it starts' },
-  { id: 'first-week',    label: 'First 7 days' },
-  { id: 'paths',         label: 'Paths' },
-  { id: 'games',         label: 'Games' },
-  { id: 'progression',   label: 'Progression' },
-  { id: 'tiers',         label: 'Tiers' },
-  { id: 'principles',    label: 'Principles' },
-  { id: 'about',         label: 'About' },
-  { id: 'waitlist',      label: 'Waitlist' },
-] as const;
-
-
 export default function App() {
   const reduceMotion = useReducedMotion();
   const [menuOpen, setMenuOpen] = useState(false);
   const [flippedCards, setFlippedCards] = useState<Set<string>>(new Set());
   const [selectedGameIndex, setSelectedGameIndex] = useState(0);
   const [isScrolled, setIsScrolled] = useState(false);
-  const [activeSectionId, setActiveSectionId] = useState<string>('top');
   const [formStatus, setFormStatus] = useState<{ message: string; type: 'success' | 'error' | 'info' | '' }>({ message: '', type: '' });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [activeWeekCard, setActiveWeekCard] = useState(0);
@@ -234,24 +219,6 @@ export default function App() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  useEffect(() => {
-    const ids = SECTION_NAV.map(s => s.id);
-    const updateActive = () => {
-      const threshold = window.innerHeight * 0.4;
-      let current = ids[0];
-      for (const id of ids) {
-        const el = document.getElementById(id);
-        if (el && el.getBoundingClientRect().top <= threshold) {
-          current = id;
-        }
-      }
-      setActiveSectionId(current);
-    };
-    window.addEventListener('scroll', updateActive, { passive: true });
-    updateActive();
-    return () => window.removeEventListener('scroll', updateActive);
-  }, []);
-
   const handleMenuToggle = () => setMenuOpen(!menuOpen);
   const closeMenu = () => setMenuOpen(false);
 
@@ -364,18 +331,18 @@ export default function App() {
 
       <header className={`site-header ${isScrolled ? "is-scrolled" : ""}`} data-header>
         <nav className="nav" aria-label="Primary navigation">
-          <a className="wordmark" href="#top" aria-label="Impulsive home">
-            <img src="/images/icons/impulsive-logo-transparent-clean.png" alt="Impulsive logo" />
-            <span>Impulsive</span>
-          </a>
-          <div className="nav-right">
-            <div className="nav-menu" id="primary-menu" ref={navMenuRef}>
-              <div className="nav-links nav-links--desktop" aria-label="Primary site links">
-                <a href="#urge-loop" onClick={closeMenu}>How it works</a>
-                <a href="#principles" onClick={closeMenu}>Principles</a>
-                <a href="#waitlist" onClick={closeMenu}>Waitlist</a>
-              </div>
+          <div className="nav-left">
+            <a className="wordmark" href="#top" aria-label="Impulsive home">
+              <img src="/images/icons/impulsive-logo-transparent-clean.png" alt="Impulsive logo" />
+              <span>Impulsive</span>
+            </a>
+            <div className="nav-links nav-links--desktop" aria-label="Primary site links">
+              <a href="#principles" onClick={closeMenu}>Principles</a>
+              <a href="#faq" onClick={closeMenu}>FAQs</a>
             </div>
+          </div>
+          <div className="nav-right">
+            <div className="nav-menu" id="primary-menu" ref={navMenuRef}></div>
             <a className="button button-small header-cta" href="#waitlist" onClick={closeMenu}>Join Waitlist</a>
             <button
               ref={themeToggleRef}
@@ -424,23 +391,42 @@ export default function App() {
               id="mobile-menu-panel"
               role="dialog"
               aria-modal="true"
-              aria-label="Mobile menu"
+              aria-labelledby="menu-title"
               className="mobile-menu-panel"
-              initial={reduceMotion ? false : { y: -24, opacity: 0 }}
-              animate={reduceMotion ? undefined : { y: 0, opacity: 1 }}
-              exit={reduceMotion ? undefined : { y: -24, opacity: 0 }}
-              transition={{ duration: 0.25, ease: 'easeOut' }}
+              initial={reduceMotion ? false : { x: 36, opacity: 0 }}
+              animate={reduceMotion ? undefined : { x: 0, opacity: 1 }}
+              exit={reduceMotion ? undefined : { x: 36, opacity: 0 }}
+              transition={{ duration: 0.28, ease: 'easeOut' }}
             >
               <div className="mobile-menu-head">
-                <span className="mobile-menu-title">Menu</span>
+                <h2 className="mobile-menu-title" id="menu-title">Menu</h2>
                 <button type="button" className="mobile-menu-close" aria-label="Close menu" onClick={closeMenu}>
                   <X size={24} />
                 </button>
               </div>
-              <div className="mobile-menu-links" aria-label="Menu links">
-                <a href="#urge-loop" onClick={closeMenu}>How it works</a>
-                <a href="#principles" onClick={closeMenu}>Principles</a>
-                <a href="#waitlist" onClick={closeMenu}>Waitlist</a>
+              <div className="mobile-menu-group">
+                <h3>How It Works</h3>
+                <div className="mobile-menu-links" aria-label="How it works links">
+                  <a href="#urge-loop" onClick={closeMenu}>Recovery Loop</a>
+                  <a href="#first-week" onClick={closeMenu}>First 7 Days</a>
+                  <a href="#paths" onClick={closeMenu}>Guided Path Map</a>
+                  <a href="#games" onClick={closeMenu}>Recovery Games</a>
+                  <a href="#progression" onClick={closeMenu}>Progression</a>
+                </div>
+              </div>
+              <div className="mobile-menu-group">
+                <h3>The Product</h3>
+                <div className="mobile-menu-links" aria-label="Product links">
+                  <a href="#principles" onClick={closeMenu}>Principles</a>
+                  <a href="#tiers" onClick={closeMenu}>Free vs Paid Tiers</a>
+                  <a href="#about" onClick={closeMenu}>About</a>
+                </div>
+              </div>
+              <div className="mobile-menu-group">
+                <h3>Get Started</h3>
+                <div className="mobile-menu-links" aria-label="Get started links">
+                  <a href="#faq" onClick={closeMenu}>FAQs</a>
+                </div>
               </div>
               <a className="button mobile-menu-cta" href="#waitlist" onClick={closeMenu}>Join Waitlist</a>
             </motion.div>
@@ -544,29 +530,35 @@ export default function App() {
             </RevealOnScroll>
 
             <motion.div className="urge-loop-grid" aria-label="What happens when Impulsive steps in" initial={reduceMotion ? false : 'hidden'} whileInView={reduceMotion ? undefined : 'visible'} viewport={{ once: true, amount: 0.15 }} variants={{ visible: { transition: { staggerChildren: 0.08 } } }}>
-              <motion.article className="urge-loop-card" style={{ "--loop-color": "#D0C3F1" } as React.CSSProperties} variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.8, ease: revealEase }}>
-                <span className="loop-marker" aria-hidden="true">01</span>
-                <div>
-                  <h3>Notice</h3>
-                  <p>Spot the time, place, emotion, app, or routine that usually starts the loop.</p>
-                </div>
-              </motion.article>
+              <motion.div className="loop-glow-wrap" style={{ "--loop-color": "#D0C3F1" } as React.CSSProperties} variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.8, ease: revealEase }}>
+                <article className="urge-loop-card">
+                  <span className="loop-marker" aria-hidden="true">01</span>
+                  <div>
+                    <h3>Notice</h3>
+                    <p>Spot the time, place, emotion, app, or routine that usually starts the loop.</p>
+                  </div>
+                </article>
+              </motion.div>
 
-              <motion.article className="urge-loop-card" style={{ "--loop-color": "#BDE0FE" } as React.CSSProperties} variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.8, ease: revealEase }}>
-                <span className="loop-marker" aria-hidden="true">02</span>
-                <div>
-                  <h3>Interrupt</h3>
-                  <p>Get one clear recovery action before autopilot takes over.</p>
-                </div>
-              </motion.article>
+              <motion.div className="loop-glow-wrap" style={{ "--loop-color": "#BDE0FE" } as React.CSSProperties} variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.8, ease: revealEase }}>
+                <article className="urge-loop-card">
+                  <span className="loop-marker" aria-hidden="true">02</span>
+                  <div>
+                    <h3>Interrupt</h3>
+                    <p>Get one clear recovery action before autopilot takes over.</p>
+                  </div>
+                </article>
+              </motion.div>
 
-              <motion.article className="urge-loop-card" style={{ "--loop-color": "#FEF1AB" } as React.CSSProperties} variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.8, ease: revealEase }}>
-                <span className="loop-marker" aria-hidden="true">03</span>
-                <div>
-                  <h3>Reduce</h3>
-                  <p>Save what helped and slowly weaken the pattern over time.</p>
-                </div>
-              </motion.article>
+              <motion.div className="loop-glow-wrap" style={{ "--loop-color": "#FEF1AB" } as React.CSSProperties} variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.8, ease: revealEase }}>
+                <article className="urge-loop-card">
+                  <span className="loop-marker" aria-hidden="true">03</span>
+                  <div>
+                    <h3>Reduce</h3>
+                    <p>Save what helped and slowly weaken the pattern over time.</p>
+                  </div>
+                </article>
+              </motion.div>
             </motion.div>
           </div>
         </section>
@@ -1211,20 +1203,6 @@ export default function App() {
         </div>
       </footer>
 
-      <nav className="section-nav" aria-label="Page sections">
-        {SECTION_NAV.map(({ id, label }) => (
-          <a
-            key={id}
-            href={`#${id}`}
-            className={`section-nav-item${activeSectionId === id ? ' is-active' : ''}`}
-            aria-label={`Go to ${label}`}
-            aria-current={activeSectionId === id ? 'true' : undefined}
-          >
-            <span className="section-nav-label" aria-hidden="true">{label}</span>
-            <span className="section-nav-dot" aria-hidden="true" />
-          </a>
-        ))}
-      </nav>
     </div>
   );
 }

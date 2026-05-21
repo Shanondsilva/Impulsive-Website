@@ -1,6 +1,8 @@
-import React, { useEffect, useState, useRef, type KeyboardEvent } from 'react';
+import React, { useEffect, useMemo, useState, useRef, type KeyboardEvent } from 'react';
 import { Moon, Sun } from 'lucide-react';
+import { motion, useMotionValueEvent, useReducedMotion, useScroll, useTransform } from 'framer-motion';
 import { ReflexOverrideGame } from './components/ReflexOverrideGame';
+import { RevealOnScroll } from './components/RevealOnScroll';
 import { useDarkMode } from './hooks/useDarkMode';
 
 type RecoveryGame = {
@@ -102,6 +104,7 @@ const SECTION_NAV = [
 
 
 export default function App() {
+  const reduceMotion = useReducedMotion();
   const [menuOpen, setMenuOpen] = useState(false);
   const [flippedCards, setFlippedCards] = useState<Set<string>>(new Set());
   const [selectedGameIndex, setSelectedGameIndex] = useState(0);
@@ -109,10 +112,15 @@ export default function App() {
   const [activeSectionId, setActiveSectionId] = useState<string>('top');
   const [formStatus, setFormStatus] = useState<{ message: string; type: 'success' | 'error' | 'info' | '' }>({ message: '', type: '' });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [activeWeekCard, setActiveWeekCard] = useState(0);
   const [startedAt] = useState(Date.now().toString());
   const navMenuRef = useRef<HTMLDivElement>(null);
   const menuToggleRef = useRef<HTMLButtonElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
+  const heroRef = useRef<HTMLElement>(null);
+  const heroPhoneRef = useRef<HTMLDivElement>(null);
+  const firstWeekRef = useRef<HTMLElement>(null);
+  const reflexSectionRef = useRef<HTMLElement>(null);
   const themeToggleRef = useRef<HTMLButtonElement>(null);
   const { theme, toggle } = useDarkMode();
   const selectedGame = recoveryGames[selectedGameIndex];
@@ -139,47 +147,46 @@ export default function App() {
     }
   };
 
+  const { scrollYProgress: heroProgress } = useScroll({
+    target: heroRef,
+    offset: ['start start', 'end start'],
+  });
+  const heroPhoneScale = useTransform(heroProgress, [0, 1], [1, 0.92]);
+  const heroPhoneY = useTransform(heroProgress, [0, 1], [0, -40]);
+  const heroPhoneOpacity = useTransform(heroProgress, [0, 0.7, 1], [1, 1, 0.85]);
+  const heroTextY = useTransform(heroProgress, [0, 1], [0, -20]);
+  const heroParallaxY = useTransform(heroProgress, [0, 1], [0, -60]);
+
+  const { scrollYProgress: firstWeekProgress } = useScroll({
+    target: firstWeekRef,
+    offset: ['start start', 'end end'],
+  });
+
+  const { scrollYProgress: reflexProgress } = useScroll({
+    target: reflexSectionRef,
+    offset: ['start start', 'end start'],
+  });
+  const reflexPhoneY = useTransform(reflexProgress, [0, 1], [0, -60]);
+
+  const activeWeekIndex = useTransform(firstWeekProgress, (value) => {
+    if (value < 0.2) return 0;
+    if (value < 0.4) return 1;
+    if (value < 0.6) return 2;
+    if (value < 0.8) return 3;
+    return 4;
+  });
+  useMotionValueEvent(activeWeekIndex, 'change', (latest) => {
+    setActiveWeekCard(Math.round(latest));
+  });
+
+  const revealEase = useMemo(() => [0.22, 1, 0.36, 1] as const, []);
+
   useEffect(() => {
-    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    // Scroll handler
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 8);
-    };
-    window.addEventListener('scroll', handleScroll, { passive: true });
-
-    // Intersection Observer for reveals
-    const reveals = document.querySelectorAll<HTMLElement>(".reveal");
-    if (!reducedMotion) {
-      document.querySelectorAll<HTMLElement>(".urge-loop-card.reveal").forEach((item, index) => {
-        item.style.transitionDelay = `${index * 50}ms`;
-      });
-      document.querySelectorAll<HTMLElement>(".path-card.reveal").forEach((item, index) => {
-        item.style.transitionDelay = `${index * 80}ms`;
-      });
-      document.querySelectorAll<HTMLElement>(".tier-card.reveal, .faq-item.reveal").forEach((item, index) => {
-        item.style.transitionDelay = `${index * 50}ms`;
-      });
-    }
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("is-visible");
-            observer.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.15 }
-    );
-    reveals.forEach((item) => observer.observe(item));
-
-    // Recovery loop badge count-up
     const loopSection = document.getElementById("urge-loop");
     const loopBadges = Array.from(document.querySelectorAll<HTMLElement>(".loop-marker"));
     let countAnimated = false;
     const runLoopCount = () => {
-      if (countAnimated || reducedMotion || loopBadges.length === 0) return;
+      if (countAnimated || reduceMotion || loopBadges.length === 0) return;
       countAnimated = true;
       loopBadges.forEach((badge) => {
         const target = Number.parseInt(badge.textContent || "0", 10) || 0;
@@ -208,10 +215,23 @@ export default function App() {
 
     // Cleanup
     return () => {
-      window.removeEventListener('scroll', handleScroll);
-      observer.disconnect();
       loopObserver?.disconnect();
     };
+  }, [reduceMotion]);
+
+  useEffect(() => {
+    let ticking = false;
+    const onScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      window.requestAnimationFrame(() => {
+        setIsScrolled(window.scrollY > 80);
+        ticking = false;
+      });
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+    return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
   useEffect(() => {
@@ -393,7 +413,7 @@ export default function App() {
       </header>
 
       <main id="main">
-        <section className="hero section" id="top" aria-labelledby="hero-title">
+        <section className="hero section" id="top" aria-labelledby="hero-title" ref={heroRef}>
           <div className="hero-bg" aria-hidden="true">
             <span className="shape shape-lilac"></span>
             <span className="shape shape-blue"></span>
@@ -402,15 +422,23 @@ export default function App() {
           </div>
 
           <div className="container hero-grid">
-            <div className="hero-copy reveal">
-              <p className="eyebrow">Privacy-first behaviour change</p>
+            <motion.div className="hero-copy" style={reduceMotion ? undefined : { y: heroTextY }}>
+              <motion.p className="eyebrow" initial={reduceMotion ? false : { opacity: 0, y: 20 }} animate={reduceMotion ? undefined : { opacity: 1, y: 0 }} transition={{ delay: 0.68, duration: 0.5, ease: revealEase }}>Privacy-first behaviour change</motion.p>
               <h1 id="hero-title" aria-label={heroHeadline}>
                 {heroHeadline.split(" ").map((word, index) => (
-                  <span key={`${word}-${index}`} className="hero-word">{word}&nbsp;</span>
+                  <motion.span
+                    key={`${word}-${index}`}
+                    className="hero-word"
+                    initial={reduceMotion ? false : { opacity: 0, y: 20 }}
+                    animate={reduceMotion ? undefined : { opacity: 1, y: 0 }}
+                    transition={{ delay: index * 0.04, duration: 0.5, ease: revealEase }}
+                  >
+                    {word}&nbsp;
+                  </motion.span>
                 ))}
               </h1>
-              <p className="hero-subhead">Impulsive helps you slow the loop before it becomes automatic. It notices risky moments, gives one clear recovery action, and saves what helped so your pattern can get weaker over time.</p>
-              <div className="hero-actions hero-actions-animate" aria-label="Hero actions">
+              <motion.p className="hero-subhead" initial={reduceMotion ? false : { opacity: 0, y: 20 }} animate={reduceMotion ? undefined : { opacity: 1, y: 0 }} transition={{ delay: 0.88, duration: 0.5, ease: revealEase }}>Impulsive helps you slow the loop before it becomes automatic. It notices risky moments, gives one clear recovery action, and saves what helped so your pattern can get weaker over time.</motion.p>
+              <div className="hero-actions" aria-label="Hero actions">
                 <a className="button" href="#waitlist">Join the waitlist</a>
                 <a className="button button-secondary" href="#urge-loop">See how it works</a>
               </div>
@@ -418,10 +446,10 @@ export default function App() {
                 <li>Built in London</li>
                 <li>Early beta</li>
               </ul>
-            </div>
+            </motion.div>
 
-            <div className="hero-visual reveal" aria-label="Impulsive app preview">
-              <div className="phone" role="img" aria-label="Phone mockup showing a private recovery flow with trigger detection, path choices, and a short game prompt.">
+            <motion.div className="hero-visual" aria-label="Impulsive app preview" style={reduceMotion ? undefined : { y: heroParallaxY }}>
+              <motion.div className="phone" role="img" aria-label="Phone mockup showing a private recovery flow with trigger detection, path choices, and a short game prompt." ref={heroPhoneRef} style={reduceMotion ? undefined : { scale: heroPhoneScale, y: heroPhoneY, opacity: heroPhoneOpacity }}>
                 <div className="phone-speaker" aria-hidden="true"></div>
                 <div className="app-screen">
                   <div className="app-topbar">
@@ -466,112 +494,112 @@ export default function App() {
                     <p className="phone-game-desc">60-second challenge to interrupt autopilot</p>
                   </div>
                 </div>
-              </div>
-            </div>
+              </motion.div>
+            </motion.div>
           </div>
         </section>
 
                 <section className="section urge-loop-section" id="urge-loop" aria-labelledby="urge-loop-title">
           <div className="container">
-            <div className="section-heading urge-loop-heading reveal">
+            <RevealOnScroll className="section-heading urge-loop-heading">
               <p className="eyebrow">Recovery loop</p>
               <h2 id="urge-loop-title">Notice, interrupt, reduce.</h2>
               <p>Impulsive is built for the moment a difficult habit starts to move faster than motivation.</p>
-            </div>
+            </RevealOnScroll>
 
-            <div className="urge-loop-grid" aria-label="What happens when Impulsive steps in">
-              <article className="urge-loop-card reveal" style={{ "--loop-color": "#D0C3F1" } as React.CSSProperties}>
+            <motion.div className="urge-loop-grid" aria-label="What happens when Impulsive steps in" initial={reduceMotion ? false : 'hidden'} whileInView={reduceMotion ? undefined : 'visible'} viewport={{ once: true, margin: '-15%' }} variants={{ visible: { transition: { staggerChildren: 0.08 } } }}>
+              <motion.article className="urge-loop-card" style={{ "--loop-color": "#D0C3F1" } as React.CSSProperties} variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.8, ease: revealEase }}>
                 <span className="loop-marker" aria-hidden="true">01</span>
                 <div>
                   <h3>Notice</h3>
                   <p>Spot the time, place, emotion, app, or routine that usually starts the loop.</p>
                 </div>
-              </article>
+              </motion.article>
 
-              <article className="urge-loop-card reveal" style={{ "--loop-color": "#BDE0FE" } as React.CSSProperties}>
+              <motion.article className="urge-loop-card" style={{ "--loop-color": "#BDE0FE" } as React.CSSProperties} variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.8, ease: revealEase }}>
                 <span className="loop-marker" aria-hidden="true">02</span>
                 <div>
                   <h3>Interrupt</h3>
                   <p>Get one clear recovery action before autopilot takes over.</p>
                 </div>
-              </article>
+              </motion.article>
 
-              <article className="urge-loop-card reveal" style={{ "--loop-color": "#FEF1AB" } as React.CSSProperties}>
+              <motion.article className="urge-loop-card" style={{ "--loop-color": "#FEF1AB" } as React.CSSProperties} variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.8, ease: revealEase }}>
                 <span className="loop-marker" aria-hidden="true">03</span>
                 <div>
                   <h3>Reduce</h3>
                   <p>Save what helped and slowly weaken the pattern over time.</p>
                 </div>
-              </article>
-            </div>
+              </motion.article>
+            </motion.div>
           </div>
         </section>
 
-        <section className="section first-week-section" id="first-week" aria-labelledby="first-week-title">
+        <section className="section first-week-section" id="first-week" aria-labelledby="first-week-title" ref={firstWeekRef}>
           <div className="container first-week-grid">
-            <div className="first-week-intro reveal">
+            <RevealOnScroll className="first-week-intro">
               <p className="eyebrow">First 7 days</p>
               <h2 id="first-week-title">Your first 7 days with Impulsive</h2>
               <p>Impulsive does not throw every feature at you on day one. It starts with one clear recovery path, learns what helps, then unlocks stronger support when your pattern becomes clearer.</p>
-            </div>
+            </RevealOnScroll>
 
-            <ol className="first-week-timeline" aria-label="Impulsive first week onboarding steps">
-              <li className="first-week-step reveal" style={{ "--week-color": "var(--mind-color)" } as React.CSSProperties}>
+            <motion.ol className="first-week-timeline" aria-label="Impulsive first week onboarding steps" initial={reduceMotion ? false : 'hidden'} whileInView={reduceMotion ? undefined : 'visible'} viewport={{ once: true, margin: '-15%' }} variants={{ visible: { transition: { staggerChildren: 0.1 } } }}>
+              <motion.li className={`first-week-step${activeWeekCard === 0 ? ' is-active' : ''}`} style={{ "--week-color": "var(--mind-color)" } as React.CSSProperties} variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0 } }} animate={reduceMotion ? undefined : { scale: activeWeekCard === 0 ? 1.02 : 1 }}>
                 <span className="week-dot" aria-hidden="true">1</span>
                 <div>
                   <p className="week-label">Day 1</p>
                   <h3>Set your pattern</h3>
                   <p>Choose what you want to reduce, when triggers usually happen, and why it matters to you.</p>
                 </div>
-              </li>
+              </motion.li>
 
-              <li className="first-week-step reveal" style={{ "--week-color": "var(--mind-color)" } as React.CSSProperties}>
+              <motion.li className={`first-week-step${activeWeekCard === 1 ? ' is-active' : ''}`} style={{ "--week-color": "var(--mind-color)" } as React.CSSProperties} variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0 } }} animate={reduceMotion ? undefined : { scale: activeWeekCard === 1 ? 1.02 : 1 }}>
                 <span className="week-dot" aria-hidden="true">2</span>
                 <div>
                   <p className="week-label">Days 1-2</p>
                   <h3>Start with Mind Core</h3>
                   <p>Impulsive begins with the simplest low-friction reset: pause, name the urge, and choose one better action.</p>
                 </div>
-              </li>
+              </motion.li>
 
-              <li className="first-week-step reveal" style={{ "--week-color": "var(--body-color)" } as React.CSSProperties}>
+              <motion.li className={`first-week-step${activeWeekCard === 2 ? ' is-active' : ''}`} style={{ "--week-color": "var(--body-color)" } as React.CSSProperties} variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0 } }} animate={reduceMotion ? undefined : { scale: activeWeekCard === 2 ? 1.02 : 1 }}>
                 <span className="week-dot" aria-hidden="true">3</span>
                 <div>
                   <p className="week-label">Days 3-4</p>
                   <h3>Build your first recovery proof</h3>
                   <p>Basic tapering, short recovery actions, and game rotation help you see what actually interrupts the loop.</p>
                 </div>
-              </li>
+              </motion.li>
 
-              <li className="first-week-step reveal" style={{ "--week-color": "var(--soul-color)" } as React.CSSProperties}>
+              <motion.li className={`first-week-step${activeWeekCard === 3 ? ' is-active' : ''}`} style={{ "--week-color": "var(--soul-color)" } as React.CSSProperties} variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0 } }} animate={reduceMotion ? undefined : { scale: activeWeekCard === 3 ? 1.02 : 1 }}>
                 <span className="week-dot" aria-hidden="true">4</span>
                 <div>
                   <p className="week-label">Day 5</p>
                   <h3>Preview the Path Map</h3>
                   <p>Body and Soul become visible as future support options, but they are not forced on you.</p>
                 </div>
-              </li>
+              </motion.li>
 
-              <li className="first-week-step reveal" style={{ "--week-color": "var(--focus-color)" } as React.CSSProperties}>
+              <motion.li className={`first-week-step${activeWeekCard === 4 ? ' is-active' : ''}`} style={{ "--week-color": "var(--focus-color)" } as React.CSSProperties} variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0 } }} animate={reduceMotion ? undefined : { scale: activeWeekCard === 4 ? 1.02 : 1 }}>
                 <span className="week-dot" aria-hidden="true">5</span>
                 <div>
                   <p className="week-label">Day 6+</p>
                   <h3>Choose your next strength level</h3>
                   <p>Stay free or explore stronger tools when you are in a calm progress moment.</p>
                 </div>
-              </li>
-            </ol>
+              </motion.li>
+            </motion.ol>
           </div>
         </section>
 
         <section className="section paths-section" id="paths" aria-labelledby="paths-title">
           <div className="container">
-            <div className="section-heading reveal">
+            <RevealOnScroll className="section-heading">
               <p className="eyebrow">Guided path map</p>
               <h2 id="paths-title">Four ways Impulsive supports the recovery loop</h2>
               <p>Impulsive starts with Mind first, then unlocks stronger support through movement, reflection, focus tools, and adaptive routing.</p>
-            </div>
-            <div className="path-cards">
+            </RevealOnScroll>
+            <motion.div className="path-cards" initial={reduceMotion ? false : 'hidden'} whileInView={reduceMotion ? undefined : 'visible'} viewport={{ once: true, margin: '-15%' }} variants={{ visible: { transition: { staggerChildren: 0.08 } } }}>
               <div
                 className={`path-card-wrapper${flippedCards.has("mind") ? " is-flipped" : ""}`}
                 role="button"
@@ -581,7 +609,7 @@ export default function App() {
                 onClick={() => togglePathFlip("mind")}
                 onKeyDown={(event) => handlePathKeyDown(event, "mind")}
               >
-                <article className="path-card psychology card-front reveal">
+                <motion.article className="path-card psychology card-front" variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0 } }}>
                   <div className="card-topline">
                     <span className="soft-icon symbol-icon" aria-hidden="true" data-fallable="">&#10022;</span>
                     <span className="status-pill">Starts first</span>
@@ -597,7 +625,7 @@ export default function App() {
                     <span>How it works</span>
                     <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 12h18M13 5l7 7-7 7" /></svg>
                   </span>
-                </article>
+                </motion.article>
 
                 <article className="path-card psychology card-back" aria-hidden={!flippedCards.has("mind")}>
                   <div className="card-topline">
@@ -628,7 +656,7 @@ export default function App() {
                 onClick={() => togglePathFlip("body")}
                 onKeyDown={(event) => handlePathKeyDown(event, "body")}
               >
-                <article className="path-card physical card-front reveal">
+                <motion.article className="path-card physical card-front" variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0 } }}>
                   <div className="card-topline">
                     <span className="soft-icon image-icon" aria-hidden="true" data-fallable="">
                       <img src="/images/icons/impulsive-body.png" alt="" />
@@ -646,7 +674,7 @@ export default function App() {
                     <span>How it works</span>
                     <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 12h18M13 5l7 7-7 7" /></svg>
                   </span>
-                </article>
+                </motion.article>
 
                 <article className="path-card physical card-back" aria-hidden={!flippedCards.has("body")}>
                   <div className="card-topline">
@@ -679,7 +707,7 @@ export default function App() {
                 onClick={() => togglePathFlip("soul")}
                 onKeyDown={(event) => handlePathKeyDown(event, "soul")}
               >
-                <article className="path-card spiritual card-front reveal">
+                <motion.article className="path-card spiritual card-front" variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0 } }}>
                   <div className="card-topline">
                     <span className="soft-icon image-icon" aria-hidden="true" data-fallable="">
                       <img src="/images/icons/impulsive-soul.png" alt="" />
@@ -697,7 +725,7 @@ export default function App() {
                     <span>How it works</span>
                     <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 12h18M13 5l7 7-7 7" /></svg>
                   </span>
-                </article>
+                </motion.article>
 
                 <article className="path-card spiritual card-back" aria-hidden={!flippedCards.has("soul")}>
                   <div className="card-topline">
@@ -730,7 +758,7 @@ export default function App() {
                 onClick={() => togglePathFlip("nexus")}
                 onKeyDown={(event) => handlePathKeyDown(event, "nexus")}
               >
-                <article className="path-card synchrology card-front reveal">
+                <motion.article className="path-card synchrology card-front" variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0 } }}>
                   <div className="card-topline">
                     <span className="soft-icon image-icon" aria-hidden="true" data-fallable="">
                       <img src="/images/icons/impulsive-nexus.png" alt="" />
@@ -748,7 +776,7 @@ export default function App() {
                     <span>How it will work</span>
                     <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 12h18M13 5l7 7-7 7" /></svg>
                   </span>
-                </article>
+                </motion.article>
 
                 <article className="path-card synchrology card-back" aria-hidden={!flippedCards.has("nexus")}>
                   <div className="card-topline">
@@ -772,13 +800,13 @@ export default function App() {
                   </span>
                 </article>
               </div>
-            </div>
+            </motion.div>
           </div>
         </section>
 
-        <section className="section recovery-games-section" id="games" aria-labelledby="recovery-games-title">
+        <section className="section recovery-games-section" id="games" aria-labelledby="recovery-games-title" ref={reflexSectionRef}>
           <div className="container">
-            <div className="section-heading recovery-games-heading reveal">
+            <RevealOnScroll className="section-heading recovery-games-heading">
               <p className="eyebrow">RECOVERY GAMES</p>
               <h2 id="recovery-games-title">Recovery games that interrupt the loop</h2>
               <p>When advice is not enough, Impulsive gives the brain a short, recordable challenge. The goal is not endless play. The goal is to break autopilot, create a visible win, and return safely.</p>
@@ -789,11 +817,11 @@ export default function App() {
                 <span aria-hidden="true">→</span>
                 <span>Walk Away saves the win</span>
               </div>
-            </div>
+            </RevealOnScroll>
 
-            <p className="game-context-note reveal">Reflex Override is the first recovery game. Impulsive is designed with 9 short interruption games in total.</p>
+            <RevealOnScroll className="game-context-note">Reflex Override is the first recovery game. Impulsive is designed with 9 short interruption games in total.</RevealOnScroll>
 
-            <article className="featured-game-card reveal" style={{ "--game-color": selectedGame.accent } as React.CSSProperties}>
+            <RevealOnScroll className="featured-game-card" style={{ "--game-color": selectedGame.accent } as React.CSSProperties}>
               <div className="featured-game-copy">
                 <span className="game-kicker">{selectedGameIndex === 0 ? "Featured first build" : "Selected recovery tool"}</span>
                 <h3>{selectedGame.name}</h3>
@@ -815,7 +843,7 @@ export default function App() {
                 </dl>
                 <button className="game-save-button" type="button">Walk Away to save</button>
               </div>
-              <div className="featured-game-visual">
+              <motion.div className="featured-game-visual" style={reduceMotion ? undefined : { y: reflexPhoneY }}>
                 {selectedGameIndex === 0 ? (
                   <ReflexOverrideGame />
                 ) : (
@@ -836,18 +864,18 @@ export default function App() {
                     <div className="safe-exit-chip">Walk Away to save</div>
                   </>
                 )}
-              </div>
-            </article>
+              </motion.div>
+            </RevealOnScroll>
 
           </div>
         </section>
 
         <section className="section unlock-progression-section" id="progression" aria-labelledby="unlock-progression-title">
           <div className="container">
-            <div className="section-heading unlock-progression-heading reveal">
+            <RevealOnScroll className="section-heading unlock-progression-heading">
               <p className="eyebrow">Level-based recovery</p>
               <h2 id="unlock-progression-title">Start tiny. Unlock strength.</h2>
-            </div>
+            </RevealOnScroll>
 
             <ol className="progression-path" aria-label="Impulsive progression path">
 
@@ -885,15 +913,15 @@ export default function App() {
 
         <section className="section tiers-section" id="tiers" aria-labelledby="tiers-title">
           <div className="container">
-            <div className="section-heading tiers-heading">
+            <RevealOnScroll className="section-heading tiers-heading">
               <p className="eyebrow">Product boundaries</p>
               <h2 id="tiers-title">Free help first. Stronger tools later.</h2>
               <p>Impulsive should help first, then offer stronger tools later. Basic recovery support stays available during risky moments. Upgrade choices belong in calm progress moments, not during weakness.</p>
-            </div>
+            </RevealOnScroll>
 
-            <div className="tiers-grid">
+            <motion.div className="tiers-grid" initial={reduceMotion ? false : 'hidden'} whileInView={reduceMotion ? undefined : 'visible'} viewport={{ once: true, margin: '-15%' }} variants={{ visible: { transition: { staggerChildren: 0.06 } } }}>
 
-              <article className="tier-card tier-card--free" style={{ "--tier-color": "var(--mind-color)" } as React.CSSProperties}>
+              <motion.article className="tier-card tier-card--free" style={{ "--tier-color": "var(--mind-color)" } as React.CSSProperties} variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0 } }}>
                 <div className="tier-card-top">
                   <span className="tier-badge">Free</span>
                   <span className="tier-name">Impulsive Core</span>
@@ -903,9 +931,9 @@ export default function App() {
                   <span className="tier-position-label">What it gives you</span>
                   <p>Enough to understand the app, build trust, and start interrupting the loop.</p>
                 </div>
-              </article>
+              </motion.article>
 
-              <article className="tier-card tier-card--invite" style={{ "--tier-color": "var(--brand-glow)" } as React.CSSProperties}>
+              <motion.article className="tier-card tier-card--invite" style={{ "--tier-color": "var(--brand-glow)" } as React.CSSProperties} variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0 } }}>
                 <div className="tier-card-top">
                   <span className="tier-badge tier-badge--invite">Invite &amp; Unlock</span>
                 </div>
@@ -914,9 +942,9 @@ export default function App() {
                   <span className="tier-position-label">What it gives you</span>
                   <p>A fair route for users who cannot pay but can help others discover the app.</p>
                 </div>
-              </article>
+              </motion.article>
 
-              <article className="tier-card tier-card--plus" style={{ "--tier-color": "var(--focus-color)" } as React.CSSProperties}>
+              <motion.article className="tier-card tier-card--plus" style={{ "--tier-color": "var(--focus-color)" } as React.CSSProperties} variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0 } }}>
                 <div className="tier-card-top">
                   <span className="tier-badge tier-badge--plus">One-time Plus</span>
                 </div>
@@ -925,9 +953,9 @@ export default function App() {
                   <span className="tier-position-label">What it gives you</span>
                   <p>A permanent stronger toolbox, not a subscription trap.</p>
                 </div>
-              </article>
+              </motion.article>
 
-              <article className="tier-card tier-card--cloud" style={{ "--tier-color": "var(--body-color)" } as React.CSSProperties}>
+              <motion.article className="tier-card tier-card--cloud" style={{ "--tier-color": "var(--body-color)" } as React.CSSProperties} variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0 } }}>
                 <div className="tier-card-top">
                   <span className="tier-badge tier-badge--cloud">Later: Cloud</span>
                 </div>
@@ -936,9 +964,9 @@ export default function App() {
                   <span className="tier-position-label">What it gives you</span>
                   <p>Future optional infrastructure, not the launch promise.</p>
                 </div>
-              </article>
+              </motion.article>
 
-            </div>
+            </motion.div>
 
             <div className="tiers-rule-panel">
               <span className="tiers-rule-icon" aria-hidden="true">
@@ -953,18 +981,18 @@ export default function App() {
         </section>
 
         <section className="section problem-section" aria-labelledby="problem-title">
-          <div className="container split-panel reveal">
+          <RevealOnScroll className="container split-panel">
             <div>
               <p className="eyebrow">The problem</p>
               <h2 id="problem-title">Most habit apps make one slip feel like failure.</h2>
             </div>
             <p>Many tools ask you to stay strong after the loop is already moving. Impulsive is designed to help earlier, when one clear action can still change the next step.</p>
-          </div>
+          </RevealOnScroll>
         </section>
 
 
         <section className="section credibility-dual-section" id="principles" aria-labelledby="principles-title">
-          <div className="container reveal">
+          <RevealOnScroll className="container">
             <div className="credibility-dual-card">
               <article className="credibility-pane credibility-pane--principles" aria-labelledby="principles-title">
                 <p className="eyebrow"><strong>PRINCIPLES</strong></p>
@@ -1003,16 +1031,16 @@ export default function App() {
                 </div>
               </article>
             </div>
-          </div>
+          </RevealOnScroll>
         </section>
 
         <section className="section faq-section" id="faq" aria-labelledby="faq-title">
           <div className="container">
-            <div className="section-heading reveal">
+            <RevealOnScroll className="section-heading">
               <p className="eyebrow">FAQ</p>
               <h2 id="faq-title">Questions before you join.</h2>
               <p className="faq-intro">Impulsive is built for private, difficult habit loops, so the answers should be clear before anyone signs up.</p>
-            </div>
+            </RevealOnScroll>
             <div className="faq-list">
               <details className="faq-item">
                 <summary>What does Impulsive actually do?</summary>
@@ -1035,7 +1063,7 @@ export default function App() {
         </section>
 
         <section className="section waitlist-section" id="waitlist" aria-labelledby="waitlist-title">
-          <div className="container waitlist-card reveal">
+          <RevealOnScroll className="container waitlist-card">
             <div>
               <p className="eyebrow">Waitlist</p>
               <h2 id="waitlist-title">Join the Impulsive waitlist.</h2>
@@ -1068,7 +1096,7 @@ export default function App() {
               )}
               <p className="waitlist-privacy-note">Your email is only used for Impulsive updates. Want to leave the waitlist? Email <a href="mailto:hello@useimpulsive.com">hello@useimpulsive.com</a>.</p>
             </form>
-          </div>
+          </RevealOnScroll>
         </section>
       </main>
 

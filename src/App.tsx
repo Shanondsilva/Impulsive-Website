@@ -223,6 +223,19 @@ export default function App() {
   const closeMenu = () => setMenuOpen(false);
 
   useEffect(() => {
+    const desktopQuery = window.matchMedia("(min-width: 768px)");
+    const closeOnDesktop = () => {
+      if (desktopQuery.matches) {
+        setMenuOpen(false);
+      }
+    };
+
+    closeOnDesktop();
+    desktopQuery.addEventListener("change", closeOnDesktop);
+    return () => desktopQuery.removeEventListener("change", closeOnDesktop);
+  }, []);
+
+  useEffect(() => {
     if (!menuOpen) return;
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
@@ -394,9 +407,9 @@ export default function App() {
               aria-modal="true"
               aria-labelledby="menu-title"
               className="mobile-menu-panel"
-              initial={reduceMotion ? false : { y: -12, opacity: 0 }}
-              animate={reduceMotion ? undefined : { y: 0, opacity: 1 }}
-              exit={reduceMotion ? undefined : { y: -12, opacity: 0 }}
+              initial={reduceMotion ? false : { x: "100%", opacity: 0 }}
+              animate={reduceMotion ? undefined : { x: 0, opacity: 1 }}
+              exit={reduceMotion ? undefined : { x: "100%", opacity: 0 }}
               transition={{ duration: 0.28, ease: 'easeOut' }}
             >
               <div className="mobile-menu-head">

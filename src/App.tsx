@@ -116,6 +116,7 @@ export default function App() {
   const themeToggleRef = useRef<HTMLButtonElement>(null);
   const { theme, toggle } = useDarkMode();
   const selectedGame = recoveryGames[selectedGameIndex];
+  const heroHeadline = "Built for habits that do not break with willpower alone.";
 
   const togglePathFlip = (id: string) => {
     setFlippedCards((prev) => {
@@ -139,14 +140,27 @@ export default function App() {
   };
 
   useEffect(() => {
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     // Scroll handler
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 8);
     };
     window.addEventListener('scroll', handleScroll, { passive: true });
-    
+
     // Intersection Observer for reveals
-    const reveals = document.querySelectorAll(".reveal");
+    const reveals = document.querySelectorAll<HTMLElement>(".reveal");
+    if (!reducedMotion) {
+      document.querySelectorAll<HTMLElement>(".urge-loop-card.reveal").forEach((item, index) => {
+        item.style.transitionDelay = `${index * 50}ms`;
+      });
+      document.querySelectorAll<HTMLElement>(".path-card.reveal").forEach((item, index) => {
+        item.style.transitionDelay = `${index * 80}ms`;
+      });
+      document.querySelectorAll<HTMLElement>(".tier-card.reveal, .faq-item.reveal").forEach((item, index) => {
+        item.style.transitionDelay = `${index * 50}ms`;
+      });
+    }
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -156,14 +170,47 @@ export default function App() {
           }
         });
       },
-      { threshold: 0.12 }
+      { threshold: 0.15 }
     );
     reveals.forEach((item) => observer.observe(item));
+
+    // Recovery loop badge count-up
+    const loopSection = document.getElementById("urge-loop");
+    const loopBadges = Array.from(document.querySelectorAll<HTMLElement>(".loop-marker"));
+    let countAnimated = false;
+    const runLoopCount = () => {
+      if (countAnimated || reducedMotion || loopBadges.length === 0) return;
+      countAnimated = true;
+      loopBadges.forEach((badge) => {
+        const target = Number.parseInt(badge.textContent || "0", 10) || 0;
+        let current = 0;
+        const tick = () => {
+          current += 1;
+          badge.textContent = String(current).padStart(2, "0");
+          if (current < target) window.setTimeout(tick, 70);
+        };
+        badge.textContent = "00";
+        window.setTimeout(tick, 80);
+      });
+    };
+    let loopObserver: IntersectionObserver | null = null;
+    if (loopSection) {
+      loopObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) runLoopCount();
+          });
+        },
+        { threshold: 0.3 }
+      );
+      loopObserver.observe(loopSection);
+    }
 
     // Cleanup
     return () => {
       window.removeEventListener('scroll', handleScroll);
       observer.disconnect();
+      loopObserver?.disconnect();
     };
   }, []);
 
@@ -208,6 +255,30 @@ export default function App() {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [menuOpen]);
+
+  useEffect(() => {
+    const detailsEls = Array.from(document.querySelectorAll<HTMLDetailsElement>(".faq-item"));
+    detailsEls.forEach((details, index) => {
+      const summary = details.querySelector("summary");
+      const panel = details.querySelector("p");
+      if (!summary || !panel) return;
+      const panelId = `faq-panel-${index + 1}`;
+      panel.id = panelId;
+      summary.setAttribute("aria-controls", panelId);
+      summary.setAttribute("aria-expanded", details.open ? "true" : "false");
+      const onToggle = () => {
+        summary.setAttribute("aria-expanded", details.open ? "true" : "false");
+      };
+      details.addEventListener("toggle", onToggle);
+      (details as any).__onToggle = onToggle;
+    });
+    return () => {
+      detailsEls.forEach((details) => {
+        const onToggle = (details as any).__onToggle;
+        if (onToggle) details.removeEventListener("toggle", onToggle);
+      });
+    };
+  }, []);
 
   const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -333,9 +404,13 @@ export default function App() {
           <div className="container hero-grid">
             <div className="hero-copy reveal">
               <p className="eyebrow">Privacy-first behaviour change</p>
-              <h1 id="hero-title">Built for habits that do not break with willpower alone.</h1>
+              <h1 id="hero-title" aria-label={heroHeadline}>
+                {heroHeadline.split(" ").map((word, index) => (
+                  <span key={`${word}-${index}`} className="hero-word">{word}&nbsp;</span>
+                ))}
+              </h1>
               <p className="hero-subhead">Impulsive helps you slow the loop before it becomes automatic. It notices risky moments, gives one clear recovery action, and saves what helped so your pattern can get weaker over time.</p>
-              <div className="hero-actions" aria-label="Hero actions">
+              <div className="hero-actions hero-actions-animate" aria-label="Hero actions">
                 <a className="button" href="#waitlist">Join the waitlist</a>
                 <a className="button button-secondary" href="#urge-loop">See how it works</a>
               </div>
@@ -346,7 +421,7 @@ export default function App() {
             </div>
 
             <div className="hero-visual reveal" aria-label="Impulsive app preview">
-              <div className="phone">
+              <div className="phone" role="img" aria-label="Phone mockup showing a private recovery flow with trigger detection, path choices, and a short game prompt.">
                 <div className="phone-speaker" aria-hidden="true"></div>
                 <div className="app-screen">
                   <div className="app-topbar">
@@ -977,8 +1052,13 @@ export default function App() {
               <input type="hidden" name="startedAt" value={startedAt} />
               <div className="form-row">
                 <input id="email" name="email" type="email" placeholder="you@example.com" autoComplete="email" required />
-                <button className="button" type="submit" disabled={isSubmitting}>
-                  {isSubmitting ? "Sending…" : "Join Waitlist"}
+                <button className="button" type="submit" disabled={isSubmitting} aria-busy={isSubmitting}>
+                  {isSubmitting ? (
+                    <>
+                      <span className="button-spinner" aria-hidden="true" />
+                      <span>Sending…</span>
+                    </>
+                  ) : "Join Waitlist"}
                 </button>
               </div>
               {formStatus.message && (

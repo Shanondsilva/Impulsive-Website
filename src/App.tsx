@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState, useRef, type KeyboardEvent } from 'react';
-import { Moon, Sun } from 'lucide-react';
-import { motion, useMotionValueEvent, useReducedMotion, useScroll, useTransform } from 'framer-motion';
+import { Menu, Moon, Sun, X } from 'lucide-react';
+import { AnimatePresence, motion, useMotionValueEvent, useReducedMotion, useScroll, useTransform } from 'framer-motion';
 import { ReflexOverrideGame } from './components/ReflexOverrideGame';
 import { RevealOnScroll } from './components/RevealOnScroll';
 import { useDarkMode } from './hooks/useDarkMode';
@@ -257,22 +257,36 @@ export default function App() {
 
   useEffect(() => {
     if (!menuOpen) return;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    const focusables = Array.from(
+      document.querySelectorAll<HTMLElement>('#mobile-menu-panel a, #mobile-menu-panel button')
+    );
+    focusables[0]?.focus();
+
     const handleKey = (event: globalThis.KeyboardEvent) => {
-      if (event.key === "Escape") setMenuOpen(false);
-    };
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        navMenuRef.current && !navMenuRef.current.contains(event.target as Node) &&
-        menuToggleRef.current && !menuToggleRef.current.contains(event.target as Node)
-      ) {
+      if (event.key === "Escape") {
         setMenuOpen(false);
+        return;
+      }
+      if (event.key === "Tab" && focusables.length > 0) {
+        const first = focusables[0];
+        const last = focusables[focusables.length - 1];
+        if (event.shiftKey && document.activeElement === first) {
+          event.preventDefault();
+          last.focus();
+        } else if (!event.shiftKey && document.activeElement === last) {
+          event.preventDefault();
+          first.focus();
+        }
       }
     };
     window.addEventListener("keydown", handleKey);
-    document.addEventListener("mousedown", handleClickOutside);
     return () => {
+      document.body.style.overflow = previousOverflow;
       window.removeEventListener("keydown", handleKey);
-      document.removeEventListener("mousedown", handleClickOutside);
+      menuToggleRef.current?.focus();
     };
   }, [menuOpen]);
 
@@ -348,15 +362,6 @@ export default function App() {
     <div className={menuOpen ? "menu-open" : ""}>
       <a className="skip-link" href="#main">Skip to content</a>
 
-      <button
-        type="button"
-        className="nav-backdrop"
-        aria-label="Close menu"
-        tabIndex={menuOpen ? 0 : -1}
-        onClick={closeMenu}
-        hidden={!menuOpen}
-      />
-
       <header className={`site-header ${isScrolled ? "is-scrolled" : ""}`} data-header>
         <nav className="nav" aria-label="Primary navigation">
           <a className="wordmark" href="#top" aria-label="Impulsive home">
@@ -368,13 +373,6 @@ export default function App() {
               <div className="nav-links nav-links--desktop" aria-label="Primary site links">
                 <a href="#urge-loop" onClick={closeMenu}>How it works</a>
                 <a href="#principles" onClick={closeMenu}>Principles</a>
-                <a href="#waitlist" onClick={closeMenu}>Waitlist</a>
-              </div>
-              <div className="nav-links nav-links--mobile" aria-label="Menu links">
-                <a href="#urge-loop" onClick={closeMenu}>How it works</a>
-                <a href="#paths" onClick={closeMenu}>Paths</a>
-                <a href="#principles" onClick={closeMenu}>Principles</a>
-                <a href="#about" onClick={closeMenu}>About</a>
                 <a href="#waitlist" onClick={closeMenu}>Waitlist</a>
               </div>
             </div>
@@ -396,21 +394,74 @@ export default function App() {
               </span>
             </button>
             <button
-              className="menu-toggle"
+              className="mobile-menu-toggle"
               type="button"
               aria-label={menuOpen ? "Close menu" : "Open menu"}
               aria-expanded={menuOpen}
-              aria-controls="primary-menu"
+              aria-controls="mobile-menu-panel"
               onClick={handleMenuToggle}
               ref={menuToggleRef}
             >
-              <span></span>
-              <span></span>
-              <span></span>
+              {menuOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
           </div>
         </nav>
       </header>
+      <AnimatePresence>
+        {menuOpen && (
+          <>
+            <motion.button
+              type="button"
+              className="mobile-menu-overlay"
+              aria-label="Close menu"
+              onClick={closeMenu}
+              initial={reduceMotion ? false : { opacity: 0 }}
+              animate={reduceMotion ? undefined : { opacity: 1 }}
+              exit={reduceMotion ? undefined : { opacity: 0 }}
+              transition={{ duration: 0.25, ease: 'easeOut' }}
+            />
+            <motion.div
+              id="mobile-menu-panel"
+              role="dialog"
+              aria-modal="true"
+              aria-label="Mobile menu"
+              className="mobile-menu-panel"
+              initial={reduceMotion ? false : { y: -24, opacity: 0 }}
+              animate={reduceMotion ? undefined : { y: 0, opacity: 1 }}
+              exit={reduceMotion ? undefined : { y: -24, opacity: 0 }}
+              transition={{ duration: 0.25, ease: 'easeOut' }}
+            >
+              <div className="mobile-menu-head">
+                <span className="mobile-menu-title">Menu</span>
+                <button type="button" className="mobile-menu-close" aria-label="Close menu" onClick={closeMenu}>
+                  <X size={24} />
+                </button>
+              </div>
+              <div className="mobile-menu-links" aria-label="Menu links">
+                <a href="#urge-loop" onClick={closeMenu}>How it works</a>
+                <a href="#principles" onClick={closeMenu}>Principles</a>
+                <a href="#waitlist" onClick={closeMenu}>Waitlist</a>
+              </div>
+              <div className="mobile-menu-theme-row">
+                <span>Theme</span>
+                <button
+                  className="theme-toggle"
+                  type="button"
+                  aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
+                  aria-pressed={theme === "dark"}
+                  onClick={() => toggle(themeToggleRef.current)}
+                >
+                  <span className="theme-toggle-icon" aria-hidden="true">
+                    {theme === "dark" ? <Sun /> : <Moon />}
+                  </span>
+                  <span className="theme-toggle-label">{theme === "dark" ? "Light" : "Dark"}</span>
+                </button>
+              </div>
+              <a className="button mobile-menu-cta" href="#waitlist" onClick={closeMenu}>Join Waitlist</a>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
 
       <main id="main">
         <section className="hero section" id="top" aria-labelledby="hero-title" ref={heroRef}>

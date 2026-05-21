@@ -1059,7 +1059,7 @@ export default function App() {
 
         <section className="section principles-section" id="principles" aria-labelledby="principles-title">
           <RevealOnScroll className="container section-text-column">
-            <article className="credibility-pane credibility-pane--principles" aria-labelledby="principles-title">
+            <article className="credibility-pane credibility-pane--principles animated-foundation-card" aria-labelledby="principles-title">
               <p className="eyebrow"><strong>PRINCIPLES</strong></p>
               <h2 id="principles-title"><strong>Built without shame loops.</strong></h2>
               <p className="credibility-principles-line"><strong>No shame streaks. No fake scores. No trigger paywalls. Private by design.</strong></p>
@@ -1078,7 +1078,7 @@ export default function App() {
 
         <section className="section about-section" id="about" aria-labelledby="about-title">
           <RevealOnScroll className="container section-text-column">
-            <article className="credibility-pane credibility-pane--about" aria-labelledby="about-title">
+            <article className="credibility-pane credibility-pane--about animated-foundation-card" aria-labelledby="about-title">
               <p className="eyebrow">ABOUT</p>
               <h2 id="about-title">Built carefully for private behaviour change.</h2>
               <ul className="about-credibility-lines" aria-label="About Impulsive">

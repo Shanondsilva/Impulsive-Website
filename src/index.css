@@ -12314,8 +12314,8 @@ p {
 /* ===== Principles/About split sections ===== */
 .principles-section,
 .about-section {
-  padding-top: 96px;
-  padding-bottom: 96px;
+  padding-top: 48px;
+  padding-bottom: 48px;
 }
 
 .section-text-column {
@@ -12326,9 +12326,7 @@ p {
 .principles-section .credibility-pane,
 .about-section .credibility-pane {
   border: 0;
-  background: transparent;
   box-shadow: none;
-  padding: 0;
 }
 
 .principles-section .credibility-pane .eyebrow,
@@ -12352,11 +12350,86 @@ p {
   background: rgba(192, 195, 208, 0.38);
 }
 
+.animated-foundation-card {
+  position: relative;
+  border-radius: 24px;
+  padding: 48px;
+  background: rgba(255, 249, 240, 0.6);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  overflow: hidden;
+  box-shadow:
+    0 14px 34px rgba(45, 39, 48, 0.08),
+    0 0 32px rgba(208, 195, 241, 0.08),
+    0 0 32px rgba(189, 224, 254, 0.08),
+    0 0 32px rgba(254, 241, 171, 0.08),
+    0 0 32px rgba(245, 167, 166, 0.08);
+}
+
+.animated-foundation-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1.5px;
+  background: conic-gradient(
+    from 0deg,
+    rgba(208, 195, 241, 0.35),
+    rgba(189, 224, 254, 0.35),
+    rgba(254, 241, 171, 0.35),
+    rgba(245, 167, 166, 0.35),
+    rgba(208, 195, 241, 0.35)
+  );
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  animation: foundation-border-flow 8s linear infinite;
+  will-change: transform;
+  pointer-events: none;
+}
+
+[data-theme="dark"] .animated-foundation-card {
+  background: rgba(20, 23, 28, 0.6);
+  box-shadow:
+    0 18px 40px rgba(0, 0, 0, 0.28),
+    0 0 32px rgba(208, 195, 241, 0.15),
+    0 0 32px rgba(189, 224, 254, 0.15),
+    0 0 32px rgba(254, 241, 171, 0.15),
+    0 0 32px rgba(245, 167, 166, 0.15);
+}
+
+[data-theme="dark"] .animated-foundation-card::before {
+  background: conic-gradient(
+    from 0deg,
+    rgba(208, 195, 241, 0.5),
+    rgba(189, 224, 254, 0.5),
+    rgba(254, 241, 171, 0.5),
+    rgba(245, 167, 166, 0.5),
+    rgba(208, 195, 241, 0.5)
+  );
+}
+
+@keyframes foundation-border-flow {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 @media (max-width: 767px) {
   .principles-section,
   .about-section {
-    padding-top: 64px;
-    padding-bottom: 64px;
+    padding-top: 32px;
+    padding-bottom: 32px;
+  }
+
+  .animated-foundation-card {
+    padding: 32px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animated-foundation-card::before {
+    animation: none;
   }
 }
 

@@ -11538,32 +11538,34 @@ p {
 [data-theme="dark"] .hero-visual .phone:hover,
 [data-theme="dark"] .hero-visual .phone:focus-within {
   background:
-    linear-gradient(150deg, rgba(255, 255, 255, 0.20), rgba(255, 255, 255, 0.04) 18%, transparent 42%) padding-box,
-    linear-gradient(145deg, #F2EAFF 0%, #8D7DA4 18%, #241C2F 52%, #B39CCB 100%) border-box;
+    linear-gradient(170deg, rgba(255, 255, 255, 0.13), rgba(255, 255, 255, 0.025) 22%, transparent 46%) padding-box,
+    linear-gradient(138deg, #F4E7FF 0%, #D7BEFF 22%, #7A6888 46%, #F3A7C4 82%, #FFC1CF 100%) border-box;
   box-shadow:
     0 0 0 1px rgba(247, 242, 255, 0.18) inset,
-    0 0 0 1px rgba(208, 195, 241, 0.72),
-    0 0 18px rgba(208, 195, 241, 0.78),
-    -10px 0 34px rgba(208, 195, 241, 0.54),
-    12px 0 38px rgba(245, 167, 166, 0.46),
-    22px 0 62px rgba(254, 241, 171, 0.20),
-    0 0 96px rgba(126, 95, 255, 0.34),
+    0 0 0 1px rgba(229, 207, 255, 0.82),
+    0 0 18px rgba(225, 199, 255, 0.88),
+    -12px 0 36px rgba(202, 176, 255, 0.60),
+    14px 0 40px rgba(255, 158, 191, 0.54),
+    26px 0 74px rgba(255, 177, 202, 0.28),
+    0 0 112px rgba(163, 122, 255, 0.32),
     0 22px 64px rgba(0, 0, 0, 0.58);
   filter: none;
 }
 
 [data-theme="dark"] .hero-visual .app-screen {
   background:
-    radial-gradient(circle at 18% 12%, rgba(208, 195, 241, 0.18), transparent 28%),
-    radial-gradient(circle at 88% 8%, rgba(189, 224, 254, 0.14), transparent 30%),
-    linear-gradient(180deg, #211B29 0%, #171520 100%);
+    radial-gradient(circle at 24% 10%, rgba(215, 190, 255, 0.13), transparent 30%),
+    radial-gradient(circle at 92% 10%, rgba(255, 167, 197, 0.12), transparent 30%),
+    linear-gradient(180deg, #211D28 0%, #15131C 100%);
 }
 
 [data-theme="dark"] .hero-visual .phone::before {
-  border-color: rgba(247, 242, 255, 0.12);
+  border-color: rgba(247, 242, 255, 0.16);
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.10),
-    inset 0 -20px 46px rgba(0, 0, 0, 0.18);
+    inset 0 1px 0 rgba(255, 255, 255, 0.18),
+    inset 10px 0 24px rgba(215, 190, 255, 0.08),
+    inset -10px 0 24px rgba(255, 167, 197, 0.07),
+    inset 0 -20px 46px rgba(0, 0, 0, 0.22);
 }
 
 [data-theme="dark"] .hero-visual .app-topbar {

@@ -344,7 +344,7 @@ export default function App() {
                     <p className="phone-card-sub">Recommended: 90-second reset</p>
                     <div className="phone-card-actions">
                       <button type="button" tabIndex={-1} className="phone-btn phone-btn--primary">Walk away</button>
-                      <button type="button" tabIndex={-1} className="phone-btn phone-btn--ghost">Continue with intention</button>
+                      <button type="button" tabIndex={-1} className="phone-btn phone-btn--ghost">Continue</button>
                     </div>
                   </div>
 
@@ -908,16 +908,6 @@ export default function App() {
                     <p><strong>Review-ready:</strong><span className="about-bullet-desc"> clear enough for advisors, clinicians, and endorsement reviewers to understand.</span></p>
                   </li>
                 </ul>
-                <div className="credibility-chips-group" aria-label="Recovery games">
-                  <p className="credibility-chips-label">Recovery games</p>
-                  <div className="credibility-chips">
-                    <span className="credibility-chip" style={{ "--chip-color": "var(--focus-color)" } as React.CSSProperties}>Reflex Override</span>
-                    <span className="credibility-chip" style={{ "--chip-color": "var(--body-color)" } as React.CSSProperties}>Fluid Regulation</span>
-                    <span className="credibility-chip" style={{ "--chip-color": "var(--brand-glow)" } as React.CSSProperties}>Breath Control</span>
-                    <span className="credibility-chip" style={{ "--chip-color": "var(--mind-color)" } as React.CSSProperties}>Pattern Break</span>
-                    <span className="credibility-chip" style={{ "--chip-color": "var(--soul-color)" } as React.CSSProperties}>+5 more</span>
-                  </div>
-                </div>
                 <div className="about-footer-row about-footer-row--disclaimer">
                   <p className="about-disclaimer">Impulsive is not a substitute for therapy, diagnosis, crisis support, or professional medical advice. If you are in crisis, please contact your GP, a qualified therapist, or the Samaritans on 116 123.</p>
                 </div>

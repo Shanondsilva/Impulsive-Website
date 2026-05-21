@@ -352,6 +352,13 @@ export default function App() {
                   </div>
                 </div>
               </motion.div>
+              <div className="hero-phone-note hero-phone-note--right" aria-hidden="true">
+                <strong>Level path, not open</strong>
+                <span>chaos</span>
+              </div>
+              <div className="hero-phone-note hero-phone-note--left" aria-hidden="true">
+                No paywall in a trigger
+              </div>
             </motion.div>
           </div>
         </section>

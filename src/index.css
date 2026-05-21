@@ -218,19 +218,24 @@ button {
 }
 
 .skip-link {
-  position: absolute;
+  position: fixed;
   left: 16px;
-  top: 16px;
-  z-index: 40;
-  transform: translateY(-140%);
+  top: 12px;
+  z-index: 120;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(calc(-100% - 20px));
   border-radius: 999px;
   background: var(--ink);
   color: #fff;
   padding: 10px 14px;
   text-decoration: none;
+  transition: opacity 160ms ease, transform 160ms ease;
 }
 
 .skip-link:focus {
+  opacity: 1;
+  pointer-events: auto;
   transform: translateY(0);
 }
 
@@ -12238,15 +12243,20 @@ p {
 .mobile-menu-panel {
   display: block;
   position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  width: min(420px, 100vw);
+  top: calc(var(--header-height) + 10px);
+  right: max(16px, env(safe-area-inset-right));
+  left: max(16px, env(safe-area-inset-left));
+  width: auto;
+  max-height: calc(100dvh - var(--header-height) - 26px);
   z-index: 81;
-  padding: 32px;
+  padding: 24px;
   overflow-y: auto;
   background: #fff9f1;
-  border-left: 1px solid rgba(45, 39, 48, 0.12);
+  border: 1px solid rgba(45, 39, 48, 0.12);
+  border-radius: 28px;
+  box-shadow: 0 24px 70px rgba(45, 39, 48, 0.20);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
 }
 
 .mobile-menu-head {
@@ -12300,7 +12310,8 @@ p {
   font-size: 18px;
   text-decoration: none;
   border-radius: 12px;
-  padding: 16px 8px;
+  padding: 14px 12px;
+  background: rgba(255, 255, 255, 0.48);
 }
 
 .mobile-menu-cta {
@@ -12341,9 +12352,16 @@ p {
   }
 }
 
+@media (min-width: 768px) {
+  .mobile-menu-toggle {
+    display: none;
+  }
+}
+
 [data-theme="dark"] .mobile-menu-panel {
   background: #14171c;
-  border-left-color: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.10);
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.44);
 }
 
 [data-theme="dark"] .mobile-menu-toggle,
@@ -12355,6 +12373,10 @@ p {
 [data-theme="dark"] .mobile-menu-toggle:active,
 [data-theme="dark"] .nav-right > .theme-toggle:active {
   background: rgba(255, 255, 255, 0.08);
+}
+
+[data-theme="dark"] .mobile-menu-links a {
+  background: rgba(255, 255, 255, 0.07);
 }
 
 .section-nav {

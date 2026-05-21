@@ -394,9 +394,9 @@ export default function App() {
               aria-modal="true"
               aria-labelledby="menu-title"
               className="mobile-menu-panel"
-              initial={reduceMotion ? false : { x: 36, opacity: 0 }}
-              animate={reduceMotion ? undefined : { x: 0, opacity: 1 }}
-              exit={reduceMotion ? undefined : { x: 36, opacity: 0 }}
+              initial={reduceMotion ? false : { y: -12, opacity: 0 }}
+              animate={reduceMotion ? undefined : { y: 0, opacity: 1 }}
+              exit={reduceMotion ? undefined : { y: -12, opacity: 0 }}
               transition={{ duration: 0.28, ease: 'easeOut' }}
             >
               <div className="mobile-menu-head">

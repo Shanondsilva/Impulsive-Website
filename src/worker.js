@@ -431,6 +431,92 @@ async function handleWaitlist(request, env) {
   }
 }
 
+// TEMPORARY ADMIN ENDPOINT — backfills confirmation emails for existing subscribers
+// who signed up before the email system was active.
+// Protected by x-admin-secret header matching env.WAITLIST_ADMIN_SECRET.
+// Call repeatedly until "remaining" returns 0. Remove once backfill is complete.
+async function handleBackfill(request, env) {
+  if (request.method !== "POST") {
+    return json({ error: "Method not allowed" }, 405);
+  }
+
+  const secret = request.headers.get("x-admin-secret");
+  if (!env.WAITLIST_ADMIN_SECRET || !secret || secret !== env.WAITLIST_ADMIN_SECRET) {
+    return json({ ok: false, error: "Unauthorized" }, 401);
+  }
+
+  const BATCH_LIMIT = 25;
+
+  const rows = await env.WAITLIST_DB
+    .prepare(
+      `SELECT id, email, first_name
+       FROM waitlist_signups
+       WHERE status = 'joined'
+         AND confirmation_sent_at IS NULL
+         AND email IS NOT NULL
+       ORDER BY created_at ASC
+       LIMIT ?`
+    )
+    .bind(BATCH_LIMIT)
+    .all();
+
+  const pending = rows.results ?? [];
+  let sent = 0;
+  let failed = 0;
+
+  for (const row of pending) {
+    try {
+      const confirmation = await sendConfirmationEmail(env, row.email, row.first_name ?? null);
+      if (confirmation.sent) {
+        await env.WAITLIST_DB
+          .prepare(
+            `UPDATE waitlist_signups
+             SET confirmation_sent_at = CURRENT_TIMESTAMP,
+                 confirmation_error = NULL,
+                 updated_at = CURRENT_TIMESTAMP
+             WHERE id = ?`
+          )
+          .bind(row.id)
+          .run();
+        sent++;
+      } else {
+        // skipped (e.g. BREVO_API_KEY not configured) — treat as failure
+        failed++;
+      }
+    } catch (error) {
+      console.error("Backfill email failed", { id: row.id, reason: error?.message });
+      await env.WAITLIST_DB
+        .prepare(
+          `UPDATE waitlist_signups
+           SET confirmation_error = ?,
+               updated_at = CURRENT_TIMESTAMP
+           WHERE id = ?`
+        )
+        .bind(String(error?.message || "send_failed").slice(0, 200), row.id)
+        .run();
+      failed++;
+    }
+  }
+
+  const countResult = await env.WAITLIST_DB
+    .prepare(
+      `SELECT COUNT(*) as remaining
+       FROM waitlist_signups
+       WHERE status = 'joined'
+         AND confirmation_sent_at IS NULL
+         AND email IS NOT NULL`
+    )
+    .first();
+
+  return json({
+    ok: true,
+    processed: pending.length,
+    sent,
+    failed,
+    remaining: Number(countResult?.remaining ?? 0)
+  });
+}
+
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
@@ -453,8 +539,12 @@ export default {
     }
 
     if (url.pathname === "/api/waitlist" || url.pathname === "/api/waitlist/") {
-  return handleWaitlist(request, env);
-}
+      return handleWaitlist(request, env);
+    }
+
+    if (url.pathname === "/api/admin/send-waitlist-confirmations") {
+      return handleBackfill(request, env);
+    }
 
     return withAssetCacheHeaders(await env.ASSETS.fetch(request));
   }

@@ -19,7 +19,7 @@ Thanks for joining the Impulsive waitlist. You're on the list.
 
 Impulsive is a privacy-first behaviour change app designed to help people navigate difficult habit loops and high-risk moments.
 
-As a solo developer, your early support genuinely means a lot. Thank you for being early.
+As a founder, your early support genuinely means a lot. Thank you for being early.
 
 Shanon
 Founder, Impulsive
@@ -50,7 +50,7 @@ const buildConfirmationHtml = (firstName) => {
               <p style="margin:0 0 20px;font-family:Georgia,'Times New Roman',serif;font-size:17px;line-height:1.75;color:#2D2730;">${greeting}</p>
               <p style="margin:0 0 20px;font-family:Georgia,'Times New Roman',serif;font-size:17px;line-height:1.75;color:#2D2730;">Thanks for joining the Impulsive waitlist. You're on the list.</p>
               <p style="margin:0 0 20px;font-family:Georgia,'Times New Roman',serif;font-size:17px;line-height:1.75;color:#2D2730;">Impulsive is a privacy-first behaviour change app designed to help people navigate difficult habit loops and high-risk moments.</p>
-              <p style="margin:0 0 32px;font-family:Georgia,'Times New Roman',serif;font-size:17px;line-height:1.75;color:#2D2730;">As a solo developer, your early support genuinely means a lot. Thank you for being early.</p>
+              <p style="margin:0 0 32px;font-family:Georgia,'Times New Roman',serif;font-size:17px;line-height:1.75;color:#2D2730;">As a founder, your early support genuinely means a lot. Thank you for being early.</p>
               <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
                 <tr>
                   <td style="padding:0 0 20px;">

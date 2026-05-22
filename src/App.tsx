@@ -1276,10 +1276,14 @@ export default function App() {
               onSubmit={handleFormSubmit}
               ref={formRef}
             >
-              <label htmlFor="email">Email address</label>
               <label className="hp-field" htmlFor="company" aria-hidden="true">Company</label>
               <input className="hp-field" id="company" name="company" type="text" tabIndex={-1} autoFocus={false} autoComplete="off" aria-hidden="true" />
               <input type="hidden" name="startedAt" value={startedAt} />
+              <label htmlFor="firstName">First name</label>
+              <div className="form-row">
+                <input id="firstName" name="firstName" type="text" placeholder="Shanon" autoComplete="given-name" maxLength={60} />
+              </div>
+              <label htmlFor="email">Email address</label>
               <div className="form-row">
                 <input id="email" name="email" type="email" placeholder="you@example.com" autoComplete="email" required />
                 <button className="button" type="submit" disabled={isSubmitting} aria-busy={isSubmitting}>

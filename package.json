@@ -15,6 +15,8 @@
     "db:normalise:remote": "npx wrangler d1 execute impulsive_waitlist --remote --file ./db/migrate-waitlist-v3-normalise.sql",
     "db:migrate:confirmation-error:local": "npx wrangler d1 execute impulsive_waitlist --local --file ./db/migrate-waitlist-v4-confirmation-error.sql",
     "db:migrate:confirmation-error:remote": "npx wrangler d1 execute impulsive_waitlist --remote --file ./db/migrate-waitlist-v4-confirmation-error.sql",
+    "db:migrate:first-name:local": "npx wrangler d1 execute impulsive_waitlist --local --file ./db/migrate-waitlist-v5-first-name.sql",
+    "db:migrate:first-name:remote": "npx wrangler d1 execute impulsive_waitlist --remote --file ./db/migrate-waitlist-v5-first-name.sql",
     "clean": "rm -rf dist",
     "lint": "tsc --noEmit"
   },

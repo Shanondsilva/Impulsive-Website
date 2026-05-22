@@ -11,23 +11,24 @@ Allow: /
 Sitemap: https://useimpulsive.com/sitemap.xml
 `;
 const CONFIRMATION_SUBJECT = "You're on the Impulsive waitlist";
-const CONFIRMATION_TEXT = `Hi,
+const buildConfirmationText = (firstName) => {
+  const greeting = firstName ? `Hi ${firstName},` : "Hi there,";
+  return `${greeting}
 
-Thanks for joining the Impulsive waitlist.
+Thanks for joining the Impulsive waitlist. You're on the list.
 
-You're now on the list, and I'll email you when Impulsive is ready for wider testing or release.
+Impulsive is a privacy-first behaviour change app designed to help people navigate difficult habit loops and high-risk moments.
 
-Impulsive is being built as a privacy-first behaviour change app for difficult habit loops, risky moments, and urge control. The goal is simple: help people slow the loop before it becomes automatic, without shame, fake streaks, or pressure during vulnerable moments.
+As a solo developer, your early support genuinely means a lot. Thank you for being early.
 
-Your email will only be used for Impulsive updates.
+Shanon
+Founder, Impulsive
 
-If you ever want to leave the waitlist, reply to this email or contact hello@useimpulsive.com.
-
-Thank you for being early.
-
-Impulsive
-Privacy-first behaviour change`;
-const CONFIRMATION_HTML = `<!doctype html>
+If you ever want to leave the waitlist, reply to this email or contact hello@useimpulsive.com.`;
+};
+const buildConfirmationHtml = (firstName) => {
+  const greeting = firstName ? `Hi ${firstName},` : "Hi there,";
+  return `<!doctype html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -46,16 +47,13 @@ const CONFIRMATION_HTML = `<!doctype html>
           </tr>
           <tr>
             <td style="background-color:#FFFFFF;border-radius:12px;padding:48px;border:1px solid #EDE8E0;">
-              <p style="margin:0 0 20px;font-family:Georgia,'Times New Roman',serif;font-size:17px;line-height:1.75;color:#2D2730;">Hi,</p>
-              <p style="margin:0 0 20px;font-family:Georgia,'Times New Roman',serif;font-size:17px;line-height:1.75;color:#2D2730;">Thanks for joining the Impulsive waitlist.</p>
-              <p style="margin:0 0 20px;font-family:Georgia,'Times New Roman',serif;font-size:17px;line-height:1.75;color:#2D2730;">You're now on the list, and I'll email you when Impulsive is ready for wider testing or release.</p>
-              <p style="margin:0 0 20px;font-family:Georgia,'Times New Roman',serif;font-size:17px;line-height:1.75;color:#2D2730;">Impulsive is being built as a privacy-first behaviour change app for difficult habit loops, risky moments, and urge control. The goal is simple: help people slow the loop before it becomes automatic, without shame, fake streaks, or pressure during vulnerable moments.</p>
-              <p style="margin:0 0 20px;font-family:Georgia,'Times New Roman',serif;font-size:17px;line-height:1.75;color:#2D2730;">Your email will only be used for Impulsive updates.</p>
-              <p style="margin:0 0 20px;font-family:Georgia,'Times New Roman',serif;font-size:17px;line-height:1.75;color:#2D2730;">If you ever want to leave the waitlist, reply to this email or contact <a href="mailto:hello@useimpulsive.com" style="color:#2D2730;text-decoration:underline;">hello@useimpulsive.com</a>.</p>
-              <p style="margin:0;font-family:Georgia,'Times New Roman',serif;font-size:17px;line-height:1.75;color:#2D2730;">Thank you for being early.</p>
+              <p style="margin:0 0 20px;font-family:Georgia,'Times New Roman',serif;font-size:17px;line-height:1.75;color:#2D2730;">${greeting}</p>
+              <p style="margin:0 0 20px;font-family:Georgia,'Times New Roman',serif;font-size:17px;line-height:1.75;color:#2D2730;">Thanks for joining the Impulsive waitlist. You're on the list.</p>
+              <p style="margin:0 0 20px;font-family:Georgia,'Times New Roman',serif;font-size:17px;line-height:1.75;color:#2D2730;">Impulsive is a privacy-first behaviour change app designed to help people navigate difficult habit loops and high-risk moments.</p>
+              <p style="margin:0 0 32px;font-family:Georgia,'Times New Roman',serif;font-size:17px;line-height:1.75;color:#2D2730;">As a solo developer, your early support genuinely means a lot. Thank you for being early.</p>
               <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
                 <tr>
-                  <td style="padding:32px 0 0;">
+                  <td style="padding:0 0 20px;">
                     <table role="presentation" cellpadding="0" cellspacing="0" border="0">
                       <tr>
                         <td style="width:32px;height:2px;background-color:#93E9BE;font-size:0;line-height:0;">&nbsp;</td>
@@ -64,8 +62,8 @@ const CONFIRMATION_HTML = `<!doctype html>
                   </td>
                 </tr>
               </table>
-              <p style="margin:20px 0 4px;font-family:Arial,Helvetica,sans-serif;font-size:14px;font-weight:600;color:#2D2730;letter-spacing:0.02em;">Impulsive</p>
-              <p style="margin:0;font-family:Arial,Helvetica,sans-serif;font-size:13px;color:#7A6E7E;">Privacy-first behaviour change</p>
+              <p style="margin:0 0 4px;font-family:Arial,Helvetica,sans-serif;font-size:14px;font-weight:600;color:#2D2730;letter-spacing:0.02em;">Shanon</p>
+              <p style="margin:0;font-family:Arial,Helvetica,sans-serif;font-size:13px;color:#7A6E7E;">Founder, Impulsive</p>
             </td>
           </tr>
           <tr>
@@ -79,6 +77,7 @@ const CONFIRMATION_HTML = `<!doctype html>
   </table>
 </body>
 </html>`;
+};
 
 // Cloudflare Workers Static Assets does not apply public/_headers automatically.
 // Security headers are attached here so they cover /, /privacy.html, /terms.html,
@@ -130,6 +129,10 @@ const json = (payload, status = 200) => {
 };
 
 const normaliseEmail = (value) => String(value || "").trim().toLowerCase();
+const normalizeFirstName = (value) => {
+  const text = String(value || "").replace(/\s+/g, " ").trim();
+  return text ? text.slice(0, 60) : null;
+};
 const cleanText = (value, maxLength = 500) => {
   const text = String(value || "").trim();
   return text ? text.slice(0, maxLength) : null;
@@ -191,7 +194,7 @@ const withAssetCacheHeaders = (response) => {
   });
 };
 
-async function saveWaitlistSignup(env, request, payload, email) {
+async function saveWaitlistSignup(env, request, payload, email, firstName) {
   if (!env.WAITLIST_DB) {
     console.error("Waitlist signup failed", { reason: "missing_d1_binding" });
     throw new Error("Missing waitlist database binding.");
@@ -206,8 +209,9 @@ async function saveWaitlistSignup(env, request, payload, email) {
         page,
         referrer,
         user_agent,
-        ip_hash
-      ) VALUES (?, ?, ?, ?, ?, ?)`
+        ip_hash,
+        first_name
+      ) VALUES (?, ?, ?, ?, ?, ?, ?)`
     )
     .bind(
       email,
@@ -215,16 +219,28 @@ async function saveWaitlistSignup(env, request, payload, email) {
       cleanText(payload.page, 500),
       cleanText(payload.referrer || request.headers.get("referer"), 500),
       cleanText(request.headers.get("user-agent"), 500),
-      ipHash
+      ipHash,
+      firstName
     )
     .run();
 
-  return {
-    duplicate: result.meta?.changes === 0
-  };
+  const duplicate = result.meta?.changes === 0;
+
+  if (duplicate && firstName) {
+    await env.WAITLIST_DB
+      .prepare(
+        `UPDATE waitlist_signups
+         SET first_name = ?, updated_at = CURRENT_TIMESTAMP
+         WHERE email = ? AND first_name IS NULL`
+      )
+      .bind(firstName, email)
+      .run();
+  }
+
+  return { duplicate };
 }
 
-async function sendConfirmationEmail(env, email) {
+async function sendConfirmationEmail(env, email, firstName) {
   if (!env.BREVO_API_KEY) {
     return { sent: false, skipped: true };
   }
@@ -251,8 +267,8 @@ async function sendConfirmationEmail(env, email) {
       to: [{ email }],
       ...(replyToEmail ? { replyTo: { email: replyToEmail } } : {}),
       subject: CONFIRMATION_SUBJECT,
-      textContent: CONFIRMATION_TEXT,
-      htmlContent: CONFIRMATION_HTML
+      textContent: buildConfirmationText(firstName),
+      htmlContent: buildConfirmationHtml(firstName)
     })
   });
 
@@ -339,8 +355,10 @@ async function handleWaitlist(request, env) {
     return json({ ok: false, message: INVALID_EMAIL_MESSAGE }, 400);
   }
 
+  const firstName = normalizeFirstName(payload.firstName);
+
   try {
-    const result = await saveWaitlistSignup(env, request, payload, email);
+    const result = await saveWaitlistSignup(env, request, payload, email, firstName);
 
     let shouldSendEmail = !result.duplicate;
     if (result.duplicate) {
@@ -355,7 +373,7 @@ async function handleWaitlist(request, env) {
     let emailSent = false;
     if (shouldSendEmail) {
       try {
-        const confirmation = await sendConfirmationEmail(env, email);
+        const confirmation = await sendConfirmationEmail(env, email, firstName);
         if (confirmation.sent) {
           await markConfirmationSent(env, email);
           emailSent = true;

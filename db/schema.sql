@@ -10,7 +10,8 @@ CREATE TABLE IF NOT EXISTS waitlist_signups (
   created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updated_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
   confirmation_sent_at TEXT,
-  confirmation_error TEXT
+  confirmation_error TEXT,
+  first_name TEXT
 );
 
 CREATE INDEX IF NOT EXISTS idx_waitlist_created_at ON waitlist_signups(created_at);

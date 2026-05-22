@@ -427,11 +427,12 @@ export default function App() {
         <nav className="nav" aria-label="Primary navigation">
           <div className="nav-left">
             <a className="wordmark" href="#top" aria-label="Impulsive home">
-              <img src="/images/icons/impulsive-logo-transparent-clean.png" alt="Impulsive logo" />
+              <img src="/images/icons/impulsive-logo-transparent-clean.png" alt="Impulsive app logo" />
               <span>Impulsive</span>
             </a>
             <div className="nav-links nav-links--desktop" aria-label="Primary site links">
               <a href="#principles" onClick={closeMenu}>Principles</a>
+              <a href="#about" onClick={closeMenu}>About</a>
               <a href="#faq" onClick={closeMenu}>FAQs</a>
             </div>
           </div>
@@ -498,28 +499,29 @@ export default function App() {
                   <X size={24} />
                 </button>
               </div>
-              <div className="mobile-menu-group">
-                <h3>How It Works</h3>
-                <div className="mobile-menu-links" aria-label="How it works links">
-                  <a href="#urge-loop" onClick={closeMenu}>Recovery Loop</a>
-                  <a href="#first-week" onClick={closeMenu}>First 7 Days</a>
-                  <a href="#paths" onClick={closeMenu}>Guided Path Map</a>
-                  <a href="#games" onClick={closeMenu}>Recovery Games</a>
-                  <a href="#progression" onClick={closeMenu}>Progression</a>
-                </div>
-              </div>
-              <div className="mobile-menu-group">
-                <h3>The Product</h3>
-                <div className="mobile-menu-links" aria-label="Product links">
+              {/* Mobile-only: header nav links are hidden on small screens */}
+              <div className="mobile-menu-group mobile-menu-group--nav-only">
+                <h3>Explore</h3>
+                <div className="mobile-menu-links" aria-label="Explore links">
                   <a href="#principles" onClick={closeMenu}>Principles</a>
-                  <a href="#tiers" onClick={closeMenu}>Free vs Paid Tiers</a>
                   <a href="#about" onClick={closeMenu}>About</a>
+                  <a href="#faq" onClick={closeMenu}>FAQs</a>
                 </div>
               </div>
               <div className="mobile-menu-group">
-                <h3>Get Started</h3>
-                <div className="mobile-menu-links" aria-label="Get started links">
-                  <a href="#faq" onClick={closeMenu}>FAQs</a>
+                <h3>Product</h3>
+                <div className="mobile-menu-links" aria-label="Product links">
+                  <a href="#urge-loop" onClick={closeMenu}>How it works</a>
+                  <a href="#paths" onClick={closeMenu}>Paths</a>
+                  <a href="#games" onClick={closeMenu}>Games</a>
+                  <a href="#progression" onClick={closeMenu}>Progression</a>
+                  <a href="#tiers" onClick={closeMenu}>Free vs Paid Tiers</a>
+                </div>
+              </div>
+              <div className="mobile-menu-group">
+                <h3>Support</h3>
+                <div className="mobile-menu-links" aria-label="Support links">
+                  <a href="mailto:hello@useimpulsive.com" onClick={closeMenu}>Contact</a>
                 </div>
               </div>
               <a className="button mobile-menu-cta" href="#waitlist" onClick={closeMenu}>Join Waitlist</a>
@@ -1315,11 +1317,12 @@ export default function App() {
             <a href="#urge-loop">How it works</a>
             <a href="#paths">Paths</a>
             <a href="#games">Games</a>
+            <a href="#progression">Progression</a>
+            <a href="#tiers">Free vs Paid Tiers</a>
           </nav>
           <nav className="footer-nav" aria-label="Support links">
             <h3>Support</h3>
-            <a href="#faq">FAQ</a>
-            <a href="#waitlist">Waitlist</a>
+            <a href="#faq">FAQs</a>
             <a href="mailto:hello@useimpulsive.com">Contact</a>
           </nav>
           <nav className="footer-nav" aria-label="Legal links">

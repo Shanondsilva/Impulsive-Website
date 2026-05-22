@@ -2,7 +2,7 @@ const MAX_BODY_BYTES = 8192;
 const MIN_FORM_SECONDS = 2;
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const SUCCESS_MESSAGE = "Thanks. You're on the waitlist.";
-const DUPLICATE_MESSAGE = "You're already on the waitlist.";
+const SUCCESS_MESSAGE_EMAIL_SENT = "Thanks. You're on the waitlist. Please check your email for confirmation.";
 const INVALID_EMAIL_MESSAGE = "Please enter a valid email address.";
 const GENERIC_FAILURE_MESSAGE = "Sorry, we could not add you to the waitlist right now. Please try again later.";
 const ROBOTS_TXT = `User-agent: *
@@ -11,34 +11,72 @@ Allow: /
 Sitemap: https://useimpulsive.com/sitemap.xml
 `;
 const CONFIRMATION_SUBJECT = "You're on the Impulsive waitlist";
-const CONFIRMATION_TEXT = `Thank you for joining the Impulsive waitlist.
+const CONFIRMATION_TEXT = `Hi,
 
-Impulsive is being built as a privacy-first behaviour-change support tool for people who want help pausing, redirecting, and reflecting during high-risk urge moments.
+Thanks for joining the Impulsive waitlist.
 
-We will let you know when early access, testing, or launch updates are ready.
+You're now on the list, and I'll email you when Impulsive is ready for wider testing or release.
 
-Impulsive is not a medical device, therapy service, or crisis service. If you feel at immediate risk or need urgent support, please contact local emergency services or a qualified support provider.
+Impulsive is being built as a privacy-first behaviour change app for difficult habit loops, risky moments, and urge control. The goal is simple: help people slow the loop before it becomes automatic, without shame, fake streaks, or pressure during vulnerable moments.
 
-If you ever want to leave the waitlist or have your email removed, just reply to this message or write to hello@useimpulsive.com.
+Your email will only be used for Impulsive updates.
 
-Thank you,
-Shanon DSilva
-Founder, Impulsive`;
+If you ever want to leave the waitlist, reply to this email or contact hello@useimpulsive.com.
+
+Thank you for being early.
+
+Impulsive
+Privacy-first behaviour change`;
 const CONFIRMATION_HTML = `<!doctype html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>You're on the Impulsive waitlist</title>
 </head>
-<body style="font-family: Arial, sans-serif; color: #2D2730; line-height: 1.6;">
-  <main>
-    <p>Thank you for joining the Impulsive waitlist.</p>
-    <p>Impulsive is being built as a privacy-first behaviour-change support tool for people who want help pausing, redirecting, and reflecting during high-risk urge moments.</p>
-    <p>We will let you know when early access, testing, or launch updates are ready.</p>
-    <p>Impulsive is not a medical device, therapy service, or crisis service. If you feel at immediate risk or need urgent support, please contact local emergency services or a qualified support provider.</p>
-    <p>If you ever want to leave the waitlist or have your email removed, just reply to this message or write to <a href="mailto:hello@useimpulsive.com">hello@useimpulsive.com</a>.</p>
-    <p>Thank you,<br />Shanon DSilva<br />Founder, Impulsive</p>
-  </main>
+<body style="margin:0;padding:0;background-color:#F7F3EE;-webkit-font-smoothing:antialiased;">
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#F7F3EE;">
+    <tr>
+      <td align="center" style="padding:48px 16px;">
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="max-width:560px;">
+          <tr>
+            <td style="padding:0 0 24px;">
+              <p style="margin:0;font-family:Arial,Helvetica,sans-serif;font-size:12px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#2D2730;">Impulsive</p>
+            </td>
+          </tr>
+          <tr>
+            <td style="background-color:#FFFFFF;border-radius:12px;padding:48px;border:1px solid #EDE8E0;">
+              <p style="margin:0 0 20px;font-family:Georgia,'Times New Roman',serif;font-size:17px;line-height:1.75;color:#2D2730;">Hi,</p>
+              <p style="margin:0 0 20px;font-family:Georgia,'Times New Roman',serif;font-size:17px;line-height:1.75;color:#2D2730;">Thanks for joining the Impulsive waitlist.</p>
+              <p style="margin:0 0 20px;font-family:Georgia,'Times New Roman',serif;font-size:17px;line-height:1.75;color:#2D2730;">You're now on the list, and I'll email you when Impulsive is ready for wider testing or release.</p>
+              <p style="margin:0 0 20px;font-family:Georgia,'Times New Roman',serif;font-size:17px;line-height:1.75;color:#2D2730;">Impulsive is being built as a privacy-first behaviour change app for difficult habit loops, risky moments, and urge control. The goal is simple: help people slow the loop before it becomes automatic, without shame, fake streaks, or pressure during vulnerable moments.</p>
+              <p style="margin:0 0 20px;font-family:Georgia,'Times New Roman',serif;font-size:17px;line-height:1.75;color:#2D2730;">Your email will only be used for Impulsive updates.</p>
+              <p style="margin:0 0 20px;font-family:Georgia,'Times New Roman',serif;font-size:17px;line-height:1.75;color:#2D2730;">If you ever want to leave the waitlist, reply to this email or contact <a href="mailto:hello@useimpulsive.com" style="color:#2D2730;text-decoration:underline;">hello@useimpulsive.com</a>.</p>
+              <p style="margin:0;font-family:Georgia,'Times New Roman',serif;font-size:17px;line-height:1.75;color:#2D2730;">Thank you for being early.</p>
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+                <tr>
+                  <td style="padding:32px 0 0;">
+                    <table role="presentation" cellpadding="0" cellspacing="0" border="0">
+                      <tr>
+                        <td style="width:32px;height:2px;background-color:#93E9BE;font-size:0;line-height:0;">&nbsp;</td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+              <p style="margin:20px 0 4px;font-family:Arial,Helvetica,sans-serif;font-size:14px;font-weight:600;color:#2D2730;letter-spacing:0.02em;">Impulsive</p>
+              <p style="margin:0;font-family:Arial,Helvetica,sans-serif;font-size:13px;color:#7A6E7E;">Privacy-first behaviour change</p>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding:24px 0 0;">
+              <p style="margin:0;font-family:Arial,Helvetica,sans-serif;font-size:12px;line-height:1.6;color:#9E96A2;text-align:center;">You're receiving this because you joined the Impulsive waitlist at useimpulsive.com.<br />To be removed, reply to this email or write to hello@useimpulsive.com.</p>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
 </body>
 </html>`;
 
@@ -197,7 +235,7 @@ async function sendConfirmationEmail(env, email) {
     return { sent: false, skipped: true };
   }
 
-  const replyToEmail = cleanText(env.WAITLIST_ADMIN_EMAIL, 254);
+  const replyToEmail = cleanText(env.WAITLIST_REPLY_TO_EMAIL || env.WAITLIST_ADMIN_EMAIL, 254);
   const response = await fetch("https://api.brevo.com/v3/smtp/email", {
     method: "POST",
     headers: {
@@ -235,6 +273,32 @@ async function markConfirmationSent(env, email) {
     )
     .bind(email)
     .run();
+
+  // Clear any previous send error; column added in migration v4 — safe to ignore if absent
+  try {
+    await env.WAITLIST_DB
+      .prepare(`UPDATE waitlist_signups SET confirmation_error = NULL WHERE email = ?`)
+      .bind(email)
+      .run();
+  } catch {
+    // confirmation_error column not yet migrated — no action needed
+  }
+}
+
+async function safeMarkConfirmationError(env, email, errorText) {
+  try {
+    await env.WAITLIST_DB
+      .prepare(
+        `UPDATE waitlist_signups
+         SET confirmation_error = ?,
+             updated_at = CURRENT_TIMESTAMP
+         WHERE email = ?`
+      )
+      .bind(String(errorText || "failed").slice(0, 200), email)
+      .run();
+  } catch {
+    // confirmation_error column not yet migrated — no action needed
+  }
 }
 
 // TODO: Before broad public traffic, add Cloudflare Turnstile verification on the
@@ -277,16 +341,35 @@ async function handleWaitlist(request, env) {
 
   try {
     const result = await saveWaitlistSignup(env, request, payload, email);
-    try {
-      const confirmation = await sendConfirmationEmail(env, email);
-      if (confirmation.sent) {
-        await markConfirmationSent(env, email);
-      }
-    } catch (error) {
-      console.error("Waitlist confirmation email failed", { reason: "brevo_failed", name: error?.name || "Error" });
+
+    let shouldSendEmail = !result.duplicate;
+    if (result.duplicate) {
+      // Only resend if no confirmation has been recorded yet
+      const row = await env.WAITLIST_DB
+        .prepare("SELECT confirmation_sent_at FROM waitlist_signups WHERE email = ?")
+        .bind(email)
+        .first();
+      shouldSendEmail = !row?.confirmation_sent_at;
     }
 
-    return json({ ok: true, message: result.duplicate ? DUPLICATE_MESSAGE : SUCCESS_MESSAGE });
+    let emailSent = false;
+    if (shouldSendEmail) {
+      try {
+        const confirmation = await sendConfirmationEmail(env, email);
+        if (confirmation.sent) {
+          await markConfirmationSent(env, email);
+          emailSent = true;
+        }
+      } catch (error) {
+        console.error("Waitlist confirmation email failed", {
+          reason: "brevo_failed",
+          name: error?.name || "Error"
+        });
+        await safeMarkConfirmationError(env, email, error?.message || "send_failed");
+      }
+    }
+
+    return json({ ok: true, message: emailSent ? SUCCESS_MESSAGE_EMAIL_SENT : SUCCESS_MESSAGE });
   } catch (error) {
     console.error("Waitlist signup failed", {
       reason: isMissingWaitlistStorage(error) ? "storage_not_configured" : "save_failed",

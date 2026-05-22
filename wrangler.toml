@@ -1,7 +1,20 @@
+# Secrets
+# Never put secret values in this file.
+# Set these using Wrangler:
+#   npx wrangler secret put BREVO_API_KEY
+#   npx wrangler secret put WAITLIST_IP_HASH_SECRET
+#
+# Plain variables are safe to keep in [vars].
+
 name = "steep-cake-9a73"
 main = "src/worker.js"
 compatibility_date = "2026-05-03"
 compatibility_flags = ["nodejs_compat"]
+
+[vars]
+WAITLIST_FROM_EMAIL = "hello@useimpulsive.com"
+WAITLIST_FROM_NAME = "Impulsive"
+WAITLIST_REPLY_TO_EMAIL = "hello@useimpulsive.com"
 
 [observability]
 enabled = true
@@ -21,7 +34,13 @@ database_id = "d43a695f-856f-412f-848c-3afc6241ccc9"
 [[routes]]
 pattern = "useimpulsive.com"
 custom_domain = true
+zone_name = "useimpulsive.com"
+enabled = true
+previews_enabled = false
 
 [[routes]]
 pattern = "www.useimpulsive.com"
 custom_domain = true
+zone_name = "useimpulsive.com"
+enabled = true
+previews_enabled = false

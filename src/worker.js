@@ -129,9 +129,39 @@ const json = (payload, status = 200) => {
 };
 
 const normaliseEmail = (value) => String(value || "").trim().toLowerCase();
-const normalizeFirstName = (value) => {
-  const text = String(value || "").replace(/\s+/g, " ").trim();
-  return text ? text.slice(0, 60) : null;
+
+const BLOCKED_EMAIL_NAMES = new Set([
+  "hello", "hi", "info", "contact", "support", "admin",
+  "team", "test", "mail", "office", "founder", "business", "noreply", "no"
+]);
+
+const inferFirstNameFromEmail = (email) => {
+  const atIdx = email.indexOf("@");
+  if (atIdx < 1) return null;
+
+  // Remove plus addressing: shanon+test@gmail.com → shanon
+  const localRaw = email.slice(0, atIdx).split("+")[0].toLowerCase();
+
+  // Block no-reply variants before splitting
+  if (/^no[-_.]?reply/.test(localRaw)) return null;
+
+  // Remove trailing digits: shanon2135 → shanon
+  const localTrimmed = localRaw.replace(/\d+$/, "");
+
+  // Split on separators, take first token: john.smith → john
+  const token = localTrimmed.split(/[._-]/)[0];
+
+  // Reject anything that isn't purely alphabetic
+  if (!/^[a-z]+$/.test(token)) return null;
+
+  // Require at least 2 letters
+  if (token.length < 2) return null;
+
+  // Block generic role or function names
+  if (BLOCKED_EMAIL_NAMES.has(token)) return null;
+
+  // Title case
+  return token.charAt(0).toUpperCase() + token.slice(1);
 };
 const cleanText = (value, maxLength = 500) => {
   const text = String(value || "").trim();
@@ -355,7 +385,7 @@ async function handleWaitlist(request, env) {
     return json({ ok: false, message: INVALID_EMAIL_MESSAGE }, 400);
   }
 
-  const firstName = normalizeFirstName(payload.firstName);
+  const firstName = inferFirstNameFromEmail(email);
 
   try {
     const result = await saveWaitlistSignup(env, request, payload, email, firstName);

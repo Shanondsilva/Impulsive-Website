@@ -104,10 +104,11 @@ const SECURITY_HEADERS = {
     "object-src 'none'",
     "frame-ancestors 'none'",
     "img-src 'self' data:",
-    "script-src 'self' 'unsafe-inline'",
+    "script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com",
     "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
     "font-src 'self' https://fonts.gstatic.com",
-    "connect-src 'self'",
+    "frame-src https://challenges.cloudflare.com",
+    "connect-src 'self' https://challenges.cloudflare.com",
     "form-action 'self'",
     "upgrade-insecure-requests"
   ].join("; ")
@@ -347,10 +348,32 @@ async function safeMarkConfirmationError(env, email, errorText) {
   }
 }
 
-// TODO: Before broad public traffic, add Cloudflare Turnstile verification on the
-// waitlist form or attach a Cloudflare rate-limiting / WAF rule to this endpoint.
-// Today the endpoint relies on: HTTPS-only canonical host, body-size cap,
-// honeypot field, minimum form-fill time, and IP-hash storage.
+const timingSafeEqual = (a, b) => {
+  const encoder = new TextEncoder();
+  const aBytes = encoder.encode(String(a ?? ""));
+  const bBytes = encoder.encode(String(b ?? ""));
+  const maxLen = Math.max(aBytes.length, bBytes.length);
+  let diff = aBytes.length ^ bBytes.length;
+  for (let i = 0; i < maxLen; i++) diff |= (aBytes[i] ?? 0) ^ (bBytes[i] ?? 0);
+  return diff === 0;
+};
+
+async function verifyTurnstile(token, secret) {
+  if (!token) return false;
+  try {
+    const response = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: new URLSearchParams({ secret, response: token }),
+    });
+    if (!response.ok) return false;
+    const data = await response.json();
+    return data.success === true;
+  } catch {
+    return false;
+  }
+}
+
 async function handleWaitlist(request, env) {
   if (request.method !== "POST") {
     return json({ error: "Method not allowed" }, 405);
@@ -383,6 +406,14 @@ async function handleWaitlist(request, env) {
   const email = normaliseEmail(payload.email);
   if (!email || email.length > 254 || !EMAIL_PATTERN.test(email)) {
     return json({ ok: false, message: INVALID_EMAIL_MESSAGE }, 400);
+  }
+
+  const turnstileToken = String(payload.turnstileToken || "").trim();
+  const turnstileVerified = env.TURNSTILE_SECRET_KEY
+    ? await verifyTurnstile(turnstileToken, env.TURNSTILE_SECRET_KEY)
+    : false;
+  if (!turnstileVerified) {
+    return json({ ok: false, message: "Bot check failed. Please refresh and try again." }, 400);
   }
 
   const firstName = inferFirstNameFromEmail(email);
@@ -431,92 +462,6 @@ async function handleWaitlist(request, env) {
   }
 }
 
-// TEMPORARY ADMIN ENDPOINT — backfills confirmation emails for existing subscribers
-// who signed up before the email system was active.
-// Protected by x-admin-secret header matching env.WAITLIST_ADMIN_SECRET.
-// Call repeatedly until "remaining" returns 0. Remove once backfill is complete.
-async function handleBackfill(request, env) {
-  if (request.method !== "POST") {
-    return json({ error: "Method not allowed" }, 405);
-  }
-
-  const secret = request.headers.get("x-admin-secret");
-  if (!env.WAITLIST_ADMIN_SECRET || !secret || secret !== env.WAITLIST_ADMIN_SECRET) {
-    return json({ ok: false, error: "Unauthorized" }, 401);
-  }
-
-  const BATCH_LIMIT = 25;
-
-  const rows = await env.WAITLIST_DB
-    .prepare(
-      `SELECT id, email, first_name
-       FROM waitlist_signups
-       WHERE status = 'joined'
-         AND confirmation_sent_at IS NULL
-         AND email IS NOT NULL
-       ORDER BY created_at ASC
-       LIMIT ?`
-    )
-    .bind(BATCH_LIMIT)
-    .all();
-
-  const pending = rows.results ?? [];
-  let sent = 0;
-  let failed = 0;
-
-  for (const row of pending) {
-    try {
-      const confirmation = await sendConfirmationEmail(env, row.email, row.first_name ?? null);
-      if (confirmation.sent) {
-        await env.WAITLIST_DB
-          .prepare(
-            `UPDATE waitlist_signups
-             SET confirmation_sent_at = CURRENT_TIMESTAMP,
-                 confirmation_error = NULL,
-                 updated_at = CURRENT_TIMESTAMP
-             WHERE id = ?`
-          )
-          .bind(row.id)
-          .run();
-        sent++;
-      } else {
-        // skipped (e.g. BREVO_API_KEY not configured) — treat as failure
-        failed++;
-      }
-    } catch (error) {
-      console.error("Backfill email failed", { id: row.id, reason: error?.message });
-      await env.WAITLIST_DB
-        .prepare(
-          `UPDATE waitlist_signups
-           SET confirmation_error = ?,
-               updated_at = CURRENT_TIMESTAMP
-           WHERE id = ?`
-        )
-        .bind(String(error?.message || "send_failed").slice(0, 200), row.id)
-        .run();
-      failed++;
-    }
-  }
-
-  const countResult = await env.WAITLIST_DB
-    .prepare(
-      `SELECT COUNT(*) as remaining
-       FROM waitlist_signups
-       WHERE status = 'joined'
-         AND confirmation_sent_at IS NULL
-         AND email IS NOT NULL`
-    )
-    .first();
-
-  return json({
-    ok: true,
-    processed: pending.length,
-    sent,
-    failed,
-    remaining: Number(countResult?.remaining ?? 0)
-  });
-}
-
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
@@ -540,10 +485,6 @@ export default {
 
     if (url.pathname === "/api/waitlist" || url.pathname === "/api/waitlist/") {
       return handleWaitlist(request, env);
-    }
-
-    if (url.pathname === "/api/admin/send-waitlist-confirmations") {
-      return handleBackfill(request, env);
     }
 
     return withAssetCacheHeaders(await env.ASSETS.fetch(request));

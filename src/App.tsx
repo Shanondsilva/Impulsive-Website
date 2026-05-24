@@ -8,6 +8,21 @@ import { ReflexOverrideGame } from './components/ReflexOverrideGame';
 import { RevealOnScroll } from './components/RevealOnScroll';
 import { useDarkMode } from './hooks/useDarkMode';
 
+// TODO: Paste your real Turnstile site key here after creating a widget in
+// the Cloudflare dashboard → Security → Turnstile → Create widget.
+const TURNSTILE_SITE_KEY = "REPLACE_WITH_SITE_KEY";
+
+declare global {
+  interface Window {
+    turnstile?: {
+      render: (container: HTMLElement, params: { sitekey: string }) => string;
+      getResponse: (widgetId: string) => string | undefined;
+      reset: (widgetId: string) => void;
+      remove: (widgetId: string) => void;
+    };
+  }
+}
+
 type RecoveryGame = {
   name: string;
   purpose: string;
@@ -110,6 +125,8 @@ export default function App() {
   const firstWeekRef = useRef<HTMLElement>(null);
   const reflexSectionRef = useRef<HTMLElement>(null);
   const themeToggleRef = useRef<HTMLButtonElement>(null);
+  const turnstileContainerRef = useRef<HTMLDivElement>(null);
+  const turnstileWidgetIdRef = useRef<string | null>(null);
   const { theme, toggle } = useDarkMode();
   const selectedGame = recoveryGames[selectedGameIndex];
   const heroHeadline = "Built for habits that do not break with willpower alone.";
@@ -374,6 +391,37 @@ export default function App() {
     };
   }, []);
 
+  useEffect(() => {
+    const scriptId = "cf-turnstile-script";
+    const renderWidget = () => {
+      if (turnstileContainerRef.current && window.turnstile && turnstileWidgetIdRef.current === null) {
+        turnstileWidgetIdRef.current = window.turnstile.render(turnstileContainerRef.current, {
+          sitekey: TURNSTILE_SITE_KEY,
+        });
+      }
+    };
+
+    if (document.getElementById(scriptId)) {
+      renderWidget();
+      return;
+    }
+
+    const script = document.createElement("script");
+    script.id = scriptId;
+    script.src = "https://challenges.cloudflare.com/turnstile/v0/api.js";
+    script.async = true;
+    script.defer = true;
+    script.onload = renderWidget;
+    document.head.appendChild(script);
+
+    return () => {
+      if (turnstileWidgetIdRef.current !== null && window.turnstile) {
+        window.turnstile.remove(turnstileWidgetIdRef.current);
+        turnstileWidgetIdRef.current = null;
+      }
+    };
+  }, []);
+
   const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!formRef.current) return;
@@ -386,12 +434,16 @@ export default function App() {
       return;
     }
 
+    const turnstileToken = turnstileWidgetIdRef.current !== null
+      ? (window.turnstile?.getResponse(turnstileWidgetIdRef.current) ?? "")
+      : "";
+
     setIsSubmitting(true);
     try {
       const response = await fetch("/api/waitlist", {
         method: "POST",
         headers: { Accept: "application/json", "Content-Type": "application/json" },
-        body: JSON.stringify(Object.fromEntries(formData.entries()))
+        body: JSON.stringify({ ...Object.fromEntries(formData.entries()), turnstileToken })
       });
 
       const rawBody = await response.text();
@@ -415,6 +467,9 @@ export default function App() {
       setFormStatus({ message: error.message || "Unable to join the waitlist right now. Please try again later.", type: "error" });
     } finally {
       setIsSubmitting(false);
+      if (turnstileWidgetIdRef.current !== null && window.turnstile) {
+        window.turnstile.reset(turnstileWidgetIdRef.current);
+      }
     }
   };
 
@@ -1291,6 +1346,7 @@ export default function App() {
                   ) : "Join Waitlist"}
                 </button>
               </div>
+              <div ref={turnstileContainerRef} style={{ margin: '0.75rem 0 0' }} />
               {formStatus.message && (
                 <p className="form-note" data-state={formStatus.type} aria-live="polite">
                   {formStatus.message}

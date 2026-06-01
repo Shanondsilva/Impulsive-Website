@@ -1385,6 +1385,7 @@ export default function App() {
             <h3>Legal</h3>
             <a href="/privacy.html">Privacy</a>
             <a href="/terms.html">Terms</a>
+            <a href="/help.html">Help</a>
           </nav>
         </div>
         <div className="container footer-base">

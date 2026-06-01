@@ -1301,11 +1301,11 @@ export default function App() {
             <div className="faq-list">
               <details className="faq-item">
                 <summary>What does Impulsive actually do?</summary>
-                <p>Impulsive is a behaviour-change app designed for the moment a habit loop accelerates. When a trigger starts, it gives you structured tools to pause and redirect — breathing patterns, body-focused grounding, short recovery games, and a calm reflection log. Between sessions it shows patterns over time so you can understand your own loop more clearly.</p>
+                <p>Impulsive is a behaviour-change app designed for the moment a habit loop accelerates. When a trigger starts, it gives you structured tools to pause and redirect breathing patterns, body-focused grounding, short recovery games, and a calm reflection log. Between sessions it shows patterns over time so you can understand your own loop more clearly.</p>
               </details>
               <details className="faq-item">
                 <summary>Is my data private?</summary>
-                <p>Yes. Your patterns, triggers, and reflections are designed to stay on your device by default. We do not sell your data and we do not use advertising trackers. Any future backup or sync feature would be optional, opt-in, and clearly explained before use — never enabled by default.</p>
+                <p>Yes. Your patterns, triggers, and reflections are designed to stay on your device by default. We do not sell your data and we do not use advertising trackers. Any future backup or sync feature would be optional, opt-in, and clearly explained before use never enabled by default.</p>
               </details>
               <details className="faq-item">
                 <summary>Is Impulsive a replacement for therapy?</summary>

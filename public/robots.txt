@@ -1,4 +1,36 @@
+# Impulsive (UseImpulsive.com) — robots policy
+# Allow every reputable crawler to index the entire site.
 User-agent: *
+Allow: /
+Disallow: /api/
+
+# Explicit allow for major search and AI crawlers
+User-agent: Googlebot
+Allow: /
+
+User-agent: Googlebot-Image
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
+
+User-agent: Applebot
+Allow: /
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
 Allow: /
 
 Sitemap: https://useimpulsive.com/sitemap.xml
+Host: https://useimpulsive.com

@@ -5,10 +5,42 @@ const SUCCESS_MESSAGE = "Thanks. You're on the waitlist.";
 const SUCCESS_MESSAGE_EMAIL_SENT = "Thanks. You're on the waitlist. Please check your email for confirmation.";
 const INVALID_EMAIL_MESSAGE = "Please enter a valid email address.";
 const GENERIC_FAILURE_MESSAGE = "Sorry, we could not add you to the waitlist right now. Please try again later.";
-const ROBOTS_TXT = `User-agent: *
+const ROBOTS_TXT = `# Impulsive (UseImpulsive.com) — robots policy
+# Allow every reputable crawler to index the entire site.
+User-agent: *
+Allow: /
+Disallow: /api/
+
+# Explicit allow for major search and AI crawlers
+User-agent: Googlebot
+Allow: /
+
+User-agent: Googlebot-Image
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
+
+User-agent: Applebot
+Allow: /
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
 Allow: /
 
 Sitemap: https://useimpulsive.com/sitemap.xml
+Host: https://useimpulsive.com
 `;
 const CONFIRMATION_SUBJECT = "You're on the Impulsive waitlist";
 const buildConfirmationText = (firstName) => {

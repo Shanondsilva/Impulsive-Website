@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Help Centre - Impulsive</title>
+<title>Help - Impulsive</title>
 <meta name="description" content="Help and answers for Impulsive: protected apps, recovery windows, games, focus, privacy, and your account." />
 <meta name="robots" content="index, follow" />
 <meta name="color-scheme" content="light" />
@@ -26,8 +26,8 @@
     --accent-soft: #D0C3F1;
     --radius: 16px;
     --maxw: 720px;
-    --display: "Comfortaa", "IBM Plex Sans", sans-serif;
-    --body: "IBM Plex Sans", Arial, Helvetica, sans-serif;
+    --display: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    --body: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   }
   * { box-sizing: border-box; }
   html { scroll-behavior: smooth; }
@@ -38,11 +38,18 @@
     font-family: var(--body);
     line-height: 1.65;
     -webkit-font-smoothing: antialiased;
+    overflow-x: clip;
   }
   a { color: var(--accent); text-decoration: none; }
   a:hover { text-decoration: underline; }
-  .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
-  .back-link { display: inline-block; margin: 28px 0 0; font-weight: 500; color: var(--muted); }
+  .wrap { width: 100%; max-width: var(--maxw); min-width: 0; margin: 0 auto; padding: 0 24px; }
+  .back-link {
+    display: inline-block;
+    margin: 28px 0 24px;
+    font-weight: 500;
+    color: #2D2730;
+    text-decoration: underline;
+  }
   header {
     padding: 8px 0 30px;
     background: linear-gradient(180deg, #F7F2FF 0%, var(--bg) 70%);
@@ -61,10 +68,11 @@
     font-size: clamp(28px, 5vw, 40px); line-height: 1.15; margin: 0 0 12px; color: var(--heading);
   }
   .lede { color: var(--muted); font-size: 17px; max-width: 56ch; margin: 0; }
-  nav.toc { display: flex; flex-wrap: wrap; gap: 8px; margin: 24px 0 2px; }
+  nav.toc { display: flex; flex-wrap: wrap; gap: 8px; min-width: 0; margin: 24px 0 2px; }
   nav.toc a {
     border: 1px solid var(--line); background: var(--surface);
     padding: 7px 14px; border-radius: 999px; font-size: 14px; color: var(--text);
+    min-width: 0; max-width: 100%; overflow-wrap: anywhere; white-space: normal;
   }
   nav.toc a:hover { border-color: var(--accent-soft); text-decoration: none; }
   section { padding: 36px 0 6px; border-bottom: 1px solid var(--line); }
@@ -74,16 +82,28 @@
   details {
     background: var(--surface); border: 1px solid var(--line);
     border-radius: var(--radius); margin: 10px 0; overflow: hidden;
+    width: 100%; max-width: 100%; min-width: 0;
   }
   details[open] { border-color: var(--accent-soft); background: var(--bg-2); }
   summary {
-    cursor: pointer; padding: 15px 18px; font-weight: 500; list-style: none;
-    display: flex; justify-content: space-between; align-items: center; gap: 14px; color: var(--text);
+    cursor: pointer; padding: 15px 46px 15px 18px; font-weight: 500; list-style: none;
+    display: block; position: relative; color: var(--text);
+    width: 100%; min-width: 0; max-width: 100%; overflow-wrap: anywhere; word-break: break-word; white-space: normal;
   }
   summary::-webkit-details-marker { display: none; }
-  summary::after { content: "+"; color: var(--accent); font-size: 20px; font-weight: 400; }
+  summary::after {
+    content: "+";
+    position: absolute;
+    top: 50%;
+    right: 18px;
+    transform: translateY(-50%);
+    color: var(--accent);
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 1;
+  }
   details[open] summary::after { content: "\2013"; }
-  .answer { padding: 0 18px 18px; color: var(--muted); }
+  .answer { min-width: 0; max-width: 100%; padding: 0 18px 18px; color: var(--muted); }
   .answer p { margin: 0 0 10px; }
   .answer ul { margin: 6px 0 10px; padding-left: 20px; }
   .answer strong { color: var(--text); font-weight: 600; }
@@ -100,15 +120,27 @@
   .btn:hover { text-decoration: none; opacity: 0.92; }
   footer { color: var(--muted); font-size: 13px; padding: 34px 0 56px; text-align: center; }
   footer a { color: var(--muted); }
+  h1, h2, h3, p, li, .lede, .section-sub, .answer, .contact { overflow-wrap: anywhere; }
+  @media (max-width: 560px) {
+    .wrap { padding: 0 18px; }
+    header { padding-bottom: 24px; }
+    .back-link { margin-top: 22px; margin-bottom: 22px; }
+    nav.toc { gap: 7px; margin-top: 22px; }
+    nav.toc a { font-size: 13px; padding: 7px 12px; }
+    section { padding-top: 30px; }
+    summary { padding: 14px 42px 14px 15px; }
+    summary::after { right: 15px; }
+    .answer { padding: 0 15px 16px; }
+    .contact { padding: 22px 18px; }
+  }
 </style>
 </head>
 <body>
 <header>
   <div class="wrap">
     <a class="back-link" href="/">Back to Impulsive</a>
-    
-    </div>
-    <h1>Help Centre</h1>
+
+    <h1>Help</h1>
     <p class="lede">Answers about protection, recovery windows, games, focus, privacy, and your account.</p>
     <nav class="toc">
       <a href="#getting-started">Getting started</a>

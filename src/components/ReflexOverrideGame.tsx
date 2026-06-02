@@ -348,11 +348,11 @@ export function ReflexOverrideGame() {
   const timePercent = (timeLeft / ROUND_SECONDS) * 100;
 
   return (
-    <div className="ro-game" aria-label="Playable Reflex Override recovery game">
+    <div className="ro-game" aria-label="Playable Reflex Override pivot game">
       {view === 'ready' && (
         <div className="ro-panel ro-ready">
           <span className="ro-mini-label">Reflex Override</span>
-          <strong>Interrupt autopilot with a short reaction round.</strong>
+          <strong>Pivot out of autopilot with a short reaction round.</strong>
           <button className="ro-play-button" type="button" onClick={startCountdown}>Start 60-second challenge</button>
         </div>
       )}

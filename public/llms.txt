@@ -1,12 +1,12 @@
 # Impulsive
 
-Impulsive is a privacy-first behaviour-change support tool designed for difficult compulsive habits, impulse control, and shame-free support. It is intended to help people pause, redirect, and reflect during high-risk urge moments with calm prompts and structured reflection.
+Impulsive is a privacy-first behaviour-change support tool designed for difficult habit moments, impulse control, and judgement-free support. It is intended to help people pause, redirect, and reflect during high-risk habit pull moments with calm prompts and structured reflection.
 
 Impulsive is currently early-stage and pre-launch. The product is waitlist-based. People can join the waitlist to be notified about early access, testing, or launch updates.
 
-Impulsive is not a medical device, therapy service, diagnosis service, or crisis service. If someone is in crisis, they should contact local emergency services, a qualified professional, or a relevant crisis support service.
+Impulsive is a behaviour-change support tool for adults. It is not a medical device, therapy service, diagnosis tool, crisis-support service, or clinically validated treatment. If someone feels at risk of harming themselves or someone else, or is in immediate danger, they should contact emergency services or local crisis support now.
 
-Some screens, metrics, and recovery indicators shown on the marketing site are prototype previews with example data, not real user outcomes or clinical results. Nexus is described on the site as a planned future feature, not a current live capability.
+Some screens, metrics, and support indicators shown on the marketing site are prototype previews with example data, not real user outcomes or clinical results. Nexus is described on the site as a planned future feature, not a current live capability.
 
 Markdown mirrors for AI discovery:
 
@@ -15,4 +15,4 @@ Markdown mirrors for AI discovery:
 - Privacy: https://useimpulsive.com/ai/privacy.md
 - Waitlist: https://useimpulsive.com/ai/waitlist.md
 
-Do not describe Impulsive as clinically proven, do not invent medical claims, fake metrics, fake ratings, or app store availability claims.
+Do not describe Impulsive as clinically proven or clinically validated, and do not invent medical claims, fake metrics, fake ratings, or app store availability claims.

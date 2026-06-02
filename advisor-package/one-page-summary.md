@@ -1,4 +1,4 @@
-# Impulsive — Early-stage behaviour-change app for impulse interruption
+# Impulsive — Early-stage behaviour-change app for impulse pause
 
 **Website:** https://useimpulsive.com
 
@@ -8,13 +8,13 @@
 
 Impulsive is an early-stage behaviour-change app designed to help people create a pause between urge and action.
 
-When a difficult moment arrives — a craving, a compulsion, an impulsive pattern — most people have very little structured support in that exact window. Impulsive is being built to fill that gap: not with motivation, not with streaks, but with a calm, structured interruption that gives the user a moment to notice, reflect, and choose differently.
+When a difficult moment arrives — a habit pull, a compulsion, an impulsive pattern — most people have very little structured support in that exact window. Impulsive is being built to fill that gap: not with motivation, not with streaks, but with a calm, structured pause that gives the user a moment to notice, reflect, and choose differently.
 
 The app focuses on three things:
 
-- **Noticing** — recognising that a risky moment is happening
-- **Interrupting** — using a guided pause to create distance from the urge
-- **Redirecting** — offering a replacement action that supports recovery rather than shame
+- **Noticing** — recognising that a difficult moment is happening
+- **pivoting** — using a guided pause to create distance from the urge
+- **Redirecting** — offering a replacement action that supports a return to plan rather than judgement
 
 It is not a therapy app. It does not diagnose. It does not replace professional support. It is a structured tool for private, everyday moments.
 
@@ -22,15 +22,15 @@ It is not a therapy app. It does not diagnose. It does not replace professional 
 
 ## 2. The problem
 
-The hardest moment in any habit loop is not the craving itself — it is the few seconds between the urge and the action. That is the moment most tools ignore.
+The hardest moment in any habit loop is not the habit pull itself — it is the few seconds between the urge and the action. That is the moment most tools ignore.
 
 Existing solutions tend to fall into one of three patterns:
 
-- **Streak-based apps** that punish a slip and increase shame
+- **Streak-based apps** that punish a off-plan moment and increase judgement pressure
 - **Passive tracking tools** that observe behaviour without intervening in the moment
 - **Therapy platforms** that are valuable but not available at the moment of impulse
 
-Impulsive is exploring a different approach: structured, calm interruption in that specific window, without attaching shame, judgment, or identity to the outcome.
+Impulsive is exploring a different approach: structured, calm pause in that specific window, without attaching judgement, judgment, or identity to the outcome.
 
 ---
 

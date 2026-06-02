@@ -35,9 +35,9 @@ type RecoveryGame = {
 const recoveryGames: RecoveryGame[] = [
   {
     name: "Reflex Override",
-    purpose: "A fast reaction game for peak-risk moments. Tap, swipe, and avoid decoys to pull the brain out of autopilot.",
+    purpose: "A fast reaction game for difficult habit moments. Tap, swipe, and avoid decoys to pull the brain out of autopilot.",
     length: "45-90 seconds.",
-    record: "Best reaction time, longest combo, personal best, urge drop.",
+    record: "Best reaction time, longest combo, personal best, intensity shift.",
     safeExit: "The strongest score requires finishing the round and choosing Walk Away.",
     accent: "var(--focus-color)",
   },
@@ -50,19 +50,19 @@ const recoveryGames: RecoveryGame[] = [
     accent: "var(--body-color)",
   },
   {
-    name: "Urge Survival Mode",
-    purpose: "The urge becomes visible as a short challenge. Defend, survive, reduce the urge bar, then choose a safe exit.",
+    name: "Difficult Moment Mode",
+    purpose: "The difficult moment becomes visible as a short challenge. Defend, steady, lower the intensity bar, then choose a safer next step.",
     length: "60-120 seconds.",
-    record: "Best survival score, fastest urge defeat, strongest recovery streak.",
-    safeExit: "The game ends with a recovery choice, not endless fighting.",
+    record: "Best steady score, fastest intensity shift, strongest return-to-plan run.",
+    safeExit: "The game ends with a pivot choice, not endless fighting.",
     accent: "var(--mind-color)",
   },
   {
     name: "Precision Focus Challenge",
-    purpose: "Trace, balance, and align with control. It shifts the mind from craving into careful attention.",
+    purpose: "Trace, balance, and align with control. It shifts attention from the habit pull into careful focus.",
     length: "45-120 seconds.",
     record: "Best precision score, cleanest trace, longest steady hold, fewest errors.",
-    safeExit: "Recovery language must stay calm. No harsh failure messages.",
+    safeExit: "Pivot language must stay calm. No harsh off-plan messages.",
     accent: "var(--soul-color)",
   },
   {
@@ -70,20 +70,20 @@ const recoveryGames: RecoveryGame[] = [
     purpose: "A short, high-energy runner for users who need intensity, not calm. It must be time-boxed, not endless.",
     length: "60-150 seconds.",
     record: "Furthest distance, best combo, highest clean run, best safe exit after runner.",
-    safeExit: "No endless runner mode inside recovery flow.",
+    safeExit: "No endless runner mode inside the pivot flow.",
     accent: "var(--focus-color)",
   },
   {
     name: "Breath-Control Combat",
     purpose: "A breathing rhythm game where steady breathing powers a shield or aura. Touch rhythm first, microphone later if needed.",
     length: "90-180 seconds.",
-    record: "Best calm combat score, longest stable rhythm, shield uptime, biggest urge drop.",
+    record: "Best calm combat score, longest stable rhythm, shield uptime, biggest intensity shift.",
     safeExit: "Reward steadiness, not frantic tapping.",
     accent: "var(--brand-glow)",
   },
   {
     name: "Pattern Break Puzzle",
-    purpose: "Quick pattern tasks that break repetitive craving loops and force the brain into recognition and problem solving.",
+    purpose: "Quick pattern tasks that break repetitive habit loops and move the brain into recognition and problem solving.",
     length: "45-120 seconds.",
     record: "Best puzzle score, fastest correct streak, highest level reached, fewest mistakes.",
     safeExit: "Keep it short and emotionally neutral.",
@@ -93,16 +93,16 @@ const recoveryGames: RecoveryGame[] = [
     name: "Rage Discharge Mode",
     purpose: "A safe abstract outlet for stress, rejection, or anger. The screen moves from chaos to calm.",
     length: "30-90 seconds.",
-    record: "Best discharge score, fastest clear, biggest urge drop, best safe exit after discharge.",
+    record: "Best discharge score, fastest clear, biggest intensity shift, best safe exit after discharge.",
     safeExit: "Do not encourage aggression. Message should be: energy discharged, control restored.",
     accent: "var(--focus-color)",
   },
   {
     name: "Identity Progression",
-    purpose: "The meta-system that turns safe exits, urge drops, and personal records into proof that the user is changing.",
+    purpose: "The meta-system that turns safe exits, intensity shifts, and personal records into proof that the user is changing.",
     length: "Always-on layer after games and on the dashboard.",
-    record: "Control Points, Path XP, Identity Level, Recovery Proof, Best Week, Best Day.",
-    safeExit: "Never fake progress. Only real safe exits, urge drops, and completed sessions count.",
+    record: "Control Points, Path XP, Identity Level, Pivot Proof, Best Week, Best Day.",
+    safeExit: "Never fake progress. Only real safe exits, intensity shifts, and completed sessions count.",
     accent: "var(--brand-glow)",
   },
 ];
@@ -129,7 +129,7 @@ export default function App() {
   const turnstileWidgetIdRef = useRef<string | null>(null);
   const { theme, toggle } = useDarkMode();
   const selectedGame = recoveryGames[selectedGameIndex];
-  const heroHeadline = "Built for habits that do not break with willpower alone.";
+  const heroHeadline = "A private pause before the habit takes over.";
 
   const togglePathFlip = (id: string) => {
     setFlippedCards((prev) => {
@@ -611,21 +611,23 @@ export default function App() {
                   </motion.span>
                 ))}
               </h1>
-              <motion.p className="hero-subhead" initial={reduceMotion ? false : { opacity: 0, y: 20 }} animate={reduceMotion ? undefined : { opacity: 1, y: 0 }} transition={{ delay: 0.88, duration: 0.5, ease: revealEase }}>Impulsive helps you slow the loop before it becomes automatic. It notices risky moments, gives one clear recovery action, and saves what helped so your pattern can get weaker over time.</motion.p>
+              <motion.p className="hero-subhead" initial={reduceMotion ? false : { opacity: 0, y: 20 }} animate={reduceMotion ? undefined : { opacity: 1, y: 0 }} transition={{ delay: 0.88, duration: 0.5, ease: revealEase }}>Impulsive helps adults notice difficult habit moments, choose a pivot action, and understand the patterns behind them. Serious, private, and shame-free.</motion.p>
               <div className="hero-actions" aria-label="Hero actions">
                 <a className="button" href="#waitlist">Join the waitlist</a>
                 <a className="button button-secondary" href="#urge-loop">See how it works</a>
               </div>
               <ul className="hero-trust-chips" aria-label="Impulsive product notes">
-                <li>Built in London</li>
-                <li>Early beta</li>
+                <li>Not therapy</li>
+                <li>Not a diagnosis tool</li>
+                <li>Not crisis support</li>
+                <li>Private behaviour-change support</li>
               </ul>
             </motion.div>
 
             <motion.div className="hero-visual" aria-label="Impulsive app preview" style={reduceMotion ? undefined : { y: heroParallaxY }}>
-              <div className="orbit-card card-calm">One clear recovery action</div>
+              <div className="orbit-card card-calm">One clear pivot action</div>
               <div className="orbit-card card-trigger">No paywall in a trigger</div>
-              <motion.div className="phone" role="img" aria-label="Phone mockup showing a private recovery flow with trigger detection and recovery actions." ref={heroPhoneRef} style={reduceMotion ? undefined : { scale: heroPhoneScale, y: heroPhoneY, opacity: heroPhoneOpacity }}>
+              <motion.div className="phone" role="img" aria-label="Phone mockup showing a private behaviour-change flow with trigger detection and pivot actions." ref={heroPhoneRef} style={reduceMotion ? undefined : { scale: heroPhoneScale, y: heroPhoneY, opacity: heroPhoneOpacity }}>
                 <div className="phone-speaker" aria-hidden="true"></div>
                 <div className="app-screen">
                   <div className="app-topbar">
@@ -634,19 +636,19 @@ export default function App() {
                   </div>
 
                   <section className="today-plan" aria-label="Today's plan preview">
-                    <p>Risky moment detected</p>
+                    <p>Difficult habit moment</p>
                     <h2>Recommended: 90-second Mind reset</h2>
                     <div className="plan-row">
                       <span>Trigger window</span>
                       <strong>7:45-9:15pm</strong>
                     </div>
-                    <div className="scorecard-proof" aria-label="Recovery action saved">
+                    <div className="scorecard-proof" aria-label="Pivot action saved">
                       <span>
-                        <small>Urge before</small>
+                        <small>Intensity before</small>
                         <strong>8/10</strong>
                       </span>
                       <span>
-                        <small>Urge after</small>
+                        <small>Intensity after</small>
                         <strong>5/10</strong>
                       </span>
                     </div>
@@ -654,7 +656,7 @@ export default function App() {
 
                   <section className="intervention">
                     <div>
-                      <span className="mini-label">One clear recovery action</span>
+                      <span className="mini-label">One clear pivot action</span>
                       <strong>90-second Mind reset</strong>
                     </div>
                     <button type="button" aria-label="Calm intervention preview" tabIndex={-1}>Done</button>
@@ -669,10 +671,10 @@ export default function App() {
                     <div className="progress-track" aria-hidden="true"><span></span></div>
                   </section>
 
-                  <section className="mockup-scorecard" aria-label="Private recovery scorecard preview">
+                  <section className="mockup-scorecard" aria-label="Private behaviour-change scorecard preview">
                     <div className="scorecard-row">
                       <span>Today</span>
-                      <strong>2 risky moments interrupted</strong>
+                      <strong>2 difficult moments paused</strong>
                     </div>
                     <div className="scorecard-row">
                       <span>Safe exits</span>
@@ -697,9 +699,9 @@ export default function App() {
                 <section className="section urge-loop-section" id="urge-loop" aria-labelledby="urge-loop-title">
           <div className="container">
             <RevealOnScroll className="section-heading urge-loop-heading">
-              <p className="eyebrow">Recovery loop</p>
-              <h2 id="urge-loop-title">Notice, interrupt, reduce.</h2>
-              <p>Impulsive is built for the moment a difficult habit starts to move faster than motivation.</p>
+              <p className="eyebrow">Behaviour-change loop</p>
+              <h2 id="urge-loop-title">Notice. Pivot. Understand.</h2>
+              <p>Notice the difficult moment. Pivot into one safer next step. Understand the pattern over time.</p>
             </RevealOnScroll>
 
             <motion.div className="urge-loop-grid" aria-label="What happens when Impulsive steps in" initial={reduceMotion ? false : 'hidden'} whileInView={reduceMotion ? undefined : 'visible'} viewport={{ once: true, amount: 0.15 }} variants={{ visible: { transition: { staggerChildren: 0.08 } } }}>
@@ -708,7 +710,7 @@ export default function App() {
                   <span className="loop-marker" aria-hidden="true">01</span>
                   <div>
                     <h3>Notice</h3>
-                    <p>Spot the time, place, emotion, app, or routine that usually starts the loop.</p>
+                    <p>Spot the moment before the automatic action takes over.</p>
                   </div>
                 </article>
               </motion.div>
@@ -717,8 +719,8 @@ export default function App() {
                 <article className="urge-loop-card">
                   <span className="loop-marker" aria-hidden="true">02</span>
                   <div>
-                    <h3>Interrupt</h3>
-                    <p>Get one clear recovery action before autopilot takes over.</p>
+                    <h3>Pivot</h3>
+                    <p>Choose one short action that helps you create space and return to control.</p>
                   </div>
                 </article>
               </motion.div>
@@ -727,8 +729,8 @@ export default function App() {
                 <article className="urge-loop-card">
                   <span className="loop-marker" aria-hidden="true">03</span>
                   <div>
-                    <h3>Reduce</h3>
-                    <p>Save what helped and slowly weaken the pattern over time.</p>
+                    <h3>Understand</h3>
+                    <p>Learn your triggers, cues, time patterns, emotional states, and what the habit may be trying to soothe.</p>
                   </div>
                 </article>
               </motion.div>
@@ -741,7 +743,7 @@ export default function App() {
             <RevealOnScroll className="first-week-intro">
               <p className="eyebrow">First 7 days</p>
               <h2 id="first-week-title">Your first 7 days with Impulsive</h2>
-              <p>Impulsive does not throw every feature at you on day one. It starts with one clear recovery path, learns what helps, then unlocks stronger support when your pattern becomes clearer.</p>
+              <p>Impulsive does not throw every feature at you on day one. It starts with one clear support path, learns what helps, then unlocks stronger support when your pattern becomes clearer.</p>
             </RevealOnScroll>
 
             <motion.ol className="first-week-timeline" aria-label="Impulsive first week onboarding steps" initial={reduceMotion ? false : 'hidden'} whileInView={reduceMotion ? undefined : 'visible'} viewport={{ once: true, amount: 0.15 }} variants={{ visible: { transition: { staggerChildren: 0.1 } } }}>
@@ -767,8 +769,8 @@ export default function App() {
                 <span className="week-dot" aria-hidden="true">3</span>
                 <div>
                   <p className="week-label">Days 3-4</p>
-                  <h3>Build your first recovery proof</h3>
-                  <p>Basic tapering, short recovery actions, and game rotation help you see what actually interrupts the loop.</p>
+                  <h3>Build your first pivot proof</h3>
+                  <p>Basic tapering, short pivot actions, and game rotation help you see what actually helps you return to plan.</p>
                 </div>
               </motion.li>
 
@@ -797,7 +799,7 @@ export default function App() {
           <div className="container">
             <RevealOnScroll className="section-heading">
               <p className="eyebrow">Guided path map</p>
-              <h2 id="paths-title">Four ways Impulsive supports the recovery loop</h2>
+              <h2 id="paths-title">Four ways Impulsive supports the pivot loop</h2>
               <p>Impulsive starts with Mind first, then unlocks stronger support through movement, reflection, focus tools, and adaptive routing.</p>
             </RevealOnScroll>
             <motion.div className="path-cards" initial={reduceMotion ? false : 'hidden'} whileInView={reduceMotion ? undefined : 'visible'} viewport={{ once: true, amount: 0.15 }} variants={{ visible: { transition: { staggerChildren: 0.08 } } }}>
@@ -927,7 +929,7 @@ export default function App() {
                       <span className="status-pill">Optional</span>
                     </div>
                     <h3>Soul</h3>
-                    <p>For users who want faith, values, prayer, or reflection to be part of recovery without pressure.</p>
+                    <p>For users who want faith, values, prayer, or reflection to be part of support without pressure.</p>
                     <ul className="path-detail-list" aria-label="Soul details">
                       <li>Optional</li>
                       <li>Never forced</li>
@@ -950,9 +952,9 @@ export default function App() {
                     <p className="card-back-tag">Soul is optional. It appears only if enabled, then gives a short grounding action without pressure.</p>
                     <p className="card-back-section-h">How it works</p>
                     <ol className="card-back-steps">
-                      <li>You enable Soul only if faith, values, prayer, or reflection belongs in your recovery.</li>
+                      <li>You enable Soul only if faith, values, prayer, or reflection belongs in your support.</li>
                       <li>Impulsive suggests a short grounding action: prayer, reflection, passage reading, or recommitment.</li>
-                      <li>If you slip, Soul helps you restart without shame.</li>
+                      <li>After an off-plan moment, Soul helps you reset without judgement.</li>
                     </ol>
                     <span className="card-flip-hint card-flip-hint-back" aria-hidden="true">
                       <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 12H3M11 5l-7 7 7 7" /></svg>
@@ -1006,7 +1008,7 @@ export default function App() {
                     <p className="card-back-section-h">How it will work</p>
                     <ol className="card-back-steps">
                       <li>It will read the private pattern: trigger windows, past success, urge ratings, and fallback history.</li>
-                      <li>It will coordinate Mind, Body, Soul, Focus, and recovery games behind the scenes.</li>
+                      <li>It will coordinate Mind, Body, Soul, Focus, and pivot games behind the scenes.</li>
                       <li>It will recommend one clear action instead of showing every option at once.</li>
                       <li>It is designed to help Impulsive become more personal over time.</li>
                     </ol>
@@ -1024,11 +1026,11 @@ export default function App() {
         <section className="section recovery-games-section" id="games" aria-labelledby="recovery-games-title" ref={reflexSectionRef}>
           <div className="container">
             <RevealOnScroll className="section-heading recovery-games-heading">
-              <p className="eyebrow">RECOVERY GAMES</p>
-              <h2 id="recovery-games-title">Recovery games that interrupt the loop</h2>
-              <p>When advice is not enough, Impulsive gives the brain a short, recordable challenge. The goal is not endless play. The goal is to break autopilot, create a visible win, and return safely.</p>
-              <div className="game-flow-strip" aria-label="Recovery game flow">
-                <span>Trigger detected</span>
+              <p className="eyebrow">PIVOT GAMES</p>
+              <h2 id="recovery-games-title">Pivot games that help you pause</h2>
+              <p>When advice is not enough, Impulsive gives the brain a short, recordable challenge. The goal is not endless play. The goal is to create space, choose one safer next step, and return to plan.</p>
+              <div className="game-flow-strip" aria-label="Pivot game flow">
+                <span>Difficult moment noticed</span>
                 <span aria-hidden="true">→</span>
                 <span>60-second challenge</span>
                 <span aria-hidden="true">→</span>
@@ -1036,14 +1038,14 @@ export default function App() {
               </div>
             </RevealOnScroll>
 
-            <RevealOnScroll className="game-context-note">Reflex Override is the first recovery game. Impulsive is designed with 9 short interruption games in total.</RevealOnScroll>
+            <RevealOnScroll className="game-context-note">Reflex Override is the first pivot game. Impulsive is designed with 9 short pause games in total.</RevealOnScroll>
 
             <RevealOnScroll className="featured-game-card" style={{ "--game-color": selectedGame.accent } as React.CSSProperties}>
               <div className="featured-game-copy">
-                <span className="game-kicker">{selectedGameIndex === 0 ? "Featured first build" : "Selected recovery tool"}</span>
+                <span className="game-kicker">{selectedGameIndex === 0 ? "Featured first build" : "Selected pivot tool"}</span>
                 <h3>{selectedGame.name}</h3>
                 <span className="game-purpose-label">Purpose</span>
-                <p>{selectedGameIndex === 0 ? "A fast reaction game for peak-risk moments. Tap the correct targets, avoid decoys, build control, then finish with a safe exit." : selectedGame.purpose}</p>
+                <p>{selectedGameIndex === 0 ? "A fast reaction game for difficult habit moments. Tap the correct targets, avoid decoys, build control, then finish with a safe exit." : selectedGame.purpose}</p>
                 <dl className="game-facts">
                   <div>
                     <dt>Session</dt>
@@ -1051,7 +1053,7 @@ export default function App() {
                   </div>
                   <div>
                     <dt>Records</dt>
-                    <dd>{selectedGameIndex === 0 ? "reaction time, combo, urge drop" : selectedGame.record}</dd>
+                    <dd>{selectedGameIndex === 0 ? "reaction time, combo, intensity shift" : selectedGame.record}</dd>
                   </div>
                   <div className="safe-exit-fact">
                     <dt>Best score</dt>
@@ -1070,7 +1072,7 @@ export default function App() {
                       <span className="reflex-orbit orbit-two"></span>
                       <span className="reflex-scan"></span>
                       <span className="reflex-chip reflex-chip-score">Combo x4</span>
-                      <span className="reflex-chip reflex-chip-risk">Trigger 8/10</span>
+                      <span className="reflex-chip reflex-chip-risk">Intensity 8/10</span>
                       <span className="reflex-target target-main"></span>
                       <span className="reflex-target target-soft"></span>
                       <span className="reflex-target target-calm"></span>
@@ -1090,7 +1092,7 @@ export default function App() {
         <section className="section unlock-progression-section" id="progression" aria-labelledby="unlock-progression-title">
           <div className="container">
             <RevealOnScroll className="section-heading unlock-progression-heading">
-              <p className="eyebrow">Level-based recovery</p>
+              <p className="eyebrow">Level-based support</p>
               <h2 id="unlock-progression-title">Start tiny. Unlock strength.</h2>
             </RevealOnScroll>
 
@@ -1171,7 +1173,7 @@ export default function App() {
             <RevealOnScroll className="section-heading tiers-heading">
               <p className="eyebrow">Product boundaries</p>
               <h2 id="tiers-title">Free help first. Stronger tools later.</h2>
-              <p>Impulsive should help first, then offer stronger tools later. Basic recovery support stays available during risky moments. Upgrade choices belong in calm progress moments, not during weakness.</p>
+              <p>Impulsive should help first, then offer stronger tools later. Basic behaviour-change support stays available during difficult moments. Upgrade choices belong in calm progress moments, not during reset points.</p>
             </RevealOnScroll>
 
             <motion.div className="tiers-grid" initial={reduceMotion ? false : 'hidden'} whileInView={reduceMotion ? undefined : 'visible'} viewport={{ once: true, amount: 0.15 }} variants={{ visible: { transition: { staggerChildren: 0.06 } } }}>
@@ -1181,10 +1183,10 @@ export default function App() {
                   <span className="tier-badge">Free</span>
                   <span className="tier-name">Impulsive Core</span>
                 </div>
-                <p className="tier-copy">Mind Core, basic trigger interruption, schedule taper, standard recovery games, Standard Focus, and a private local progress ledger.</p>
+                <p className="tier-copy">Mind Core, basic pivot support, schedule taper, standard pivot games, Standard Focus, and a private local progress ledger.</p>
                 <div className="tier-position">
                   <span className="tier-position-label">What it gives you</span>
-                  <p>Enough to understand the app, build trust, and start interrupting the loop.</p>
+                  <p>Enough to understand the app, build trust, and start creating a pause.</p>
                 </div>
               </motion.article>
 
@@ -1239,7 +1241,7 @@ export default function App() {
           <RevealOnScroll className="container split-panel">
             <div>
               <p className="eyebrow">The problem</p>
-              <h2 id="problem-title">Most habit apps make one slip feel like failure.</h2>
+              <h2 id="problem-title">Most habit apps make one off-plan moment feel too final.</h2>
             </div>
             <p>Many tools ask you to stay strong after the loop is already moving. Impulsive is designed to help earlier, when one clear action can still change the next step.</p>
           </RevealOnScroll>
@@ -1250,10 +1252,10 @@ export default function App() {
           <RevealOnScroll className="container section-text-column">
             <article className="credibility-pane credibility-pane--principles animated-foundation-card" aria-labelledby="principles-title">
               <p className="eyebrow"><strong>PRINCIPLES</strong></p>
-              <h2 id="principles-title"><strong>Built without shame loops.</strong></h2>
-              <p className="credibility-principles-line"><strong>No shame streaks. No fake scores. No trigger paywalls. Private by design.</strong></p>
-              <div className="credibility-chips-group" aria-label="Recovery paths">
-                <p className="credibility-chips-label">Recovery paths</p>
+              <h2 id="principles-title"><strong>Built without judgement loops.</strong></h2>
+              <p className="credibility-principles-line"><strong>No red reset screens. No fake scores. No trigger paywalls. Private by design.</strong></p>
+              <div className="credibility-chips-group" aria-label="Support paths">
+                <p className="credibility-chips-label">Support paths</p>
                 <div className="credibility-chips">
                   <span className="credibility-chip" style={{ "--chip-color": "var(--mind-color)" } as React.CSSProperties}>Mind</span>
                   <span className="credibility-chip" style={{ "--chip-color": "var(--body-color)" } as React.CSSProperties}>Body</span>
@@ -1273,11 +1275,11 @@ export default function App() {
               <ul className="about-credibility-lines" aria-label="About Impulsive">
                 <li className="about-credibility-item">
                   <span className="about-bullet" aria-hidden="true"></span>
-                  <p><strong>Privacy-first:</strong><span className="about-bullet-desc"> sensitive recovery records stay private and local-first by default.</span></p>
+                  <p><strong>Privacy-first:</strong><span className="about-bullet-desc"> sensitive habit moments and reflections stay private and local-first by default.</span></p>
                 </li>
                 <li className="about-credibility-item">
                   <span className="about-bullet" aria-hidden="true"></span>
-                  <p><strong>Careful language:</strong><span className="about-bullet-desc"> no cure claims, fake percentages, or medical promises.</span></p>
+                  <p><strong>Careful language:</strong><span className="about-bullet-desc"> no treatment claims, fake percentages, or clinical promises.</span></p>
                 </li>
                 <li className="about-credibility-item">
                   <span className="about-bullet" aria-hidden="true"></span>
@@ -1285,7 +1287,7 @@ export default function App() {
                 </li>
               </ul>
               <div className="about-footer-row about-footer-row--disclaimer">
-                <p className="about-disclaimer">Impulsive is not a substitute for therapy, diagnosis, crisis support, or professional medical advice. If you are in crisis, please contact your GP, a qualified therapist, or the Samaritans on 116 123.</p>
+                <p className="about-disclaimer">Impulsive is a behaviour-change support tool for adults. It is not a medical device, therapy service, diagnosis tool, crisis-support service, or clinically validated treatment. It does not diagnose, treat, cure, or prevent addiction, compulsions, mental health conditions, or any medical condition. It helps you create a pause, choose a next step, and understand your patterns.</p>
               </div>
             </article>
           </RevealOnScroll>
@@ -1296,12 +1298,16 @@ export default function App() {
             <RevealOnScroll className="section-heading">
               <p className="eyebrow">FAQ</p>
               <h2 id="faq-title">Questions before you join.</h2>
-              <p className="faq-intro">Impulsive is built for private, difficult habit loops, so the answers should be clear before anyone signs up.</p>
+              <p className="faq-intro">Impulsive is built for private behaviour-change support around difficult habit moments, so the answers should be clear before anyone signs up.</p>
             </RevealOnScroll>
             <div className="faq-list">
               <details className="faq-item">
                 <summary>What does Impulsive actually do?</summary>
-                <p>Impulsive is a behaviour-change app designed for the moment a habit loop accelerates. When a trigger starts, it gives you structured tools to pause and redirect breathing patterns, body-focused grounding, short recovery games, and a calm reflection log. Between sessions it shows patterns over time so you can understand your own loop more clearly.</p>
+                <p>Impulsive is a behaviour-change support app for adults who want a short pause between a difficult habit moment and the next action. It helps you notice the moment, choose one pivot action, and understand triggers, cues, time patterns, emotional states, and what the habit may be trying to soothe.</p>
+              </details>
+              <details className="faq-item">
+                <summary>Does Impulsive judge sexual behaviour?</summary>
+                <p>No. Impulsive does not judge sexual desire, masturbation, porn use, kink, identity, or consensual sexual behaviour. It is only concerned with moments where a behaviour feels distressing, hard to control, harmful, unwanted, misaligned with your values, or difficult to stop despite consequences.</p>
               </details>
               <details className="faq-item">
                 <summary>Is my data private?</summary>
@@ -1309,7 +1315,7 @@ export default function App() {
               </details>
               <details className="faq-item">
                 <summary>Is Impulsive a replacement for therapy?</summary>
-                <p>No. Impulsive is a behaviour-change support tool, not therapy, diagnosis, or clinical treatment. It is designed to sit alongside professional support. If you are in crisis or need clinical care, please contact your GP, a qualified therapist, or the Samaritans on 116 123.</p>
+                <p>No. Impulsive is a behaviour-change support tool for adults. It is not a medical device, therapy service, diagnosis tool, crisis-support service, or clinically validated treatment. If you feel at risk of harming yourself or someone else, or you are in immediate danger, contact emergency services or local crisis support now.</p>
               </details>
               <details className="faq-item">
                 <summary>What is the waitlist for?</summary>
@@ -1324,7 +1330,7 @@ export default function App() {
             <div>
               <p className="eyebrow">Waitlist</p>
               <h2 id="waitlist-title">Join the Impulsive waitlist.</h2>
-              <p>Get notified when Impulsive is ready for wider testing or release.</p>
+              <p>Get notified when private behaviour-change support for difficult habit moments is ready for wider testing or release.</p>
             </div>
             <form
               className="waitlist-form"
@@ -1365,7 +1371,7 @@ export default function App() {
               <img src="/images/icons/impulsive-logo-transparent-clean.png" alt="" />
               <span>Impulsive</span>
             </a>
-            <p className="footer-tagline">Privacy-first behaviour change.</p>
+            <p className="footer-tagline">Private behaviour-change support for adults.</p>
             <p className="footer-location">Built in London</p>
           </div>
           <nav className="footer-nav" aria-label="Product links">
@@ -1390,7 +1396,7 @@ export default function App() {
         </div>
         <div className="container footer-base">
           <div className="footer-base-text">
-            <p className="footer-disclaimer">Impulsive is an early-stage behaviour-change support product. It is not a replacement for professional medical or mental health care.</p>
+            <p className="footer-disclaimer">Impulsive helps adults create a pause, choose a next step, and understand habit patterns. It is not therapy, a diagnosis tool, or crisis support.</p>
             <p className="footer-removal-note">Want to leave the waitlist or request deletion of your email? Email <a href="mailto:hello@useimpulsive.com">hello@useimpulsive.com</a>.</p>
           </div>
           <p className="footer-copyright">&copy; {new Date().getFullYear()} Impulsive. All rights reserved.</p>

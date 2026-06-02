@@ -10,4 +10,4 @@ Waitlist removal and email deletion requests can be sent to hello@useimpulsive.c
 
 The public privacy page is available at https://useimpulsive.com/privacy.html and was last updated on 20 May 2026.
 
-Impulsive is not a medical device, therapy service, diagnosis service, or crisis service. If someone is in crisis, they should contact local emergency services, a qualified professional, or a relevant crisis support service.
+Impulsive is a behaviour-change support tool for adults. It is not a medical device, therapy service, diagnosis tool, crisis-support service, or clinically validated treatment. If someone feels at risk of harming themselves or someone else, or is in immediate danger, they should contact emergency services or local crisis support now.

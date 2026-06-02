@@ -21,8 +21,8 @@ This folder contains materials for advisor outreach. Everything here is intended
 | File | What it shows |
 |---|---|
 | `01-hero-desktop.png` | Hero section at 1440px — headline, phone mockup, and core value proposition |
-| `02-product-section.png` | Product explanation — Notice / Interrupt / Reduce framing |
-| `03-principles-about.png` | Principles section — "Built without shame loops" and the design values |
+| `02-product-section.png` | Product explanation — Notice / pivot / Reduce framing |
+| `03-principles-about.png` | Principles section — "Built without judgement loops" and the design values |
 | `04-waitlist.png` | Waitlist section — how early supporters are joining |
 | `05-mobile-hero.png` | Mobile hero at 390px — responsive layout on a phone-sized screen |
 

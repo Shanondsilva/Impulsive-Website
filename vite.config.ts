@@ -19,6 +19,7 @@ export default defineConfig(() => {
         input: {
           main: path.resolve(__dirname, 'index.html'),
           howImpulsiveWorks: path.resolve(__dirname, 'how-impulsive-works/index.html'),
+          privateBehaviourChangeSupport: path.resolve(__dirname, 'private-behaviour-change-support/index.html'),
         },
       },
     },

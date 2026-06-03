@@ -530,6 +530,17 @@ export default {
       return withAssetCacheHeaders(await env.ASSETS.fetch(new Request(assetUrl, request)));
     }
 
+    if (url.pathname === "/private-behaviour-change-support.html") {
+      url.pathname = "/private-behaviour-change-support";
+      return Response.redirect(url.toString(), 301);
+    }
+
+    if (url.pathname === "/private-behaviour-change-support" || url.pathname === "/private-behaviour-change-support/") {
+      const assetUrl = new URL(request.url);
+      assetUrl.pathname = "/private-behaviour-change-support/index.html";
+      return withAssetCacheHeaders(await env.ASSETS.fetch(new Request(assetUrl, request)));
+    }
+
     return withAssetCacheHeaders(await env.ASSETS.fetch(request));
   }
 };

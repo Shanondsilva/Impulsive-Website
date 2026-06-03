@@ -68,6 +68,19 @@ async function startServer() {
         next(error);
       }
     });
+    app.get("/private-behaviour-change-support.html", (req, res) => {
+      res.redirect(301, "/private-behaviour-change-support");
+    });
+    app.get(["/private-behaviour-change-support", "/private-behaviour-change-support/"], async (req, res, next) => {
+      try {
+        const templatePath = path.join(process.cwd(), "private-behaviour-change-support", "index.html");
+        const template = await fs.readFile(templatePath, "utf-8");
+        const html = await vite.transformIndexHtml(req.originalUrl, template);
+        res.status(200).set({ "Content-Type": "text/html" }).end(html);
+      } catch (error) {
+        next(error);
+      }
+    });
     app.use(vite.middlewares);
     app.get("*", async (req, res, next) => {
       try {
@@ -86,6 +99,12 @@ async function startServer() {
     });
     app.get(["/how-impulsive-works", "/how-impulsive-works/"], (req, res) => {
       res.sendFile(path.join(distPath, "how-impulsive-works", "index.html"));
+    });
+    app.get("/private-behaviour-change-support.html", (req, res) => {
+      res.redirect(301, "/private-behaviour-change-support");
+    });
+    app.get(["/private-behaviour-change-support", "/private-behaviour-change-support/"], (req, res) => {
+      res.sendFile(path.join(distPath, "private-behaviour-change-support", "index.html"));
     });
     app.use(express.static(distPath));
     app.get("*", (req, res) => {

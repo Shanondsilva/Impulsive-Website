@@ -519,9 +519,14 @@ export default {
       return handleWaitlist(request, env);
     }
 
+    if (url.pathname === "/how-impulsive-works.html") {
+      url.pathname = "/how-impulsive-works";
+      return Response.redirect(url.toString(), 301);
+    }
+
     if (url.pathname === "/how-impulsive-works" || url.pathname === "/how-impulsive-works/") {
       const assetUrl = new URL(request.url);
-      assetUrl.pathname = "/how-impulsive-works.html";
+      assetUrl.pathname = "/how-impulsive-works/index.html";
       return withAssetCacheHeaders(await env.ASSETS.fetch(new Request(assetUrl, request)));
     }
 

@@ -18,7 +18,7 @@ export default defineConfig(() => {
       rollupOptions: {
         input: {
           main: path.resolve(__dirname, 'index.html'),
-          howImpulsiveWorks: path.resolve(__dirname, 'how-impulsive-works.html'),
+          howImpulsiveWorks: path.resolve(__dirname, 'how-impulsive-works/index.html'),
         },
       },
     },

@@ -55,10 +55,12 @@ async function startServer() {
       server: { middlewareMode: true },
       appType: "custom",
     });
-    app.use(vite.middlewares);
+    app.get("/how-impulsive-works.html", (req, res) => {
+      res.redirect(301, "/how-impulsive-works");
+    });
     app.get(["/how-impulsive-works", "/how-impulsive-works/"], async (req, res, next) => {
       try {
-        const templatePath = path.join(process.cwd(), "how-impulsive-works.html");
+        const templatePath = path.join(process.cwd(), "how-impulsive-works", "index.html");
         const template = await fs.readFile(templatePath, "utf-8");
         const html = await vite.transformIndexHtml(req.originalUrl, template);
         res.status(200).set({ "Content-Type": "text/html" }).end(html);
@@ -66,6 +68,7 @@ async function startServer() {
         next(error);
       }
     });
+    app.use(vite.middlewares);
     app.get("*", async (req, res, next) => {
       try {
         const templatePath = path.join(process.cwd(), "index.html");
@@ -78,10 +81,13 @@ async function startServer() {
     });
   } else {
     const distPath = path.join(process.cwd(), "dist");
-    app.use(express.static(distPath));
-    app.get(["/how-impulsive-works", "/how-impulsive-works/"], (req, res) => {
-      res.sendFile(path.join(distPath, "how-impulsive-works.html"));
+    app.get("/how-impulsive-works.html", (req, res) => {
+      res.redirect(301, "/how-impulsive-works");
     });
+    app.get(["/how-impulsive-works", "/how-impulsive-works/"], (req, res) => {
+      res.sendFile(path.join(distPath, "how-impulsive-works", "index.html"));
+    });
+    app.use(express.static(distPath));
     app.get("*", (req, res) => {
       res.sendFile(path.join(distPath, "index.html"));
     });

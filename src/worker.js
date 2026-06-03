@@ -519,6 +519,12 @@ export default {
       return handleWaitlist(request, env);
     }
 
+    if (url.pathname === "/how-impulsive-works" || url.pathname === "/how-impulsive-works/") {
+      const assetUrl = new URL(request.url);
+      assetUrl.pathname = "/how-impulsive-works.html";
+      return withAssetCacheHeaders(await env.ASSETS.fetch(new Request(assetUrl, request)));
+    }
+
     return withAssetCacheHeaders(await env.ASSETS.fetch(request));
   }
 };

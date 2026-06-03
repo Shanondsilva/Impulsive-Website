@@ -2,6 +2,7 @@ import express from "express";
 import { createServer as createViteServer } from "vite";
 import path from "path";
 import cors from "cors";
+import fs from "fs/promises";
 
 async function startServer() {
   const app = express();
@@ -52,12 +53,35 @@ async function startServer() {
   if (process.env.NODE_ENV !== "production") {
     const vite = await createViteServer({
       server: { middlewareMode: true },
-      appType: "spa",
+      appType: "custom",
     });
     app.use(vite.middlewares);
+    app.get(["/how-impulsive-works", "/how-impulsive-works/"], async (req, res, next) => {
+      try {
+        const templatePath = path.join(process.cwd(), "how-impulsive-works.html");
+        const template = await fs.readFile(templatePath, "utf-8");
+        const html = await vite.transformIndexHtml(req.originalUrl, template);
+        res.status(200).set({ "Content-Type": "text/html" }).end(html);
+      } catch (error) {
+        next(error);
+      }
+    });
+    app.get("*", async (req, res, next) => {
+      try {
+        const templatePath = path.join(process.cwd(), "index.html");
+        const template = await fs.readFile(templatePath, "utf-8");
+        const html = await vite.transformIndexHtml(req.originalUrl, template);
+        res.status(200).set({ "Content-Type": "text/html" }).end(html);
+      } catch (error) {
+        next(error);
+      }
+    });
   } else {
     const distPath = path.join(process.cwd(), "dist");
     app.use(express.static(distPath));
+    app.get(["/how-impulsive-works", "/how-impulsive-works/"], (req, res) => {
+      res.sendFile(path.join(distPath, "how-impulsive-works.html"));
+    });
     app.get("*", (req, res) => {
       res.sendFile(path.join(distPath, "index.html"));
     });

@@ -14,5 +14,13 @@ export default defineConfig(() => {
     server: {
       hmr: process.env.DISABLE_HMR !== 'true',
     },
+    build: {
+      rollupOptions: {
+        input: {
+          main: path.resolve(__dirname, 'index.html'),
+          howImpulsiveWorks: path.resolve(__dirname, 'how-impulsive-works.html'),
+        },
+      },
+    },
   };
 });

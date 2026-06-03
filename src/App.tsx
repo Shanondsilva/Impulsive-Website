@@ -8,9 +8,15 @@ import { ReflexOverrideGame } from './components/ReflexOverrideGame';
 import { RevealOnScroll } from './components/RevealOnScroll';
 import { useDarkMode } from './hooks/useDarkMode';
 
-// TODO: Paste your real Turnstile site key here after creating a widget in
-// the Cloudflare dashboard → Security → Turnstile → Create widget.
-const TURNSTILE_SITE_KEY = "REPLACE_WITH_SITE_KEY";
+type ViteImportMeta = ImportMeta & {
+  env?: Record<string, string | undefined>;
+};
+
+const TURNSTILE_PLACEHOLDER_SITE_KEY = ["REPLACE", "WITH", "SITE", "KEY"].join("_");
+const TURNSTILE_SITE_KEY = ((import.meta as ViteImportMeta).env?.VITE_TURNSTILE_SITE_KEY ?? "").trim();
+const isTurnstileConfigured = (siteKey: string) => Boolean(siteKey) && siteKey !== TURNSTILE_PLACEHOLDER_SITE_KEY;
+const TURNSTILE_IS_CONFIGURED = isTurnstileConfigured(TURNSTILE_SITE_KEY);
+const TURNSTILE_NOT_CONFIGURED_MESSAGE = "The waitlist security check is not configured yet. Please try again later.";
 
 declare global {
   interface Window {
@@ -392,6 +398,8 @@ export default function App() {
   }, []);
 
   useEffect(() => {
+    if (!TURNSTILE_IS_CONFIGURED) return;
+
     const scriptId = "cf-turnstile-script";
     const renderWidget = () => {
       if (turnstileContainerRef.current && window.turnstile && turnstileWidgetIdRef.current === null) {
@@ -431,6 +439,11 @@ export default function App() {
 
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       setFormStatus({ message: "Please enter a valid email address.", type: "error" });
+      return;
+    }
+
+    if (!TURNSTILE_IS_CONFIGURED) {
+      setFormStatus({ message: TURNSTILE_NOT_CONFIGURED_MESSAGE, type: "error" });
       return;
     }
 
@@ -1352,7 +1365,9 @@ export default function App() {
                   ) : "Join Waitlist"}
                 </button>
               </div>
-              <div ref={turnstileContainerRef} style={{ margin: '0.75rem 0 0' }} />
+              {TURNSTILE_IS_CONFIGURED && (
+                <div ref={turnstileContainerRef} style={{ margin: '0.75rem 0 0' }} />
+              )}
               {formStatus.message && (
                 <p className="form-note" data-state={formStatus.type} aria-live="polite">
                   {formStatus.message}

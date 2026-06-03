@@ -81,6 +81,19 @@ async function startServer() {
         next(error);
       }
     });
+    app.get("/focus-mode.html", (req, res) => {
+      res.redirect(301, "/focus-mode");
+    });
+    app.get(["/focus-mode", "/focus-mode/"], async (req, res, next) => {
+      try {
+        const templatePath = path.join(process.cwd(), "focus-mode", "index.html");
+        const template = await fs.readFile(templatePath, "utf-8");
+        const html = await vite.transformIndexHtml(req.originalUrl, template);
+        res.status(200).set({ "Content-Type": "text/html" }).end(html);
+      } catch (error) {
+        next(error);
+      }
+    });
     app.use(vite.middlewares);
     app.get("*", async (req, res, next) => {
       try {
@@ -105,6 +118,12 @@ async function startServer() {
     });
     app.get(["/private-behaviour-change-support", "/private-behaviour-change-support/"], (req, res) => {
       res.sendFile(path.join(distPath, "private-behaviour-change-support", "index.html"));
+    });
+    app.get("/focus-mode.html", (req, res) => {
+      res.redirect(301, "/focus-mode");
+    });
+    app.get(["/focus-mode", "/focus-mode/"], (req, res) => {
+      res.sendFile(path.join(distPath, "focus-mode", "index.html"));
     });
     app.use(express.static(distPath));
     app.get("*", (req, res) => {

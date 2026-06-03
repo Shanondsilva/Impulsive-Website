@@ -541,6 +541,17 @@ export default {
       return withAssetCacheHeaders(await env.ASSETS.fetch(new Request(assetUrl, request)));
     }
 
+    if (url.pathname === "/focus-mode.html") {
+      url.pathname = "/focus-mode";
+      return Response.redirect(url.toString(), 301);
+    }
+
+    if (url.pathname === "/focus-mode" || url.pathname === "/focus-mode/") {
+      const assetUrl = new URL(request.url);
+      assetUrl.pathname = "/focus-mode/index.html";
+      return withAssetCacheHeaders(await env.ASSETS.fetch(new Request(assetUrl, request)));
+    }
+
     return withAssetCacheHeaders(await env.ASSETS.fetch(request));
   }
 };

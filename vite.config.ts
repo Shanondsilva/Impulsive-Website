@@ -20,6 +20,7 @@ export default defineConfig(() => {
           main: path.resolve(__dirname, 'index.html'),
           howImpulsiveWorks: path.resolve(__dirname, 'how-impulsive-works/index.html'),
           privateBehaviourChangeSupport: path.resolve(__dirname, 'private-behaviour-change-support/index.html'),
+          focusMode: path.resolve(__dirname, 'focus-mode/index.html'),
         },
       },
     },

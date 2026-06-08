@@ -94,7 +94,8 @@
         margin-top: 30px;
       }
 
-      a {
+      a,
+      button {
         min-height: 48px;
         display: inline-flex;
         align-items: center;
@@ -104,6 +105,9 @@
         font-size: 15px;
         font-weight: 700;
         text-decoration: none;
+        border: 0;
+        cursor: pointer;
+        font-family: inherit;
       }
 
       .primary {
@@ -122,11 +126,29 @@
         }
 
         .actions,
-        a {
+        a,
+        button {
           width: 100%;
         }
       }
     </style>
+    <script>
+      var intentUrl =
+        "intent://auth/verified#Intent;scheme=impulsive;package=com.impulsive.app.debug;end";
+      var fallbackUrl = "impulsive://auth/verified";
+
+      function openImpulsive() {
+        window.location.href = intentUrl;
+
+        setTimeout(function () {
+          window.location.href = fallbackUrl;
+        }, 900);
+      }
+
+      window.addEventListener("DOMContentLoaded", function () {
+        setTimeout(openImpulsive, 700);
+      });
+    </script>
   </head>
   <body>
     <main>
@@ -138,7 +160,7 @@
       <h1>Email verified</h1>
       <p>Your email has been verified. Open Impulsive to continue.</p>
       <div class="actions">
-        <a class="primary" href="impulsive://auth/verified">Open app</a>
+        <button class="primary" onclick="openImpulsive()">Open Impulsive</button>
         <a class="secondary" href="/">Go to website</a>
       </div>
     </main>

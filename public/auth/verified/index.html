@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Email verified | Impulsive</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --bg: #f7f3ee;
+        --text: #2d2730;
+        --muted: #6f6673;
+        --panel: #ffffff;
+        --line: #e8ded5;
+        --accent: #47c985;
+        --accent-strong: #2d8f5c;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        padding: 32px 18px;
+        background: var(--bg);
+        color: var(--text);
+        font-family: Arial, Helvetica, sans-serif;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      main {
+        width: min(100%, 460px);
+        background: var(--panel);
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        padding: 36px;
+        box-shadow: 0 24px 60px rgba(45, 39, 48, 0.08);
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 36px;
+        font-size: 13px;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+
+      .brand img {
+        width: 32px;
+        height: 32px;
+      }
+
+      .mark {
+        width: 42px;
+        height: 42px;
+        display: grid;
+        place-items: center;
+        border-radius: 50%;
+        background: rgba(71, 201, 133, 0.14);
+        color: var(--accent-strong);
+        font-size: 24px;
+        font-weight: 700;
+        margin-bottom: 22px;
+      }
+
+      h1 {
+        margin: 0 0 14px;
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: clamp(34px, 8vw, 48px);
+        line-height: 1.05;
+        font-weight: 500;
+        letter-spacing: 0;
+      }
+
+      p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 16px;
+        line-height: 1.7;
+      }
+
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 30px;
+      }
+
+      a {
+        min-height: 48px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 6px;
+        padding: 13px 18px;
+        font-size: 15px;
+        font-weight: 700;
+        text-decoration: none;
+      }
+
+      .primary {
+        background: var(--text);
+        color: #ffffff;
+      }
+
+      .secondary {
+        border: 1px solid var(--line);
+        color: var(--text);
+      }
+
+      @media (max-width: 420px) {
+        main {
+          padding: 28px 22px;
+        }
+
+        .actions,
+        a {
+          width: 100%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <div class="brand">
+        <img src="/images/impulsive-logo-vector.svg" alt="" />
+        <span>Impulsive</span>
+      </div>
+      <div class="mark" aria-hidden="true">✓</div>
+      <h1>Email verified</h1>
+      <p>Your email has been verified. Open Impulsive to continue.</p>
+      <div class="actions">
+        <a class="primary" href="impulsive://auth/verified">Open app</a>
+        <a class="secondary" href="/">Go to website</a>
+      </div>
+    </main>
+  </body>
+</html>

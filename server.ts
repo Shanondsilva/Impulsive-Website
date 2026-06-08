@@ -94,6 +94,15 @@ async function startServer() {
         next(error);
       }
     });
+    app.get(["/auth/verified", "/auth/verified/"], async (req, res, next) => {
+      try {
+        const templatePath = path.join(process.cwd(), "public", "auth", "verified", "index.html");
+        const template = await fs.readFile(templatePath, "utf-8");
+        res.status(200).set({ "Content-Type": "text/html" }).end(template);
+      } catch (error) {
+        next(error);
+      }
+    });
     app.use(vite.middlewares);
     app.get("*", async (req, res, next) => {
       try {
@@ -124,6 +133,9 @@ async function startServer() {
     });
     app.get(["/focus-mode", "/focus-mode/"], (req, res) => {
       res.sendFile(path.join(distPath, "focus-mode", "index.html"));
+    });
+    app.get(["/auth/verified", "/auth/verified/"], (req, res) => {
+      res.sendFile(path.join(distPath, "auth", "verified", "index.html"));
     });
     app.use(express.static(distPath));
     app.get("*", (req, res) => {

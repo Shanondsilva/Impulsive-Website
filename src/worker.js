@@ -519,6 +519,12 @@ export default {
       return handleWaitlist(request, env);
     }
 
+    if (url.pathname === "/auth/verified" || url.pathname === "/auth/verified/") {
+      const assetUrl = new URL(request.url);
+      assetUrl.pathname = "/auth/verified/index.html";
+      return withAssetCacheHeaders(await env.ASSETS.fetch(new Request(assetUrl, request)));
+    }
+
     if (url.pathname === "/how-impulsive-works.html") {
       url.pathname = "/how-impulsive-works";
       return Response.redirect(url.toString(), 301);

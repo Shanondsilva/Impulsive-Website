@@ -1360,7 +1360,7 @@ export default function App() {
                   {isSubmitting ? (
                     <>
                       <span className="button-spinner" aria-hidden="true" />
-                      <span>Sending…</span>
+                      <span>Sending...</span>
                     </>
                   ) : "Join Waitlist"}
                 </button>

@@ -1,5 +1,6 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import {
+  destroyAnimationActors,
   initAnimationActors,
   runDarkModeAnimation,
   runLightModeAnimation,
@@ -24,9 +25,14 @@ const applyTheme = (theme: Theme): void => {
 
 export function useDarkMode() {
   const [theme, setTheme] = useState<Theme>(readStoredTheme);
+  const toggleInProgressRef = useRef(false);
 
   useEffect(() => {
     initAnimationActors();
+
+    return () => {
+      destroyAnimationActors();
+    };
   }, []);
 
   useEffect(() => {
@@ -35,23 +41,31 @@ export function useDarkMode() {
 
   const toggle = useCallback(
     async (toggleEl?: HTMLElement | null) => {
-      const next: Theme = theme === 'dark' ? 'light' : 'dark';
+      if (toggleInProgressRef.current) return;
 
-      if (next === 'dark') {
-        const animated = await runDarkModeAnimation(toggleEl ?? null);
-        if (!animated) applyTheme('dark');
-      } else {
-        const animated = await runLightModeAnimation(toggleEl ?? null);
-        if (!animated) applyTheme('light');
-      }
+      toggleInProgressRef.current = true;
 
       try {
-        localStorage.setItem(STORAGE_KEY, next);
-      } catch {
-        // The visible theme still changes even if storage is unavailable.
-      }
+        const next: Theme = theme === 'dark' ? 'light' : 'dark';
 
-      setTheme(next);
+        if (next === 'dark') {
+          const animated = await runDarkModeAnimation(toggleEl ?? null);
+          if (!animated) applyTheme('dark');
+        } else {
+          const animated = await runLightModeAnimation(toggleEl ?? null);
+          if (!animated) applyTheme('light');
+        }
+
+        try {
+          localStorage.setItem(STORAGE_KEY, next);
+        } catch {
+          // The visible theme still changes even if storage is unavailable.
+        }
+
+        setTheme(next);
+      } finally {
+        toggleInProgressRef.current = false;
+      }
     },
     [theme],
   );

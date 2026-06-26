@@ -21,17 +21,45 @@ let wire: HTMLDivElement | null = null;
 let wireLine: SVGLineElement | null = null;
 let wireHandle: SVGCircleElement | null = null;
 let busy = false;
-let initialized = false;
 let animGeneration = 0;
+
+type AnimationActors = {
+  stickman: HTMLDivElement;
+  wire: HTMLDivElement;
+  wireLine: SVGLineElement;
+  wireHandle: SVGCircleElement;
+};
 
 const wait = (ms: number) => new Promise<void>((r) => setTimeout(r, ms));
 
 const clamp = (value: number, min: number, max: number): number =>
   Math.min(Math.max(value, min), max);
 
+function getConnectedActors(): AnimationActors | null {
+  if (
+    !stickman?.isConnected ||
+    !wire?.isConnected ||
+    !wireLine?.isConnected ||
+    !wireHandle?.isConnected
+  ) {
+    return null;
+  }
+
+  return {
+    stickman,
+    wire,
+    wireLine,
+    wireHandle,
+  };
+}
+
 export function initAnimationActors(): void {
-  if (initialized) return;
-  initialized = true;
+  if (getConnectedActors()) return;
+  if (!document.body) return;
+
+  document
+    .querySelectorAll<HTMLElement>('.dm-stickman, .dm-wire')
+    .forEach((element) => element.remove());
 
   stickman = document.createElement('div');
   stickman.className = 'dm-stickman';
@@ -47,16 +75,55 @@ export function initAnimationActors(): void {
   wireHandle = wire.querySelector<SVGCircleElement>('.dm-wire-handle');
 }
 
+function resetAnimationState(actors: AnimationActors): void {
+  actors.stickman.className = 'dm-stickman';
+  actors.stickman.style.right = '';
+  actors.stickman.style.top = '';
+
+  actors.wire.classList.remove('show');
+  actors.wireLine.setAttribute('y2', '108');
+  actors.wireHandle.setAttribute('cy', '115');
+
+  document.querySelectorAll<HTMLElement>('[data-fallable]').forEach((element) => {
+    element.style.opacity = '';
+  });
+
+  document
+    .querySelectorAll<HTMLElement>(
+      '.dm-spark, [data-dark-mode-animation-clone="true"]',
+    )
+    .forEach((element) => element.remove());
+}
+
+export function destroyAnimationActors(): void {
+  animGeneration += 1;
+  busy = false;
+
+  document
+    .querySelectorAll<HTMLElement>(
+      '.dm-stickman, .dm-wire, .dm-spark, [data-dark-mode-animation-clone="true"]',
+    )
+    .forEach((element) => element.remove());
+
+  document.querySelectorAll<HTMLElement>('[data-fallable]').forEach((element) => {
+    element.style.opacity = '';
+  });
+
+  stickman = null;
+  wire = null;
+  wireLine = null;
+  wireHandle = null;
+}
+
 function setThemeAttr(dark: boolean): void {
   document.documentElement.dataset.theme = dark ? 'dark' : 'light';
   document.documentElement.style.colorScheme = dark ? 'dark' : 'light';
 }
 
-function positionWire(toggleEl: HTMLElement): void {
-  if (!wire) return;
+function positionWire(toggleEl: HTMLElement, activeWire: HTMLDivElement): void {
   const t = toggleEl.getBoundingClientRect();
-  wire.style.left = `${t.left + t.width / 2 - 8}px`;
-  wire.style.top = `${t.bottom - 2}px`;
+  activeWire.style.left = `${t.left + t.width / 2 - 8}px`;
+  activeWire.style.top = `${t.bottom - 2}px`;
 }
 
 function spawnSpark(x: number, y: number): void {
@@ -109,6 +176,7 @@ function dropElement(el: HTMLElement): void {
   burst(r.left + r.width / 2, r.top + r.height / 2, 7);
 
   const clone = el.cloneNode(true) as HTMLElement;
+  clone.dataset.darkModeAnimationClone = 'true';
   Object.assign(clone.style, {
     position: 'fixed',
     left: `${r.left}px`,
@@ -138,7 +206,19 @@ function dropElement(el: HTMLElement): void {
 }
 
 export async function runDarkModeAnimation(toggleEl: HTMLElement | null): Promise<boolean> {
-  if (busy || !toggleEl || !stickman || !wire || !wireLine || !wireHandle) return false;
+  if (busy || !toggleEl) return false;
+
+  initAnimationActors();
+
+  const actors = getConnectedActors();
+  if (!actors) return false;
+
+  const {
+    stickman: activeStickman,
+    wire: activeWire,
+    wireLine: activeWireLine,
+    wireHandle: activeWireHandle,
+  } = actors;
 
   if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
     setThemeAttr(true);
@@ -149,75 +229,96 @@ export async function runDarkModeAnimation(toggleEl: HTMLElement | null): Promis
   const gen = ++animGeneration;
   const isActive = () => gen === animGeneration;
 
-  positionWire(toggleEl);
-  wire.classList.add('show');
-  await wait(280);
-  if (!isActive()) return false;
+  try {
+    positionWire(toggleEl, activeWire);
+    activeWire.classList.add('show');
+    await wait(280);
+    if (!isActive()) return false;
 
-  const wireR = wire.getBoundingClientRect();
-  const handleR = wireHandle.getBoundingClientRect();
-  const isMobile = window.innerWidth <= 640;
-  const walkMs = isMobile ? 1050 : 1300;
-  const targetRight = clamp(window.innerWidth - wireR.left - 36, 6, window.innerWidth - 42);
-  const targetTop = clamp(handleR.top - 14, 46, Math.max(46, window.innerHeight - 96));
-  stickman.style.right = `${targetRight}px`;
-  stickman.style.top = `${targetTop}px`;
-  await wait(walkMs);
-  if (!isActive()) return false;
+    const wireR = activeWire.getBoundingClientRect();
+    const handleR = activeWireHandle.getBoundingClientRect();
+    const isMobile = window.innerWidth <= 640;
+    const walkMs = isMobile ? 1050 : 1300;
+    const targetRight = clamp(window.innerWidth - wireR.left - 36, 6, window.innerWidth - 42);
+    const targetTop = clamp(handleR.top - 14, 46, Math.max(46, window.innerHeight - 96));
+    activeStickman.style.right = `${targetRight}px`;
+    activeStickman.style.top = `${targetTop}px`;
+    await wait(walkMs);
+    if (!isActive()) return false;
 
-  stickman.classList.add('stand', 'reach');
-  await wait(300);
-  if (!isActive()) return false;
+    activeStickman.classList.add('stand', 'reach');
+    await wait(300);
+    if (!isActive()) return false;
 
-  stickman.classList.remove('reach');
-  stickman.classList.add('pull');
-  tweenAttr(wireLine, 'y2', 108, 128, 220, undefined, isActive);
-  tweenAttr(wireHandle, 'cy', 115, 135, 220, undefined, isActive);
-  await wait(240);
-  if (!isActive()) return false;
+    activeStickman.classList.remove('reach');
+    activeStickman.classList.add('pull');
+    tweenAttr(activeWireLine, 'y2', 108, 128, 220, undefined, isActive);
+    tweenAttr(activeWireHandle, 'cy', 115, 135, 220, undefined, isActive);
+    await wait(240);
+    if (!isActive()) return false;
 
-  const wh = wireHandle.getBoundingClientRect();
-  burst(wh.left + 5, wh.top + 5, 12);
-  await wait(140);
-  if (!isActive()) return false;
+    const wh = activeWireHandle.getBoundingClientRect();
+    burst(wh.left + 5, wh.top + 5, 12);
+    await wait(140);
+    if (!isActive()) return false;
 
-  document.querySelectorAll<HTMLElement>('[data-fallable]').forEach((el, i) =>
-    setTimeout(() => { if (isActive()) dropElement(el); }, i * 90)
-  );
-  await wait(140);
-  if (!isActive()) return false;
+    document.querySelectorAll<HTMLElement>('[data-fallable]').forEach((el, i) =>
+      setTimeout(() => { if (isActive()) dropElement(el); }, i * 90)
+    );
+    await wait(140);
+    if (!isActive()) return false;
 
-  setThemeAttr(true);
-  await wait(55); if (!isActive()) return false; setThemeAttr(false);
-  await wait(45); if (!isActive()) return false; setThemeAttr(true);
-  await wait(95); if (!isActive()) return false; setThemeAttr(false);
-  await wait(40); if (!isActive()) return false; setThemeAttr(true);
+    setThemeAttr(true);
+    await wait(55); if (!isActive()) return false; setThemeAttr(false);
+    await wait(45); if (!isActive()) return false; setThemeAttr(true);
+    await wait(95); if (!isActive()) return false; setThemeAttr(false);
+    await wait(40); if (!isActive()) return false; setThemeAttr(true);
 
-  stickman.classList.remove('pull');
-  const easeOut = (t: number) => (t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2);
-  tweenAttr(wireLine, 'y2', 128, 104, 180, easeOut, isActive);
-  tweenAttr(wireHandle, 'cy', 135, 111, 180, easeOut, isActive);
-  await wait(220);
-  if (!isActive()) return false;
+    activeStickman.classList.remove('pull');
+    const easeOut = (t: number) => (t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2);
+    tweenAttr(activeWireLine, 'y2', 128, 104, 180, easeOut, isActive);
+    tweenAttr(activeWireHandle, 'cy', 135, 111, 180, easeOut, isActive);
+    await wait(220);
+    if (!isActive()) return false;
 
-  tweenAttr(wireLine, 'y2', 104, 108, 140, undefined, isActive);
-  tweenAttr(wireHandle, 'cy', 111, 115, 140, undefined, isActive);
-  await wait(220);
-  if (!isActive()) return false;
+    tweenAttr(activeWireLine, 'y2', 104, 108, 140, undefined, isActive);
+    tweenAttr(activeWireHandle, 'cy', 111, 115, 140, undefined, isActive);
+    await wait(220);
+    if (!isActive()) return false;
 
-  stickman.classList.remove('stand');
-  stickman.style.right = '-80px';
-  await wait(walkMs);
-  if (!isActive()) return false;
+    activeStickman.classList.remove('stand');
+    activeStickman.style.right = '-80px';
+    await wait(walkMs);
+    if (!isActive()) return false;
 
-  wire.classList.remove('show');
-  stickman.style.right = '';
-  busy = false;
-  return true;
+    activeWire.classList.remove('show');
+    activeStickman.style.right = '';
+    return true;
+  } catch (error) {
+    console.error('Dark mode animation failed.', error);
+    return false;
+  } finally {
+    if (gen === animGeneration) {
+      resetAnimationState(actors);
+      busy = false;
+    }
+  }
 }
 
 export async function runLightModeAnimation(toggleEl: HTMLElement | null): Promise<boolean> {
-  if (busy || !toggleEl || !stickman || !wire || !wireLine || !wireHandle) return false;
+  if (busy || !toggleEl) return false;
+
+  initAnimationActors();
+
+  const actors = getConnectedActors();
+  if (!actors) return false;
+
+  const {
+    stickman: activeStickman,
+    wire: activeWire,
+    wireLine: activeWireLine,
+    wireHandle: activeWireHandle,
+  } = actors;
 
   if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
     setThemeAttr(false);
@@ -228,63 +329,72 @@ export async function runLightModeAnimation(toggleEl: HTMLElement | null): Promi
   const gen = ++animGeneration;
   const isActive = () => gen === animGeneration;
 
-  positionWire(toggleEl);
-  wire.classList.add('show');
-  await wait(280);
-  if (!isActive()) return false;
+  try {
+    positionWire(toggleEl, activeWire);
+    activeWire.classList.add('show');
+    await wait(280);
+    if (!isActive()) return false;
 
-  const wireR = wire.getBoundingClientRect();
-  const handleR = wireHandle.getBoundingClientRect();
-  const isMobile = window.innerWidth <= 640;
-  const walkMs = isMobile ? 1050 : 1300;
-  const targetRight = clamp(window.innerWidth - wireR.left - 36, 6, window.innerWidth - 42);
-  const targetTop = clamp(handleR.top - 14, 46, Math.max(46, window.innerHeight - 96));
-  stickman.style.right = `${targetRight}px`;
-  stickman.style.top = `${targetTop}px`;
-  await wait(walkMs);
-  if (!isActive()) return false;
+    const wireR = activeWire.getBoundingClientRect();
+    const handleR = activeWireHandle.getBoundingClientRect();
+    const isMobile = window.innerWidth <= 640;
+    const walkMs = isMobile ? 1050 : 1300;
+    const targetRight = clamp(window.innerWidth - wireR.left - 36, 6, window.innerWidth - 42);
+    const targetTop = clamp(handleR.top - 14, 46, Math.max(46, window.innerHeight - 96));
+    activeStickman.style.right = `${targetRight}px`;
+    activeStickman.style.top = `${targetTop}px`;
+    await wait(walkMs);
+    if (!isActive()) return false;
 
-  stickman.classList.add('stand', 'reach');
-  await wait(300);
-  if (!isActive()) return false;
+    activeStickman.classList.add('stand', 'reach');
+    await wait(300);
+    if (!isActive()) return false;
 
-  stickman.classList.remove('reach');
-  stickman.classList.add('pull');
-  tweenAttr(wireLine, 'y2', 108, 128, 220, undefined, isActive);
-  tweenAttr(wireHandle, 'cy', 115, 135, 220, undefined, isActive);
-  await wait(240);
-  if (!isActive()) return false;
+    activeStickman.classList.remove('reach');
+    activeStickman.classList.add('pull');
+    tweenAttr(activeWireLine, 'y2', 108, 128, 220, undefined, isActive);
+    tweenAttr(activeWireHandle, 'cy', 115, 135, 220, undefined, isActive);
+    await wait(240);
+    if (!isActive()) return false;
 
-  const wh = wireHandle.getBoundingClientRect();
-  burst(wh.left + 5, wh.top + 5, 12);
-  await wait(140);
-  if (!isActive()) return false;
+    const wh = activeWireHandle.getBoundingClientRect();
+    burst(wh.left + 5, wh.top + 5, 12);
+    await wait(140);
+    if (!isActive()) return false;
 
-  setThemeAttr(false);
-  await wait(55); if (!isActive()) return false; setThemeAttr(true);
-  await wait(45); if (!isActive()) return false; setThemeAttr(false);
-  await wait(95); if (!isActive()) return false; setThemeAttr(true);
-  await wait(40); if (!isActive()) return false; setThemeAttr(false);
+    setThemeAttr(false);
+    await wait(55); if (!isActive()) return false; setThemeAttr(true);
+    await wait(45); if (!isActive()) return false; setThemeAttr(false);
+    await wait(95); if (!isActive()) return false; setThemeAttr(true);
+    await wait(40); if (!isActive()) return false; setThemeAttr(false);
 
-  stickman.classList.remove('pull');
-  const easeOut = (t: number) => (t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2);
-  tweenAttr(wireLine, 'y2', 128, 104, 180, easeOut, isActive);
-  tweenAttr(wireHandle, 'cy', 135, 111, 180, easeOut, isActive);
-  await wait(220);
-  if (!isActive()) return false;
+    activeStickman.classList.remove('pull');
+    const easeOut = (t: number) => (t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2);
+    tweenAttr(activeWireLine, 'y2', 128, 104, 180, easeOut, isActive);
+    tweenAttr(activeWireHandle, 'cy', 135, 111, 180, easeOut, isActive);
+    await wait(220);
+    if (!isActive()) return false;
 
-  tweenAttr(wireLine, 'y2', 104, 108, 140, undefined, isActive);
-  tweenAttr(wireHandle, 'cy', 111, 115, 140, undefined, isActive);
-  await wait(220);
-  if (!isActive()) return false;
+    tweenAttr(activeWireLine, 'y2', 104, 108, 140, undefined, isActive);
+    tweenAttr(activeWireHandle, 'cy', 111, 115, 140, undefined, isActive);
+    await wait(220);
+    if (!isActive()) return false;
 
-  stickman.classList.remove('stand');
-  stickman.style.right = '-80px';
-  await wait(walkMs);
-  if (!isActive()) return false;
+    activeStickman.classList.remove('stand');
+    activeStickman.style.right = '-80px';
+    await wait(walkMs);
+    if (!isActive()) return false;
 
-  wire.classList.remove('show');
-  stickman.style.right = '';
-  busy = false;
-  return true;
+    activeWire.classList.remove('show');
+    activeStickman.style.right = '';
+    return true;
+  } catch (error) {
+    console.error('Light mode animation failed.', error);
+    return false;
+  } finally {
+    if (gen === animGeneration) {
+      resetAnimationState(actors);
+      busy = false;
+    }
+  }
 }

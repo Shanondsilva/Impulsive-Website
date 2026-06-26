@@ -11,38 +11,33 @@ import './lib/darkModeAnimation.css';
 
 const faqs = [
   {
-    question: 'What is Impulsive?',
+    question: 'Is Impulsive an app?',
     answer:
-      'Impulsive is a private behaviour-change support app designed to help users pause before difficult habit moments, choose one clear pivot action, and understand their pattern over time.',
+      'Yes. Impulsive is being built as an Android app for private behaviour-change support during difficult habit moments.',
   },
   {
-    question: 'Is Impulsive a blocker app?',
+    question: 'Is the Impulsive app available yet?',
     answer:
-      'Impulsive is not only a blocker. Blocking can be part of support, but the main idea is to help the user create a pause, take one better action, and learn from the moment afterwards.',
-  },
-  {
-    question: 'Is Impulsive therapy?',
-    answer:
-      'No. Impulsive is not therapy, medical treatment, diagnosis, or emergency support. It is a private support tool for behaviour change.',
-  },
-  {
-    question: 'What does Notice, Pivot, Understand mean?',
-    answer:
-      'Notice means recognising the difficult habit moment. Pivot means choosing a better next action before the loop takes over. Understand means reviewing the moment afterwards without shame.',
+      'Not fully yet. Impulsive is in development and will open to early access users first.',
   },
   {
     question: 'Is Impulsive private?',
     answer:
-      'Privacy is a core part of the product direction. The app is being built to feel calm, discreet, and personal, especially because difficult habit moments can be sensitive.',
+      'Yes. Privacy is a core product direction, especially because difficult habit moments can feel sensitive.',
   },
   {
-    question: 'Can I join the waitlist?',
+    question: 'Is Impulsive a therapy app?',
     answer:
-      'Yes. You can join the waitlist to follow the early development of Impulsive and be notified when early access becomes available.',
+      'No. Impulsive is a private support tool for adults. It is not therapy or crisis support.',
+  },
+  {
+    question: 'What is Focus Mode?',
+    answer:
+      'Focus Mode is part of Impulsive for starting focus, recovering from distraction, and returning to one clear next action.',
   },
 ];
 
-function HowImpulsiveWorksPage() {
+function ImpulsiveAppPage() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const menuToggleRef = useRef<HTMLButtonElement>(null);
@@ -74,9 +69,7 @@ function HowImpulsiveWorksPage() {
     focusables[0]?.focus();
 
     const handleKey = (event: globalThis.KeyboardEvent) => {
-      if (event.key === 'Escape') {
-        setMenuOpen(false);
-      }
+      if (event.key === 'Escape') setMenuOpen(false);
     };
 
     window.addEventListener('keydown', handleKey);
@@ -102,8 +95,8 @@ function HowImpulsiveWorksPage() {
               <span>Impulsive</span>
             </a>
             <div className="nav-links nav-links--desktop" aria-label="Primary site links">
-              <a href="/#principles">Principles</a>
-              <a href="/#about">About</a>
+              <a href="/how-impulsive-works">How it works</a>
+              <a href="/private-behaviour-change-support">Private support</a>
               <a href="/#faq">FAQs</a>
             </div>
           </div>
@@ -152,8 +145,9 @@ function HowImpulsiveWorksPage() {
               <h3>Explore</h3>
               <div className="mobile-menu-links" aria-label="Explore links">
                 <a href="/" onClick={closeMenu}>Home</a>
-                <a href="/#principles" onClick={closeMenu}>Principles</a>
-                <a href="/#about" onClick={closeMenu}>About</a>
+                <a href="/how-impulsive-works" onClick={closeMenu}>How Impulsive Works</a>
+                <a href="/private-behaviour-change-support" onClick={closeMenu}>Private Support</a>
+                <a href="/focus-mode" onClick={closeMenu}>Focus Mode</a>
                 <a href="/#faq" onClick={closeMenu}>FAQs</a>
               </div>
             </div>
@@ -163,7 +157,7 @@ function HowImpulsiveWorksPage() {
       )}
 
       <main id="main" className="seo-page">
-        <section className="section seo-hero" aria-labelledby="how-title">
+        <section className="section seo-hero" aria-labelledby="app-title">
           <div className="hero-bg" aria-hidden="true">
             <span className="shape shape-lilac" />
             <span className="shape shape-blue" />
@@ -172,20 +166,19 @@ function HowImpulsiveWorksPage() {
           </div>
           <div className="container seo-hero-inner">
             <RevealOnScroll className="seo-hero-copy">
-              <p className="eyebrow">How Impulsive works</p>
-              <h1 id="how-title">How Impulsive Works</h1>
+              <p className="eyebrow">Impulsive app</p>
+              <h1 id="app-title">Impulsive app</h1>
               <p>
-                Impulsive is built for difficult habit moments where willpower alone is not enough. Instead of shaming you,
-                overwhelming you, or forcing a harsh block, Impulsive helps you pause, choose one clear pivot action, and
-                understand your pattern privately.
+                Impulsive is a private behaviour-change support app for adults who want a calmer way to handle difficult habit
+                moments. It is also known as Use Impulsive, UseImpulsive, useimpulsive, and the Impulsive app.
               </p>
               <p>
-                The app is designed around a simple loop: notice the moment, pivot before the habit takes over, and understand
-                what happened afterwards.
+                The app is being built for people who want a private pause, one clear pivot action, and a simple way to understand
+                what helped afterwards.
               </p>
               <div className="hero-actions">
                 <a className="button" href="/#waitlist">Join the waitlist</a>
-                <a className="button button-secondary" href="/">Back to home</a>
+                <a className="button button-secondary" href="/how-impulsive-works">How Impulsive works</a>
               </div>
             </RevealOnScroll>
           </div>
@@ -194,77 +187,69 @@ function HowImpulsiveWorksPage() {
         <section className="section seo-content-section">
           <div className="container seo-content-grid">
             <RevealOnScroll className="seo-article">
-              <section className="seo-copy-block" aria-labelledby="pause-title">
-                <h2 id="pause-title">A private pause before the habit takes over</h2>
-                <p>Most habit apps focus on blocking, streaks, pressure, or punishment after something has already gone wrong. Impulsive is designed for the moment before the loop takes over.</p>
-                <p>When a difficult habit moment appears, the goal is not to shame the user or overload them with choices. The goal is to create a short private pause, show one clear pivot action, and help the user move through the moment with more control.</p>
-                <p>Impulsive is not built around perfection. It is built around interruption, reflection, and gradual behaviour change.</p>
-              </section>
-
-              <section className="seo-copy-block" aria-labelledby="loop-title">
-                <h2 id="loop-title">The core loop: Notice, Pivot, Understand</h2>
-                <p>Impulsive is built around a simple behaviour-change loop:</p>
-                <div className="seo-loop-list">
-                  <article>
-                    <h3>Notice:</h3>
-                    <p>The first step is recognising that a difficult habit moment is starting. This could happen through a risky app open, a known trigger window, boredom, stress, late-night scrolling, or a moment where the user feels pulled toward an old pattern.</p>
-                  </article>
-                  <article>
-                    <h3>Pivot:</h3>
-                    <p>Instead of leaving the user alone with the urge, Impulsive gives one clear pivot action. This may be a short reset, a focus action, a movement prompt, a reflection, or a small recovery game designed to interrupt autopilot.</p>
-                  </article>
-                  <article>
-                    <h3>Understand:</h3>
-                    <p>After the moment passes, the app helps the user review what happened without shame. The goal is to learn the pattern, not punish the person.</p>
-                  </article>
-                </div>
-              </section>
-
-              <section className="seo-copy-block" aria-labelledby="moment-title">
-                <h2 id="moment-title">What happens during a difficult habit moment</h2>
-                <p>When a difficult habit moment starts, the user does not need a complicated menu. They need one calm next step.</p>
-                <p>Impulsive is designed to reduce the gap between urge and action. Instead of relying only on motivation, the app can guide the user into a short reset, a clear pivot action, or a focused interruption that helps them move away from the automatic loop.</p>
-                <p>The aim is simple: pause the moment, choose one better action, and keep enough distance to make a more intentional decision.</p>
-              </section>
-
-              <section className="seo-copy-block" aria-labelledby="blockers-title">
-                <h2 id="blockers-title">Why Impulsive is different from normal blockers</h2>
-                <p>Normal blockers often work by cutting access completely. That can help in some situations, but it does not always teach the user what to do in the moment when the urge appears.</p>
-                <p>Impulsive is different because it is not only trying to block behaviour. It is trying to help the user build a new response pattern.</p>
-                <p>The app focuses on three things:</p>
-                <ol>
-                  <li>Create a pause before the automatic action.</li>
-                  <li>Offer one clear pivot instead of too many choices.</li>
-                  <li>Help the user understand the pattern afterwards.</li>
-                </ol>
-                <p>The goal is not fear, shame, or punishment. The goal is private behaviour-change support that becomes more useful over time.</p>
-              </section>
-
-              <section className="seo-copy-block" aria-labelledby="privacy-title">
-                <h2 id="privacy-title">Privacy-first support</h2>
-                <p>Impulsive is built around privacy because difficult habit moments are personal. The app should feel calm, discreet, and safe to use without embarrassment.</p>
-                <p>The goal is not to expose the user, judge them, or turn their private struggle into a public score. The goal is to help them create a better response in the moment and understand their pattern over time.</p>
-                <p>For the early version, Impulsive is designed to keep the experience simple, private, and focused on behaviour-change support rather than public accountability or social pressure.</p>
+              <section className="seo-copy-block" aria-labelledby="what-title">
+                <h2 id="what-title">What is the Impulsive app?</h2>
+                <p>Impulsive is a private behaviour-change support app for difficult habit moments. It is designed to help adults create a short pause before an automatic action, choose one better next step, and learn what helped afterwards.</p>
+                <p>The same product may be searched as Impulsive, Use Impulsive, UseImpulsive, useimpulsive, or the Impulsive app. Those names all point to the same app and brand at <a href="/">useimpulsive.com</a>.</p>
+                <p>Impulsive is calm by design. It avoids public pressure, shame, and complicated menus during moments when the user needs one clear action.</p>
               </section>
 
               <section className="seo-copy-block" aria-labelledby="for-title">
-                <h2 id="for-title">Who Impulsive is for</h2>
-                <p>Impulsive is for people who want private support during difficult habit moments. It is for someone who feels they repeat a behaviour they do not fully want, especially when they are tired, stressed, bored, alone, distracted, or pulled into a familiar loop.</p>
-                <p>It may be useful for people who want help with pausing, resetting, focusing, or changing their response before a habit takes over.</p>
-                <p>Impulsive is not about judging the person. It is about giving them a calmer way to notice the moment, choose a better next step, and understand their pattern over time.</p>
+                <h2 id="for-title">Who the Impulsive app is for</h2>
+                <p>The Impulsive app is for adults who want private support when a familiar behaviour starts to feel difficult to steer.</p>
+                <p>That concern may come from distress, loss of control, harm, values conflict, relationship impact, or difficulty stopping despite unwanted consequences.</p>
+                <p>Impulsive does not judge identity, desire, or consensual behaviour. It is concerned with moments where the person wants more space, more clarity, and a calmer next action.</p>
+              </section>
+
+              <section className="seo-copy-block" aria-labelledby="works-title">
+                <h2 id="works-title">How the Impulsive app works</h2>
+                <p>Impulsive is built around the current core loop: Trigger → Pause → Pivot → Control.</p>
+                <div className="seo-loop-list">
+                  <article>
+                    <h3>Trigger:</h3>
+                    <p>Notice the difficult moment as it begins, before the old pattern has fully taken over.</p>
+                  </article>
+                  <article>
+                    <h3>Pause:</h3>
+                    <p>Create space before acting, so the next move is less automatic.</p>
+                  </article>
+                  <article>
+                    <h3>Pivot:</h3>
+                    <p>Choose one short replacement action, such as a reset, movement prompt, reflection, focus step, or pivot game.</p>
+                  </article>
+                  <article>
+                    <h3>Control:</h3>
+                    <p>Track what helped and build better patterns over time, privately and without shame.</p>
+                  </article>
+                </div>
+                <p>For a deeper overview of the product loop, read <a href="/how-impulsive-works">How Impulsive works</a>.</p>
+              </section>
+
+              <section className="seo-copy-block" aria-labelledby="private-title">
+                <h2 id="private-title">What makes Impulsive private</h2>
+                <p>Difficult habit moments can feel sensitive. A useful app should be available in the moment without making the user feel watched, exposed, or turned into a public score.</p>
+                <p>Impulsive is being built around private progress tracking, discreet support paths, and a calm experience that can be opened when the user actually needs it.</p>
+                <p>That is why the wider product direction focuses on <a href="/private-behaviour-change-support">private behaviour-change support</a> instead of public accountability or pressure.</p>
               </section>
 
               <section className="seo-copy-block" aria-labelledby="not-title">
                 <h2 id="not-title">What Impulsive is not</h2>
-                <p>Impulsive is not a medical device, diagnosis tool, therapy replacement, or emergency support service. It does not claim to cure, treat, or prevent any condition.</p>
-                <p>It is also not designed to shame users, punish them, or make them feel like one difficult moment means failure.</p>
-                <p>Impulsive is a private behaviour-change support app. Its purpose is to help users pause before a difficult habit moment, choose one better action, and understand their pattern with more clarity.</p>
+                <p>Impulsive is not therapy, a crisis service, or a substitute for professional care. It does not promise perfect control or instant change.</p>
+                <p>It is also not designed to shame users, punish private behaviour, or suggest that one difficult moment defines the person.</p>
+                <p>Impulsive is a private app for behaviour-change support: create a pause, choose one pivot action, and understand the pattern with more clarity.</p>
+              </section>
+
+              <section className="seo-copy-block" aria-labelledby="focus-title">
+                <h2 id="focus-title">Impulsive Focus Mode</h2>
+                <p>Focus Mode is part of the Impulsive product direction. It helps users start focus, recover when distraction happens, and return to one clear next action.</p>
+                <p>That same idea connects to difficult habit moments: the goal is not perfection, but recovery. When attention breaks or a loop starts, Impulsive helps the user come back calmly.</p>
+                <p>You can read more on the dedicated <a href="/focus-mode">Impulsive Focus Mode</a> page.</p>
               </section>
 
               <section className="seo-copy-block seo-join-block" aria-labelledby="join-title">
                 <h2 id="join-title">Join the waitlist</h2>
-                <p>Impulsive is currently being built for early users who want a calmer, more private way to work through difficult habit moments.</p>
-                <p>If the idea feels useful, you can join the waitlist and follow the early development of the app.</p>
+                <p>Impulsive is currently in development and opening to early users first.</p>
+                <p>If you want private behaviour-change support for difficult habit moments, you can join the waitlist and follow the early development of the app.</p>
                 <a className="button" href="/#waitlist">Join the waitlist</a>
               </section>
 
@@ -283,11 +268,12 @@ function HowImpulsiveWorksPage() {
 
             <aside className="seo-side-panel" aria-label="Page navigation">
               <p className="eyebrow">Page guide</p>
-              <a href="#pause-title">Private pause</a>
-              <a href="#loop-title">Notice, Pivot, Understand</a>
-              <a href="#moment-title">Difficult moments</a>
-              <a href="#blockers-title">Different from blockers</a>
-              <a href="#privacy-title">Privacy-first support</a>
+              <a href="#what-title">What it is</a>
+              <a href="#for-title">Who it is for</a>
+              <a href="#works-title">How it works</a>
+              <a href="#private-title">Private support</a>
+              <a href="#not-title">What it is not</a>
+              <a href="#focus-title">Focus Mode</a>
               <a href="#join-title">Join the waitlist</a>
             </aside>
           </div>
@@ -306,12 +292,12 @@ function HowImpulsiveWorksPage() {
           </div>
           <nav className="footer-nav" aria-label="Product links">
             <h3>Product</h3>
+            <a href="/">Home</a>
             <a href="/impulsive-app">Impulsive App</a>
-            <a href="/#urge-loop">How it works</a>
+            <a href="/how-impulsive-works">How Impulsive Works</a>
+            <a href="/private-behaviour-change-support">Private Support</a>
+            <a href="/focus-mode">Focus Mode</a>
             <a href="/#paths">Paths</a>
-            <a href="/#games">Games</a>
-            <a href="/#progression">Progression</a>
-            <a href="/#tiers">Free vs Paid Tiers</a>
           </nav>
           <nav className="footer-nav" aria-label="Support links">
             <h3>Support</h3>
@@ -327,7 +313,7 @@ function HowImpulsiveWorksPage() {
         </div>
         <div className="container footer-base">
           <div className="footer-base-text">
-            <p className="footer-disclaimer">Impulsive helps adults create a pause, choose a next step, and understand habit patterns. It is not therapy, a diagnosis tool, or crisis support.</p>
+            <p className="footer-disclaimer">Impulsive helps adults create a pause, choose a next step, and understand habit patterns. It is not therapy or crisis support.</p>
             <p className="footer-removal-note">Want to leave the waitlist or request deletion of your email? Email <a href="mailto:hello@useimpulsive.com">hello@useimpulsive.com</a>.</p>
           </div>
           <p className="footer-copyright">&copy; {new Date().getFullYear()} Impulsive. All rights reserved.</p>
@@ -340,7 +326,7 @@ function HowImpulsiveWorksPage() {
 createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <SmoothScroll>
-      <HowImpulsiveWorksPage />
+      <ImpulsiveAppPage />
     </SmoothScroll>
   </React.StrictMode>,
 );

@@ -525,6 +525,17 @@ export default {
       return withAssetCacheHeaders(await env.ASSETS.fetch(new Request(assetUrl, request)));
     }
 
+    if (url.pathname === "/impulsive-app.html") {
+      url.pathname = "/impulsive-app";
+      return Response.redirect(url.toString(), 301);
+    }
+
+    if (url.pathname === "/impulsive-app" || url.pathname === "/impulsive-app/") {
+      const assetUrl = new URL(request.url);
+      assetUrl.pathname = "/impulsive-app/index.html";
+      return withAssetCacheHeaders(await env.ASSETS.fetch(new Request(assetUrl, request)));
+    }
+
     if (url.pathname === "/how-impulsive-works.html") {
       url.pathname = "/how-impulsive-works";
       return Response.redirect(url.toString(), 301);
@@ -555,6 +566,17 @@ export default {
     if (url.pathname === "/focus-mode" || url.pathname === "/focus-mode/") {
       const assetUrl = new URL(request.url);
       assetUrl.pathname = "/focus-mode/index.html";
+      return withAssetCacheHeaders(await env.ASSETS.fetch(new Request(assetUrl, request)));
+    }
+
+    if (url.pathname === "/help.html") {
+      url.pathname = "/help";
+      return Response.redirect(url.toString(), 301);
+    }
+
+    if (url.pathname === "/help" || url.pathname === "/help/") {
+      const assetUrl = new URL(request.url);
+      assetUrl.pathname = "/help.html";
       return withAssetCacheHeaders(await env.ASSETS.fetch(new Request(assetUrl, request)));
     }
 

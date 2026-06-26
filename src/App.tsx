@@ -1,8 +1,8 @@
 import React, { useEffect, useMemo, useState, useRef, type KeyboardEvent } from 'react';
 import { Menu, Moon, Sun, X } from 'lucide-react';
 import { AnimatePresence, motion, useMotionValueEvent, useReducedMotion, useScroll, useTransform } from 'framer-motion';
-import Lenis from 'lenis';
 import { AmbientParticles } from './components/AmbientParticles';
+import { BrandLogo } from './components/BrandLogo';
 import { PageBlobs } from './components/PageBlobs';
 import { ReflexOverrideGame } from './components/ReflexOverrideGame';
 import { RevealOnScroll } from './components/RevealOnScroll';
@@ -227,26 +227,6 @@ export default function App() {
     // Cleanup
     return () => {
       loopObserver?.disconnect();
-    };
-  }, [reduceMotion]);
-
-  useEffect(() => {
-    if (reduceMotion) return;
-    const lenis = new Lenis({
-      duration: 1.15,
-      easing: (t: number) => 1 - Math.pow(1 - t, 4),
-      smoothWheel: true,
-      touchMultiplier: 1.8,
-    });
-    let rafId: number;
-    const raf = (time: number) => {
-      lenis.raf(time);
-      rafId = requestAnimationFrame(raf);
-    };
-    rafId = requestAnimationFrame(raf);
-    return () => {
-      cancelAnimationFrame(rafId);
-      lenis.destroy();
     };
   }, [reduceMotion]);
 
@@ -495,7 +475,7 @@ export default function App() {
         <nav className="nav" aria-label="Primary navigation">
           <div className="nav-left">
             <a className="wordmark" href="#top" aria-label="Impulsive home">
-              <img src="/images/icons/impulsive-logo-transparent-clean.png" alt="Impulsive app logo" />
+              <BrandLogo />
               <span>Impulsive</span>
             </a>
             <div className="nav-links nav-links--desktop" aria-label="Primary site links">
@@ -556,6 +536,7 @@ export default function App() {
               aria-modal="true"
               aria-labelledby="menu-title"
               className="mobile-menu-panel"
+              data-lenis-prevent
               initial={reduceMotion ? false : { x: 36, opacity: 0 }}
               animate={reduceMotion ? undefined : { x: 0, opacity: 1 }}
               exit={reduceMotion ? undefined : { x: 36, opacity: 0 }}
@@ -1281,26 +1262,68 @@ export default function App() {
         </section>
 
         <section className="section about-section" id="about" aria-labelledby="about-title">
-          <RevealOnScroll className="container section-text-column">
-            <article className="credibility-pane credibility-pane--about animated-foundation-card" aria-labelledby="about-title">
-              <p className="eyebrow">ABOUT</p>
-              <h2 id="about-title">Built carefully for private behaviour change.</h2>
-              <ul className="about-credibility-lines" aria-label="About Impulsive">
-                <li className="about-credibility-item">
-                  <span className="about-bullet" aria-hidden="true"></span>
-                  <p><strong>Privacy-first:</strong><span className="about-bullet-desc"> sensitive habit moments and reflections stay private and local-first by default.</span></p>
-                </li>
-                <li className="about-credibility-item">
-                  <span className="about-bullet" aria-hidden="true"></span>
-                  <p><strong>Careful language:</strong><span className="about-bullet-desc"> no treatment claims, fake percentages, or clinical promises.</span></p>
-                </li>
-                <li className="about-credibility-item">
-                  <span className="about-bullet" aria-hidden="true"></span>
-                  <p><strong>Review-ready:</strong><span className="about-bullet-desc"> clear enough for advisors, clinicians, and endorsement reviewers to understand.</span></p>
-                </li>
-              </ul>
-              <div className="about-footer-row about-footer-row--disclaimer">
-                <p className="about-disclaimer">Impulsive is a behaviour-change support tool for adults. It is not a medical device, therapy service, diagnosis tool, crisis-support service, or clinically validated treatment. It does not diagnose, treat, cure, or prevent addiction, compulsions, mental health conditions, or any medical condition. It helps you create a pause, choose a next step, and understand your patterns.</p>
+          <RevealOnScroll className="container about-article-container">
+            <article
+              className="about-article animated-foundation-card"
+              aria-labelledby="about-title"
+            >
+              <header className="about-article__header">
+                <h2 id="about-title">About Impulsive</h2>
+              </header>
+
+              <div className="about-article__content">
+                <p>
+                  Impulsive was created by Shanon Dsilva, a digital marketing professional based in the UK, who saw a gap between two kinds of apps. On one side sat blunt blockers that simply wall things off. On the other sat abstinence apps built around streaks and willpower. Neither helped in the moment an urge actually hits, and many leaned on shame, which tends to make things harder rather than easier.
+                </p>
+
+                <p>
+                  Impulsive was built on a simpler idea: an urge is a wave that passes if you give it somewhere to go. Instead of blocking, or demanding that you quit overnight, it helps you notice the urge, ride it out, and gradually reduce the behaviour at a pace you can sustain. It does this without judgement, and with your data kept private on your own device.
+                </p>
+
+                <p>
+                  The approach has been shaped and reviewed by accredited psychotherapists working in this field, whose guidance has informed both the tone and the design. Impulsive is a self-help tool, not a replacement for professional support, and it points people toward that support where it helps.
+                </p>
+
+                <section
+                  className="about-article__thinking"
+                  aria-labelledby="about-thinking-title"
+                >
+                  <h3 id="about-thinking-title">The thinking behind Impulsive</h3>
+
+                  <p>
+                    Impulsive draws on established ideas in behaviour change rather than novel claims. Compulsive sexual and digital behaviour is a recognised clinical issue, and the app is built around approaches that practitioners already use.
+                  </p>
+
+                  <ul className="about-principles-list">
+                    <li>
+                      <p>
+                        <strong>Urge surfing.</strong> The core ninety second tool is based on urge surfing, a recognised technique for riding out a craving until it naturally subsides, rather than fighting or suppressing it.
+                      </p>
+                    </li>
+
+                    <li>
+                      <p>
+                        <strong>Harm reduction and gradual change.</strong> Impulsive helps a person reduce a behaviour gradually, in the way habits are usually changed, rather than demanding sudden, total abstinence.
+                      </p>
+                    </li>
+
+                    <li>
+                      <p>
+                        <strong>A non-shaming approach.</strong> The design deliberately avoids shame, reflecting the clinical understanding that shame tends to maintain compulsive behaviour rather than reduce it. This is the aspect the reviewing clinicians have most consistently welcomed.
+                      </p>
+                    </li>
+
+                    <li>
+                      <p>
+                        <strong>Privacy by design.</strong> Because the subject is sensitive, the app keeps data on the person's own device and collects nothing beyond an optional account email.
+                      </p>
+                    </li>
+                  </ul>
+                </section>
+
+                <p className="about-article__disclaimer">
+                  Impulsive is a self-help wellbeing tool. It is not a medical device, does not provide diagnosis or treatment, and is intended to sit alongside, not replace, professional support.
+                </p>
               </div>
             </article>
           </RevealOnScroll>
@@ -1383,7 +1406,7 @@ export default function App() {
         <div className="container footer-grid">
           <div className="footer-brand">
             <a className="wordmark" href="#top" aria-label="Impulsive home">
-              <img src="/images/icons/impulsive-logo-transparent-clean.png" alt="" />
+              <BrandLogo />
               <span>Impulsive</span>
             </a>
             <p className="footer-tagline">Private behaviour-change support for adults.</p>
@@ -1391,6 +1414,7 @@ export default function App() {
           </div>
           <nav className="footer-nav" aria-label="Product links">
             <h3>Product</h3>
+            <a href="/impulsive-app">Impulsive App</a>
             <a href="#urge-loop">How it works</a>
             <a href="#paths">Paths</a>
             <a href="#games">Games</a>

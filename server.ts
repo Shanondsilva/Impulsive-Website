@@ -55,6 +55,19 @@ async function startServer() {
       server: { middlewareMode: true },
       appType: "custom",
     });
+    app.get("/impulsive-app.html", (req, res) => {
+      res.redirect(301, "/impulsive-app");
+    });
+    app.get(["/impulsive-app", "/impulsive-app/"], async (req, res, next) => {
+      try {
+        const templatePath = path.join(process.cwd(), "impulsive-app", "index.html");
+        const template = await fs.readFile(templatePath, "utf-8");
+        const html = await vite.transformIndexHtml(req.originalUrl, template);
+        res.status(200).set({ "Content-Type": "text/html" }).end(html);
+      } catch (error) {
+        next(error);
+      }
+    });
     app.get("/how-impulsive-works.html", (req, res) => {
       res.redirect(301, "/how-impulsive-works");
     });
@@ -116,6 +129,12 @@ async function startServer() {
     });
   } else {
     const distPath = path.join(process.cwd(), "dist");
+    app.get("/impulsive-app.html", (req, res) => {
+      res.redirect(301, "/impulsive-app");
+    });
+    app.get(["/impulsive-app", "/impulsive-app/"], (req, res) => {
+      res.sendFile(path.join(distPath, "impulsive-app", "index.html"));
+    });
     app.get("/how-impulsive-works.html", (req, res) => {
       res.redirect(301, "/how-impulsive-works");
     });

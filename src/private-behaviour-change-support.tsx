@@ -2,7 +2,9 @@ import React, { useEffect, useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import { Menu, Moon, Sun, X } from 'lucide-react';
 import { AmbientParticles } from './components/AmbientParticles';
+import { BrandLogo } from './components/BrandLogo';
 import { RevealOnScroll } from './components/RevealOnScroll';
+import { SmoothScroll } from './components/SmoothScroll';
 import { useDarkMode } from './hooks/useDarkMode';
 import './index.css';
 import './lib/darkModeAnimation.css';
@@ -94,7 +96,7 @@ function PrivateBehaviourChangeSupportPage() {
         <nav className="nav" aria-label="Primary navigation">
           <div className="nav-left">
             <a className="wordmark" href="/" aria-label="Impulsive home">
-              <img src="/images/icons/impulsive-logo-transparent-clean.png" alt="Impulsive app logo" />
+              <BrandLogo />
               <span>Impulsive</span>
             </a>
             <div className="nav-links nav-links--desktop" aria-label="Primary site links">
@@ -137,7 +139,7 @@ function PrivateBehaviourChangeSupportPage() {
       {menuOpen && (
         <>
           <button type="button" className="mobile-menu-overlay" aria-label="Close menu" onClick={closeMenu} />
-          <div id="mobile-menu-panel" role="dialog" aria-modal="true" aria-labelledby="menu-title" className="mobile-menu-panel">
+          <div id="mobile-menu-panel" role="dialog" aria-modal="true" aria-labelledby="menu-title" className="mobile-menu-panel" data-lenis-prevent>
             <div className="mobile-menu-head">
               <h2 className="mobile-menu-title" id="menu-title">Menu</h2>
               <button type="button" className="mobile-menu-close" aria-label="Close menu" onClick={closeMenu}>
@@ -288,7 +290,7 @@ function PrivateBehaviourChangeSupportPage() {
         <div className="container footer-grid">
           <div className="footer-brand">
             <a className="wordmark" href="/" aria-label="Impulsive home">
-              <img src="/images/icons/impulsive-logo-transparent-clean.png" alt="" />
+              <BrandLogo />
               <span>Impulsive</span>
             </a>
             <p className="footer-tagline">Private behaviour-change support for adults.</p>
@@ -297,6 +299,7 @@ function PrivateBehaviourChangeSupportPage() {
           <nav className="footer-nav" aria-label="Product links">
             <h3>Product</h3>
             <a href="/">Home</a>
+            <a href="/impulsive-app">Impulsive App</a>
             <a href="/how-impulsive-works">How Impulsive Works</a>
             <a href="/#paths">Paths</a>
             <a href="/#games">Games</a>
@@ -327,6 +330,8 @@ function PrivateBehaviourChangeSupportPage() {
 
 createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <PrivateBehaviourChangeSupportPage />
+    <SmoothScroll>
+      <PrivateBehaviourChangeSupportPage />
+    </SmoothScroll>
   </React.StrictMode>,
 );

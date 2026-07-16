@@ -17,6 +17,8 @@
     "db:migrate:confirmation-error:remote": "npx wrangler d1 execute impulsive_waitlist --remote --file ./db/migrate-waitlist-v4-confirmation-error.sql",
     "db:migrate:first-name:local": "npx wrangler d1 execute impulsive_waitlist --local --file ./db/migrate-waitlist-v5-first-name.sql",
     "db:migrate:first-name:remote": "npx wrangler d1 execute impulsive_waitlist --remote --file ./db/migrate-waitlist-v5-first-name.sql",
+    "db:migrate:deletion-requests:local": "npx wrangler d1 execute impulsive_waitlist --local --file ./db/migrate-deletion-requests.sql",
+    "db:migrate:deletion-requests:remote": "npx wrangler d1 execute impulsive_waitlist --remote --file ./db/migrate-deletion-requests.sql",
     "clean": "rm -rf dist",
     "lint": "tsc --noEmit"
   },
@@ -29,6 +31,7 @@
     "express": "^4.21.2",
     "framer-motion": "^12.40.0",
     "lenis": "^1.3.23",
+    "lottie-react": "^2.4.1",
     "lucide-react": "^0.546.0",
     "motion": "^12.23.24",
     "react": "^19.0.1",

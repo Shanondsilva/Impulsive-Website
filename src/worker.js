@@ -5,6 +5,12 @@ const SUCCESS_MESSAGE = "Thanks. You're on the waitlist.";
 const SUCCESS_MESSAGE_EMAIL_SENT = "Thanks. You're on the waitlist. Please check your email for confirmation.";
 const INVALID_EMAIL_MESSAGE = "Please enter a valid email address.";
 const GENERIC_FAILURE_MESSAGE = "Sorry, we could not add you to the waitlist right now. Please try again later.";
+const DELETE_REQUEST_MESSAGE = "If that email has an Impulsive account, we've sent a confirmation link.";
+const DELETE_REQUEST_FAILURE_MESSAGE = "We couldn't send a confirmation link right now. Please try again.";
+const DELETE_CONFIRM_FAILURE_MESSAGE = "This deletion link is invalid, expired, or has already been used.";
+const DELETE_UPSTREAM_FAILURE_MESSAGE = "Could not complete deletion. Please try again or email hello@useimpulsive.com.";
+const DELETE_SUCCESS_MESSAGE = "Your Impulsive account and data have been permanently deleted.";
+const DELETE_TOKEN_TTL_MS = 60 * 60 * 1000;
 const ROBOTS_TXT = `# Impulsive (UseImpulsive.com) — robots policy
 # Allow every reputable crawler to index the entire site.
 User-agent: *
@@ -160,6 +166,7 @@ const json = (payload, status = 200) => {
   applySecurityHeaders(headers);
   return new Response(JSON.stringify(payload), { status, headers });
 };
+const jsonResponse = json;
 
 const normaliseEmail = (value) => String(value || "").trim().toLowerCase();
 
@@ -238,6 +245,23 @@ const hashIp = async (ip, secret) => {
   return Array.from(new Uint8Array(digest))
     .map((byte) => byte.toString(16).padStart(2, "0"))
     .join("");
+};
+
+const sha256Hex = async (value) => {
+  const input = new TextEncoder().encode(String(value || ""));
+  const digest = await crypto.subtle.digest("SHA-256", input);
+  return Array.from(new Uint8Array(digest))
+    .map((byte) => byte.toString(16).padStart(2, "0"))
+    .join("");
+};
+
+const createDeletionToken = () => {
+  const randomBytes = new Uint8Array(32);
+  crypto.getRandomValues(randomBytes);
+  const randomHex = Array.from(randomBytes)
+    .map((byte) => byte.toString(16).padStart(2, "0"))
+    .join("");
+  return `${crypto.randomUUID()}.${randomHex}`;
 };
 
 const withAssetCacheHeaders = (response) => {
@@ -342,6 +366,85 @@ async function sendConfirmationEmail(env, email, firstName) {
   return { sent: true, skipped: false };
 }
 
+const buildDeletionEmailText = (confirmationUrl) => `Hi there,
+
+We received a request to permanently delete your Impulsive account and all associated data.
+
+Confirm account deletion: ${confirmationUrl}
+
+This action cannot be undone. The confirmation link expires in 1 hour.
+
+If you didn't request this, you can safely ignore this email and your account will remain unchanged.
+
+Impulsive`;
+
+const buildDeletionEmailHtml = (confirmationUrl) => `<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Confirm account deletion</title>
+</head>
+<body style="margin:0;padding:0;background-color:#F7F3EE;-webkit-font-smoothing:antialiased;">
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#F7F3EE;">
+    <tr>
+      <td align="center" style="padding:48px 16px;">
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="max-width:560px;">
+          <tr>
+            <td style="padding:0 0 24px;font-family:Arial,Helvetica,sans-serif;font-size:12px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#2D2730;">Impulsive</td>
+          </tr>
+          <tr>
+            <td style="background-color:#FFFFFF;border-radius:12px;padding:40px;border:1px solid #EDE8E0;">
+              <h1 style="margin:0 0 20px;font-family:Georgia,'Times New Roman',serif;font-size:26px;line-height:1.25;color:#2D2730;">Confirm account deletion</h1>
+              <p style="margin:0 0 20px;font-family:Arial,Helvetica,sans-serif;font-size:16px;line-height:1.7;color:#2D2730;">We received a request to permanently delete your Impulsive account and all associated data.</p>
+              <p style="margin:0 0 24px;font-family:Arial,Helvetica,sans-serif;font-size:16px;line-height:1.7;color:#2D2730;"><strong>This action cannot be undone.</strong> This link expires in 1 hour.</p>
+              <p style="margin:0 0 28px;"><a href="${confirmationUrl}" style="display:inline-block;border-radius:999px;background-color:#2D2730;color:#FFFFFF;font-family:Arial,Helvetica,sans-serif;font-size:15px;font-weight:700;text-decoration:none;padding:14px 22px;">Delete my account</a></p>
+              <p style="margin:0;font-family:Arial,Helvetica,sans-serif;font-size:14px;line-height:1.7;color:#665E68;">If you didn't request this, you can safely ignore this email and your account will remain unchanged.</p>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>`;
+
+async function sendDeletionConfirmationEmail(env, email, confirmationUrl) {
+  if (!env.BREVO_API_KEY) {
+    throw new Error("Missing Brevo API key.");
+  }
+
+  const fromEmail = cleanText(env.WAITLIST_FROM_EMAIL || env.BREVO_SENDER_EMAIL, 254);
+  if (!fromEmail) {
+    throw new Error("Missing deletion email sender.");
+  }
+
+  const replyToEmail = cleanText(env.WAITLIST_REPLY_TO_EMAIL || env.WAITLIST_ADMIN_EMAIL, 254);
+  const response = await fetch("https://api.brevo.com/v3/smtp/email", {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      "api-key": env.BREVO_API_KEY
+    },
+    body: JSON.stringify({
+      sender: {
+        email: fromEmail,
+        name: cleanText(env.WAITLIST_FROM_NAME || env.BREVO_SENDER_NAME, 120) || "Impulsive"
+      },
+      to: [{ email }],
+      ...(replyToEmail ? { replyTo: { email: replyToEmail } } : {}),
+      subject: "Confirm you want to delete your Impulsive account",
+      textContent: buildDeletionEmailText(confirmationUrl),
+      htmlContent: buildDeletionEmailHtml(confirmationUrl)
+    })
+  });
+
+  if (!response.ok) {
+    throw new Error("Brevo deletion email request failed.");
+  }
+}
+
 async function markConfirmationSent(env, email) {
   await env.WAITLIST_DB
     .prepare(
@@ -403,6 +506,262 @@ async function verifyTurnstile(token, secret) {
     return data.success === true;
   } catch {
     return false;
+  }
+}
+
+async function checkFirebaseUserExists(env, email) {
+  if (!env.FIREBASE_USER_EXISTS_URL || !env.FIREBASE_DELETE_SECRET) {
+    throw new Error("Firebase user lookup service is not configured.");
+  }
+
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 8000);
+
+  try {
+    const response = await fetch(env.FIREBASE_USER_EXISTS_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${env.FIREBASE_DELETE_SECRET}`,
+      },
+      body: JSON.stringify({ email }),
+      signal: controller.signal,
+    });
+
+    if (!response.ok) {
+      throw new Error("Firebase user lookup request failed.");
+    }
+
+    const result = await response.json();
+
+    if (
+      !result ||
+      result.success !== true ||
+      typeof result.exists !== "boolean"
+    ) {
+      throw new Error("Firebase user lookup returned an invalid response.");
+    }
+
+    return result.exists;
+  } finally {
+    clearTimeout(timeout);
+  }
+}
+
+async function handleDeleteAccountRequest(request, env) {
+  if (request.method !== "POST") {
+    return jsonResponse({ error: "Method not allowed" }, 405);
+  }
+
+  const contentLength = Number(
+    request.headers.get("content-length") || "0"
+  );
+
+  if (contentLength > MAX_BODY_BYTES) {
+    return jsonResponse(
+      { error: DELETE_REQUEST_FAILURE_MESSAGE },
+      413
+    );
+  }
+
+  let payload;
+
+  try {
+    payload = await parseRequest(request);
+  } catch {
+    return jsonResponse(
+      { message: DELETE_REQUEST_MESSAGE },
+      200
+    );
+  }
+
+  const email = normaliseEmail(payload.email);
+
+  if (!email || email.length > 254 || !email.includes("@")) {
+    return jsonResponse(
+      { message: DELETE_REQUEST_MESSAGE },
+      200
+    );
+  }
+
+  if (env.TURNSTILE_SECRET_KEY) {
+    const turnstileToken = String(
+      payload.turnstileToken || ""
+    ).trim();
+
+    const turnstileVerified = await verifyTurnstile(
+      turnstileToken,
+      env.TURNSTILE_SECRET_KEY
+    );
+
+    if (!turnstileVerified) {
+      return jsonResponse(
+        { error: DELETE_REQUEST_FAILURE_MESSAGE },
+        400
+      );
+    }
+  }
+
+  try {
+    if (!env.WAITLIST_DB) {
+      throw new Error("Missing D1 database binding.");
+    }
+
+    /*
+     * Verify the Firebase Authentication account exists before creating
+     * any deletion token or sending any email.
+     *
+     * The browser never receives the value of accountExists.
+     */
+    const accountExists = await checkFirebaseUserExists(
+      env,
+      email
+    );
+
+    /*
+     * Nonexistent and already-deleted accounts intentionally receive the
+     * same public response as existing accounts.
+     *
+     * No D1 row and no Brevo email are created.
+     */
+    if (!accountExists) {
+      return jsonResponse(
+        { message: DELETE_REQUEST_MESSAGE },
+        200
+      );
+    }
+
+    const token = createDeletionToken();
+    const tokenHash = await sha256Hex(token);
+
+    const expiresAt = new Date(
+      Date.now() + DELETE_TOKEN_TTL_MS
+    ).toISOString();
+
+    const ipHash = await hashIp(
+      getClientIp(request),
+      env.WAITLIST_IP_HASH_SECRET
+    );
+
+    await env.WAITLIST_DB
+      .prepare(
+        `INSERT INTO deletion_requests
+          (email, token_hash, expires_at, ip_hash)
+         VALUES (?, ?, ?, ?)`
+      )
+      .bind(
+        email,
+        tokenHash,
+        expiresAt,
+        ipHash
+      )
+      .run();
+
+    const confirmationUrl =
+      `${new URL(request.url).origin}` +
+      `/delete-account/confirm?token=${encodeURIComponent(token)}`;
+
+    await sendDeletionConfirmationEmail(
+      env,
+      email,
+      confirmationUrl
+    );
+  } catch (error) {
+    console.error("Account deletion request failed", {
+      reason: "request_failed",
+      name: error?.name || "Error",
+    });
+
+    /*
+     * Fail closed:
+     * Firebase lookup failure, D1 failure, or email delivery failure must
+     * never generate a deletion token while pretending the process worked.
+     *
+     * This error does not reveal whether the submitted account exists.
+     */
+    return jsonResponse(
+      { error: DELETE_REQUEST_FAILURE_MESSAGE },
+      502
+    );
+  }
+
+  return jsonResponse(
+    { message: DELETE_REQUEST_MESSAGE },
+    200
+  );
+}
+
+async function handleDeleteAccountConfirm(request, env) {
+  if (request.method !== "POST") {
+    return jsonResponse({ error: "Method not allowed" }, 405);
+  }
+
+  const contentLength = Number(request.headers.get("content-length") || "0");
+  if (contentLength > MAX_BODY_BYTES) {
+    return jsonResponse({ error: DELETE_CONFIRM_FAILURE_MESSAGE }, 400);
+  }
+
+  let payload;
+  try {
+    payload = await parseRequest(request);
+  } catch {
+    return jsonResponse({ error: DELETE_CONFIRM_FAILURE_MESSAGE }, 400);
+  }
+
+  const token = typeof payload.token === "string" ? payload.token.trim() : "";
+  if (!token || token.length > 512 || !env.WAITLIST_DB) {
+    return jsonResponse({ error: DELETE_CONFIRM_FAILURE_MESSAGE }, 400);
+  }
+
+  try {
+    const tokenHash = await sha256Hex(token);
+    const row = await env.WAITLIST_DB
+      .prepare(
+        `SELECT email, expires_at, used_at
+         FROM deletion_requests
+         WHERE token_hash = ?`
+      )
+      .bind(tokenHash)
+      .first();
+
+    const expiresAt = row?.expires_at ? Date.parse(row.expires_at) : Number.NaN;
+    if (!row || row.used_at || !Number.isFinite(expiresAt) || expiresAt < Date.now()) {
+      return jsonResponse({ error: DELETE_CONFIRM_FAILURE_MESSAGE }, 400);
+    }
+
+    if (!env.FIREBASE_DELETE_URL || !env.FIREBASE_DELETE_SECRET) {
+      throw new Error("Firebase deletion service is not configured.");
+    }
+
+    const firebaseResponse = await fetch(env.FIREBASE_DELETE_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${env.FIREBASE_DELETE_SECRET}`
+      },
+      body: JSON.stringify({ email: row.email })
+    });
+
+    if (!firebaseResponse.ok) {
+      return jsonResponse({ error: DELETE_UPSTREAM_FAILURE_MESSAGE }, 502);
+    }
+
+    await env.WAITLIST_DB
+      .prepare(
+        `UPDATE deletion_requests
+         SET used_at = CURRENT_TIMESTAMP
+         WHERE token_hash = ? AND used_at IS NULL`
+      )
+      .bind(tokenHash)
+      .run();
+
+    return jsonResponse({ message: DELETE_SUCCESS_MESSAGE }, 200);
+  } catch (error) {
+    console.error("Account deletion confirmation failed", {
+      reason: "confirmation_failed",
+      name: error?.name || "Error"
+    });
+    return jsonResponse({ error: DELETE_UPSTREAM_FAILURE_MESSAGE }, 502);
   }
 }
 
@@ -517,6 +876,26 @@ export default {
 
     if (url.pathname === "/api/waitlist" || url.pathname === "/api/waitlist/") {
       return handleWaitlist(request, env);
+    }
+
+    if (url.pathname === "/api/delete-account/request" || url.pathname === "/api/delete-account/request/") {
+      return handleDeleteAccountRequest(request, env);
+    }
+
+    if (url.pathname === "/api/delete-account/confirm" || url.pathname === "/api/delete-account/confirm/") {
+      return handleDeleteAccountConfirm(request, env);
+    }
+
+    if (url.pathname === "/delete-account/confirm" || url.pathname === "/delete-account/confirm/") {
+      const assetUrl = new URL(request.url);
+      assetUrl.pathname = "/delete-account/confirm/index.html";
+      return withAssetCacheHeaders(await env.ASSETS.fetch(new Request(assetUrl, request)));
+    }
+
+    if (url.pathname === "/delete-account" || url.pathname === "/delete-account/") {
+      const assetUrl = new URL(request.url);
+      assetUrl.pathname = "/delete-account/index.html";
+      return withAssetCacheHeaders(await env.ASSETS.fetch(new Request(assetUrl, request)));
     }
 
     if (url.pathname === "/auth/verified" || url.pathname === "/auth/verified/") {

@@ -22,6 +22,8 @@ export default defineConfig(() => {
           howImpulsiveWorks: path.resolve(__dirname, 'how-impulsive-works/index.html'),
           privateBehaviourChangeSupport: path.resolve(__dirname, 'private-behaviour-change-support/index.html'),
           focusMode: path.resolve(__dirname, 'focus-mode/index.html'),
+          deleteAccount: path.resolve(__dirname, 'delete-account/index.html'),
+          deleteAccountConfirm: path.resolve(__dirname, 'delete-account/confirm/index.html'),
         },
       },
     },

@@ -3,6 +3,8 @@
 # Set these using Wrangler:
 #   npx wrangler secret put BREVO_API_KEY
 #   npx wrangler secret put WAITLIST_IP_HASH_SECRET
+#   npx wrangler secret put FIREBASE_DELETE_URL
+#   npx wrangler secret put FIREBASE_DELETE_SECRET
 #
 # Plain variables are safe to keep in [vars].
 

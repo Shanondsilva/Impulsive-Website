@@ -948,6 +948,27 @@ export default {
       return withAssetCacheHeaders(await env.ASSETS.fetch(new Request(assetUrl, request)));
     }
 
+    if (url.pathname === "/privacy.html") {
+      url.pathname = "/privacy";
+      return Response.redirect(url.toString(), 301);
+    }
+
+    if (url.pathname === "/privacy" || url.pathname === "/privacy/") {
+      const assetUrl = new URL(request.url);
+      assetUrl.pathname = "/privacy.html";
+      return withAssetCacheHeaders(await env.ASSETS.fetch(new Request(assetUrl, request)));
+    }
+
+    if (url.pathname === "/terms.html") {
+      url.pathname = "/terms";
+      return Response.redirect(url.toString(), 301);
+    }
+
+    if (url.pathname === "/terms" || url.pathname === "/terms/") {
+      const assetUrl = new URL(request.url);
+      assetUrl.pathname = "/terms.html";
+      return withAssetCacheHeaders(await env.ASSETS.fetch(new Request(assetUrl, request)));
+    }
     if (url.pathname === "/help.html") {
       url.pathname = "/help";
       return Response.redirect(url.toString(), 301);

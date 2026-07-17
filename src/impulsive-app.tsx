@@ -302,7 +302,7 @@ function ImpulsiveAppPage() {
           <nav className="footer-nav" aria-label="Support links">
             <h3>Support</h3>
             <a href="/#faq">FAQs</a>
-            <a href="mailto:hello@useimpulsive.com">Contact</a>
+            <a href="mailto:contact@useimpulsive.com">Contact</a>
           </nav>
           <nav className="footer-nav" aria-label="Legal links">
             <h3>Legal</h3>

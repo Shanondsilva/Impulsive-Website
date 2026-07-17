@@ -60,7 +60,7 @@ export function AccountDeletionLayout({ children }: AccountDeletionLayoutProps) 
             <a href="/help">Help</a>
             <a href="/privacy.html">Privacy</a>
             <a href="/terms.html">Terms</a>
-            <a href="mailto:hello@useimpulsive.com">Contact</a>
+            <a href="mailto:contact@useimpulsive.com">Contact</a>
           </nav>
           <p className="footer-copyright">&copy; {new Date().getFullYear()} Impulsive. All rights reserved.</p>
         </div>

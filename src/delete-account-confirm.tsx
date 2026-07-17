@@ -115,7 +115,7 @@ function DeleteAccountConfirmPage() {
             <div className="account-deletion-result-actions">
               <a className="button" href="/">Back to home</a>
               {confirmation.status === 'error' && (
-                <a className="button button-secondary" href="mailto:hello@useimpulsive.com">Email support</a>
+                <a className="button button-secondary" href="mailto:contact@useimpulsive.com">Email support</a>
               )}
             </div>
           )}

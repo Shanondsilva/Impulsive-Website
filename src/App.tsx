@@ -570,7 +570,7 @@ export default function App() {
               <div className="mobile-menu-group">
                 <h3>Support</h3>
                 <div className="mobile-menu-links" aria-label="Support links">
-                  <a href="mailto:hello@useimpulsive.com" onClick={closeMenu}>Contact</a>
+                  <a href="mailto:contact@useimpulsive.com" onClick={closeMenu}>Contact</a>
                 </div>
               </div>
               <a className="button mobile-menu-cta" href="#waitlist" onClick={closeMenu}>Join Waitlist</a>
@@ -1424,7 +1424,7 @@ export default function App() {
           <nav className="footer-nav" aria-label="Support links">
             <h3>Support</h3>
             <a href="#faq">FAQs</a>
-            <a href="mailto:hello@useimpulsive.com">Contact</a>
+            <a href="mailto:contact@useimpulsive.com">Contact</a>
           </nav>
           <nav className="footer-nav" aria-label="Legal links">
             <h3>Legal</h3>

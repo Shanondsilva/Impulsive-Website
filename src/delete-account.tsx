@@ -181,7 +181,7 @@ function DeleteAccountPage() {
                 </p>
               )}
             </form>
-            <p className="account-deletion-help">Need help? Email <a href="mailto:hello@useimpulsive.com">hello@useimpulsive.com</a>.</p>
+            <p className="account-deletion-help">Need help? Email <a href="mailto:contact@useimpulsive.com">contact@useimpulsive.com</a>.</p>
           </div>
         </section>
       </main>

@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -17,7 +17,7 @@
   <p><a class="back-link" href="/">Back to Impulsive</a></p>
 
   <h1>Privacy Policy</h1>
-  <p class="muted">Last updated: 17 July 2026</p>
+  <p class="muted">Last updated: 9 August 2026</p>
 
   <h2>About this policy</h2>
   <p>
@@ -32,10 +32,12 @@
   </p>
   <p>
     Impulsive is a behaviour-change support tool designed to help adults create
-    a pause between a difficult habit moment and their next action. We have
-    designed the app so that sensitive behavioural and recovery information is
-    stored locally on your device rather than being stored in our cloud
-    infrastructure.
+    a pause between a difficult habit moment and their next action. The app is
+    designed to keep sensitive behavioural and recovery information on your
+    device by default. Some features you choose to use, including optional cloud
+    recovery, account services, subscriptions, crash diagnostics, and Website
+    Protection, involve limited processing or transfer of information off the
+    device as described below.
   </p>
 
   <h2>Information you provide when creating or using an account</h2>
@@ -69,24 +71,59 @@
     sessions, game activity, preferences, and related app state.
   </p>
   <p>
-    This behavioural and recovery information is designed to be stored locally
-    on your device using local app storage, including an encrypted local
-    database where applicable. Impulsive does not use Firebase or our backend
-    servers to store your journal entries, recovery progress, streaks, urge
-    history, behavioural records, or personal reflections.
+    This information is stored locally on your device by default using local app
+    storage, including an encrypted local database where applicable. Impulsive
+    does not routinely synchronise your journal entries, recovery history,
+    behavioural records, or personal reflections to Cloud Firestore.
+  </p>
+  <p>
+    If you deliberately enable the optional cloud-recovery feature, selected
+    recovery information is copied into an encrypted recovery backup and sent
+    off the device as described in the next section. This is separate from the
+    app's ordinary local storage.
   </p>
 
-  <h2>Backup, restore, and export</h2>
+  <h2>Backup, restore, export, and optional cloud recovery</h2>
   <p>
-    Impulsive provides local backup, restore, and export functionality. When you
-    manually export your data, you choose where the exported file is saved and
-    are responsible for keeping that file secure.
+    Impulsive provides manual backup, restore, and export functionality. A
+    manual Impulsive backup is encrypted using a password you choose. You choose
+    where the exported file is saved and are responsible for keeping both the
+    file and its password secure.
   </p>
   <p>
     Selected app settings and restore information may also be eligible for
     Android's device backup mechanisms if backup is enabled for your device and
-    Google account. These backups are handled by the Android platform and Google
-    rather than by an Impulsive-operated cloud storage service.
+    Google account. Impulsive's Android backup rules are configured so that
+    cloud backup is used only where the Android platform provides the required
+    client-side encryption capability. Android device-to-device transfer is
+    handled by the Android platform.
+  </p>
+  <p>
+    Cloud recovery is an optional feature for eligible signed-in, non-guest
+    accounts. It does not turn on merely because you use Impulsive. If you
+    enable it, you choose a separate recovery password. The app creates the
+    recovery copy on the device and encrypts it before upload. The recovery
+    password is used on the device for the recovery encryption process and is
+    not included in the uploaded recovery file.
+  </p>
+  <p>
+    The encrypted cloud-recovery copy may include journal notes, checklist
+    items, recovery sessions, user-added blocked domains, and certain completed
+    onboarding information needed to restore supported app state. It does not
+    represent a general server-side copy of everything stored by the app.
+  </p>
+  <p>
+    Where your Impulsive account is linked to Google, the encrypted recovery
+    copy is stored in the Impulsive app-data area of your Google Drive account.
+    For another eligible signed-in, non-guest account, the encrypted recovery
+    copy may instead be stored in Firebase Storage under that account's Firebase
+    UID. These routes are used to provide the recovery feature you choose to
+    enable.
+  </p>
+  <p>
+    Turning cloud recovery off stops future scheduled cloud-recovery uploads but
+    does not, by itself, remove an encrypted recovery copy that was already
+    stored. Account and backup deletion are described below.
   </p>
 
   <h2>Protection features, installed apps, and Usage Access</h2>
@@ -118,12 +155,15 @@
   <p>
     Impulsive does not operate a remote VPN server and does not route your
     general internet traffic through an Impulsive server. DNS requests that are
-    not blocked may be forwarded to external DNS resolvers, including Cloudflare
-    DNS resolvers, for normal name resolution.
+    not blocked may be forwarded over encrypted DNS-over-HTTPS connections to
+    external family-safety DNS resolvers, including Cloudflare and AdGuard, for
+    normal name resolution and applicable family-safety responses.
   </p>
   <p>
-    Impulsive does not receive or store a server-side copy of your general web
-    browsing history or DNS query history through this feature.
+    Those external DNS providers process the DNS requests needed to answer them
+    according to their own services and privacy practices. Impulsive does not
+    receive or keep a server-side copy of your general web-browsing history or
+    DNS-query history through Website Protection.
   </p>
 
   <h2>Subscription and purchase information</h2>
@@ -136,7 +176,9 @@
     To verify and maintain your Plus entitlement, the app and our backend may
     process your Firebase UID, subscription product, entitlement status,
     subscription expiry information, and Google Play purchase-token information
-    used for verification.
+    used for verification. The backend may retain a protected representation of
+    purchase-token information and entitlement state so that a subscription can
+    be verified and associated with the correct Impulsive account.
   </p>
 
   <h2>Security and app-integrity information</h2>
@@ -177,9 +219,9 @@
   <h2>How we use information</h2>
   <ul>
     <li>Create, authenticate, secure, and manage your account.</li>
-    <li>Provide features you choose to use.</li>
+    <li>Provide features you choose to use, including optional encrypted cloud recovery.</li>
     <li>Verify and maintain subscription entitlements.</li>
-    <li>Protect the app and backend from fraud and abuse.</li>
+    <li>Protect the app and backend from fraud, abuse, and unauthorised access.</li>
     <li>Diagnose crashes and technical failures.</li>
     <li>Respond to support, privacy, and account-deletion requests.</li>
     <li>Meet applicable legal, security, accounting, and regulatory obligations.</li>
@@ -192,11 +234,12 @@
 
   <h2>Service providers</h2>
   <ul>
-    <li>Google Firebase for authentication, backend functions, App Check, and Crashlytics.</li>
+    <li>Google Firebase for authentication, backend functions, App Check, Crashlytics, and Firebase Storage used for optional encrypted cloud recovery on eligible accounts.</li>
     <li>Google Play for distribution, billing, subscriptions, and Play Integrity.</li>
-    <li>Google if you choose Google sign-in.</li>
+    <li>Google for Google sign-in and, where you enable it, storage of an encrypted cloud-recovery copy in the Impulsive app-data area of your Google Drive account.</li>
     <li>Meta/Facebook if you choose Facebook sign-in.</li>
-    <li>Cloudflare for website infrastructure and DNS resolution used by Website Protection.</li>
+    <li>Cloudflare and AdGuard for encrypted DNS resolution used by Website Protection.</li>
+    <li>Cloudflare for website infrastructure.</li>
     <li>Brevo or another email provider for requested product communications.</li>
   </ul>
 
@@ -211,6 +254,12 @@
     necessary to operate the service, verify entitlements, prevent fraud, and
     meet legal or accounting obligations.
   </p>
+  <p>
+    An encrypted cloud-recovery copy may remain in the applicable cloud-storage
+    location until it is replaced by a later backup or removed through the
+    relevant deletion process. Turning cloud recovery off stops future scheduled
+    uploads but does not by itself delete an existing cloud-recovery file.
+  </p>
 
   <h2>Account and data deletion</h2>
   <p>
@@ -221,14 +270,33 @@
   </p>
   <p>
     Account deletion removes the Impulsive authentication account and associated
-    server-side records that we control, subject to information that must be
-    retained for legitimate legal, security, fraud-prevention, or accounting
-    purposes.
+    server-side records that we control, including applicable account and
+    subscription records. For Firebase Storage cloud recovery, the deletion
+    process removes the encrypted recovery object associated with the Firebase
+    account.
+  </p>
+  <p>
+    Where an encrypted cloud-recovery copy is held in the Impulsive app-data
+    area of your Google Drive account, the in-app account-deletion flow is
+    designed to request the Google authorisation needed to remove that recovery
+    copy before the Impulsive account is deleted. If you request deletion only
+    through the website, we may not have the Google authorisation needed to
+    access an app-data file held in your Google account. In that situation, you
+    may need to remove Impulsive app data through the controls provided by your
+    Google account.
   </p>
   <p>
     Local app data can be removed through the app's data-deletion features or by
-    clearing app storage or uninstalling the app. Separate manual exports or
-    Android backups may need to be deleted separately.
+    clearing app storage or uninstalling the app. Manual backup files that you
+    exported are under your control and must be deleted by you from the location
+    where you saved them. Separate Android platform backups may also need to be
+    removed through your Google or device backup settings.
+  </p>
+  <p>
+    We may retain limited information only where retention is necessary for a
+    legitimate legal, security, fraud-prevention, or accounting reason. Where a
+    legal retention requirement applies, retained information is not kept for
+    unrelated product use.
   </p>
 
   <h2>Your choices and rights</h2>
@@ -241,13 +309,19 @@
     To make a privacy request, contact
     <a href="mailto:hello@useimpulsive.com">hello@useimpulsive.com</a>.
   </p>
+  <p>
+    If UK data-protection law applies to you and you are dissatisfied with how
+    we handle your personal information, you may also make a complaint to the
+    UK Information Commissioner's Office.
+  </p>
 
   <h2>Security</h2>
   <p>
     We use technical and organisational measures intended to protect the
     information we process, including local encrypted storage where applicable,
-    secure authentication, encrypted network connections, app-integrity checks,
-    and server-side purchase verification.
+    encryption of optional cloud-recovery payloads before upload, secure
+    authentication, encrypted network connections, app-integrity checks, and
+    server-side purchase verification.
   </p>
 
   <h2>Children</h2>

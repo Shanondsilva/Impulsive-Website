@@ -1,13 +1,15 @@
 # Privacy
 
-Impulsive is designed as a privacy-first behaviour-change support tool. It is an early-stage, pre-launch product currently in waitlist phase.
+Impulsive is designed as a privacy-first behaviour-change support app for adults. The current public Privacy Policy at https://useimpulsive.com/privacy.html is the controlling public description of data handling.
 
-The product is intended to keep patterns, triggers, and reflections private by default. Impulsive does not sell user data and does not use third-party advertising trackers.
+Sensitive behavioural and recovery information is stored locally on the device by default. Depending on the features a user chooses, limited off-device processing can occur for account authentication, optional encrypted cloud recovery, subscription verification, app integrity, crash diagnostics, website infrastructure and related service operations.
 
-The waitlist collects email addresses for early access, testing, and launch updates. Signups may be stored in Cloudflare D1 or equivalent backend storage, and confirmation email may be sent through a transactional email provider.
+Eligible users can choose optional encrypted cloud recovery. The encrypted recovery route can use the Impulsive app-data area of the user's Google Drive account or Firebase Storage, depending on the eligible account path. This is separate from the app's ordinary local behavioural storage.
 
-Waitlist removal and email deletion requests can be sent to hello@useimpulsive.com.
+Optional app protection can use Android Usage Access locally. Optional Website Protection can use Android's VPN framework for on-device DNS filtering. See the public Privacy Policy for the exact current implementation and third-party service disclosures.
 
-The public privacy page is available at https://useimpulsive.com/privacy.html and was last updated on 20 May 2026.
+Historical waitlist email data is separate from app behavioural data. Removal or privacy requests can be sent to hello@useimpulsive.com.
 
-Impulsive is a behaviour-change support tool for adults. It is not a medical device, therapy service, diagnosis tool, crisis-support service, or clinically validated treatment. If someone feels at risk of harming themselves or someone else, or is in immediate danger, they should contact emergency services or local crisis support now.
+The Privacy Policy must be updated whenever a released build materially changes data collection, advertising technology, recovery, authentication, diagnostics or other data flows. Do not infer the privacy behaviour of a future build from the current public policy.
+
+Impulsive is not a medical device, therapy service, diagnosis tool, crisis-support service or clinically validated treatment.

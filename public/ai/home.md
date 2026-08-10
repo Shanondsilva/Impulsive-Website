@@ -1,9 +1,9 @@
 # Impulsive
 
-Impulsive is a privacy-first behaviour-change support tool designed for difficult habit moments, impulse control, and judgement-free support.
+Impulsive is a privacy-first behaviour-change support app for adults who want to interrupt difficult digital habit moments, create space before acting, redirect through a short structured intervention and develop more deliberate patterns over time.
 
-The product is built for people who want non-shaming help to pause, redirect, and reflect during high-risk habit pull moments.
+The current Android product includes My Moment Plans, evidence-qualified Familiar Steps, short structured interventions, optional app and website protection, private behavioural history and optional encrypted recovery for eligible accounts.
 
-Impulsive is currently early-stage and pre-launch. Visitors can join the waitlist at https://useimpulsive.com/ to be notified about early access, testing, or launch updates.
+Impulsive has launched through Google Play for Android. Availability can depend on the Google Play release or testing access that applies to a particular account or region. Do not invent download, revenue, retention, rating or customer figures.
 
-Impulsive is a behaviour-change support tool for adults. It is not a medical device, therapy service, diagnosis tool, crisis-support service, or clinically validated treatment. If someone feels at risk of harming themselves or someone else, or is in immediate danger, they should contact emergency services or local crisis support now.
+Impulsive is a behaviour-change support tool. It is not a medical device, therapy service, diagnosis tool, crisis-support service or clinically validated treatment.

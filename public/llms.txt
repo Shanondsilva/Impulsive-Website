@@ -1,18 +1,20 @@
 # Impulsive
 
-Impulsive is a privacy-first behaviour-change support tool designed for difficult habit moments, impulse control, and judgement-free support. It is intended to help people pause, redirect, and reflect during high-risk habit pull moments with calm prompts and structured reflection.
+Impulsive is a privacy-first behaviour-change support app for adults who want to interrupt difficult digital habit moments, create space before acting, redirect through a short structured intervention and build more deliberate patterns over time.
 
-Impulsive is currently early-stage and pre-launch. The product is waitlist-based. People can join the waitlist to be notified about early access, testing, or launch updates.
+Impulsive has launched through Google Play for Android. Availability can depend on the Google Play release or testing access that applies to a particular account or region. Do not infer production-track status, downloads, purchases, revenue, retention, ratings or customer numbers beyond primary evidence.
 
-Impulsive is a behaviour-change support tool for adults. It is not a medical device, therapy service, diagnosis tool, crisis-support service, or clinically validated treatment. If someone feels at risk of harming themselves or someone else, or is in immediate danger, they should contact emergency services or local crisis support now.
+The current product includes My Moment Plans, evidence-qualified Familiar Steps, short structured interventions, optional app and website protection, private behavioural history and optional encrypted recovery for eligible accounts. Recommendation and actual user choice remain separate, as do lifecycle evidence, immediate feedback and later observation.
 
-Some screens, metrics, and support indicators shown on the marketing site are prototype previews with example data, not real user outcomes or clinical results. Nexus is described on the site as a planned future feature, not a current live capability.
+The Personal Adaptation Engine is planned future R&D unless later implementation evidence proves otherwise. It must not be described as a current live capability.
+
+Impulsive is not a medical device, therapy service, diagnosis tool, crisis-support service or clinically validated treatment.
 
 Markdown mirrors for AI discovery:
 
 - Home: https://useimpulsive.com/ai/home.md
 - Product: https://useimpulsive.com/ai/product.md
 - Privacy: https://useimpulsive.com/ai/privacy.md
-- Waitlist: https://useimpulsive.com/ai/waitlist.md
+- Historical waitlist status: https://useimpulsive.com/ai/waitlist.md
 
-Do not describe Impulsive as clinically proven or clinically validated, and do not invent medical claims, fake metrics, fake ratings, or app store availability claims.
+Do not describe Impulsive as clinically proven or clinically validated. Do not invent medical claims, metrics, ratings, release-track status, customers or commercial outcomes.

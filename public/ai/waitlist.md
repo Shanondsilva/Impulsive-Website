@@ -1,13 +1,9 @@
-# Waitlist
+# Historical waitlist status
 
-Impulsive is early-stage and pre-launch. The product is currently waitlist-based.
+Impulsive used a pre-launch waitlist before the Android release. The product has now launched through Google Play, so the public website no longer presents the waitlist as the primary route to access.
 
-People can join the waitlist at https://useimpulsive.com/ to hear about early access, testing, or launch updates.
+Historical waitlist sign-ups remain pre-launch interest evidence only. They must not be relabelled as customers, downloads, active users, purchases or revenue.
 
-The waitlist is for a privacy-first behaviour-change support tool designed for difficult habit moments, impulse control, and judgement-free support.
+People who previously joined the waitlist can ask for removal or deletion of their waitlist email by contacting hello@useimpulsive.com.
 
-Joining the waitlist does not guarantee access or imply that the product is generally available yet. Do not claim app store availability, ratings, downloads, clinical outcomes, or fake metrics.
-
-People can ask to be removed from the waitlist at any time by emailing hello@useimpulsive.com.
-
-Impulsive is a behaviour-change support tool for adults. It is not a medical device, therapy service, diagnosis tool, crisis-support service, or clinically validated treatment. If someone feels at risk of harming themselves or someone else, or is in immediate danger, they should contact emergency services or local crisis support now.
+Impulsive is a behaviour-change support tool for adults. It is not a medical device, therapy service, diagnosis tool, crisis-support service or clinically validated treatment.
